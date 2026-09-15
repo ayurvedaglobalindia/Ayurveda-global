@@ -1,0 +1,339 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+:root {
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-dm-sans: 'DM Sans', system-ui, sans-serif;
+  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+
+  --color-ayur-black: #0A0A0A;
+  --color-ayur-charcoal: #1A1A1A;
+  --color-ayur-forest: #1B3A2F;
+  --color-ayur-sage: #4A7C59;
+  --color-ayur-moss: #6B8E6E;
+  --color-ayur-cream: #F5F0E8;
+  --color-ayur-beige: #E8DCC8;
+  --color-ayur-sand: #D4C4A8;
+  --color-ayur-stone: #A89B8A;
+  --color-ayur-gold: #C9A84C;
+  --color-ayur-gold-light: #E8D4A0;
+  --color-ayur-copper: #B87333;
+  --color-ayur-leaf: #2D5A3D;
+  --color-ayur-herb: #5D8A6E;
+  --color-ayur-earth: #8B7355;
+
+  --shadow-soft: 0 2px 8px rgba(10, 10, 10, 0.08);
+  --shadow-medium: 0 4px 16px rgba(10, 10, 10, 0.12);
+  --shadow-strong: 0 8px 32px rgba(10, 10, 10, 0.16);
+  --shadow-gold: 0 0 20px rgba(201, 168, 76, 0.3);
+
+  --transition-fast: 150ms ease-out;
+  --transition-normal: 250ms ease-out;
+  --transition-slow: 400ms ease-out;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-dm-sans);
+  background-color: var(--color-ayur-cream);
+  color: var(--color-ayur-black);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--color-ayur-black);
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
+h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+h5 { font-size: clamp(1.125rem, 2vw, 1.5rem); }
+h6 { font-size: clamp(1rem, 1.5vw, 1.25rem); }
+
+p {
+  color: var(--color-ayur-charcoal);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-ayur-forest);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+::selection {
+  background-color: var(--color-ayur-gold);
+  color: var(--color-ayur-black);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-ayur-beige);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ayur-sage);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ayur-forest);
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-16 sm:py-24 lg:py-32;
+  }
+
+  .section-sm {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-ayur-forest text-ayur-cream hover:bg-ayur-leaf focus:ring-ayur-forest;
+  }
+
+  .btn-secondary {
+    @apply btn bg-ayur-gold text-ayur-black hover:bg-ayur-gold-light focus:ring-ayur-gold;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-ayur-forest text-ayur-forest hover:bg-ayur-forest hover:text-ayur-cream focus:ring-ayur-forest;
+  }
+
+  .btn-ghost {
+    @apply btn text-ayur-forest hover:bg-ayur-beige focus:ring-ayur-forest;
+  }
+
+  .btn-whatsapp {
+    @apply btn bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+  }
+
+  .btn-gold {
+    @apply btn bg-gradient-to-r from-ayur-gold to-ayur-copper text-ayur-black hover:from-ayur-gold-light hover:to-ayur-gold focus:ring-ayur-gold shadow-lg shadow-ayur-gold/30;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 bg-white border border-ayur-sand rounded-lg text-ayur-black placeholder-ayur-stone transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ayur-gold focus:border-transparent;
+  }
+
+  .input-error {
+    @apply border-ayur-copper focus:ring-ayur-copper;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-ayur-forest mb-1.5;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-soft overflow-hidden transition-all duration-300 hover:shadow-medium;
+  }
+
+  .card-hover {
+    @apply card hover:-translate-y-1 hover:shadow-strong;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-gold {
+    @apply badge bg-ayur-gold/10 text-ayur-gold border border-ayur-gold/20;
+  }
+
+  .badge-sage {
+    @apply badge bg-ayur-sage/10 text-ayur-sage border border-ayur-sage/20;
+  }
+
+  .badge-age {
+    @apply badge bg-red-50 text-red-700 border border-red-200;
+  }
+
+  .link-underline {
+    @apply relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-current after:origin-bottom-right after:scale-x-0 after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-ayur-gold to-ayur-copper bg-clip-text text-transparent;
+  }
+
+  .texture-wood {
+    background-image: url('/images/textures/wood-grain.png');
+    background-repeat: repeat;
+    opacity: 0.03;
+  }
+
+  .texture-stone {
+    background-image: url('/images/textures/stone-noise.png');
+    background-repeat: repeat;
+    opacity: 0.02;
+  }
+
+  .texture-botanical {
+    background-image: url('/images/textures/botanical-lines.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.04;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out forwards;
+  }
+
+  .animate-pulse-gold {
+    animation: pulseGold 2s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(201, 168, 76, 0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+
+  .section {
+    @apply py-12;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus-visible-ring {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-ayur-gold focus-visible:ring-offset-2;
+}
+
+.gradient-border {
+  position: relative;
+  background: white;
+  border-radius: 1rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 1.125rem;
+  background: linear-gradient(135deg, var(--color-ayur-gold), var(--color-ayur-copper));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.gradient-border:hover::before {
+  opacity: 1;
+}

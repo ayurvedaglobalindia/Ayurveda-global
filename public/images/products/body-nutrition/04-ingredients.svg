@@ -1,0 +1,24 @@
+<svg width="800" height="800" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="800" fill="#F5F0E8"/>
+  <g transform="translate(400,400)">
+    <text x="0" y="-350" text-anchor="middle" font-family="Georgia, serif" font-size="32" font-weight="bold" fill="#1B3A2F">Key Ingredients</text>
+    <g transform="translate(-300, -250)">
+      <rect x="0" y="0" width="600" height="500" rx="10" fill="#FFFFFF" stroke="#C9A84C" stroke-width="2"/>
+      <text x="300" y="50" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#1B3A2F">Each 2 Capsules Contain:</text>
+      <g transform="translate(50, 100)">
+        <text x="0" y="0" font-family="Georgia, serif" font-size="18" fill="#1B3A2F">Ashwagandha Root Extract</text>
+        <text x="450" y="0" text-anchor="end" font-family="Georgia, serif" font-size="18" fill="#4A7C59">300mg</text>
+        <text x="0" y="50" font-family="Georgia, serif" font-size="18" fill="#1B3A2F">Shatavari Root Extract</text>
+        <text x="450" y="50" text-anchor="end" font-family="Georgia, serif" font-size="18" fill="#4A7C59">200mg</text>
+        <text x="0" y="100" font-family="Georgia, serif" font-size="18" fill="#1B3A2F">Amla Fruit Extract</text>
+        <text x="450" y="100" text-anchor="end" font-family="Georgia, serif" font-size="18" fill="#4A7C59">150mg</text>
+        <text x="0" y="150" font-family="Georgia, serif" font-size="18" fill="#1B3A2F">Guduchi Stem Extract</text>
+        <text x="450" y="150" text-anchor="end" font-family="Georgia, serif" font-size="18" fill="#4A7C59">150mg</text>
+        <text x="0" y="200" font-family="Georgia, serif" font-size="18" fill="#1B3A2F">Triphala Blend</text>
+        <text x="450" y="200" text-anchor="end" font-family="Georgia, serif" font-size="18" fill="#4A7C59">100mg</text>
+        <text x="0" y="250" font-family="Georgia, serif" font-size="18" fill="#1B3A2F">Brahmi Whole Plant Extract</text>
+        <text x="450" y="250" text-anchor="end" font-family="Georgia, serif" font-size="18" fill="#4A7C59">100mg</text>
+      </g>
+    </g>
+  </g>
+</svg>
