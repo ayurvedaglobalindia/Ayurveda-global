@@ -17,7 +17,7 @@ const mockOrders = [
     status: 'delivered' as const,
     paymentMethod: 'whatsapp' as const,
     items: [
-      { name: 'BODY Essential Nutrition', quantity: 1, price: 149900, image: '/images/products/body-nutrition/01-primary.jpg' },
+      { name: 'BODY Essential Nutrition', quantity: 1, price: 149900, image: '/images/products/body-nutrition/01-primary.svg' },
     ],
   },
   {
@@ -28,7 +28,7 @@ const mockOrders = [
     status: 'shipped' as const,
     paymentMethod: 'cod' as const,
     items: [
-      { name: 'STAYMAX+ Delay Spray', quantity: 1, price: 89900, image: '/images/products/staymax/01-primary.jpg' },
+      { name: 'STAYMAX+ Delay Spray', quantity: 1, price: 89900, image: '/images/products/staymax/01-primary.svg' },
     ],
   },
   {
@@ -39,7 +39,7 @@ const mockOrders = [
     status: 'processing' as const,
     paymentMethod: 'whatsapp' as const,
     items: [
-      { name: 'BODY Essential Nutrition', quantity: 2, price: 149900, image: '/images/products/body-nutrition/01-primary.jpg' },
+      { name: 'BODY Essential Nutrition', quantity: 2, price: 149900, image: '/images/products/body-nutrition/01-primary.svg' },
     ],
   },
 ]

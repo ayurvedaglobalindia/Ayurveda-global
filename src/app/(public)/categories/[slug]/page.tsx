@@ -8,6 +8,7 @@ import { ProductGrid } from '@/components/product/ProductGrid'
 import { ProductSort } from '@/components/product/ProductSort'
 import { Pagination } from '@/components/ui/Pagination'
 import { getCategories, getProductsByCategory, getCategoryBySlug } from '@/lib/products/registry'
+import { Logo } from '@/components/ui/Logo'
 import type { Product, Category } from '@/types'
 
 const ITEMS_PER_PAGE = 12
@@ -79,15 +80,20 @@ export default function CategoryPage() {
   return (
     <div className="container py-8 lg:py-12">
       <div className="mb-8">
-        <nav className="flex items-center gap-2 text-sm text-ayur-stone mb-4" aria-label="Breadcrumb">
-          <a href="/" className="hover:text-ayur-forest transition-colors">Home</a>
-          <span>/</span>
-          <a href="/categories" className="hover:text-ayur-forest transition-colors">Categories</a>
-          <span>/</span>
-          <span className="text-ayur-black font-medium">{category.name}</span>
-        </nav>
-        <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black">{category.name}</h1>
-        <p className="text-ayur-stone mt-2">{category.description}</p>
+        <div className="flex items-center gap-4">
+          <Logo variant="header" animate className="flex-shrink-0" />
+          <div>
+            <nav className="flex items-center gap-2 text-sm text-ayur-stone mb-4" aria-label="Breadcrumb">
+              <a href="/" className="hover:text-ayur-forest transition-colors">Home</a>
+              <span>/</span>
+              <a href="/categories" className="hover:text-ayur-forest transition-colors">Categories</a>
+              <span>/</span>
+              <span className="text-ayur-black font-medium">{category.name}</span>
+            </nav>
+            <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black">{category.name}</h1>
+            <p className="text-ayur-stone mt-2">{category.description}</p>
+          </div>
+        </div>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">

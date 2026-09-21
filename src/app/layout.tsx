@@ -12,42 +12,45 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Ayur Veda Global | Authentic Ayurvedic Wellness Products',
-    template: '%s | Ayur Veda Global',
-  },
-  description: 'Discover authentic Ayurvedic wellness products. BODY Essential Nutrition supplements and STAYMAX+ Delay Spray. Natural herbs, sustainable sourcing, free shipping on orders above ₹999.',
-  keywords: ['ayurvedic', 'wellness', 'herbal supplements', 'natural products', 'ayurveda', 'health'],
-  authors: [{ name: 'Ayur Veda Global' }],
-  creator: 'Ayur Veda Global',
-  publisher: 'Ayur Veda Global',
-  robots: 'index, follow',
-  openGraph: {
-    type: 'website',
-    locale: 'en_IN',
-    url: 'https://ayurvedaglobal.com',
-    siteName: 'Ayur Veda Global',
-    title: 'Ayur Veda Global | Authentic Ayurvedic Wellness Products',
-    description: 'Discover authentic Ayurvedic wellness products. Natural herbs, sustainable sourcing.',
-    images: [
-      {
-        url: '/images/og-default.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Ayur Veda Global',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Ayur Veda Global | Authentic Ayurvedic Wellness Products',
-    description: 'Discover authentic Ayurvedic wellness products. Natural herbs, sustainable sourcing.',
-    images: ['/images/og-default.jpg'],
-  },
-  verification: {
-    google: 'google-site-verification-code',
-  },
-}
+    title: {
+      default: 'Ayur Veda Global | Authentic Ayurvedic Wellness Products',
+      template: '%s | Ayur Veda Global',
+    },
+    description: 'Discover authentic Ayurvedic wellness products. BODY Essential Nutrition supplements and STAYMAX+ Delay Spray. Natural herbs, sustainable sourcing, free shipping on orders above ₹999.',
+    keywords: ['ayurvedic', 'wellness', 'herbal supplements', 'natural products', 'ayurveda', 'health'],
+    authors: [{ name: 'Ayur Veda Global' }],
+    creator: 'Ayur Veda Global',
+    publisher: 'Ayur Veda Global',
+    robots: 'index, follow',
+    openGraph: {
+      type: 'website',
+      locale: 'en_IN',
+      url: 'https://ayurvedaglobal.com',
+      siteName: 'Ayur Veda Global',
+      title: 'Ayur Veda Global | Authentic Ayurvedic Wellness Products',
+      description: 'Discover authentic Ayurvedic wellness products. Natural herbs, sustainable sourcing.',
+      images: [
+        {
+          url: '/images/og-default.svg',
+          width: 1200,
+          height: 630,
+          alt: 'Ayur Veda Global',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Ayur Veda Global | Authentic Ayurvedic Wellness Products',
+      description: 'Discover authentic Ayurvedic wellness products. Natural herbs, sustainable sourcing.',
+      images: ['/images/og-default.svg'],
+    },
+    verification: {
+      google: 'google-site-verification-code',
+    },
+    icons: {
+      icon: '/favicon.ico',
+    },
+  }
 
 export const viewport: Viewport = {
   themeColor: '#1B3A2F',

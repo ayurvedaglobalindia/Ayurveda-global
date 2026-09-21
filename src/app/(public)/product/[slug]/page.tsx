@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -7,7 +8,7 @@ import { ProductDetails } from '@/components/product/ProductDetails'
 import { ProductCard } from '@/components/product/ProductCard'
 import { getProductBySlug, getRelatedProducts, getAllProducts } from '@/lib/products/registry'
 import { generateProductSEO } from '@/lib/seo'
-import type { Product } from '@/types'
+import { Logo } from '@/components/ui/Logo'
 import { Breadcrumb } from '@/components/ui/Breadcrumb'
 import { AgeVerificationGate } from '@/components/layout/AgeVerificationGate'
 import { useUIStore } from '@/store/uiStore'
@@ -78,7 +79,12 @@ export default function ProductPage({ params }: ProductPageProps) {
       />
 
       <div className="container py-8 lg:py-12">
-        <Breadcrumb items={breadcrumbItems} className="mb-8" />
+        <div className="flex items-center gap-4 mb-8">
+          <Logo variant="header" animate className="flex-shrink-0" />
+          <div>
+            <Breadcrumb items={breadcrumbItems} className="mb-0" />
+          </div>
+        </div>
 
         {product.ageRestricted && !showAgeGate && (
           <AgeVerificationGate
@@ -108,5 +114,3 @@ export default function ProductPage({ params }: ProductPageProps) {
     </>
   )
 }
-
-import { useState } from 'react'

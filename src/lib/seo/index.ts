@@ -115,18 +115,18 @@ export function generateWebsiteStructuredData() {
 }
 
 export function generatePageSEO(
-  title: string,
-  description: string,
-  path: string,
-  ogImage?: string,
-  keywords: string[] = []
-): SEOData {
-  return {
-    title: `${title} | ${SITE_NAME}`,
-    description,
-    keywords: [...keywords, 'ayurvedic', 'wellness', 'natural', 'herbal'],
-    ogImage: ogImage || `${SITE_URL}/images/og-default.jpg`,
-    ogType: 'website',
-    structuredData: generateWebsiteStructuredData(),
+    title: string,
+    description: string,
+    path: string,
+    ogImage?: string,
+    keywords: string[] = []
+  ): SEOData {
+    return {
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      keywords: [...keywords, 'ayurvedic', 'wellness', 'natural', 'herbal'],
+      ogImage: ogImage || `${SITE_URL}/images/og-default.svg`,
+      ogType: 'website',
+      structuredData: generateWebsiteStructuredData(),
+    }
   }
-}

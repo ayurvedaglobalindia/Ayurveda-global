@@ -1,9 +1,9 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Leaf, Sparkles, Shield } from 'lucide-react'
 import { getCategories, getProductsByCategory } from '@/lib/products/registry'
 import { generateWebsiteStructuredData } from '@/lib/seo'
+import { Logo } from '@/components/ui/Logo'
 import type { Category } from '@/types'
 
 export const metadata: Metadata = {
@@ -29,8 +29,13 @@ export default function CategoriesPage() {
 
       <div className="container py-8 lg:py-12">
         <div className="mb-12">
-          <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black">Shop by Category</h1>
-          <p className="text-ayur-stone mt-2">Explore our curated collections of authentic Ayurvedic products</p>
+          <div className="flex items-center gap-4">
+            <Logo variant="header" animate className="flex-shrink-0" />
+            <div>
+              <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black">Shop by Category</h1>
+              <p className="text-ayur-stone mt-2">Explore our curated collections of authentic Ayurvedic products</p>
+            </div>
+          </div>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

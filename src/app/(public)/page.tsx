@@ -1,12 +1,14 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { Leaf, Truck, Shield, RotateCcw, Sparkles, Star, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
 import { ProductCard } from '@/components/product/ProductCard'
 import { getFeaturedProducts, getAllProducts } from '@/lib/products/registry'
 import { generateWebsiteStructuredData, generateOrganizationStructuredData } from '@/lib/seo'
 import type { Product } from '@/types'
+import { Hero } from '@/components/hero/Hero'
 
 export const metadata: Metadata = {
   title: 'Authentic Ayurvedic Wellness Products',
@@ -63,61 +65,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-ayur-forest via-ayur-leaf to-ayur-black" />
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url('/images/textures/botanical-lines.svg')" }} />
-        <div className="container relative py-20 lg:py-32">
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="mb-6 flex items-center gap-3"
-            >
-              <span className="px-4 py-1.5 rounded-full bg-ayur-gold/20 text-ayur-gold text-sm font-medium">
-                Authentic Ayurvedic Wellness
-              </span>
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-heading text-5xl md:text-7xl font-medium text-ayur-cream leading-tight mb-6"
-            >
-              Ancient Wisdom for{' '}
-              <span className="text-ayur-gold">Modern Wellness</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl md:text-2xl text-ayur-beige leading-relaxed mb-10 max-w-2xl"
-            >
-              Discover premium Ayurvedic formulations crafted with pure herbs.
-              BODY Essential Nutrition for daily vitality and STAYMAX+ for men's wellness.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-4"
-            >
-              <Link href="/shop">
-                <Button variant="gold" size="lg" className="group">
-                  Shop Now
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <Link href="/about">
-                <Button variant="outline" size="lg" className="border-ayur-gold text-ayur-gold hover:bg-ayur-gold hover:text-ayur-black">
-                  Our Story
-                </Button>
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-ayur-cream to-transparent" />
-      </section>
+      <Hero />
 
       <section className="section bg-white">
         <div className="container">

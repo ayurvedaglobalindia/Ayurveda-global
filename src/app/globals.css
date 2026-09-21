@@ -10,29 +10,41 @@
   --font-cormorant: 'Cormorant Garamond', Georgia, serif;
 
   --color-ayur-black: #0A0A0A;
-  --color-ayur-charcoal: #1A1A1A;
-  --color-ayur-forest: #1B3A2F;
-  --color-ayur-sage: #4A7C59;
-  --color-ayur-moss: #6B8E6E;
-  --color-ayur-cream: #F5F0E8;
-  --color-ayur-beige: #E8DCC8;
-  --color-ayur-sand: #D4C4A8;
-  --color-ayur-stone: #A89B8A;
+  --color-ayur-charcoal: #121212;
+  --color-ayur-forest: #0D2B1F;
+  --color-ayur-forest-deep: #081E14;
+  --color-ayur-sage: #2E7D32;
+  --color-ayur-sage-light: #4CAF50;
+  --color-ayur-moss: #558B2F;
+  --color-ayur-cream: #FFFDF8;
+  --color-ayur-beige: #F5F0E1;
+  --color-ayur-sand: #E8DCC8;
+  --color-ayur-stone: #BCAA95;
   --color-ayur-gold: #C9A84C;
   --color-ayur-gold-light: #E8D4A0;
+  --color-ayur-gold-deep: #B8963E;
   --color-ayur-copper: #B87333;
-  --color-ayur-leaf: #2D5A3D;
-  --color-ayur-herb: #5D8A6E;
-  --color-ayur-earth: #8B7355;
+  --color-ayur-leaf: #1B5E20;
+  --color-ayur-herb: #2E7D32;
+  --color-ayur-earth: #8D6E63;
+  --color-ayur-crimson: #8B0000;
+  --color-ayur-crimson-light: #B71C1C;
+  --color-ayur-crimson-deep: #5D0000;
+  --color-ayur-ruby: #C0392B;
+  --color-ayur-ruby-light: #E74C3C;
 
-  --shadow-soft: 0 2px 8px rgba(10, 10, 10, 0.08);
-  --shadow-medium: 0 4px 16px rgba(10, 10, 10, 0.12);
-  --shadow-strong: 0 8px 32px rgba(10, 10, 10, 0.16);
-  --shadow-gold: 0 0 20px rgba(201, 168, 76, 0.3);
+  --shadow-soft: 0 2px 8px rgba(10, 10, 10, 0.06);
+  --shadow-medium: 0 8px 24px rgba(10, 10, 10, 0.1);
+  --shadow-strong: 0 16px 48px rgba(10, 10, 10, 0.14);
+  --shadow-gold: 0 0 30px rgba(201, 168, 76, 0.35);
+  --shadow-gold-lg: 0 0 60px rgba(201, 168, 76, 0.25);
+  --shadow-crimson: 0 0 30px rgba(139, 0, 0, 0.3);
+  --shadow-inner-gold: inset 0 0 30px rgba(201, 168, 76, 0.15);
 
   --transition-fast: 150ms ease-out;
   --transition-normal: 250ms ease-out;
   --transition-slow: 400ms ease-out;
+  --transition-spring: 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 * {
@@ -165,6 +177,10 @@ input, textarea, select {
     @apply btn bg-gradient-to-r from-ayur-gold to-ayur-copper text-ayur-black hover:from-ayur-gold-light hover:to-ayur-gold focus:ring-ayur-gold shadow-lg shadow-ayur-gold/30;
   }
 
+  .btn-crimson {
+    @apply btn bg-ayur-crimson text-ayur-cream hover:bg-ayur-crimson-light focus:ring-ayur-crimson;
+  }
+
   .input {
     @apply w-full px-4 py-3 bg-white border border-ayur-sand rounded-lg text-ayur-black placeholder-ayur-stone transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ayur-gold focus:border-transparent;
   }
@@ -185,6 +201,10 @@ input, textarea, select {
     @apply card hover:-translate-y-1 hover:shadow-strong;
   }
 
+  .card-premium {
+    @apply bg-white rounded-2xl shadow-soft border border-ayur-sand/50 overflow-hidden transition-all duration-500 hover:shadow-strong hover:-translate-y-1 hover:border-ayur-gold/50;
+  }
+
   .badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
@@ -195,6 +215,10 @@ input, textarea, select {
 
   .badge-sage {
     @apply badge bg-ayur-sage/10 text-ayur-sage border border-ayur-sage/20;
+  }
+
+  .badge-crimson {
+    @apply badge bg-ayur-crimson/10 text-ayur-crimson border border-ayur-crimson/20;
   }
 
   .badge-age {
@@ -209,14 +233,22 @@ input, textarea, select {
     @apply bg-gradient-to-r from-ayur-gold to-ayur-copper bg-clip-text text-transparent;
   }
 
+  .text-gradient-crimson {
+    @apply bg-gradient-to-r from-ayur-crimson to-ayur-ruby bg-clip-text text-transparent;
+  }
+
+  .text-gradient-forest {
+    @apply bg-gradient-to-r from-ayur-forest to-ayur-sage bg-clip-text text-transparent;
+  }
+
   .texture-wood {
-    background-image: url('/images/textures/wood-grain.png');
+    background-image: url('/images/textures/wood-grain.svg');
     background-repeat: repeat;
     opacity: 0.03;
   }
 
   .texture-stone {
-    background-image: url('/images/textures/stone-noise.png');
+    background-image: url('/images/textures/stone-noise.svg');
     background-repeat: repeat;
     opacity: 0.02;
   }
@@ -227,27 +259,85 @@ input, textarea, select {
     background-position: center;
     opacity: 0.04;
   }
+
+  .glass {
+    @apply bg-white/80 backdrop-blur-md;
+  }
+
+  .glass-dark {
+    @apply bg-ayur-black/80 backdrop-blur-md;
+  }
+
+  .gradient-border {
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 1.125rem;
+    background: linear-gradient(135deg, var(--color-ayur-gold), var(--color-ayur-copper));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+
+  .gradient-border:hover::before {
+    opacity: 1;
+  }
+
+  .gradient-border-crimson::before {
+    background: linear-gradient(135deg, var(--color-ayur-crimson), var(--color-ayur-ruby));
+  }
 }
 
 @layer utilities {
   .animate-fade-in {
-    animation: fadeIn 0.5s ease-out forwards;
+    animation: fadeIn 0.6s ease-out forwards;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.4s ease-out forwards;
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.6s ease-out forwards;
   }
 
   .animate-slide-in-right {
-    animation: slideInRight 0.3s ease-out forwards;
+    animation: slideInRight 0.4s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.4s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+
+  .animate-rotate-in {
+    animation: rotateIn 0.6s ease-out forwards;
   }
 
   .animate-pulse-gold {
-    animation: pulseGold 2s ease-in-out infinite;
+    animation: pulseGold 3s ease-in-out infinite;
   }
 
   .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 12s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+    background-size: 200% 100%;
   }
 
   .delay-100 { animation-delay: 100ms; }
@@ -255,6 +345,58 @@ input, textarea, select {
   .delay-300 { animation-delay: 300ms; }
   .delay-400 { animation-delay: 400ms; }
   .delay-500 { animation-delay: 500ms; }
+  .delay-600 { animation-delay: 600ms; }
+  .delay-700 { animation-delay: 700ms; }
+  .delay-800 { animation-delay: 800ms; }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .scroll-reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scroll-reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scroll-reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scroll-reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scroll-reveal-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scroll-reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .parallax-slow {
+    transform: translateZ(0);
+    will-change: transform;
+  }
 }
 
 @keyframes fadeIn {
@@ -263,23 +405,48 @@ input, textarea, select {
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes rotateIn {
+  from { opacity: 0; transform: rotate(-5deg) scale(0.95); }
+  to { opacity: 1; transform: rotate(0deg) scale(1); }
 }
 
 @keyframes pulseGold {
   0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.4); }
-  50% { box-shadow: 0 0 0 10px rgba(201, 168, 76, 0); }
+  50% { box-shadow: 0 0 0 15px rgba(201, 168, 76, 0); }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 @media (max-width: 640px) {
@@ -315,25 +482,4 @@ input, textarea, select {
 
 .focus-visible-ring {
   @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-ayur-gold focus-visible:ring-offset-2;
-}
-
-.gradient-border {
-  position: relative;
-  background: white;
-  border-radius: 1rem;
-}
-
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 1.125rem;
-  background: linear-gradient(135deg, var(--color-ayur-gold), var(--color-ayur-copper));
-  z-index: -1;
-  opacity: 0;
-  transition: opacity var(--transition-normal);
-}
-
-.gradient-border:hover::before {
-  opacity: 1;
 }

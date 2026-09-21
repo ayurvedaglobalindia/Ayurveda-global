@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { Search, ChevronDown, ChevronUp } from 'lucide-react'
 import { Accordion } from '@/components/ui/Accordion'
 import { generateFAQStructuredData, generateWebsiteStructuredData } from '@/lib/seo'
+import { Logo } from '@/components/ui/Logo'
 
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions',

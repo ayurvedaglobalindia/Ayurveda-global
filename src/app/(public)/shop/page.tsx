@@ -11,6 +11,7 @@ import { ProductFilters } from '@/components/product/ProductFilters'
 import { ProductSort } from '@/components/product/ProductSort'
 import { Pagination } from '@/components/ui/Pagination'
 import { getAllProducts, getProductsByCategory, searchProducts, getCategories } from '@/lib/products/registry'
+import { Logo } from '@/components/ui/Logo'
 import type { Product, Category } from '@/types'
 
 const sortOptions = [
@@ -157,8 +158,13 @@ export default function ShopPage() {
   return (
     <div className="container py-8 lg:py-12">
       <div className="mb-8">
-        <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black">Shop All Products</h1>
-        <p className="text-ayur-stone mt-2">Discover our complete range of authentic Ayurvedic wellness products</p>
+        <div className="flex items-center gap-4">
+          <Logo variant="header" animate className="flex-shrink-0" />
+          <div>
+            <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black">Shop All Products</h1>
+            <p className="text-ayur-stone mt-2">Discover our complete range of authentic Ayurvedic wellness products</p>
+          </div>
+        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
@@ -200,14 +206,14 @@ export default function ShopPage() {
               <div className="flex items-center gap-1 bg-ayur-cream rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={classNames('p-2 rounded transition-colors', viewMode === 'grid ? 'bg-white text-ayur-forest' : 'text-ayur-stone')}
+                  className={classNames('p-2 rounded transition-colors', viewMode === 'grid' ? 'bg-white text-ayur-forest' : 'text-ayur-stone')}
                   aria-label="Grid view"
                 >
                   <Grid className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={classNames('p-2 rounded transition-colors', viewMode === 'list ? 'bg-white text-ayur-forest' : 'text-ayur-stone')}
+                  className={classNames('p-2 rounded transition-colors', viewMode === 'list' ? 'bg-white text-ayur-forest' : 'text-ayur-stone')}
                   aria-label="List view"
                 >
                   <List className="w-5 h-5" />

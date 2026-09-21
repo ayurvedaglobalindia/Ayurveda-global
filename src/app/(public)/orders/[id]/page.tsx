@@ -38,7 +38,7 @@ const mockOrderDetails = {
       phone: '+91 98765 43210',
     },
     items: [
-      { name: 'BODY Essential Nutrition', variant: '60 Capsules', quantity: 1, price: 149900, total: 149900, image: '/images/products/body-nutrition/01-primary.jpg' },
+      { name: 'BODY Essential Nutrition', variant: '60 Capsules', quantity: 1, price: 149900, total: 149900, image: '/images/products/body-nutrition/01-primary.svg' },
     ],
     timeline: [
       { status: 'confirmed', date: '2024-12-15T10:30:00Z', note: 'Order confirmed via WhatsApp' },
@@ -73,7 +73,7 @@ const mockOrderDetails = {
       phone: '+91 87654 32109',
     },
     items: [
-      { name: 'STAYMAX+ Delay Spray', variant: '30 ml', quantity: 1, price: 89900, total: 89900, image: '/images/products/staymax/01-primary.jpg' },
+      { name: 'STAYMAX+ Delay Spray', variant: '30 ml', quantity: 1, price: 89900, total: 89900, image: '/images/products/staymax/01-primary.svg' },
     ],
     timeline: [
       { status: 'confirmed', date: '2024-12-10T14:20:00Z', note: 'Order confirmed - Cash on Delivery' },

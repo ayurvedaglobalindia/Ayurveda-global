@@ -1,31 +1,31 @@
 import type { Product, Category } from '@/types'
 
 export const categories: Category[] = [
-  {
-    id: 'supplements',
-    name: 'Supplements',
-    slug: 'supplements',
-    description: 'Daily wellness support with authentic Ayurvedic herbs',
-    image: '/images/categories/supplements.jpg',
-    productCount: 1,
-  },
-  {
-    id: 'personal-care',
-    name: 'Personal Care',
-    slug: 'personal-care',
-    description: 'Natural personal care solutions rooted in Ayurvedic wisdom',
-    image: '/images/categories/personal-care.jpg',
-    productCount: 1,
-  },
-  {
-    id: 'wellness',
-    name: 'Wellness',
-    slug: 'wellness',
-    description: 'Holistic wellness formulations for modern living',
-    image: '/images/categories/wellness.jpg',
-    productCount: 0,
-  },
-]
+    {
+      id: 'supplements',
+      name: 'Supplements',
+      slug: 'supplements',
+      description: 'Daily wellness support with authentic Ayurvedic herbs',
+      image: '/images/categories/supplements.svg',
+      productCount: 1,
+    },
+    {
+      id: 'personal-care',
+      name: 'Personal Care',
+      slug: 'personal-care',
+      description: 'Natural personal care solutions rooted in Ayurvedic wisdom',
+      image: '/images/categories/personal-care.svg',
+      productCount: 1,
+    },
+    {
+      id: 'wellness',
+      name: 'Wellness',
+      slug: 'wellness',
+      description: 'Holistic wellness formulations for modern living',
+      image: '/images/categories/wellness.svg',
+      productCount: 0,
+    },
+  ]
 
 export const products: Product[] = [
   {
@@ -37,11 +37,11 @@ export const products: Product[] = [
     shortDescription: 'A blend of 6 potent Ayurvedic herbs for daily wellness support',
     category: 'supplements',
     images: [
-      { src: '/images/products/body-nutrition/01-primary.jpg', alt: 'BODY Essential Nutrition 60 Capsules - Front view', isPrimary: true },
-      { src: '/images/products/body-nutrition/02-angle.jpg', alt: 'BODY Essential Nutrition - Angled view', isPrimary: false },
-      { src: '/images/products/body-nutrition/03-packaging.jpg', alt: 'BODY Essential Nutrition - Packaging detail', isPrimary: false },
-      { src: '/images/products/body-nutrition/04-ingredients.jpg', alt: 'BODY Essential Nutrition - Ingredients panel', isPrimary: false },
-      { src: '/images/products/body-nutrition/05-lifestyle.jpg', alt: 'BODY Essential Nutrition - Lifestyle shot', isPrimary: false },
+      { src: '/images/products/body-nutrition/01-primary.svg', alt: 'BODY Essential Nutrition 60 Capsules - Front view', isPrimary: true },
+      { src: '/images/products/body-nutrition/02-angle.svg', alt: 'BODY Essential Nutrition - Angled view', isPrimary: false },
+      { src: '/images/products/body-nutrition/03-packaging.svg', alt: 'BODY Essential Nutrition - Packaging detail', isPrimary: false },
+      { src: '/images/products/body-nutrition/04-ingredients.svg', alt: 'BODY Essential Nutrition - Ingredients panel', isPrimary: false },
+      { src: '/images/products/body-nutrition/05-lifestyle.svg', alt: 'BODY Essential Nutrition - Lifestyle shot', isPrimary: false },
     ],
     price: 149900,
     compareAtPrice: 179900,
@@ -94,11 +94,11 @@ export const products: Product[] = [
     shortDescription: 'Topical endurance spray with Ayurvedic herbs for men. 18+ only.',
     category: 'personal-care',
     images: [
-      { src: '/images/products/staymax/01-primary.jpg', alt: 'STAYMAX+ Delay Spray 30ml - Front view', isPrimary: true },
-      { src: '/images/products/staymax/02-angle.jpg', alt: 'STAYMAX+ Delay Spray - Angled view', isPrimary: false },
-      { src: '/images/products/staymax/03-packaging.jpg', alt: 'STAYMAX+ Delay Spray - Packaging detail', isPrimary: false },
-      { src: '/images/products/staymax/04-usage.jpg', alt: 'STAYMAX+ Delay Spray - Usage demonstration', isPrimary: false },
-      { src: '/images/products/staymax/05-lifestyle.jpg', alt: 'STAYMAX+ Delay Spray - Lifestyle shot', isPrimary: false },
+      { src: '/images/products/staymax/01-primary.svg', alt: 'STAYMAX+ Delay Spray 30ml - Front view', isPrimary: true },
+      { src: '/images/products/staymax/02-angle.svg', alt: 'STAYMAX+ Delay Spray - Angled view', isPrimary: false },
+      { src: '/images/products/staymax/03-packaging.svg', alt: 'STAYMAX+ Delay Spray - Packaging detail', isPrimary: false },
+      { src: '/images/products/staymax/04-usage.svg', alt: 'STAYMAX+ Delay Spray - Usage demonstration', isPrimary: false },
+      { src: '/images/products/staymax/05-lifestyle.svg', alt: 'STAYMAX+ Delay Spray - Lifestyle shot', isPrimary: false },
     ],
     price: 89900,
     compareAtPrice: 109900,

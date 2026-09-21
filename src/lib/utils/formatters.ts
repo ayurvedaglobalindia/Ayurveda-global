@@ -130,3 +130,5 @@ export function formatPhoneForDisplay(phone: string): string {
   }
   return phone
 }
+
+export { calculateShipping, FREE_SHIPPING_THRESHOLD } from '@/lib/shipping'
