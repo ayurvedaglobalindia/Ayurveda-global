@@ -1,11 +1,11 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Leaf, Truck, Shield, RotateCcw, Sparkles, Star, ArrowRight } from 'lucide-react'
+import { Leaf, Truck, Shield, RotateCcw, Sparkles, Star, ArrowRight, Tag, CheckCircle2, Clock, Percent } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { Badge } from '@/components/ui/Badge'
 import { ProductCard } from '@/components/product/ProductCard'
-import { getFeaturedProducts, getAllProducts } from '@/lib/products/registry'
+import { getFeaturedProducts, getAllProducts, getCategories } from '@/lib/products/registry'
 import { generateWebsiteStructuredData, generateOrganizationStructuredData } from '@/lib/seo'
 import type { Product } from '@/types'
 import { Hero } from '@/components/hero/Hero'
@@ -67,70 +67,111 @@ export default function HomePage() {
 
       <Hero />
 
-      <section className="section bg-white">
+      {/* Quick Category Navigation Pill Carousel / Bar */}
+      <section className="bg-ayur-cream border-b border-ayur-sand/50 py-6">
         <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black mb-4">
-              Why Choose Ayur Veda Global
-            </h2>
-            <p className="text-ayur-stone text-lg">
-              We bridge traditional Ayurvedic wisdom with modern wellness needs,
-              offering products that are pure, potent, and sustainably sourced.
-            </p>
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <div>
+              <span className="text-xs font-semibold text-ayur-sage uppercase tracking-wider">Explore Collections</span>
+              <h2 className="font-heading text-xl sm:text-2xl font-medium text-ayur-black">Shop by Wellness Category</h2>
+            </div>
+            <Link href="/shop" className="text-xs sm:text-sm font-medium text-ayur-forest hover:text-ayur-gold flex items-center gap-1">
+              All Categories <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={benefit.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center p-6 rounded-2xl bg-ayur-cream hover:bg-ayur-beige transition-colors"
-              >
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-ayur-forest/10 flex items-center justify-center">
-                  <benefit.icon className="w-8 h-8 text-ayur-forest" />
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+            <Link href="/shop?category=supplements" className="p-4 rounded-2xl bg-white border border-ayur-sand/60 hover:border-ayur-forest hover:shadow-soft transition-all duration-300 group flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-ayur-mint-soft flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                <Leaf className="w-6 h-6 text-ayur-forest" />
+              </div>
+              <div>
+                <h3 className="font-medium text-sm sm:text-base text-ayur-black group-hover:text-ayur-forest">Supplements</h3>
+                <p className="text-xs text-ayur-stone">Vitality, Immunity & Energy</p>
+              </div>
+            </Link>
+
+            <Link href="/shop?category=personal-care" className="p-4 rounded-2xl bg-white border border-ayur-sand/60 hover:border-ayur-forest hover:shadow-soft transition-all duration-300 group flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-ayur-gold/15 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                <Sparkles className="w-6 h-6 text-ayur-gold-deep" />
+              </div>
+              <div>
+                <h3 className="font-medium text-sm sm:text-base text-ayur-black group-hover:text-ayur-forest">Personal Care</h3>
+                <p className="text-xs text-ayur-stone">Men's Endurance & Natural Care</p>
+              </div>
+            </Link>
+
+            <Link href="/shop" className="col-span-2 md:col-span-1 p-4 rounded-2xl bg-gradient-to-br from-ayur-forest to-ayur-leaf text-ayur-cream border border-ayur-forest hover:shadow-soft transition-all duration-300 group flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <Tag className="w-6 h-6 text-ayur-gold" />
                 </div>
-                <h3 className="font-heading text-xl font-medium text-ayur-black mb-2">{benefit.title}</h3>
-                <p className="text-ayur-stone">{benefit.description}</p>
-              </motion.div>
-            ))}
+                <div>
+                  <h3 className="font-medium text-sm sm:text-base text-ayur-cream">Special Bundles</h3>
+                  <p className="text-xs text-ayur-sand">Save up to 20% on Combos</p>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-ayur-gold group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      {/* Featured Products Showcase */}
+      <section className="section bg-white">
         <div className="container">
-          <div className="flex items-center justify-between mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ayur-mint-soft text-ayur-forest text-xs font-semibold uppercase tracking-wider mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-ayur-sage" />
+                Authentic Formulations
+              </div>
               <h2 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black">Featured Products</h2>
-              <p className="text-ayur-stone mt-2">Our most loved Ayurvedic formulations</p>
+              <p className="text-ayur-stone mt-2 text-sm sm:text-base">Our clinical-grade, lab-tested herbal formulations</p>
             </div>
             <Link href="/shop">
-              <Button variant="ghost" className="gap-2">
-                View All
+              <Button variant="outline" className="gap-2 border-ayur-forest text-ayur-forest hover:bg-ayur-forest hover:text-white">
+                View All Products
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+            {featuredProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust & Ayurvedic Guarantees Section */}
+      <section className="section bg-ayur-cream border-y border-ayur-sand/40">
+        <div className="container">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-semibold text-ayur-forest uppercase tracking-wider">The Ayur Veda Promise</span>
+            <h2 className="font-heading text-3xl font-medium text-ayur-black mt-2">Why Choose Ayur Veda Global</h2>
+            <p className="text-ayur-stone text-sm sm:text-base mt-2">
+              Combining ancient Ayurvedic treatises with modern analytical testing for pure, safe efficacy.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {benefits.map(benefit => (
+              <div
+                key={benefit.title}
+                className="p-6 rounded-2xl bg-white border border-ayur-sand/50 hover:border-ayur-forest/30 hover:shadow-soft transition-all duration-300 group"
               >
-                <ProductCard product={product} />
-              </motion.div>
+                <div className="w-12 h-12 rounded-xl bg-ayur-mint-soft flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <benefit.icon className="w-6 h-6 text-ayur-forest" />
+                </div>
+                <h3 className="font-heading text-lg font-medium text-ayur-black mb-2">{benefit.title}</h3>
+                <p className="text-sm text-ayur-stone leading-relaxed">{benefit.description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       <section className="section bg-ayur-black text-ayur-cream relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url('/images/textures/wood-grain.png')" }} />
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url('/images/textures/botanical-lines.svg')" }} />
         <div className="container relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -194,21 +235,17 @@ export default function HomePage() {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {trustBadges.map((badge, index) => (
-              <motion.div
+            {trustBadges.map((badge) => (
+              <div
                 key={badge.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center p-6 rounded-2xl bg-ayur-cream"
+                className="text-center p-6 rounded-2xl bg-ayur-cream border border-ayur-sand/40 hover:shadow-soft transition-all duration-300"
               >
                 <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-ayur-forest/10 flex items-center justify-center">
                   <badge.icon className="w-7 h-7 text-ayur-forest" />
                 </div>
                 <h3 className="font-heading text-lg font-medium text-ayur-black mb-1">{badge.title}</h3>
                 <p className="text-ayur-stone text-sm">{badge.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

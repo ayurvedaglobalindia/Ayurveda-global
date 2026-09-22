@@ -156,34 +156,60 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
           )}
         </div>
       </Link>
-      <div className="p-4 space-y-3">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-medium text-ayur-black line-clamp-1 group-hover:text-ayur-forest transition-colors">
-            <Link href={`/product/${product.slug}`}>{product.name}</Link>
-          </h3>
-          {product.category === 'supplements' && <Badge variant="sage">Supplement</Badge>}
+      <div className="p-4 sm:p-5 space-y-3 bg-white">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 text-xs text-ayur-gold font-medium">
+            <Rating rating={4.8} size="sm" />
+            <span className="text-ayur-stone text-[11px] ml-1">(4.8)</span>
+          </div>
+          {product.category === 'supplements' && <Badge variant="sage">Supplements</Badge>}
           {product.category === 'personal-care' && <Badge variant="gold">Personal Care</Badge>}
           {product.category === 'wellness' && <Badge variant="sage">Wellness</Badge>}
         </div>
-        <p className="text-sm text-ayur-stone line-clamp-2">{product.shortDescription}</p>
-        <div className="flex items-center justify-between">
-          <PriceDisplay price={product.price} compareAtPrice={product.compareAtPrice} />
+
+        <div>
+          <h3 className="font-heading font-medium text-lg text-ayur-black line-clamp-1 group-hover:text-ayur-forest transition-colors">
+            <Link href={`/product/${product.slug}`}>{product.name}</Link>
+          </h3>
+          <p className="text-xs sm:text-sm text-ayur-stone line-clamp-2 mt-1 leading-relaxed">{product.shortDescription}</p>
+        </div>
+
+        <div className="pt-2 border-t border-ayur-sand/40">
+          <PriceDisplay price={product.price} compareAtPrice={product.compareAtPrice} size="md" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 pt-1">
           {inCart ? (
-            <QuantitySelector
-              value={cartQuantity}
-              onChange={qty => { if (qty === 0) { } else { } }}
-              max={product.inventory.quantity}
-              size="sm"
-            />
+            <div className="col-span-2 flex items-center justify-between bg-ayur-beige/60 p-1.5 rounded-full border border-ayur-sand/50">
+              <span className="text-xs font-medium text-ayur-forest pl-3">In Cart ({cartQuantity})</span>
+              <Button size="sm" variant="outline" className="text-xs py-1 px-3" onClick={() => openModal('cart')}>
+                View Cart
+              </Button>
+            </div>
           ) : (
-            <Button
-              size="sm"
-              onClick={handleAddToCart}
-              disabled={product.inventory.trackQuantity && product.inventory.quantity === 0}
-              className="w-full sm:w-auto"
-            >
-              {product.inventory.trackQuantity && product.inventory.quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
-            </Button>
+            <>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleAddToCart}
+                disabled={product.inventory.trackQuantity && product.inventory.quantity === 0}
+                className="w-full text-xs font-semibold border-ayur-forest text-ayur-forest hover:bg-ayur-forest hover:text-white"
+              >
+                Add to Cart
+              </Button>
+              <Button
+                size="sm"
+                variant="primary"
+                onClick={e => {
+                  handleAddToCart(e)
+                  openModal('cart')
+                }}
+                disabled={product.inventory.trackQuantity && product.inventory.quantity === 0}
+                className="w-full text-xs font-semibold bg-ayur-forest text-ayur-cream hover:bg-ayur-forest-deep shadow-sm"
+              >
+                Buy Now
+              </Button>
+            </>
           )}
         </div>
       </div>

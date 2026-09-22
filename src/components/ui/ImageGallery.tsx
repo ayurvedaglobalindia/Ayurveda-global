@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { Image } from 'next/image'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { classNames } from '@/lib/utils/formatters'

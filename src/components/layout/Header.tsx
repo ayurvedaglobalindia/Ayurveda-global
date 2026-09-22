@@ -33,8 +33,8 @@ export function Header() {
 
   return (
     <header className={classNames(
-      'fixed top-0 left-0 right-0 z-40 transition-all duration-500',
-      isScrolled ? 'bg-ayur-cream/95 backdrop-blur-md shadow-soft border-b border-ayur-sand/50' : 'bg-transparent'
+      'w-full transition-all duration-300',
+      isScrolled ? 'bg-ayur-cream/98 backdrop-blur-md shadow-soft border-b border-ayur-sand/50' : 'bg-ayur-cream/95 backdrop-blur-sm border-b border-ayur-sand/40'
     )}>
       <div className="container">
         <div className="flex items-center justify-between h-16 md:h-20 gap-4">
@@ -42,16 +42,23 @@ export function Header() {
             <Logo variant="header" animate />
           </Link>
 
-          <div className="flex-1 max-w-xl hidden md:block">
-            <form role="search" className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ayur-stone" aria-hidden="true" />
+          <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-ayur-forest" aria-label="Main Navigation">
+            <Link href="/shop" className="hover:text-ayur-gold transition-colors py-1">Shop All</Link>
+            <Link href="/shop?category=supplements" className="hover:text-ayur-gold transition-colors py-1">Supplements</Link>
+            <Link href="/shop?category=personal-care" className="hover:text-ayur-gold transition-colors py-1">Personal Care</Link>
+            <Link href="/about" className="hover:text-ayur-gold transition-colors py-1">Our Heritage</Link>
+            <Link href="/contact" className="hover:text-ayur-gold transition-colors py-1">Contact</Link>
+          </nav>
+
+          <div className="flex-1 max-w-md hidden md:block">
+            <form role="search" onSubmit={e => { e.preventDefault(); if (searchQuery.trim()) { window.location.href = `/shop?q=${encodeURIComponent(searchQuery.trim())}`; } }} className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ayur-stone" aria-hidden="true" />
               <input
                 type="search"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                onFocus={() => openModal('search')}
-                placeholder="Search products, herbs, wellness..."
-                className="w-full pl-12 pr-4 py-2.5 bg-ayur-beige border-0 rounded-full text-ayur-black placeholder-ayur-stone focus:outline-none focus:ring-2 focus:ring-ayur-gold transition-all duration-300"
+                placeholder="Search herbs, wellness, solutions..."
+                className="w-full pl-11 pr-4 py-2 bg-ayur-beige/80 border border-ayur-sand/60 rounded-full text-sm text-ayur-black placeholder-ayur-stone focus:outline-none focus:ring-2 focus:ring-ayur-gold focus:bg-white transition-all duration-300"
                 aria-label="Search products"
               />
             </form>
@@ -137,15 +144,23 @@ export function Header() {
 function MobileSearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [query, setQuery] = useState('')
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (query.trim()) {
+      onClose()
+      window.location.href = `/shop?q=${encodeURIComponent(query.trim())}`
+    }
+  }
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Search"
+      title="Search Products & Wisdom"
       size="full"
       showCloseButton
     >
-      <form className="w-full max-w-xl mx-auto">
+      <form onSubmit={handleSearchSubmit} className="w-full max-w-xl mx-auto">
         <div className="relative mb-6">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-ayur-stone" aria-hidden="true" />
           <input

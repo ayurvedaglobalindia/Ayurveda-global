@@ -46,10 +46,6 @@ const statusConfig = {
   cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-red-100 text-red-700', lineColor: 'bg-red-500' },
 }
 
-export const metadata: Metadata = {
-  title: 'Track Your Order',
-  description: 'Enter your order ID and email/phone to track your delivery',
-}
 
 export default function TrackOrderPage() {
   const [orderId, setOrderId] = useState('')

@@ -40,3 +40,20 @@ next-env.d.ts
 
 # data
 data/
+
+# logs & process ids
+*.log
+*.pid
+devserver.log
+dev.log
+cloudflared.log
+tunnel.log
+
+# tunnels & local tools
+cloudflared*
+tunnel*
+keep_tunnel.sh
+
+# temp assets
+public/images/*-backup.png
+public/images/*-transparent.png

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { X, Plus, Minus, Trash2, Tag, Gift } from 'lucide-react'
@@ -100,15 +101,16 @@ export function CartDrawer() {
             </div>
 
             {items.length > 0 && (
-              <div className="p-4 border-t border-ayur-beige space-y-3">
-                <Link href="/checkout">
-                  <Button variant="primary" size="lg" className="w-full">
-                    Proceed to Checkout
+              <div className="p-4 border-t border-ayur-sand/50 bg-white space-y-2.5">
+                <Link href="/checkout" onClick={closeCartDrawer}>
+                  <Button variant="gold" size="lg" className="w-full text-base font-semibold shadow-md">
+                    Proceed to Checkout ({formatINR(total)})
                   </Button>
                 </Link>
-                <Link href="/shop" className="text-center">
-                  <Button variant="ghost" className="w-full">Continue Shopping</Button>
-                </Link>
+                <div className="flex items-center justify-center gap-4 text-xs text-ayur-stone pt-1">
+                  <span className="flex items-center gap-1">🔒 100% Secure Checkout</span>
+                  <span className="flex items-center gap-1">🌿 Pure Ayurveda</span>
+                </div>
               </div>
             )}
           </motion.div>
@@ -157,7 +159,7 @@ function CartDrawerItem({
   )
 }
 
-function CouponInput({
+export function CouponInput({
   couponCode,
   onApply,
   onRemove,
@@ -252,5 +254,3 @@ function CartSummary({
     </div>
   )
 }
-
-import { useState } from 'react'

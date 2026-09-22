@@ -41,38 +41,35 @@ export function AnnouncementBar() {
     <AnimatePresence mode="wait">
       <motion.div
         key={currentIndex}
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
+        exit={{ opacity: 0, y: 10 }}
         transition={{ duration: 0.3 }}
-        className="bg-ayur-forest text-ayur-cream py-2"
+        className="bg-ayur-forest text-ayur-cream py-2 px-3 text-xs sm:text-sm"
         role="status"
         aria-live="polite"
       >
-        <div className="container flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 overflow-x-auto">
+        <div className="container flex items-center justify-between gap-2">
+          <div className="flex-1 flex items-center justify-center sm:justify-start min-w-0">
             {announcements.map((announcement, index) => (
-              <motion.span
+              <span
                 key={announcement.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: index === currentIndex ? 1 : 0 }}
-                exit={{ opacity: 0 }}
                 className={classNames(
-                  'flex items-center gap-2 whitespace-nowrap text-sm',
-                  index === currentIndex ? 'opacity-100' : 'opacity-0 pointer-events-none absolute'
+                  'flex items-center gap-1.5 sm:gap-2 truncate',
+                  index === currentIndex ? 'inline-flex' : 'hidden'
                 )}
               >
-                {announcement.icon && <announcement.icon className="w-4 h-4 flex-shrink-0" />}
-                {announcement.text}
-              </motion.span>
+                {announcement.icon && <announcement.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 text-ayur-gold" />}
+                <span className="truncate">{announcement.text}</span>
+              </span>
             ))}
           </div>
           <button
             onClick={() => setIsVisible(false)}
-            className="p-1 rounded-lg text-ayur-cream/70 hover:text-ayur-cream hover:bg-white/10 transition-colors flex-shrink-0"
+            className="p-1 rounded text-ayur-cream/70 hover:text-ayur-cream hover:bg-white/10 transition-colors flex-shrink-0 ml-2"
             aria-label="Dismiss announcements"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </div>
       </motion.div>

@@ -2,6 +2,7 @@
 
 import { classNames } from '@/lib/utils/formatters'
 import { formatINR, calculateDiscountPercentage, calculateSavings } from '@/lib/utils/formatters'
+import { Badge } from '@/components/ui/Badge'
 
 interface PriceDisplayProps {
   price: number

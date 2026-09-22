@@ -91,10 +91,6 @@ const statusConfig = {
   cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-red-100 text-red-700', lineColor: 'bg-red-500' },
 }
 
-export const metadata: Metadata = {
-  title: 'Order Details',
-  description: 'View your order details and track delivery',
-}
 
 export default function OrderDetailPage() {
   const params = useParams()
@@ -283,6 +279,3 @@ export default function OrderDetailPage() {
   )
 }
 
-import { useParams } from 'next/navigation'
-import { MessageSquare } from 'lucide-react'
-import { classNames } from '@/lib/utils/formatters'

@@ -43,7 +43,7 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[100vh] flex items-center overflow-hidden"
+      className="relative min-h-[100vh] flex flex-col justify-center py-10 sm:py-14 md:py-20 lg:py-24 overflow-hidden"
       aria-labelledby="hero-title"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-ayur-forest via-ayur-leaf to-ayur-black" />
@@ -53,146 +53,123 @@ export function Hero() {
       />
 
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-ayur-gold/10 blur-3xl pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] md:w-[700px] lg:w-[800px] h-[320px] sm:h-[500px] md:h-[700px] lg:h-[800px] rounded-full bg-ayur-gold/10 blur-3xl pointer-events-none"
         animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
       />
 
       <motion.div
-        className="absolute top-1/4 right-10 w-[300px] h-[300px] rounded-full bg-ayur-sage/10 blur-3xl pointer-events-none"
+        className="absolute top-1/4 right-4 sm:right-10 w-[180px] sm:w-[260px] md:w-[300px] h-[180px] sm:h-[260px] md:h-[300px] rounded-full bg-ayur-sage/10 blur-3xl pointer-events-none"
         animate={{ scale: [1, 1.05, 1], opacity: [0.2, 0.4, 0.2] }}
         transition={{ duration: 15, repeat: Infinity, ease: 'linear', delay: 5 }}
       />
 
       <motion.div
-        className="absolute bottom-1/4 left-10 w-[200px] h-[200px] rounded-full bg-ayur-gold/5 blur-3xl pointer-events-none"
+        className="absolute bottom-1/4 left-4 sm:left-10 w-[140px] sm:w-[180px] md:w-[200px] h-[140px] sm:h-[180px] md:h-[200px] rounded-full bg-ayur-gold/5 blur-3xl pointer-events-none"
         animate={{ scale: [1, 1.08, 1], opacity: [0.15, 0.3, 0.15] }}
         transition={{ duration: 18, repeat: Infinity, ease: 'linear', delay: 10 }}
       />
 
-      <div className="container relative py-20 lg:py-32 z-10">
+      <div className="container relative z-10">
         <div className="max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.175, 0.885, 0.32, 1.275] }}
-            className="mb-8 flex items-center gap-4"
+            transition={{ duration: 0.6 }}
+            className="mb-4 sm:mb-6 md:mb-8 flex items-center gap-3 sm:gap-4"
           >
-            <motion.span
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="px-4 py-2 rounded-full bg-ayur-gold/20 text-ayur-gold text-sm font-medium border border-ayur-gold/30"
-            >
+            <span className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-ayur-gold/20 text-ayur-gold text-xs sm:text-sm font-medium border border-ayur-gold/30">
               Authentic Ayurvedic Wellness
-            </motion.span>
-            <motion.div
-              initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: 1, width: 60 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="h-0.5 bg-gradient-to-r from-ayur-gold to-ayur-copper rounded-full"
-            />
+            </span>
+            <div className="h-0.5 w-10 sm:w-16 bg-gradient-to-r from-ayur-gold to-ayur-copper rounded-full" />
           </motion.div>
 
           <motion.h1
             id="hero-title"
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.175, 0.885, 0.32, 1.275] }}
-            className="font-heading text-5xl md:text-7xl lg:text-8xl font-medium text-ayur-cream leading-[1.1] mb-8 tracking-tight"
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-medium text-ayur-cream leading-[1.15] mb-4 sm:mb-6 md:mb-8 tracking-tight"
           >
             Ancient Wisdom for{' '}
-            <motion.span
-              initial={{ opacity: 0, rotateY: 90 }}
-              animate={{ opacity: 1, rotateY: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-ayur-gold relative inline-block"
-            >
+            <span className="text-ayur-gold relative inline-block">
               Modern Wellness
-            </motion.span>
+            </span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25 }}
-            className="text-xl md:text-2xl text-ayur-beige leading-relaxed mb-12 max-w-2xl"
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-sm sm:text-base md:text-xl text-ayur-beige/90 leading-relaxed mb-6 sm:mb-8 md:mb-10 max-w-2xl"
           >
             Discover premium Ayurvedic formulations crafted with pure herbs.
             BODY Essential Nutrition for daily vitality and STAYMAX+ for men's wellness.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            className="flex flex-wrap gap-4 mb-16"
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="flex flex-wrap gap-3 sm:gap-4 mb-6 sm:mb-8 md:mb-10"
           >
             <Link href="/shop">
-              <Button variant="gold" size="lg" className="group relative overflow-hidden">
+              <Button variant="gold" size="lg" className="group relative overflow-hidden text-sm sm:text-base">
                 <span className="relative flex items-center gap-2 z-10">
                   Shop Now
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
                 </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-ayur-gold-light to-ayur-copper scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 0 }}
-                />
               </Button>
             </Link>
             <Link href="/about">
-              <Button variant="outline" size="lg" className="border-ayur-gold text-ayur-gold hover:bg-ayur-gold hover:text-ayur-black group relative overflow-hidden">
+              <Button variant="outline" size="lg" className="border-ayur-gold text-ayur-gold hover:bg-ayur-gold hover:text-ayur-black group relative overflow-hidden text-sm sm:text-base">
                 <span className="relative z-10">Our Story</span>
-                <motion.div className="absolute inset-0 bg-gradient-to-r from-ayur-gold to-ayur-copper scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
               </Button>
             </Link>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.45 }}
-            className="flex flex-wrap items-center gap-8 text-ayur-sand text-sm"
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="flex flex-wrap items-center gap-3 sm:gap-6 md:gap-8 text-ayur-sand text-xs sm:text-sm"
           >
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-ayur-gold animate-pulse-gold" />
+              <div className="w-2 h-2 rounded-full bg-ayur-gold animate-pulse-gold flex-shrink-0" />
               <span className="font-medium text-ayur-cream">Trusted by 10,000+ customers</span>
             </div>
             <div className="flex items-center gap-2">
-              <Leaf className="w-4 h-4 text-ayur-gold" />
+              <Leaf className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-ayur-gold flex-shrink-0" />
               <span>98% satisfaction rate</span>
             </div>
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-ayur-gold" />
+              <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-ayur-gold flex-shrink-0" />
               <span>GMP certified facility</span>
             </div>
           </motion.div>
         </div>
       </div>
 
-      <div ref={statsRef} className={classNames('container relative z-10 -mt-20 lg:-mt-28 pb-16', statsVisible ? 'opacity-100' : 'opacity-0')}>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      {/* 4 Trust Feature Cards - Stacks cleanly under heading on mobile */}
+      <div ref={statsRef} className={classNames('container relative z-10 mt-8 sm:mt-10 md:mt-12 lg:mt-14', statsVisible ? 'opacity-100' : 'opacity-0')}>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {trustIndicators.map((item, index) => (
             <motion.div
               key={item.label}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-              className="group relative p-5 md:p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-ayur-gold/20 hover:border-ayur-gold/50 hover:bg-white/10 transition-all duration-500"
+              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              className="group relative p-3.5 sm:p-5 md:p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-ayur-gold/25 hover:border-ayur-gold/60 hover:bg-white/15 transition-all duration-300"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-ayur-gold/10 to-ayur-copper/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-              <div className="relative w-12 h-12 rounded-xl bg-ayur-forest/30 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
-                <item.icon className="w-6 h-6 text-ayur-gold" />
+              <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl bg-ayur-forest/50 border border-ayur-gold/20 flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-105 transition-transform duration-300">
+                <item.icon className="w-4.5 h-4.5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-ayur-gold" />
               </div>
-              <p className="relative font-heading font-medium text-ayur-cream mb-1">{item.label}</p>
-              <p className="relative text-sm text-ayur-sand">{item.desc}</p>
+              <p className="relative font-heading text-sm sm:text-base md:text-lg font-medium text-ayur-cream mb-0.5 sm:mb-1">{item.label}</p>
+              <p className="relative text-xs sm:text-sm text-ayur-sand/90">{item.desc}</p>
             </motion.div>
           ))}
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-ayur-cream to-transparent pointer-events-none" />
     </section>
   )
 }

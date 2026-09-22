@@ -233,11 +233,24 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
           />
           <Button
             size="lg"
+            variant="outline"
             onClick={handleAddToCart}
             disabled={product.inventory.trackQuantity && maxQuantity === 0}
-            className="flex-1 min-w-[200px]"
+            className="flex-1 min-w-[160px] border-2 border-ayur-forest text-ayur-forest hover:bg-ayur-forest hover:text-white"
           >
             {product.inventory.trackQuantity && maxQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+          </Button>
+          <Button
+            size="lg"
+            variant="gold"
+            onClick={() => {
+              handleAddToCart()
+              openModal('cart')
+            }}
+            disabled={product.inventory.trackQuantity && maxQuantity === 0}
+            className="flex-1 min-w-[160px]"
+          >
+            Buy Now
           </Button>
         </div>
 
@@ -245,12 +258,12 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
           variant="whatsapp"
           size="lg"
           onClick={handleWhatsAppClick}
-          className="w-full sm:w-auto flex-1 min-w-[200px] gap-2"
+          className="w-full flex items-center justify-center gap-2 shadow-sm font-medium"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.5 14.4c-.3-.1-1.8-.9-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8 1-.9 1.2-.2.2-.4.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.2-.2-.2-.3-.3-.3-.5 0-.2 0-.4-.1-.5-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5-.2 0-.4 0-.6 0-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.6-.3" />
           </svg>
-          Enquire on WhatsApp
+          Quick Order via WhatsApp
         </Button>
 
         <div className="grid grid-cols-2 gap-4 pt-4 border-t border-ayur-beige">

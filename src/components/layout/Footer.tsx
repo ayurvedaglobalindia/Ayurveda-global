@@ -61,12 +61,12 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="flex items-center gap-3" aria-label="Ayur Veda Global Home">
-              <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-gradient-to-br from-ayur-forest to-ayur-sage flex items-center justify-center">
+              <div className="relative w-12 h-12 flex items-center justify-center bg-transparent">
                 <Image
-                  src="/images/logo-original.png"
+                  src="/images/logo.png"
                   alt="Ayur Veda Global"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   priority
                   sizes="48px"
                 />

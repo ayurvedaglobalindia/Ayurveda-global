@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Metadata } from 'next'
 import Link from 'next/link'
 import { CheckCircle, Package, MessageSquare, Home } from 'lucide-react'
+// @ts-ignore
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { useUIStore } from '@/store/uiStore'
@@ -13,10 +13,6 @@ interface CheckoutSuccessPageProps {
   searchParams: Promise<{ order: string }>
 }
 
-export const metadata: Metadata = {
-  title: 'Order Confirmed',
-  description: 'Your order has been placed successfully',
-}
 
 export default function CheckoutSuccessPage({ searchParams }: CheckoutSuccessPageProps) {
   const { closeModal, showToast } = useUIStore()

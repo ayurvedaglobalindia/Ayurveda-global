@@ -1,14 +1,9 @@
 'use client'
 
-import { Metadata } from 'next'
 import { useCartStore } from '@/store/cartStore'
 import { CheckoutForm } from '@/components/checkout/CheckoutSteps'
 import { CartItemSkeleton } from '@/components/ui/Skeleton'
 
-export const metadata: Metadata = {
-  title: 'Checkout',
-  description: 'Complete your purchase securely',
-}
 
 export default function CheckoutPage() {
   const { items, getSubtotal } = useCartStore()

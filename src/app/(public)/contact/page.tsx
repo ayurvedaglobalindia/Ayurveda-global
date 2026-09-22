@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Metadata } from 'next'
 import { Mail, Phone, MapPin, MessageSquare, Clock, Send, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -12,10 +11,6 @@ import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappSt
 import { useWhatsAppStore } from '@/store/whatsappStore'
 import { useUIStore } from '@/store/uiStore'
 
-export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: 'Get in touch with Ayur Veda Global. We\'re here to help with your wellness questions, orders, and more.',
-}
 
 const contactInfo = [
   {

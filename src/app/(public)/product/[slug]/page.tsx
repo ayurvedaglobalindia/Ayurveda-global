@@ -17,39 +17,6 @@ interface ProductPageProps {
   params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const { slug } = await params
-  const product = getProductBySlug(slug)
-
-  if (!product) {
-    return { title: 'Product Not Found' }
-  }
-
-  const seo = generateProductSEO(product)
-  return {
-    title: seo.title,
-    description: seo.description,
-    keywords: seo.keywords,
-    openGraph: {
-      title: seo.title,
-      description: seo.description,
-      type: 'product',
-      images: seo.ogImage ? [{ url: seo.ogImage }] : [],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: seo.title,
-      description: seo.description,
-      images: seo.ogImage ? [seo.ogImage] : [],
-    },
-    other: {
-      'product:price:amount': (product.price / 100).toFixed(2),
-      'product:price:currency': 'INR',
-      'product:availability': product.inventory.quantity > 0 ? 'in stock' : 'out of stock',
-    },
-  }
-}
-
 export default function ProductPage({ params }: ProductPageProps) {
   const { slug } = useParams()
   const product = getProductBySlug(slug as string)

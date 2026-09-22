@@ -422,16 +422,25 @@ function ReviewStep({
       <div className="bg-white border border-ayur-beige rounded-2xl p-6 space-y-4">
         <h3 className="font-medium text-ayur-black">Order Items</h3>
         <div className="space-y-3">
-          {items.map(item => (
-            <div key={item.id} className="flex gap-3 p-3 bg-ayur-cream rounded-lg">
-              <div className="w-12 h-12 rounded-lg bg-white flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-ayur-black text-sm">{item.product.name}</p>
-                <p className="text-sm text-ayur-stone">Qty: {item.quantity}</p>
+          {items.map(item => {
+            const primaryImage = item.product?.images?.find((img: any) => img.isPrimary) || item.product?.images?.[0]
+            return (
+              <div key={item.id} className="flex items-center gap-3 p-3 bg-ayur-cream/70 rounded-xl border border-ayur-sand/30">
+                <div className="w-12 h-12 rounded-lg bg-white overflow-hidden relative flex-shrink-0 border border-ayur-sand/40">
+                  {primaryImage?.src ? (
+                    <img src={primaryImage.src} alt={item.product.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-ayur-beige" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-ayur-black text-sm line-clamp-1">{item.product.name}</p>
+                  <p className="text-xs text-ayur-stone">Qty: {item.quantity}</p>
+                </div>
+                <PriceDisplay price={item.price * item.quantity} size="sm" />
               </div>
-              <PriceDisplay price={item.price * item.quantity} size="sm" />
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         <div className="border-t border-ayur-beige pt-4 space-y-2">

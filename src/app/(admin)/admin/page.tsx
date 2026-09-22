@@ -26,8 +26,8 @@ const paymentStatusConfig = {
 }
 
 export default function AdminDashboard() {
-  const [orders, setOrders] = useState([])
-  const [leads, setLeads] = useState([])
+  const [orders, setOrders] = useState<any[]>([])
+  const [leads, setLeads] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
@@ -35,7 +35,7 @@ export default function AdminDashboard() {
   const [statusFilter, setStatusFilter] = useState('')
   const [paymentFilter, setPaymentFilter] = useState('')
   const [dateFilter, setDateFilter] = useState('')
-  const [selectedOrder, setSelectedOrder] = useState(null)
+  const [selectedOrder, setSelectedOrder] = useState<any>(null)
   const [showOrderModal, setShowOrderModal] = useState(false)
   const [showLeads, setShowLeads] = useState(false)
 
@@ -92,7 +92,7 @@ export default function AdminDashboard() {
   const exportOrders = () => {
     const csv = [
       ['Order ID', 'Customer', 'Phone', 'Email', 'Total', 'Status', 'Payment', 'Date', 'Items'],
-      ...orders.map(o => [
+      ...orders.map((o: any) => [
         o.id,
         o.customer_name,
         o.customer_phone,
@@ -192,7 +192,7 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {orders.map(order => {
+                {orders.map((order: any) => {
                   const status = statusConfig[order.order_status as keyof typeof statusConfig]
                   const payment = paymentStatusConfig[order.payment_status as keyof typeof paymentStatusConfig]
                   const StatusIcon = status?.icon
@@ -384,7 +384,7 @@ function LeadsTable({ leads, onClose }: { leads: any[]; onClose: () => void }) {
           </tr>
         </thead>
         <tbody>
-          {leads.slice(0, 100).map((lead, index) => (
+          {leads.slice(0, 100).map((lead: any, index: number) => (
             <tr key={index} className="border-b border-ayur-beige/50">
               <td className="py-3">
                 <Badge variant={lead.source as any}>{lead.source}</Badge>

@@ -1,6 +1,5 @@
 'use client'
 
-import { Metadata } from 'next'
 import Link from 'next/link'
 import { Package, Truck, CheckCircle, Clock, XCircle, ArrowLeft } from 'lucide-react'
 import { formatDate, formatINR, generateId } from '@/lib/utils/formatters'
@@ -52,10 +51,6 @@ const statusConfig = {
   cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-red-100 text-red-700' },
 }
 
-export const metadata: Metadata = {
-  title: 'My Orders',
-  description: 'View your order history and track deliveries',
-}
 
 export default function OrdersPage() {
   return (
