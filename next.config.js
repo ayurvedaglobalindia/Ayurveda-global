@@ -9,6 +9,7 @@ const nextConfig = {
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
   experimental: {
+    useWasmBinary: true,
     forceSwcTransforms: false,
   },
   webpack: (config, { dev, isServer }) => {

@@ -54,7 +54,7 @@ export default function TrackOrderPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleTrack = () => {
+  const handleTrack = async () => {
     setError('')
     if (!orderId.trim() || !contact.trim()) {
       setError('Please enter both Order ID and email/phone')
@@ -62,17 +62,69 @@ export default function TrackOrderPage() {
     }
 
     setLoading(true)
-    setTimeout(() => {
-      const order = mockTrackingData[orderId as keyof typeof mockTrackingData]
-      if (order) {
-        setTrackedOrder(order)
-        setError('')
-      } else {
-        setTrackedOrder(null)
-        setError('Order not found. Please check your Order ID and contact details.')
+    const trimmedId = orderId.trim()
+    const trimmedContact = contact.trim().toLowerCase()
+
+    try {
+      const res = await fetch(`/api/orders/${encodeURIComponent(trimmedId)}`)
+      if (res.ok) {
+        const order = await res.json()
+        const orderPhone = (order.customer_phone || '').toLowerCase()
+        const orderEmail = (order.customer_email || '').toLowerCase()
+
+        if (orderPhone.includes(trimmedContact) || orderEmail.includes(trimmedContact) || trimmedContact.includes(orderPhone)) {
+          let items = []
+          try {
+            items = typeof order.items_json === 'string' ? JSON.parse(order.items_json) : (order.items || [])
+          } catch {
+            items = []
+          }
+
+          const status = (order.order_status || 'confirmed') as keyof typeof statusConfig
+          const statusKeys: Array<keyof typeof statusConfig> = ['confirmed', 'processing', 'shipped', 'delivered']
+          const currentIndex = statusKeys.indexOf(status)
+
+          const timeline = statusKeys
+            .filter((_, idx) => idx <= (currentIndex >= 0 ? currentIndex : 0))
+            .map((s, idx) => ({
+              status: s,
+              date: idx === 0 ? order.created_at : order.updated_at,
+              note: s === 'confirmed' ? `Order confirmed (${order.payment_method === 'whatsapp' ? 'WhatsApp' : 'Cash on Delivery'})` :
+                    s === 'processing' ? 'Order is being packaged and prepared for dispatch' :
+                    s === 'shipped' ? 'Dispatched via express courier' : 'Successfully delivered',
+            }))
+
+          setTrackedOrder({
+            orderNumber: order.order_number || order.id,
+            status,
+            items: items.map((i: any) => ({
+              name: i.name || i.productName || 'Ayurvedic Wellness Product',
+              quantity: i.quantity || 1,
+              total: i.total || i.price || order.total_amount,
+            })),
+            total: order.total_amount,
+            timeline,
+            trackingNumber: `EXP-${(order.order_number || order.id).slice(-8)}`,
+            carrier: 'BlueDart / Express Logistics',
+          })
+          setLoading(false)
+          return
+        }
       }
-      setLoading(false)
-    }, 800)
+    } catch {
+      // Continue to mock fallback
+    }
+
+    // Fallback to sample mock data if matching
+    const mockOrder = mockTrackingData[trimmedId as keyof typeof mockTrackingData]
+    if (mockOrder) {
+      setTrackedOrder(mockOrder)
+      setError('')
+    } else {
+      setTrackedOrder(null)
+      setError('Order not found. Please verify your Order ID and contact details.')
+    }
+    setLoading(false)
   }
 
   if (trackedOrder) {

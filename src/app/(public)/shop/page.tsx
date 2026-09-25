@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { Loader2, Filter, X, Grid, List } from 'lucide-react'
 import { classNames } from '@/lib/utils/formatters'
@@ -26,7 +26,7 @@ const sortOptions = [
 
 const ITEMS_PER_PAGE = 12
 
-export default function ShopPage() {
+function ShopContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -246,5 +246,18 @@ export default function ShopPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ShopPage() {
+  return (
+    <Suspense fallback={
+      <div className="container py-24 text-center">
+        <div className="w-10 h-10 border-4 border-ayur-forest border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <p className="text-ayur-stone font-medium">Loading collection...</p>
+      </div>
+    }>
+      <ShopContent />
+    </Suspense>
   )
 }

@@ -117,10 +117,25 @@ export function CheckoutForm() {
       notes: formData.notes,
     }
 
-    if (formData.paymentMethod === 'whatsapp') {
-      const orderId = `ORD-${Date.now()}`
-      const orderNumber = orderId
+    const orderId = `ORD-${Date.now()}`
+    const orderNumber = orderId
 
+    // Persist order to database via /api/orders
+    try {
+      await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...orderData,
+          id: orderId,
+          orderNumber,
+        }),
+      })
+    } catch (err) {
+      console.error('Failed to save order:', err)
+    }
+
+    if (formData.paymentMethod === 'whatsapp') {
       const message = buildOrderWhatsAppMessage({
         orderId,
         orderNumber,
@@ -146,10 +161,9 @@ export function CheckoutForm() {
       clearCart()
       openModal('checkout-success', { orderNumber })
     } else {
-      // COD - would create order via API
       showToast({ type: 'success', title: 'Order placed!', message: 'Your Cash on Delivery order has been confirmed.' })
       clearCart()
-      openModal('checkout-success', { orderNumber: `COD-${Date.now()}` })
+      openModal('checkout-success', { orderNumber })
     }
   }
 

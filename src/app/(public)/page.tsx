@@ -198,25 +198,35 @@ export default function HomePage() {
                 </Button>
               </Link>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="aspect-square rounded-2xl overflow-hidden bg-ayur-forest relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Leaf className="w-24 h-24 text-ayur-gold/30" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="rounded-2xl overflow-hidden bg-ayur-charcoal border border-ayur-gold/20 shadow-lg relative group">
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full aspect-[4/3] object-cover rounded-2xl"
+                  poster="/images/og-default.svg"
+                >
+                  <source src="/videos/ayurvedic-wellness.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div className="p-3 bg-ayur-forest/90 text-center">
+                  <span className="text-xs font-semibold text-ayur-gold uppercase tracking-wider">Ayurvedic Wellness Film</span>
                 </div>
               </div>
-              <div className="aspect-square rounded-2xl overflow-hidden bg-ayur-charcoal relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Sparkles className="w-24 h-24 text-ayur-gold/30" />
-                </div>
-              </div>
-              <div className="aspect-square rounded-2xl overflow-hidden bg-ayur-forest/50 relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Shield className="w-24 h-24 text-ayur-gold/30" />
-                </div>
-              </div>
-              <div className="aspect-square rounded-2xl overflow-hidden bg-ayur-charcoal/50 relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Truck className="w-24 h-24 text-ayur-gold/30" />
+              <div className="rounded-2xl overflow-hidden bg-ayur-charcoal border border-ayur-gold/20 shadow-lg relative group">
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full aspect-[4/3] object-cover rounded-2xl"
+                  poster="/images/og-default.svg"
+                >
+                  <source src="/videos/wellness-product.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div className="p-3 bg-ayur-forest/90 text-center">
+                  <span className="text-xs font-semibold text-ayur-gold uppercase tracking-wider">Product Showcase</span>
                 </div>
               </div>
             </div>

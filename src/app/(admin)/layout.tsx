@@ -8,7 +8,7 @@ import { classNames } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
 import { Drawer } from '@/components/ui/Drawer'
 
-export function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -16,14 +16,23 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (pathname === '/login') {
+      setLoading(false)
+      return
+    }
     const auth = localStorage.getItem('admin_auth')
     if (auth) {
       setIsAuthenticated(true)
     } else {
-      router.push('/admin/login')
+      router.push('/login')
     }
     setLoading(false)
-  }, [router])
+  }, [router, pathname])
+
+  if (pathname === '/login') {
+    return <>{children}</>
+  }
 
   if (loading) {
     return (

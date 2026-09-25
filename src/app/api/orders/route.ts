@@ -38,7 +38,8 @@ export async function GET(request: NextRequest) {
     }
 
     const countStmt = db.prepare(`SELECT COUNT(*) as total FROM orders ${whereClause}`)
-    const total = countStmt.get(...params).total
+    const countRes = countStmt.get(...params)
+    const total = countRes ? (countRes.total ?? 0) : 0
     const totalPages = Math.ceil(total / limit)
 
     const ordersStmt = db.prepare(`
@@ -76,8 +77,8 @@ export async function POST(request: NextRequest) {
       notes,
     } = body
 
-    const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 8).toUpperCase()}`
-    const orderNumber = orderId
+    const orderId = body.id || body.orderId || body.orderNumber || `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`
+    const orderNumber = body.orderNumber || orderId
 
     const stmt = db.prepare(`
       INSERT INTO orders (
