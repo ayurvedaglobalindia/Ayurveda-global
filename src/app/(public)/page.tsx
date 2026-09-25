@@ -26,6 +26,7 @@ import { getAllProducts, getCategories } from '@/lib/products/registry'
 import { generateWebsiteStructuredData, generateOrganizationStructuredData } from '@/lib/seo'
 import { Hero } from '@/components/hero/Hero'
 import { ComboSpotlight } from '@/components/home/ComboSpotlight'
+import { AnimatedProductShowcase3D } from '@/components/home/AnimatedProductShowcase3D'
 
 export const metadata: Metadata = {
   title: 'Ayur Veda Global | Authentic Ayurvedic Wellness & Performance Products',
@@ -260,6 +261,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Interactive 3D Animated Product Showcase Section */}
+      <AnimatedProductShowcase3D />
+
       {/* Special Dedicated 3D Combo Spotlight Section */}
       <ComboSpotlight />
 
@@ -415,7 +419,7 @@ export default function HomePage() {
             </p>
             <div className="pt-2">
               <a
-                href="https://wa.me/919999999999?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20a%20question%20regarding%20your%20products."
+                href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20a%20question%20regarding%20your%20products."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-6 py-3.5 rounded-2xl shadow-xl transition-all"

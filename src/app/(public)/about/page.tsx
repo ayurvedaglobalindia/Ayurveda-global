@@ -34,10 +34,33 @@ const values = [
 ]
 
 const team = [
-  { name: 'Dr. Priya Sharma', role: 'Chief Ayurvedic Officer', bio: '20+ years clinical Ayurveda practice, PhD in Dravyaguna' },
-  { name: 'Rajesh Kumar', role: 'Founder & CEO', bio: 'Former pharma executive, passionate about natural wellness' },
-  { name: 'Dr. Anjali Mehta', role: 'Head of R&D', bio: 'Botanist specializing in medicinal plant cultivation' },
-  { name: 'Vikram Singh', role: 'Operations Director', bio: 'Supply chain expert with focus on sustainable sourcing' },
+  {
+    name: 'Mageesh',
+    role: 'Owner',
+    image: '/images/team/mageesh.jpg',
+    bio: 'Founder and brand owner driving authentic Ayurvedic wellness, sustainable herbal sourcing, and quality excellence across India.',
+  },
+  {
+    name: 'Umesh',
+    role: 'Manager',
+    image: '/images/team/umesh.jpg',
+    bio: 'Overseeing brand operations, product quality compliance, nationwide delivery, and customer experience excellence.',
+  },
+  {
+    name: 'Dr. Priya Sharma',
+    role: 'Chief Ayurvedic Formulator',
+    bio: '20+ years of classical Ayurvedic clinical research and traditional herbal pharmacopoeia adaptation.',
+  },
+  {
+    name: 'Dr. Anjali Mehta',
+    role: 'Head of Botanical R&D',
+    bio: 'PhD botanist leading purity testing, potency standardization, and laboratory safety certifications.',
+  },
+  {
+    name: 'Vikram Singh',
+    role: 'Supply Chain Director',
+    bio: 'Ensuring sustainable ethical sourcing, farmer partnerships, and highest quality natural herbs.',
+  },
 ]
 
 const milestones = [
@@ -136,13 +159,23 @@ export default function AboutPage() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.map((member, index) => (
-              <div key={member.name} className="text-center p-6 rounded-2xl bg-ayur-cream">
-                <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-ayur-forest/10 flex items-center justify-center">
-                  <Users className="w-12 h-12 text-ayur-forest" />
+              <div key={member.name} className="text-center p-6 rounded-2xl bg-ayur-cream hover:shadow-md transition-all duration-300 group">
+                <div className="w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden bg-ayur-forest/10 flex items-center justify-center relative border-2 border-ayur-gold/30 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                  {member.image ? (
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      sizes="112px"
+                      className="object-cover object-top"
+                    />
+                  ) : (
+                    <Users className="w-12 h-12 text-ayur-forest" />
+                  )}
                 </div>
                 <h3 className="font-heading text-lg font-medium text-ayur-black mb-1">{member.name}</h3>
-                <p className="text-ayur-gold text-sm font-medium mb-2">{member.role}</p>
-                <p className="text-ayur-stone text-sm">{member.bio}</p>
+                <p className="text-ayur-gold text-sm font-semibold mb-2">{member.role}</p>
+                <p className="text-ayur-stone text-sm leading-relaxed">{member.bio}</p>
               </div>
             ))}
           </div>

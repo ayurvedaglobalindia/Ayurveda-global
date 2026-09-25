@@ -11,7 +11,6 @@ import { ProductFilters } from '@/components/product/ProductFilters'
 import { ProductSort } from '@/components/product/ProductSort'
 import { Pagination } from '@/components/ui/Pagination'
 import { getAllProducts, getProductsByCategory, searchProducts, getCategories } from '@/lib/products/registry'
-import { Logo } from '@/components/ui/Logo'
 import type { Product, Category } from '@/types'
 
 const sortOptions = [
@@ -157,13 +156,11 @@ function ShopContent() {
 
   return (
     <div className="container py-8 lg:py-12">
-      <div className="mb-8">
-        <div className="flex items-center gap-4">
-          <Logo variant="header" animate className="flex-shrink-0" />
-          <div>
-            <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black">Shop All Products</h1>
-            <p className="text-ayur-stone mt-2">Discover our complete range of authentic Ayurvedic wellness products</p>
-          </div>
+      <div className="mb-8 pb-4 border-b border-ayur-sand/30">
+        <div>
+          <span className="text-xs font-bold text-ayur-forest uppercase tracking-wider">Ayurvedic Formulations</span>
+          <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black mt-1">Shop All Products</h1>
+          <p className="text-ayur-stone mt-2 text-sm sm:text-base">Discover our complete range of authentic Ayurvedic wellness & performance products</p>
         </div>
       </div>
 
@@ -184,7 +181,7 @@ function ShopContent() {
             onSortChange={sort => updateFilters({ sort })}
             hasActiveFilters={hasActiveFilters}
             onClearFilters={handleClearFilters}
-            isMobile={true}
+            isMobile={false}
           />
         </aside>
 

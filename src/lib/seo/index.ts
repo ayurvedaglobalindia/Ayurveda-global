@@ -55,6 +55,23 @@ export function generateOrganizationStructuredData() {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/images/logo.png`,
+    founder: {
+      '@type': 'Person',
+      name: 'Mageesh',
+      jobTitle: 'Owner',
+      telephone: '+91-9123485451',
+      image: `${SITE_URL}/images/team/mageesh.jpg`,
+    },
+    employee: [
+      {
+        '@type': 'Person',
+        name: 'Umesh',
+        jobTitle: 'Manager',
+        telephone: '+91-9123485451',
+        email: 'umesh@ayurvedaglobal.com',
+        image: `${SITE_URL}/images/team/umesh.jpg`,
+      },
+    ],
     sameAs: [
       'https://www.instagram.com/ayurvedaglobal',
       'https://www.facebook.com/ayurvedaglobal',

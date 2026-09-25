@@ -25,7 +25,14 @@ export function Hero() {
   const { openModal, showToast } = useUIStore()
 
   const [activeProductIndex, setActiveProductIndex] = useState(2) // Defaults to combo (index 2)
+  const [heroMediaMode, setHeroMediaMode] = useState<'3d-motion' | 'photo'>('3d-motion')
   const activeProduct = products[activeProductIndex] || products[0]
+
+  const productHeroVideos: Record<string, string> = {
+    'vitality-power-combo': '/videos/ayur-veda-product-showcase.mp4',
+    'body-essential-nutrition': '/videos/ayur-veda-product-showcase.mp4',
+    'staymax-delay-spray': '/videos/3d-reveal-animation.mp4',
+  }
 
   const { ref: heroRef } = useScrollReveal({ delay: 100 })
   const { ref: statsRef, isVisible: statsVisible } = useScrollReveal({ delay: 300 })
@@ -164,37 +171,71 @@ export function Hero() {
                 <div className="relative z-10 flex items-center justify-between pb-3 border-b border-white/10 mb-3">
                   <div className="flex items-center gap-2">
                     <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ayur-gold opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-ayur-gold"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
                     <span className="text-xs font-bold uppercase tracking-wider text-ayur-gold">
-                      {activeProduct.id === 'vitality-power-combo' ? '🔥 Most Popular Combo' : 'Featured Product'}
+                      {activeProduct.id === 'vitality-power-combo' ? '🔥 Master Combo' : 'Featured Product'}
                     </span>
                   </div>
-                  <span className="text-xs text-ayur-cream/80 font-medium">
-                    Save up to 29%
-                  </span>
+
+                  {/* 3D Motion vs Photo Toggle */}
+                  <div className="flex items-center gap-1 bg-black/60 p-0.5 rounded-xl border border-white/10 text-[10px]">
+                    <button
+                      onClick={() => setHeroMediaMode('3d-motion')}
+                      className={`px-2 py-0.5 rounded-lg font-bold transition-all ${
+                        heroMediaMode === '3d-motion'
+                          ? 'bg-ayur-gold text-black shadow'
+                          : 'text-ayur-sand hover:text-white'
+                      }`}
+                    >
+                      🎬 3D Motion
+                    </button>
+                    <button
+                      onClick={() => setHeroMediaMode('photo')}
+                      className={`px-2 py-0.5 rounded-lg font-bold transition-all ${
+                        heroMediaMode === 'photo'
+                          ? 'bg-ayur-gold text-black shadow'
+                          : 'text-ayur-sand hover:text-white'
+                      }`}
+                    >
+                      📷 Photo
+                    </button>
+                  </div>
                 </div>
 
-                {/* Product Image Stage with 3D Depth */}
-                <div className="relative z-10 aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-black/20 to-black/60 border border-white/10 shadow-inner">
-                  <Image
-                    src={activeProduct.images[0]?.src || '/images/products/vitality-power-combo.jpg'}
-                    alt={activeProduct.name}
-                    fill
-                    priority
-                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, 400px"
-                  />
+                {/* Product Media Stage with 3D Depth */}
+                <div className="relative z-10 aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-black/40 to-black/80 border border-white/10 shadow-inner flex items-center justify-center">
+                  {heroMediaMode === '3d-motion' ? (
+                    <video
+                      key={activeProduct.id}
+                      src={productHeroVideos[activeProduct.id] || '/videos/ayur-veda-product-showcase.mp4'}
+                      poster={activeProduct.images[0]?.src || '/images/products/vitality-power-combo.jpg'}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-contain p-2 transition-all duration-700"
+                    />
+                  ) : (
+                    <Image
+                      src={activeProduct.images[0]?.src || '/images/products/vitality-power-combo.jpg'}
+                      alt={activeProduct.name}
+                      fill
+                      priority
+                      className="object-contain p-4 transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, 400px"
+                    />
+                  )}
 
                   {/* Floating Badges */}
-                  <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                    <span className="px-3 py-1 rounded-full text-[11px] font-bold text-white bg-gradient-to-r from-ayur-gold to-ayur-copper shadow-lg backdrop-blur-md">
+                  <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-20 pointer-events-none">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white bg-gradient-to-r from-ayur-gold to-ayur-copper shadow-lg backdrop-blur-md">
                       {activeProduct.id === 'vitality-power-combo' ? '👑 Best Value Kit' : activeProduct.id === 'body-essential-nutrition' ? '🌿 60 Capsules' : '⚡ 30 ml Spray'}
                     </span>
                   </div>
 
-                  <div className="absolute bottom-3 inset-x-3 bg-black/60 backdrop-blur-md rounded-xl p-2.5 text-center border border-white/10">
+                  <div className="absolute bottom-3 inset-x-3 bg-black/70 backdrop-blur-md rounded-xl p-2.5 text-center border border-white/10 z-20 pointer-events-none">
                     <p className="text-xs font-semibold text-ayur-cream truncate">{activeProduct.name}</p>
                     <p className="text-[11px] text-ayur-gold font-medium mt-0.5">{activeProduct.tagline}</p>
                   </div>

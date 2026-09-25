@@ -18,8 +18,6 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
 
-  const primaryImage = images.find(img => img.isPrimary) || images[0]
-
   const goToPrevious = useCallback(() => {
     setSelectedIndex(prev => (prev === 0 ? images.length - 1 : prev - 1))
   }, [images.length])
@@ -34,48 +32,59 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
     if (e.key === 'Escape') setIsFullscreen(false)
   }
 
+  const currentImage = images[selectedIndex] || images[0]
+
   return (
     <div className={classNames('relative', className)}>
-      <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-ayur-beige shadow-lg border border-ayur-sand/40" role="region" aria-label="Product image gallery">
+      {/* Main Image Stage */}
+      <div
+        className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-b from-[#f9f8f4] to-[#ede7dc] shadow-md border border-ayur-sand/50 group"
+        role="region"
+        aria-label="Product image gallery"
+      >
         <Image
-          src={images[selectedIndex].src}
-          alt={images[selectedIndex].alt || alt}
+          src={currentImage.src}
+          alt={currentImage.alt || alt}
           fill
-          className="object-cover transition-opacity duration-300"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-contain p-4 sm:p-6 transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 450px"
           priority={selectedIndex === 0}
         />
-        {images.length > 1 && !isFullscreen && (
+
+        {/* Previous / Next Arrows on Hover */}
+        {images.length > 1 && (
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 backdrop-blur-sm text-ayur-forest hover:bg-white shadow-medium transition-all focus-visible-ring"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md text-ayur-forest hover:bg-white shadow-lg flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100 focus-visible-ring"
               aria-label="Previous image"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-5 h-5 -ml-0.5" />
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 backdrop-blur-sm text-ayur-forest hover:bg-white shadow-medium transition-all focus-visible-ring"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md text-ayur-forest hover:bg-white shadow-lg flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100 focus-visible-ring"
               aria-label="Next image"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-5 h-5 ml-0.5" />
             </button>
           </>
         )}
-        {images.length > 1 && (
-          <button
-            onClick={() => setIsFullscreen(true)}
-            className="absolute bottom-3 right-3 p-2 rounded-full bg-white/90 backdrop-blur-sm text-ayur-forest hover:bg-white shadow-medium transition-all focus-visible-ring"
-            aria-label="View fullscreen"
-          >
-            <Expand className="w-5 h-5" />
-          </button>
-        )}
+
+        {/* Fullscreen Expansion Button */}
+        <button
+          onClick={() => setIsFullscreen(true)}
+          className="absolute bottom-3.5 right-3.5 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md text-ayur-forest hover:bg-white shadow-lg flex items-center justify-center transition-all focus-visible-ring"
+          aria-label="View high-resolution image"
+          title="Zoom image"
+        >
+          <Expand className="w-4.5 h-4.5" />
+        </button>
       </div>
 
+      {/* Thumbnails Row */}
       {images.length > 1 && (
-        <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide" role="tablist" aria-label="Product thumbnails">
+        <div className="flex gap-2.5 mt-3.5 overflow-x-auto pb-1 scrollbar-hide" role="tablist" aria-label="Product thumbnails">
           {images.map((image, index) => (
             <button
               key={index}
@@ -84,77 +93,82 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
               aria-selected={index === selectedIndex}
               aria-label={`View image ${index + 1}`}
               className={classNames(
-                'relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 focus-visible-ring',
+                'relative flex-shrink-0 w-16 h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 bg-white shadow-sm focus-visible-ring',
                 index === selectedIndex
-                  ? 'border-ayur-gold ring-2 ring-ayur-gold/20'
-                  : 'border-transparent hover:border-ayur-sage/50'
+                  ? 'border-ayur-gold ring-2 ring-ayur-gold/25'
+                  : 'border-ayur-sand/60 hover:border-ayur-forest/40'
               )}
             >
               <Image
                 src={image.src}
                 alt={image.alt || alt}
                 fill
-                className="object-cover"
-                sizes="80px"
+                className="object-contain p-1"
+                sizes="64px"
               />
-              {image.isPrimary && (
-                <span className="absolute bottom-1 left-1 px-1.5 py-0.5 text-xs font-medium bg-ayur-gold text-ayur-black rounded">
-                  Main
-                </span>
-              )}
             </button>
           ))}
         </div>
       )}
 
-      <Modal isOpen={isFullscreen} onClose={() => setIsFullscreen(false)} size="full" showCloseButton>
-        <div className="relative h-[80vh] flex items-center justify-center" onKeyDown={handleKeyDown}>
-          <button
-            onClick={goToPrevious}
-            className="absolute left-4 p-3 rounded-full bg-white/90 backdrop-blur-sm text-ayur-forest hover:bg-white shadow-medium transition-all focus-visible-ring z-10"
-            aria-label="Previous image"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <motion.div
-            key={selectedIndex}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="max-h-[70vh] max-w-[90vw]"
-          >
+      {/* Fullscreen High-Res Modal */}
+      <Modal
+        isOpen={isFullscreen}
+        onClose={() => setIsFullscreen(false)}
+        size="lg"
+        title="High-Resolution Product Viewer"
+        showCloseButton
+      >
+        <div className="flex flex-col items-center justify-center gap-4" onKeyDown={handleKeyDown}>
+          <div className="relative w-full aspect-square max-h-[55vh] sm:max-h-[60vh] bg-gradient-to-b from-[#f9f8f4] to-[#ede7dc] rounded-2xl overflow-hidden border border-ayur-sand/50 shadow-inner flex items-center justify-center">
             <Image
-              src={images[selectedIndex].src}
-              alt={images[selectedIndex].alt || alt}
-              width={1200}
-              height={1200}
-              className="object-contain rounded-lg shadow-strong"
+              src={currentImage.src}
+              alt={currentImage.alt || alt}
+              fill
+              className="object-contain p-4 sm:p-6"
+              sizes="(max-width: 1024px) 90vw, 700px"
+              priority
             />
-          </motion.div>
-          <button
-            onClick={goToNext}
-            className="absolute right-4 p-3 rounded-full bg-white/90 backdrop-blur-sm text-ayur-forest hover:bg-white shadow-medium transition-all focus-visible-ring z-10"
-            aria-label="Next image"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-            {images.map((image, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedIndex(index)}
-                className={classNames(
-                  'w-16 h-16 rounded-lg overflow-hidden border-2 transition-all',
-                  index === selectedIndex
-                    ? 'border-ayur-gold'
-                    : 'border-transparent hover:border-ayur-sage/50'
-                )}
-              >
-                <Image src={image.src} alt="" fill className="object-cover" sizes="64px" />
-              </button>
-            ))}
+
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={goToPrevious}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md text-ayur-forest hover:bg-white shadow-lg flex items-center justify-center transition-all z-10"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-6 h-6 -ml-0.5" />
+                </button>
+                <button
+                  onClick={goToNext}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md text-ayur-forest hover:bg-white shadow-lg flex items-center justify-center transition-all z-10"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-6 h-6 ml-0.5" />
+                </button>
+              </>
+            )}
           </div>
+
+          {/* Fullscreen Thumbnails */}
+          {images.length > 1 && (
+            <div className="flex gap-2 justify-center flex-wrap pt-2">
+              {images.map((image, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedIndex(index)}
+                  className={classNames(
+                    'relative w-14 h-16 rounded-xl overflow-hidden border-2 transition-all bg-white shadow-sm',
+                    index === selectedIndex
+                      ? 'border-ayur-gold ring-2 ring-ayur-gold/30'
+                      : 'border-ayur-sand/60 hover:border-ayur-forest/40 opacity-70 hover:opacity-100'
+                  )}
+                >
+                  <Image src={image.src} alt="" fill className="object-contain p-1" sizes="56px" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </Modal>
     </div>

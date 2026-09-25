@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Heart, Share2, Truck, Shield, RotateCcw, Leaf, Check, X, Minus, Plus } from 'lucide-react'
+import { Heart, Share2, Truck, Shield, RotateCcw, Leaf, Check, X, Minus, Plus, Play } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { classNames } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
@@ -14,6 +14,8 @@ import { QuantitySelector } from '@/components/ui/QuantitySelector'
 import { Tabs } from '@/components/ui/Tabs'
 import { ImageGallery } from '@/components/ui/ImageGallery'
 import { Accordion } from '@/components/ui/Accordion'
+import { Modal } from '@/components/ui/Modal'
+import { ProductVideoPlayer } from '@/components/ui/ProductVideoPlayer'
 import type { Product, ProductVariant } from '@/types'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
@@ -35,6 +37,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
   const { trackLead } = useWhatsAppStore()
 
   const [quantity, setQuantity] = useState(1)
+  const [showVideoModal, setShowVideoModal] = useState(false)
   const [selectedVariantId, setSelectedVariantId] = useState(selectedVariant?.id || product.variants[0]?.id)
   const currentVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
 
@@ -141,6 +144,20 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
         </div>
       ),
     },
+    {
+      label: 'Watch Video',
+      content: (
+        <div className="py-2">
+          <ProductVideoPlayer
+            videoSrc="/videos/ayur-veda-product-showcase.mp4"
+            posterSrc={product.images[0]?.src || '/images/products/body-essential-nutrition.jpg'}
+            title={`${product.name} — Authentic Product Video Showcase`}
+            subtitle="Demonstration of genuine bottle sealing, formulation purity, and packaging"
+            showCta={false}
+          />
+        </div>
+      ),
+    },
   ]
 
   const trustBadges = [
@@ -154,6 +171,25 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
     <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
       <div className="space-y-4">
         <ImageGallery images={product.images} alt={product.name} />
+
+        {/* Watch Real Video Trigger */}
+        <div
+          onClick={() => setShowVideoModal(true)}
+          className="rounded-2xl p-4 bg-gradient-to-r from-[#0F2D1E] to-[#1a4a33] text-white flex items-center justify-between shadow-md cursor-pointer hover:shadow-lg transition-all group border border-ayur-gold/30"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-ayur-gold/20 flex items-center justify-center text-ayur-gold flex-shrink-0 group-hover:scale-110 transition-transform">
+              <Play className="w-5 h-5 ml-0.5" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-white group-hover:text-ayur-gold transition-colors">Watch Official Video Showcase</p>
+              <p className="text-xs text-ayur-sand/80">See real product unboxing & quality</p>
+            </div>
+          </div>
+          <span className="px-3 py-1.5 rounded-lg bg-ayur-gold text-black text-xs font-bold shadow group-hover:bg-yellow-400 transition-colors">
+            Play HD
+          </span>
+        </div>
       </div>
 
       <div className="space-y-6">
@@ -284,6 +320,23 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
       <div className="md:col-span-2 mt-8 pt-8 border-t border-ayur-sand/40">
         <Tabs items={tabItems} variant="pills" className="w-full" />
       </div>
+
+      {/* Video Pop-up Modal */}
+      <Modal
+        isOpen={showVideoModal}
+        onClose={() => setShowVideoModal(false)}
+        size="lg"
+        title={`${product.name} — Official Video Showcase`}
+      >
+        <div className="p-0">
+          <ProductVideoPlayer
+            videoSrc="/videos/ayur-veda-product-showcase.mp4"
+            posterSrc={product.images[0]?.src || '/images/products/body-essential-nutrition.jpg'}
+            hideHeader={true}
+            showCta={true}
+          />
+        </div>
+      </Modal>
     </div>
   )
 }

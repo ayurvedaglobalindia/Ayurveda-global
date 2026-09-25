@@ -9,7 +9,9 @@ interface WhatsAppStore {
   clearLeads: () => void
 }
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '9123485451'
+const RAW_WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919123485451'
+const cleanDigits = RAW_WHATSAPP_NUMBER.replace(/\D/g, '')
+const WHATSAPP_NUMBER = cleanDigits.length === 10 ? `91${cleanDigits}` : cleanDigits
 
 export const useWhatsAppStore = create<WhatsAppStore>()(
   persist(

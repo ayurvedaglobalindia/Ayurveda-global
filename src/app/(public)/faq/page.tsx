@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { Search, ChevronDown, ChevronUp } from 'lucide-react'
+import { Search, ChevronDown, ChevronUp, MessageSquare } from 'lucide-react'
 import { Accordion } from '@/components/ui/Accordion'
 import { generateFAQStructuredData, generateWebsiteStructuredData } from '@/lib/seo'
 import { Logo } from '@/components/ui/Logo'
@@ -212,7 +212,7 @@ export default function FAQPage() {
             <p className="text-ayur-stone mb-4">Still have questions? We're here to help.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/contact" className="btn-primary">Contact Support</a>
-              <a href="https://wa.me/9123485451" target="_blank" rel="noopener noreferrer" className="btn-whatsapp">
+              <a href="https://wa.me/919123485451" target="_blank" rel="noopener noreferrer" className="btn-whatsapp">
                 <MessageSquare className="w-4 h-4 mr-2" />
                 WhatsApp Us
               </a>
@@ -223,5 +223,3 @@ export default function FAQPage() {
     </>
   )
 }
-
-import { MessageSquare } from 'lucide-react'

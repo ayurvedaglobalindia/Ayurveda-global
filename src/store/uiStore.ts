@@ -11,7 +11,7 @@ interface Toast {
 
 interface Modal {
   isOpen: boolean
-  type: 'age-gate' | 'cart' | 'wishlist' | 'mobile-menu' | 'search' | 'checkout-success' | null
+  type: 'age-gate' | 'cart' | 'wishlist' | 'mobile-menu' | 'search' | 'checkout-success' | 'quick-view' | null
   data?: unknown
 }
 

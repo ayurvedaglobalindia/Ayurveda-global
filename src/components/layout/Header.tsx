@@ -20,7 +20,7 @@ export function Header() {
   const { items: cartItems, getItemCount } = useCartStore()
   const { getItemCount: getWishlistCount } = useWishlistStore()
   const { user, isAuthenticated } = useUserStore()
-  const { openModal, closeModal, isCartDrawerOpen, isWishlistDrawerOpen, isMobileMenuOpen, isSearchOpen, closeSearch, closeMobileMenu } = useUIStore()
+  const { openModal, closeModal, isCartDrawerOpen, isWishlistDrawerOpen, isMobileMenuOpen, isSearchOpen, toggleSearch, closeSearch, closeMobileMenu } = useUIStore()
 
   const cartCount = getItemCount()
   const wishlistCount = getWishlistCount()
@@ -65,6 +65,14 @@ export function Header() {
           </div>
 
           <div className="flex items-center gap-1 md:gap-2">
+            <button
+              onClick={toggleSearch}
+              className="p-2 md:hidden rounded-full text-ayur-forest hover:bg-ayur-beige transition-all duration-300 focus-visible-ring"
+              aria-label="Search products"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+
             <button
               onClick={() => openModal('wishlist')}
               className="relative p-2 md:p-2.5 rounded-full text-ayur-forest hover:bg-ayur-beige hover:text-ayur-crimson transition-all duration-300 focus-visible-ring group"
@@ -174,12 +182,16 @@ function MobileSearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =
           />
         </div>
         <div className="flex flex-wrap gap-2">
-          {['Ashwagandha', 'Shatavari', 'Immunity', "Men's Wellness", 'Daily Wellness'].map(term => (
+          {['Vitality Power Combo', 'BODY Nutrition', 'STAYMAX+ Delay Spray', 'Ashwagandha', 'Purified Shilajit', 'Rasayana'].map(term => (
             <button
               key={term}
               type="button"
-              onClick={() => setQuery(term)}
-              className="px-4 py-2 bg-white border border-ayur-sand rounded-full text-sm text-ayur-forest hover:bg-ayur-beige hover:border-ayur-gold transition-all duration-300"
+              onClick={() => {
+                setQuery(term)
+                onClose()
+                window.location.href = `/shop?q=${encodeURIComponent(term)}`
+              }}
+              className="px-4 py-2 bg-white border border-ayur-sand rounded-full text-sm font-medium text-ayur-forest hover:bg-ayur-beige hover:border-ayur-gold transition-all duration-300"
             >
               {term}
             </button>

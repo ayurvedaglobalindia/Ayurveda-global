@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, Truck, Shield, RotateCcw, Headphones, Leaf } from 'lucide-react'
 import { classNames } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
+import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
 
 const footerLinks = {
   shop: [
@@ -162,8 +163,6 @@ export function Footer() {
 }
 
 function WhatsAppFooterCTA() {
-  const { buildWhatsAppUrl, buildProductEnquiryMessage } = require('@/store/whatsappStore')
-
   const handleWhatsAppClick = () => {
     const message = buildProductEnquiryMessage({
       customerName: '',

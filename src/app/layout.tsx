@@ -4,6 +4,7 @@ import './globals.css'
 import { Providers } from '@/components/providers'
 import { Toaster } from '@/components/ui/Toast'
 import { WhatsAppFloatButton } from '@/components/layout/WhatsAppFloatButton'
+import { GlobalModals } from '@/components/layout/GlobalModals'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -76,6 +77,7 @@ export default function RootLayout({
           {children}
           <Toaster />
           <WhatsAppFloatButton />
+          <GlobalModals />
         </Providers>
       </body>
     </html>

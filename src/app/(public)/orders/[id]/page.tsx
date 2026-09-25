@@ -263,7 +263,7 @@ export default function OrderDetailPage() {
             <h2 className="font-heading text-xl font-medium text-ayur-black mb-4">Need Help?</h2>
             <p className="text-ayur-stone mb-4">Contact us for any questions about your order.</p>
             <div className="flex gap-3">
-              <Button variant="whatsapp" className="flex-1" onClick={() => window.open('https://wa.me/9123485451', '_blank')}>
+              <Button variant="whatsapp" className="flex-1" onClick={() => window.open('https://wa.me/919123485451', '_blank')}>
                 <MessageSquare className="w-4 h-4 mr-2" />
                 WhatsApp Support
               </Button>
