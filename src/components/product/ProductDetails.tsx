@@ -281,7 +281,9 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
         </div>
       </div>
 
-      <Tabs items={tabItems} variant="pills" className="mt-4" />
+      <div className="md:col-span-2 mt-8 pt-8 border-t border-ayur-sand/40">
+        <Tabs items={tabItems} variant="pills" className="w-full" />
+      </div>
     </div>
   )
 }

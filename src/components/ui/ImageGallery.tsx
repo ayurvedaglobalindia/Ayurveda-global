@@ -36,7 +36,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
 
   return (
     <div className={classNames('relative', className)}>
-      <div className="relative aspect-square rounded-2xl overflow-hidden bg-ayur-beige" role="region" aria-label="Product image gallery">
+      <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-ayur-beige shadow-lg border border-ayur-sand/40" role="region" aria-label="Product image gallery">
         <Image
           src={images[selectedIndex].src}
           alt={images[selectedIndex].alt || alt}
