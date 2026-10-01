@@ -71,6 +71,22 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
     }
   }
 
+  const handleBuyNow = () => {
+    if (product.ageRestricted) {
+      openModal('age-gate', {
+        productId: product.id,
+        productName: product.name,
+        onVerify: () => {
+          addItem(product, selectedVariantId, quantity)
+          window.location.href = '/checkout'
+        },
+      })
+    } else {
+      addItem(product, selectedVariantId, quantity)
+      window.location.href = '/checkout'
+    }
+  }
+
   const handleWishlistToggle = () => {
     if (inWishlist) {
       showToast({ type: 'info', title: 'Removed from wishlist' })
@@ -378,7 +394,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
           </Button>
           <Button
             variant="gold"
-            onClick={handleAddToCart}
+            onClick={handleBuyNow}
             disabled={product.inventory.trackQuantity && maxQuantity === 0}
             className="flex-1 min-w-[150px] py-4 rounded-xl font-bold text-sm shadow-xl gold-shimmer"
           >

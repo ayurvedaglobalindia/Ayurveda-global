@@ -169,10 +169,59 @@ export function HomeProductGrid() {
             <p className="text-sm sm:text-base text-ayur-stone mt-3 max-w-2xl mx-auto leading-relaxed">
               Clinically standardized Himalayan Shilajit, Ashwagandha, and botanical actives for peak daily energy and intimate endurance. Zero side effects.
             </p>
+
+            {/* Hero Quick Action CTAs */}
+            <div className="flex flex-wrap items-center justify-center gap-3.5 mt-6">
+              <a
+                href="#products-section"
+                className="px-6 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-black font-bold text-sm shadow-lg shadow-emerald-900/30 transition-all transform hover:-translate-y-0.5 flex items-center gap-2"
+              >
+                <span>Shop Formulations</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <button
+                onClick={() => {
+                  const message = buildProductEnquiryMessage({
+                    customerName: '',
+                    productName: 'Ayur Veda Formulations',
+                    quantity: 1,
+                    enquiry: 'Hi Ayur Veda Global, I would like a consultation / order assistance.',
+                    source: 'hero',
+                  })
+                  window.open(buildWhatsAppUrl(message), '_blank')
+                }}
+                className="px-6 py-3 rounded-full bg-[#128C7E]/25 hover:bg-[#128C7E]/40 border border-[#25D366]/40 text-emerald-300 font-semibold text-sm transition-all flex items-center gap-2"
+              >
+                <svg className="w-4 h-4 text-[#25D366]" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.5 14.4c-.3-.1-1.8-.9-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8 1-.9 1.2-.2.2-.4.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.2-.2-.2-.3-.3-.3-.5 0-.2 0-.4-.1-.5-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5-.2 0-.4 0-.6 0-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.6-.3" />
+                </svg>
+                <span>Chat on WhatsApp</span>
+              </button>
+            </div>
+
+            {/* Quick Trust Highlights */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 pt-6 border-t border-emerald-500/15 text-xs text-ayur-stone">
+              <div className="flex items-center justify-center gap-2">
+                <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                <span><strong className="text-ayur-ivory">4.9★</strong> (1.2k+ Reviews)</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <Leaf className="w-4 h-4 text-emerald-400" />
+                <span><strong className="text-ayur-ivory">100%</strong> Pure Ayurvedic</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <Shield className="w-4 h-4 text-emerald-400" />
+                <span><strong className="text-ayur-ivory">Discreet</strong> Plain Box</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <Truck className="w-4 h-4 text-emerald-400" />
+                <span><strong className="text-ayur-ivory">Free COD</strong> All India</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="container relative z-10 pb-12 sm:pb-16 lg:pb-20">
+        <div id="products-section" className="container relative z-10 pb-12 sm:pb-16 lg:pb-20">
           <div className="products-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             {products.map((product) => {
               const meta = productMeta[product.id] || {
