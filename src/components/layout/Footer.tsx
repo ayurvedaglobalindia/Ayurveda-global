@@ -175,7 +175,7 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-3" aria-label="Ayur Veda Global Home">
               <div className="relative w-12 h-12 flex items-center justify-center">
                 <Image
-                  src="/images/logo-transparent.png"
+                  src="/images/logo.png"
                   alt="Ayur Veda Global"
                   width={48}
                   height={48}

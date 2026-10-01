@@ -125,7 +125,7 @@ export function Header() {
           >
             <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
               <Image
-                src="/images/logo-transparent.png"
+                src="/images/logo.png"
                 alt="Ayur Veda Global"
                 width={40}
                 height={40}
