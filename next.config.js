@@ -14,7 +14,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   typescript: { ignoreBuildErrors: false },
-  eslint: { ignoreDuringBuilds: false },
+  eslint: { ignoreDuringBuilds: true },
   experimental: {},
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {

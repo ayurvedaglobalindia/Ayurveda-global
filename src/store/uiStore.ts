@@ -9,7 +9,7 @@ interface Toast {
   duration?: number
 }
 
-export type ModalType = 'age-gate' | 'cart'
+export type ModalType = 'age-gate' | 'cart' | 'quick-view' | 'mobile-menu' | string
 
 interface Modal {
   isOpen: boolean
@@ -21,6 +21,9 @@ interface UIStore {
   toasts: Toast[]
   modals: Record<string, Modal>
   isCartDrawerOpen: boolean
+  isWishlistDrawerOpen: boolean
+  isMobileMenuOpen: boolean
+  isSearchOpen: boolean
   ageVerifiedProducts: string[]
   showToast: (toast: Omit<Toast, 'id'>) => void
   dismissToast: (id: string) => void
@@ -28,6 +31,12 @@ interface UIStore {
   closeModal: (type: ModalType) => void
   openCartDrawer: () => void
   closeCartDrawer: () => void
+  openWishlistDrawer: () => void
+  closeWishlistDrawer: () => void
+  toggleMobileMenu: () => void
+  closeMobileMenu: () => void
+  toggleSearch: () => void
+  closeSearch: () => void
   verifyAge: (productId: string) => void
   isAgeVerified: (productId: string) => boolean
 }

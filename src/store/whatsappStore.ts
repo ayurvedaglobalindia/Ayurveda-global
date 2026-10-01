@@ -1,6 +1,62 @@
+import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
+import type { WhatsAppLeadEvent } from '@/types'
+
+interface WhatsAppStore {
+  leads: WhatsAppLeadEvent[]
+  trackLead: (event: Omit<WhatsAppLeadEvent, 'id' | 'createdAt' | 'userAgent' | 'referrer'> & {
+    userAgent?: string
+    referrer?: string
+  }) => void
+  getLeads: () => WhatsAppLeadEvent[]
+  clearLeads: () => void
+}
+
 const RAW_WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919123485451'
 const cleanDigits = RAW_WHATSAPP_NUMBER.replace(/\D/g, '')
 const WHATSAPP_NUMBER = cleanDigits.length === 10 ? `91${cleanDigits}` : cleanDigits
+
+export const useWhatsAppStore = create<WhatsAppStore>()(
+  persist(
+    (set, get) => ({
+      leads: [],
+
+      trackLead: (eventData) => {
+        const event: WhatsAppLeadEvent = {
+          ...eventData,
+          id: Date.now(),
+          createdAt: new Date().toISOString(),
+          userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+          referrer: typeof document !== 'undefined' ? document.referrer : '',
+        }
+
+        set(state => ({
+          leads: [event, ...state.leads].slice(0, 500),
+        }))
+
+        if (typeof window !== 'undefined') {
+          fetch('/api/whatsapp/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(event),
+          }).catch(() => {})
+        }
+      },
+
+      getLeads: () => {
+        return get().leads
+      },
+
+      clearLeads: () => {
+        set({ leads: [] })
+      },
+    }),
+    {
+      name: 'ayur-veda-whatsapp-leads',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+)
 
 export function buildWhatsAppUrl(message: string): string {
   const encodedMessage = encodeURIComponent(message)
@@ -8,8 +64,8 @@ export function buildWhatsAppUrl(message: string): string {
 }
 
 export function buildOrderWhatsAppMessage(data: {
-  orderId: string
-  orderNumber: string
+  orderId?: string
+  orderNumber?: string
   customerName: string
   customerPhone: string
   customerEmail?: string
@@ -32,10 +88,11 @@ export function buildOrderWhatsAppMessage(data: {
   }>
   subtotal: number
   shipping: number
-  tax: number
+  tax?: number
   discount: number
   total: number
   paymentMethod: string
+  couponCode?: string
   notes?: string
 }): string {
   const itemsList = data.items
@@ -47,7 +104,7 @@ export function buildOrderWhatsAppMessage(data: {
 
   return `🌿 *New Order - Ayur Veda Global*
 
-*Order ID:* ${data.orderNumber || data.orderId}
+*Order ID:* ${data.orderNumber || data.orderId || 'AVG-DIRECT'}
 
 *Customer:* ${data.customerName}
 *Phone:* ${data.customerPhone}
@@ -63,7 +120,7 @@ ${itemsList}
 
 *Subtotal:* ₹${(data.subtotal / 100).toLocaleString('en-IN')}
 *Shipping:* ${data.shipping === 0 ? 'Free' : `₹${(data.shipping / 100).toLocaleString('en-IN')}`}
-${data.discount > 0 ? `*Discount:* -₹${(data.discount / 100).toLocaleString('en-IN')}\n` : ''}*Total:* ₹${(data.total / 100).toLocaleString('en-IN')}
+${data.discount > 0 ? `*Discount (${data.couponCode || 'Promo'}):* -₹${(data.discount / 100).toLocaleString('en-IN')}\n` : ''}*Total:* ₹${(data.total / 100).toLocaleString('en-IN')}
 *Payment Method:* ${data.paymentMethod.toUpperCase()}
 ${data.notes ? `\n*Notes:* ${data.notes}` : ''}
 
@@ -72,7 +129,7 @@ Please confirm this order. Thank you! 🌿`
 }
 
 export function buildProductEnquiryMessage(data: {
-  customerName: string
+  customerName?: string
   productName: string
   quantity: number
   enquiry: string
@@ -80,12 +137,12 @@ export function buildProductEnquiryMessage(data: {
 }): string {
   return `🌿 *Enquiry - Ayur Veda Global*
 
-*Customer:* ${data.customerName || 'Not provided'}
+*Customer:* ${data.customerName || 'Interested Customer'}
 *Product:* ${data.productName}
 *Quantity:* ${data.quantity}
 
 *Message:* ${data.enquiry}
 
 ---
-Please share pricing and availability. Thank you! 🌿`
+Please share pricing, delivery time, and availability. Thank you! 🌿`
 }
