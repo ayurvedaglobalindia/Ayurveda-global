@@ -5,6 +5,7 @@ import { useUIStore } from '@/store/uiStore'
 import { ProductQuickViewModal } from '@/components/product/ProductQuickViewModal'
 import { AgeVerificationGate } from '@/components/layout/AgeVerificationGate'
 import { CartDrawer } from '@/components/cart/CartDrawer'
+import { MobileMenuDrawer } from '@/components/layout/MobileMenuDrawer'
 import type { Product } from '@/types'
 
 export function GlobalModals() {
@@ -13,6 +14,7 @@ export function GlobalModals() {
   const quickViewModal = modals['quick-view']
   const ageGateModal = modals['age-gate']
   const cartModal = modals['cart']
+  const mobileMenuModal = modals['mobile-menu']
 
   useEffect(() => {
     if (cartModal?.isOpen) {
@@ -49,6 +51,12 @@ export function GlobalModals() {
           }}
         />
       )}
+
+      {/* Slide-out Mobile Navigation Drawer */}
+      <MobileMenuDrawer
+        isOpen={Boolean(mobileMenuModal?.isOpen)}
+        onClose={() => closeModal('mobile-menu')}
+      />
     </>
   )
 }

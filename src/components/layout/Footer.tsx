@@ -132,7 +132,7 @@ export function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="bg-ayur-void text-ayur-cream relative overflow-hidden border-t border-ayur-gold/15"
+      className="bg-ayur-void text-ayur-cream relative overflow-hidden border-t border-ayur-gold/15 pb-16 md:pb-0"
     >
       {/* Ambient Atmospheric Glows */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-ayur-gold/3 rounded-full blur-[200px] pointer-events-none animate-breathe" aria-hidden="true" />
