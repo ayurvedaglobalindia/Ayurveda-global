@@ -115,8 +115,19 @@ export function validatePincode(pincode: string): boolean {
   return /^[1-9][0-9]{5}$/.test(pincode)
 }
 
+export function normalizeIndianPhone(phone: string): string {
+  let cleaned = phone.replace(/\D/g, '')
+  if (cleaned.length === 12 && cleaned.startsWith('91')) {
+    cleaned = cleaned.slice(2)
+  } else if (cleaned.length === 11 && cleaned.startsWith('0')) {
+    cleaned = cleaned.slice(1)
+  }
+  return cleaned
+}
+
 export function validatePhone(phone: string): boolean {
-  return /^[6-9]\d{9}$/.test(phone.replace(/\D/g, ''))
+  const normalized = normalizeIndianPhone(phone)
+  return /^[6-9]\d{9}$/.test(normalized)
 }
 
 export function validateEmail(email: string): boolean {

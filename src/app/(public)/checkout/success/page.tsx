@@ -1,35 +1,36 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
-import { CheckCircle, Package, MessageSquare, Home } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
+import { CheckCircle, Package, MessageSquare, ArrowRight, ShieldCheck, Compass } from 'lucide-react'
 // @ts-ignore
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { useUIStore } from '@/store/uiStore'
 import { buildWhatsAppUrl, buildOrderWhatsAppMessage } from '@/store/whatsappStore'
 
-interface CheckoutSuccessPageProps {
-  searchParams: Promise<{ order: string }>
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="container py-24 text-center">
+        <div className="w-10 h-10 border-2 border-ayur-gold border-t-transparent rounded-full animate-spin mx-auto" />
+      </div>
+    }>
+      <CheckoutSuccessContent />
+    </Suspense>
+  )
 }
 
-
-export default function CheckoutSuccessPage({ searchParams }: CheckoutSuccessPageProps) {
-  const { closeModal, showToast } = useUIStore()
-  const [orderNumber, setOrderNumber] = useState('')
-
-  useEffect(() => {
-    searchParams.then(params => {
-      if (params.order) {
-        setOrderNumber(params.order)
-      }
-    })
-  }, [searchParams])
+function CheckoutSuccessContent() {
+  const { closeModal } = useUIStore()
+  const searchParams = useSearchParams()
+  const orderNumber = searchParams.get('order') || searchParams.get('orderNumber') || 'ORD-PROCESSING'
 
   const handleWhatsAppShare = () => {
     const message = buildOrderWhatsAppMessage({
-      orderId: orderNumber,
-      orderNumber,
+      orderId: orderNumber || 'PENDING',
+      orderNumber: orderNumber || 'PENDING',
       customerName: '',
       customerPhone: '',
       shippingAddress: {
@@ -59,51 +60,69 @@ export default function CheckoutSuccessPage({ searchParams }: CheckoutSuccessPag
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', damping: 15, stiffness: 200 }}
-          className="w-24 h-24 mx-auto mb-8 rounded-full bg-ayur-forest flex items-center justify-center"
+          className="w-24 h-24 mx-auto mb-8 rounded-full bg-[#1A4D36]/80 border-2 border-[#D4AF37] shadow-[0_0_30px_rgba(212,175,55,0.25)] flex items-center justify-center relative"
         >
-          <CheckCircle className="w-12 h-12 text-ayur-cream" />
+          <CheckCircle className="w-12 h-12 text-[#F4E295]" />
+          <div className="absolute inset-0 rounded-full border border-[#D4AF37]/40 animate-ping opacity-25" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#F4E295] text-xs font-medium uppercase tracking-widest mb-4"
+        >
+          <ShieldCheck className="w-3.5 h-3.5" />
+          Order Authenticated & Recorded
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="font-heading text-3xl md:text-4xl font-medium text-ayur-black mb-4"
+          className="font-serif text-3xl md:text-5xl font-normal text-white mb-4 tracking-tight"
         >
-          Order Confirmed!
+          Namaste, Your Order is Confirmed
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-ayur-stone text-lg mb-8"
+          className="text-[#C4BDA8] text-base md:text-lg mb-8 leading-relaxed max-w-xl mx-auto"
         >
-          Thank you for your order! Your order number is <strong className="text-ayur-black">{orderNumber}</strong>
+          Thank you for choosing Ayur Veda Global. Your order reference code is{' '}
+          <span className="font-mono font-bold text-[#F4E295] bg-[#061B12] px-3 py-1 rounded-lg border border-[#D4AF37]/30 inline-block ml-1">
+            {orderNumber || 'ORD-PROCESSING'}
+          </span>
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="grid md:grid-cols-3 gap-6 mb-10"
+          className="grid md:grid-cols-3 gap-4 mb-10 text-left"
         >
-          <div className="p-6 rounded-2xl bg-ayur-cream">
-            <Package className="w-10 h-10 text-ayur-forest mx-auto mb-3" />
-            <h3 className="font-medium text-ayur-black mb-1">Order Placed</h3>
-            <p className="text-ayur-stone text-sm">We've received your order</p>
-          </div>
-          <div className="p-6 rounded-2xl bg-ayur-cream">
-            <MessageSquare className="w-10 h-10 text-green-600 mx-auto mb-3" />
-            <h3 className="font-medium text-ayur-black mb-1">WhatsApp Confirmation</h3>
-            <p className="text-ayur-stone text-sm">Coordinate payment & delivery</p>
-          </div>
-          <div className="p-6 rounded-2xl bg-ayur-cream">
-            <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-ayur-gold/20 flex items-center justify-center">
-              <span className="text-ayur-gold font-bold">📦</span>
+          <div className="p-5 rounded-2xl glass-luxury-card border border-[#D4AF37]/25 flex flex-col justify-between">
+            <Package className="w-8 h-8 text-[#D4AF37] mb-3" />
+            <div>
+              <h3 className="font-serif text-base font-medium text-white mb-1">Apothecary Prepared</h3>
+              <p className="text-[#8A9B8F] text-xs leading-relaxed">Formulation being inspected & securely packaged</p>
             </div>
-            <h3 className="font-medium text-ayur-black mb-1">Processing Soon</h3>
-            <p className="text-ayur-stone text-sm">We'll prepare your order</p>
+          </div>
+          <div className="p-5 rounded-2xl glass-luxury-card border border-[#D4AF37]/25 flex flex-col justify-between">
+            <MessageSquare className="w-8 h-8 text-emerald-400 mb-3" />
+            <div>
+              <h3 className="font-serif text-base font-medium text-white mb-1">WhatsApp Concierge</h3>
+              <p className="text-[#8A9B8F] text-xs leading-relaxed">Coordinate dispatch, tracking, and live updates</p>
+            </div>
+          </div>
+          <div className="p-5 rounded-2xl glass-luxury-card border border-[#D4AF37]/25 flex flex-col justify-between">
+            <Compass className="w-8 h-8 text-[#F4E295] mb-3" />
+            <div>
+              <h3 className="font-serif text-base font-medium text-white mb-1">Discreet Express</h3>
+              <p className="text-[#8A9B8F] text-xs leading-relaxed">Tamper-evident, 100% confidential courier transit</p>
+            </div>
           </div>
         </motion.div>
 
@@ -117,31 +136,32 @@ export default function CheckoutSuccessPage({ searchParams }: CheckoutSuccessPag
             variant="whatsapp"
             size="lg"
             onClick={handleWhatsAppShare}
-            className="flex-1"
+            className="flex-1 justify-center py-3.5 shadow-lg shadow-[#25D366]/10"
           >
             <MessageSquare className="w-5 h-5 mr-2" />
-            Share on WhatsApp
+            Open WhatsApp Concierge
           </Button>
-          <Link href="/shop">
-            <Button variant="outline" size="lg" className="flex-1">
-              <Home className="w-5 h-5 mr-2" />
+          <Link href="/shop" className="flex-1">
+            <Button variant="outline" size="lg" className="w-full justify-center py-3.5 border-[#D4AF37]/40 text-[#FAF7EE] hover:bg-[#D4AF37]/10">
               Continue Shopping
+              <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
         </motion.div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-8 text-sm text-ayur-stone"
+          className="mt-10 p-4 rounded-xl bg-[#061B12]/80 border border-[#D4AF37]/20 max-w-lg mx-auto text-xs text-[#8A9B8F] leading-relaxed"
         >
-          You'll receive a WhatsApp message shortly with order details and payment instructions.
-          Save your order number <strong className="text-ayur-black">{orderNumber}</strong> for reference.
-        </motion.p>
+          Need to monitor your package in real-time? Track anytime using your phone or order ID at{' '}
+          <Link href="/track-order" className="text-[#F4E295] underline underline-offset-4 hover:text-white transition-colors">
+            Order Tracking Portal
+          </Link>
+          .
+        </motion.div>
       </div>
     </div>
   )
 }
-
-import { useState } from 'react'

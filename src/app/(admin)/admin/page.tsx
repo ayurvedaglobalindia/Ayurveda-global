@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Package, Truck, CheckCircle, Clock, XCircle, Search, Filter, Download, ChevronLeft, ChevronRight, MessageSquare, Eye, Edit } from 'lucide-react'
 import { formatDate, formatDateTime, formatINR, generateId } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
@@ -39,12 +39,7 @@ export default function AdminDashboard() {
   const [showOrderModal, setShowOrderModal] = useState(false)
   const [showLeads, setShowLeads] = useState(false)
 
-  useEffect(() => {
-    fetchOrders()
-    fetchLeads()
-  }, [currentPage, search, statusFilter, paymentFilter, dateFilter])
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     setLoading(true)
     try {
       const params = new URLSearchParams({
@@ -57,23 +52,28 @@ export default function AdminDashboard() {
       })
       const res = await fetch(`/api/orders?${params}`)
       const data = await res.json()
-      setOrders(data.orders)
-      setTotalPages(data.totalPages)
+      setOrders(data.orders || [])
+      setTotalPages(data.totalPages || 1)
     } catch (e) {
       console.error('Failed to fetch orders:', e)
     }
     setLoading(false)
-  }
+  }, [currentPage, search, statusFilter, paymentFilter, dateFilter])
 
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     try {
       const res = await fetch('/api/whatsapp/lead')
       const data = await res.json()
-      setLeads(data.leads)
+      setLeads(data.leads || [])
     } catch (e) {
       console.error('Failed to fetch leads:', e)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    fetchOrders()
+    fetchLeads()
+  }, [fetchOrders, fetchLeads])
 
   const handleStatusUpdate = async (orderId: string, newStatus: string) => {
     try {

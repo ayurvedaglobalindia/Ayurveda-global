@@ -16,90 +16,77 @@ export default function ShippingPolicyPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateWebsiteStructuredData()) }}
       />
 
-      <div className="container py-8 lg:py-12">
+      <div className="container py-8 lg:py-16">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-12">
-            <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black mb-4">Shipping Policy</h1>
-            <p className="text-ayur-stone text-sm">Last updated: {lastUpdated}</p>
+          <div className="mb-8">
+            <span className="text-[#D4AF37] text-xs uppercase tracking-widest font-semibold block mb-2">Logistics & Dispatches</span>
+            <h1 className="font-serif text-3xl md:text-5xl font-normal text-white mb-3">Shipping Policy</h1>
+            <p className="text-[#8A9B8F] text-sm">Effective: {lastUpdated}</p>
           </div>
 
-          <div className="prose prose-ayur max-w-none space-y-8">
+          <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-6 md:p-10 text-[#C4BDA8] leading-relaxed space-y-8 text-sm md:text-base">
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">1. Shipping Charges</h2>
-              <ul className="list-disc list-inside space-y-2 text-ayur-stone">
-                <li><strong>Standard Shipping:</strong> ₹49 flat rate on all orders</li>
-                <li><strong>Free Shipping:</strong> On orders above ₹999</li>
-                <li>No hidden fees or surcharges</li>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                1. Shipping Rates & Thresholds
+              </h2>
+              <ul className="list-disc list-inside space-y-1.5 text-[#C4BDA8] pl-2">
+                <li><strong className="text-white">Complimentary Express Shipping:</strong> Available on all orders above ₹999 across all serviceable PIN codes in India.</li>
+                <li><strong className="text-white">Standard Delivery Fee:</strong> Flat ₹49 on orders below ₹999.</li>
+                <li><strong className="text-white">Zero Hidden Charges:</strong> All prices shown at checkout include GST and handling fees.</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">2. Delivery Timelines</h2>
-              <ul className="list-disc list-inside space-y-2 text-ayur-stone">
-                <li><strong>Metro Cities:</strong> 3-5 business days</li>
-                <li><strong>Major Cities:</strong> 4-6 business days</li>
-                <li><strong>Standard Areas:</strong> 5-7 business days</li>
-                <li><strong>Remote Areas:</strong> 7-10 business days</li>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                2. Delivery Timelines
+              </h2>
+              <ul className="list-disc list-inside space-y-1.5 text-[#C4BDA8] pl-2">
+                <li><strong className="text-white">Metro Hubs (Mumbai, Delhi NCR, Bengaluru, Hyderabad, Chennai, Kolkata):</strong> 2–4 business days</li>
+                <li><strong className="text-white">Tier-II & Tier-III Cities:</strong> 3–5 business days</li>
+                <li><strong className="text-white">Rest of India & Remote Outposts:</strong> 5–7 business days</li>
               </ul>
-              <p className="mt-3">Business days exclude weekends and public holidays. Timelines start from order confirmation, not order placement.</p>
+              <p className="mt-3 text-xs text-[#8A9B8F]">Orders confirmed before 2:00 PM IST Monday through Saturday are dispatched the same calendar day.</p>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">3. Order Processing</h2>
-              <ul className="list-disc list-inside space-y-2 text-ayur-stone">
-                <li>Orders confirmed via WhatsApp are processed within 24 hours</li>
-                <li>COD orders are processed immediately upon placement</li>
-                <li>Orders placed after 2 PM may be processed the next business day</li>
-                <li>No processing on Sundays and public holidays</li>
-              </ul>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                3. Discreet Packaging Protocol
+              </h2>
+              <p>We respect customer confidentiality. All products, particularly STAYMAX+ Delay Spray and Vitality Combos, are shipped in plain, tamper-evident corrugated boxes with zero external product markings or descriptions, bearing only discreet logistics labels.</p>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">4. Shipping Carriers</h2>
-              <p>We partner with trusted carriers including BlueDart, DTDC, Delhivery, and India Post. Carrier selection is based on your location and service availability.</p>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                4. Courier Partners
+              </h2>
+              <p>We ship through premium air express networks including BlueDart, DTDC Apex, Delhivery Express, and Speed Post for remote regions. Airway Bill (AWB) numbers are assigned immediately upon packaging.</p>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">5. Order Tracking</h2>
-              <ul className="list-disc list-inside space-y-2 text-ayur-stone">
-                <li>Tracking details sent via WhatsApp once shipped</li>
-                <li>Track on our Track Order page with Order ID + email/phone</li>
-                <li>Carrier tracking links provided when available</li>
-                <li>Delivery notifications via WhatsApp</li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">6. Delivery Issues</h2>
-              <ul className="list-disc list-inside space-y-2 text-ayur-stone">
-                <li><strong>Failed Delivery:</strong> Carrier typically attempts 2-3 times. Contact us if delivery fails</li>
-                <li><strong>Damaged Package:</strong> Report within 24 hours with photos for replacement</li>
-                <li><strong>Lost Package:</strong> We investigate with carrier (7-10 days) and arrange replacement/refund</li>
-                <li><strong>Wrong Address:</strong> Contact us immediately; changes may not be possible after dispatch</li>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                5. Live Order Tracking
+              </h2>
+              <ul className="list-disc list-inside space-y-1.5 text-[#C4BDA8] pl-2">
+                <li>Tracking links are dispatched via automated WhatsApp and SMS upon courier scan</li>
+                <li>Track anytime via our live portal at <a href="/track-order" className="text-[#D4AF37] hover:underline">ayurvedaglobal.com/track-order</a></li>
+                <li>Direct assistance available from our logistics desk via WhatsApp</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">7. International Shipping</h2>
-              <p>Currently, we only ship within India. International shipping is not available at this time. For wholesale inquiries from outside India, contact us at wholesale@ayurvedaglobal.com.</p>
-            </section>
-
-            <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">8. Shipping Restrictions</h2>
-              <ul className="list-disc list-inside space-y-2 text-ayur-stone">
-                <li>STAYMAX+ Delay Spray (18+) requires age verification at delivery in some states</li>
-                <li>Certain pincodes may have restricted COD availability</li>
-                <li>We comply with all local regulations and carrier restrictions</li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">9. Contact Us</h2>
-              <p>For shipping-related questions:</p>
-              <ul className="list-disc list-inside space-y-1 text-ayur-stone mt-2">
-                <li>WhatsApp: +91 91234 85451</li>
-                <li>Email: shipping@ayurvedaglobal.com</li>
-                <li>Track Order: <a href="/track-order" className="underline hover:text-ayur-gold">/track-order</a></li>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                6. Shipping Assistance
+              </h2>
+              <p>For inquiries regarding dispatch status, PIN code serviceability, or delivery scheduling:</p>
+              <ul className="list-disc list-inside space-y-1.5 text-[#C4BDA8] pl-2 mt-2">
+                <li><strong className="text-white">WhatsApp Dispatch Desk:</strong> <a href="https://wa.me/919123485451" className="text-[#D4AF37] hover:underline">+91 91234 85451</a></li>
+                <li><strong className="text-white">Email:</strong> <a href="mailto:shipping@ayurvedaglobal.com" className="text-[#D4AF37] hover:underline">shipping@ayurvedaglobal.com</a></li>
               </ul>
             </section>
           </div>

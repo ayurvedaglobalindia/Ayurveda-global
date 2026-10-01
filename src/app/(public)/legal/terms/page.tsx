@@ -16,107 +16,108 @@ export default function TermsOfServicePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateWebsiteStructuredData()) }}
       />
 
-      <div className="container py-8 lg:py-12">
+      <div className="container py-8 lg:py-16">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-12">
-            <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black mb-4">Terms of Service</h1>
-            <p className="text-ayur-stone text-sm">Last updated: {lastUpdated}</p>
+          <div className="mb-8">
+            <span className="text-[#D4AF37] text-xs uppercase tracking-widest font-semibold block mb-2">Legal Governance</span>
+            <h1 className="font-serif text-3xl md:text-5xl font-normal text-white mb-3">Terms of Service</h1>
+            <p className="text-[#8A9B8F] text-sm">Effective: {lastUpdated}</p>
           </div>
 
-          <div className="prose prose-ayur max-w-none space-y-8">
+          <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-6 md:p-10 text-[#C4BDA8] leading-relaxed space-y-8 text-sm md:text-base">
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">1. Acceptance of Terms</h2>
-              <p>By accessing and using ayurvedaglobal.com ("Website") and purchasing products from Ayur Veda Global ("Company," "we," "our," "us"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part, you may not use our services.</p>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                1. Acceptance of Terms
+              </h2>
+              <p>By accessing and using ayurvedaglobal.com (&quot;Website&quot;) and purchasing formulations from Ayur Veda Global (&quot;Company,&quot; &quot;we,&quot; &quot;our,&quot; &quot;us&quot;), you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you disagree with any part, you may not use our services.</p>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">2. Products and Services</h2>
-              <p>We offer Ayurvedic wellness products including dietary supplements and personal care items. Product descriptions, images, and prices are subject to change without notice. We make reasonable efforts to display colors and packaging accurately, but cannot guarantee your screen's display matches the actual product.</p>
-              <p><strong>Age Restriction:</strong> STAYMAX+ Delay Spray is for individuals 18 years and older only. By purchasing, you confirm you meet this requirement.</p>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                2. Products and Services
+              </h2>
+              <p>We offer authentic Ayurvedic wellness products including dietary supplements and personal care items. Product descriptions, imagery, and prices are subject to change without notice. We make reasonable efforts to display botanical ingredients and packaging accurately.</p>
+              <p className="mt-3 text-[#F4E295] bg-[#061B12] p-3 rounded-lg border border-[#D4AF37]/30 text-xs">
+                <strong>Age Restriction:</strong> STAYMAX+ Delay Spray is formulated for individuals 18 years and older only. By purchasing, you legally confirm you meet this requirement.
+              </p>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">3. Orders and Payment</h2>
-              <ul className="list-disc list-inside space-y-2 text-ayur-stone">
-                <li>All orders are subject to acceptance and availability</li>
-                <li>We offer WhatsApp Order (coordinated payment via WhatsApp) and Cash on Delivery (COD)</li>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                3. Orders and Payment
+              </h2>
+              <ul className="list-disc list-inside space-y-1.5 text-[#C4BDA8] pl-2">
+                <li>All orders are subject to acceptance and raw botanical availability</li>
+                <li>We offer WhatsApp Concierge Order (coordinated payment via WhatsApp) and Cash on Delivery (COD)</li>
                 <li>Prices are in Indian Rupees (INR) and include applicable taxes</li>
-                <li>We reserve the right to refuse or cancel any order</li>
-                <li>Order confirmation via WhatsApp constitutes acceptance</li>
+                <li>We reserve the right to decline or cancel any unverified order</li>
+                <li>Order confirmation via WhatsApp constitutes mutual commercial agreement</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">4. Shipping and Delivery</h2>
-              <ul className="list-disc list-inside space-y-2 text-ayur-stone">
-                <li>Flat ₹49 shipping; free on orders above ₹999</li>
-                <li>Standard delivery: 5-7 business days</li>
-                <li>Risk passes to you upon delivery</li>
-                <li>We are not liable for carrier delays</li>
-                <li>Provide accurate shipping information</li>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                4. Shipping and Delivery
+              </h2>
+              <ul className="list-disc list-inside space-y-1.5 text-[#C4BDA8] pl-2">
+                <li>Complimentary express delivery on all orders above ₹999; flat ₹49 on orders below</li>
+                <li>Standard delivery: 3-5 business days across Indian metros</li>
+                <li>Discreet, tamper-evident protective outer packaging</li>
+                <li>Real-time shipment tracking provided via SMS and WhatsApp</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">5. Returns and Refunds</h2>
-              <ul className="list-disc list-inside space-y-2 text-ayur-stone">
-                <li>7-day return policy for unopened, unused products</li>
-                <li>Original packaging and safety seals must be intact</li>
-                <li>Personal care products (opened) cannot be returned for hygiene</li>
-                <li>Refunds within 5-7 business days of receiving return</li>
-                <li>Return shipping covered for defective/incorrect items</li>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                5. Returns and Refunds
+              </h2>
+              <ul className="list-disc list-inside space-y-1.5 text-[#C4BDA8] pl-2">
+                <li>7-day return policy for unopened, uncompromised products with seals intact</li>
+                <li>Original packaging and tamper-evident seals must be unbroken</li>
+                <li>Personal care products (opened) cannot be returned due to Ayurvedic hygiene protocols</li>
+                <li>Direct refund initiated within 2 business days of verified return receipt</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">6. Health and Wellness Disclaimer</h2>
-              <p><strong>Important:</strong> Our products are dietary supplements and personal care items, not medications. They are not intended to diagnose, treat, cure, or prevent any disease. Statements about product benefits are based on traditional Ayurvedic use and general wellness support, not clinical trials or medical claims.</p>
-              <p>Consult a healthcare professional before use if pregnant, nursing, taking medications, or have medical conditions. Individual results may vary. Discontinue use if adverse reactions occur.</p>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                6. Health and Wellness Disclaimer
+              </h2>
+              <p><strong>Traditional Lineage:</strong> Our formulations are dietary supplements and personal care preparations based on classical Ayurvedic treatises (Charaka Samhita, Sushruta Samhita). They are not intended to substitute professional medical diagnosis or clinical treatments.</p>
+              <p className="mt-2">Always consult a qualified Ayurvedic physician or medical doctor before beginning any supplement routine, particularly if pregnant, lactating, or on prescription medication.</p>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">7. Intellectual Property</h2>
-              <p>All content on this Website (text, images, logos, designs, trademarks) is owned by or licensed to Ayur Veda Global. You may not reproduce, distribute, or create derivative works without written permission.</p>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                7. Intellectual Property
+              </h2>
+              <p>All trademarks, logos, botanical iconography, text, and design motifs on this Website are proprietary property of Ayur Veda Global. Reproduction without express written consent is strictly prohibited.</p>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">8. User Conduct</h2>
-              <p>You agree not to:</p>
-              <ul className="list-disc list-inside space-y-1 text-ayur-stone mt-2">
-                <li>Use the Website for unlawful purposes</li>
-                <li>Interfere with site security or functionality</li>
-                <li>Scrape, crawl, or extract data without permission</li>
-                <li>Post false, misleading, or harmful content</li>
-                <li>Attempt to gain unauthorized access</li>
-              </ul>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                8. Governing Law
+              </h2>
+              <p>These Terms shall be governed and interpreted under the laws of the Republic of India. Any legal dispute shall fall under the exclusive jurisdiction of the competent courts in Mumbai, Maharashtra.</p>
             </section>
 
             <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">9. Limitation of Liability</h2>
-              <p>To the maximum extent permitted by law, Ayur Veda Global shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill. Our total liability shall not exceed the amount paid for the relevant product.</p>
-            </section>
-
-            <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">10. Indemnification</h2>
-              <p>You agree to indemnify and hold harmless Ayur Veda Global from any claims, damages, losses, or expenses arising from your use of the Website, violation of these Terms, or infringement of any rights.</p>
-            </section>
-
-            <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">11. Governing Law and Disputes</h2>
-              <p>These Terms are governed by the laws of India. Disputes shall be resolved through good-faith negotiation, failing which by arbitration in Mumbai under the Arbitration and Conciliation Act, 1996. Courts in Mumbai shall have exclusive jurisdiction.</p>
-            </section>
-
-            <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">12. Changes to Terms</h2>
-              <p>We may modify these Terms at any time. Changes take effect upon posting. Continued use constitutes acceptance. Material changes will be communicated via email or WhatsApp.</p>
-            </section>
-
-            <section>
-              <h2 className="font-heading text-xl font-medium text-ayur-black mb-3">13. Contact Information</h2>
-              <p>For questions about these Terms:</p>
-              <ul className="list-disc list-inside space-y-1 text-ayur-stone mt-2">
-                <li>Email: legal@ayurvedaglobal.com</li>
-                <li>WhatsApp: +91 91234 85451</li>
+              <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                9. Legal Inquiries
+              </h2>
+              <p>For inquiries regarding these Terms of Service:</p>
+              <ul className="list-disc list-inside space-y-1.5 text-[#C4BDA8] pl-2 mt-2">
+                <li>Email: <a href="mailto:legal@ayurvedaglobal.com" className="text-[#D4AF37] hover:underline">legal@ayurvedaglobal.com</a></li>
+                <li>WhatsApp: <a href="https://wa.me/919123485451" className="text-[#D4AF37] hover:underline">+91 91234 85451</a></li>
                 <li>Post: Ayur Veda Global, Mumbai, Maharashtra, India</li>
               </ul>
             </section>

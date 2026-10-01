@@ -28,39 +28,39 @@ export function Tabs({ items, defaultIndex = 0, onChange, className, variant = '
     }
   }
 
-  const variantStyles = {
-    line: 'border-b border-ayur-beige',
-    pills: '',
-    underline: 'border-b border-ayur-beige',
-  }
-
   const tabStyles = {
     line: (isActive: boolean) =>
       classNames(
         'px-4 py-3 text-sm font-medium transition-all relative',
         isActive
-          ? 'text-ayur-forest'
-          : 'text-ayur-stone hover:text-ayur-forest'
+          ? 'text-ayur-gold-light'
+          : 'text-ayur-stone hover:text-ayur-gold-light'
       ),
     pills: (isActive: boolean) =>
       classNames(
-        'px-6 py-2.5 text-sm font-medium rounded-full transition-all',
+        'px-5 py-2.5 text-sm font-medium rounded-full transition-all',
         isActive
-          ? 'bg-ayur-forest text-ayur-cream shadow-soft'
-          : 'text-ayur-stone hover:bg-ayur-beige hover:text-ayur-forest'
+          ? 'bg-gradient-to-r from-ayur-gold-light to-ayur-gold text-ayur-void shadow-lg shadow-ayur-gold/30'
+          : 'text-ayur-stone hover:bg-ayur-forest-dark hover:text-ayur-gold-light'
       ),
     underline: (isActive: boolean) =>
       classNames(
         'px-4 py-3 text-sm font-medium transition-all relative',
         isActive
-          ? 'text-ayur-forest'
-          : 'text-ayur-stone hover:text-ayur-forest'
+          ? 'text-ayur-gold-light'
+          : 'text-ayur-stone hover:text-ayur-gold-light'
       ),
+  }
+
+  const indicatorStyles = {
+    line: 'absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-ayur-gold-light to-ayur-gold transition-all duration-300',
+    underline: 'absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-ayur-gold-light to-ayur-gold transition-all duration-300',
+    pills: 'hidden',
   }
 
   return (
     <div className={classNames('space-y-4', className)}>
-      <div className={classNames('flex gap-1 overflow-x-auto', variantStyles[variant])} role="tablist">
+      <div className="relative flex gap-1 overflow-x-auto" role="tablist">
         {items.map((item, index) => (
           <button
             key={index}
@@ -72,13 +72,22 @@ export function Tabs({ items, defaultIndex = 0, onChange, className, variant = '
             disabled={item.disabled}
             className={classNames(
               tabStyles[variant](index === activeIndex),
-              item.disabled && 'opacity-50 cursor-not-allowed',
-              variant === 'line' && index === activeIndex && 'after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-0.5 after:bg-ayur-forest'
+              item.disabled && 'opacity-50 cursor-not-allowed'
             )}
           >
             {item.label}
           </button>
         ))}
+        {variant !== 'pills' && (
+          <motion.div
+            className={indicatorStyles[variant]}
+            animate={{
+              width: items[activeIndex] ? items[activeIndex].label.length * 8 + 40 : 0,
+              left: items.slice(0, activeIndex).reduce((acc, item) => acc + item.label.length * 8 + 40, 0),
+            }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          />
+        )}
       </div>
       <AnimatePresence mode="wait">
         <motion.div

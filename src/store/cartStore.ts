@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { CartItem, CartState, Product } from '@/types'
+import { getProductById, getProductBySlug, getProductImage } from '@/lib/products/registry'
+import { calculateShipping } from '@/lib/shipping'
 
 interface CartStore extends CartState {
   addItem: (product: Product, variantId?: string, quantity?: number) => void
@@ -33,28 +35,43 @@ export const useCartStore = create<CartStore>()(
       ...initialState,
 
       addItem: (product, variantId, quantity = 1) => {
-        const variant = variantId ? product.variants.find(v => v.id === variantId) : product.variants[0]
-        const price = variant?.price || product.price
-        const variantIdToUse = variant?.id || product.variants[0]?.id
+        const canonical = getProductById(product.id) || getProductBySlug(product.slug || product.id)
+        const baseProduct = canonical ? { ...canonical, ...product } : product
+        const resolvedImg = getProductImage(baseProduct, product.id)
+        const images = (baseProduct.images && Array.isArray(baseProduct.images) && baseProduct.images.length > 0)
+          ? baseProduct.images
+          : [resolvedImg]
+
+        const enrichedProduct: Product = {
+          ...baseProduct,
+          images,
+        }
+
+        const variant = variantId
+          ? enrichedProduct.variants?.find(v => v.id === variantId)
+          : enrichedProduct.variants?.[0]
+        const price = variant?.price || enrichedProduct.price
+        const variantIdToUse = variant?.id || enrichedProduct.variants?.[0]?.id || 'default'
 
         set(state => {
           const existingIndex = state.items.findIndex(
-            item => item.productId === product.id && item.variantId === variantIdToUse
+            item => item.productId === enrichedProduct.id && item.variantId === variantIdToUse
           )
 
           if (existingIndex >= 0) {
             const newItems = [...state.items]
             newItems[existingIndex].quantity += quantity
+            newItems[existingIndex].product = enrichedProduct
             return { items: newItems }
           }
 
           const newItem: CartItem = {
-            id: `${product.id}-${variantIdToUse}-${Date.now()}`,
-            productId: product.id,
+            id: `${enrichedProduct.id}-${variantIdToUse}-${Date.now()}`,
+            productId: enrichedProduct.id,
             variantId: variantIdToUse,
             quantity,
             price,
-            product,
+            product: enrichedProduct,
           }
           return { items: [...state.items, newItem] }
         })
@@ -110,7 +127,9 @@ export const useCartStore = create<CartStore>()(
       getTotal: () => {
         const { items, discount, shipping, tax } = get()
         const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-        return Math.max(0, subtotal - discount + shipping + tax)
+        if (items.length === 0) return 0
+        const effectiveShipping = shipping > 0 ? shipping : calculateShipping(subtotal).cost
+        return Math.max(0, subtotal - discount + effectiveShipping + tax)
       },
 
       getItemCount: () => {
@@ -145,6 +164,26 @@ export const useCartStore = create<CartStore>()(
         couponCode: state.couponCode,
         discount: state.discount,
       }),
+      onRehydrateStorage: () => (state) => {
+        if (state && Array.isArray(state.items)) {
+          state.items = state.items.map(item => {
+            const canonical = getProductById(item.productId) || getProductBySlug(item.productId)
+            const fallbackImg = getProductImage(item.product, item.productId)
+            const baseProduct = canonical ? { ...canonical, ...item.product } : item.product
+            const images = (baseProduct?.images && Array.isArray(baseProduct.images) && baseProduct.images.length > 0)
+              ? baseProduct.images
+              : [fallbackImg]
+
+            return {
+              ...item,
+              product: {
+                ...baseProduct,
+                images,
+              },
+            }
+          })
+        }
+      },
     }
   )
 )

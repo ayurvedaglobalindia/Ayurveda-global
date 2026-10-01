@@ -4,7 +4,7 @@ import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { classNames } from '@/lib/utils/formatters'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp' | 'gold'
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp' | 'gold' | 'emerald' | 'emerald-outline' | 'gold-outline'
   size?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
   loading?: boolean
@@ -21,6 +21,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       ghost: 'text-ayur-forest hover:bg-ayur-beige focus-visible:ring-ayur-forest',
       whatsapp: 'bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-500',
       gold: 'bg-gradient-to-r from-ayur-gold to-ayur-copper text-ayur-black hover:from-ayur-gold-light hover:to-ayur-gold focus-visible:ring-ayur-gold shadow-lg shadow-ayur-gold/30',
+      emerald: 'bg-ayur-forest-deep text-white hover:bg-ayur-forest focus-visible:ring-emerald-500 shadow-md',
+      'emerald-outline': 'border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10 focus-visible:ring-emerald-500',
+      'gold-outline': 'border border-ayur-gold/40 text-ayur-gold hover:bg-ayur-gold/10 focus-visible:ring-ayur-gold',
     }
 
     const sizeStyles = {

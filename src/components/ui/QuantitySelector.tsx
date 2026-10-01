@@ -22,9 +22,9 @@ export function QuantitySelector({ value, onChange, min = 1, max = 99, size = 'm
   }
 
   const sizeStyles = {
-    sm: 'h-8 text-sm',
-    md: 'h-10 text-base',
-    lg: 'h-12 text-lg',
+    sm: 'h-8 text-sm px-3',
+    md: 'h-10 text-base px-4',
+    lg: 'h-12 text-lg px-5',
   }
 
   const buttonSize = {
@@ -34,12 +34,12 @@ export function QuantitySelector({ value, onChange, min = 1, max = 99, size = 'm
   }
 
   return (
-    <div className={classNames('inline-flex items-center border border-ayur-sand rounded-lg overflow-hidden', className)}>
+    <div className={classNames('inline-flex items-center bg-ayur-charcoal border border-ayur-forest-dark/50 rounded-xl overflow-hidden hover:border-ayur-gold/50 transition-colors', className)}>
       <button
         onClick={handleDecrease}
         disabled={value <= min}
         className={classNames(
-          'flex items-center justify-center text-ayur-forest hover:bg-ayur-beige transition-colors disabled:opacity-50 disabled:cursor-not-allowed',
+          'flex items-center justify-center text-ayur-gold hover:bg-ayur-gold/10 hover:text-ayur-gold-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent',
           buttonSize[size]
         )}
         aria-label="Decrease quantity"
@@ -58,7 +58,7 @@ export function QuantitySelector({ value, onChange, min = 1, max = 99, size = 'm
           onChange(newValue)
         }}
         className={classNames(
-          'w-16 text-center bg-transparent border-0 focus:outline-none focus:ring-0 appearance-none',
+          'w-16 text-center bg-transparent border-0 focus:outline-none focus:ring-0 appearance-none text-ayur-ivory',
           sizeStyles[size]
         )}
         min={min}
@@ -69,7 +69,7 @@ export function QuantitySelector({ value, onChange, min = 1, max = 99, size = 'm
         onClick={handleIncrease}
         disabled={value >= max}
         className={classNames(
-          'flex items-center justify-center text-ayur-forest hover:bg-ayur-beige transition-colors disabled:opacity-50 disabled:cursor-not-allowed',
+          'flex items-center justify-center text-ayur-gold hover:bg-ayur-gold/10 hover:text-ayur-gold-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent',
           buttonSize[size]
         )}
         aria-label="Increase quantity"

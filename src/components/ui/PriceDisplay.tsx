@@ -26,7 +26,7 @@ export function PriceDisplay({ price, compareAtPrice, size = 'md', showSavings =
 
   return (
     <div className={classNames('flex items-baseline gap-2 flex-wrap', className)}>
-      <span className={classNames('font-semibold text-ayur-black', sizeStyles[size])}>
+      <span className={classNames('font-heading font-bold text-ayur-ivory', sizeStyles[size])}>
         {formatINR(price)}
       </span>
       {hasDiscount && compareAtPrice && (
@@ -35,12 +35,12 @@ export function PriceDisplay({ price, compareAtPrice, size = 'md', showSavings =
         </span>
       )}
       {hasDiscount && showSavings && (
-        <Badge variant="sale" className="ml-1">
+        <Badge variant="gold" className="ml-1">
           {discountPercentage}% OFF
         </Badge>
       )}
       {hasDiscount && showSavings && (
-        <span className="text-sm text-ayur-sage font-medium">
+        <span className="text-sm text-ayur-gold-light font-medium">
           Save {formatINR(savings)}
         </span>
       )}
@@ -57,11 +57,11 @@ export function PriceRangeDisplay({ minPrice, maxPrice, size = 'md' }: { minPric
   }
 
   if (minPrice === maxPrice) {
-    return <span className={classNames('font-semibold text-ayur-black', sizeStyles[size])}>{formatINR(minPrice)}</span>
+    return <span className={classNames('font-heading font-bold text-ayur-ivory', sizeStyles[size])}>{formatINR(minPrice)}</span>
   }
 
   return (
-    <span className={classNames('font-semibold text-ayur-black', sizeStyles[size])}>
+    <span className={classNames('font-heading font-bold text-ayur-ivory', sizeStyles[size])}>
       {formatINR(minPrice)} - {formatINR(maxPrice)}
     </span>
   )

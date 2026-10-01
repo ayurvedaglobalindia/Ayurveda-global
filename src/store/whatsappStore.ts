@@ -1,59 +1,6 @@
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
-import type { WhatsAppLeadEvent } from '@/types'
-
-interface WhatsAppStore {
-  leads: WhatsAppLeadEvent[]
-  trackLead: (event: Omit<WhatsAppLeadEvent, 'id' | 'createdAt' | 'userAgent' | 'referrer'>) => void
-  getLeads: () => WhatsAppLeadEvent[]
-  clearLeads: () => void
-}
-
 const RAW_WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919123485451'
 const cleanDigits = RAW_WHATSAPP_NUMBER.replace(/\D/g, '')
 const WHATSAPP_NUMBER = cleanDigits.length === 10 ? `91${cleanDigits}` : cleanDigits
-
-export const useWhatsAppStore = create<WhatsAppStore>()(
-  persist(
-    (set, get) => ({
-      leads: [],
-
-      trackLead: (eventData) => {
-        const event: WhatsAppLeadEvent = {
-          ...eventData,
-          id: Date.now(),
-          createdAt: new Date().toISOString(),
-          userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
-          referrer: typeof document !== 'undefined' ? document.referrer : '',
-        }
-
-        set(state => ({
-          leads: [event, ...state.leads].slice(0, 500),
-        }))
-
-        if (typeof window !== 'undefined') {
-          fetch('/api/whatsapp/lead', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(event),
-          }).catch(() => {})
-        }
-      },
-
-      getLeads: () => {
-        return get().leads
-      },
-
-      clearLeads: () => {
-        set({ leads: [] })
-      },
-    }),
-    {
-      name: 'ayur-veda-whatsapp-leads',
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-)
 
 export function buildWhatsAppUrl(message: string): string {
   const encodedMessage = encodeURIComponent(message)
@@ -77,7 +24,8 @@ export function buildOrderWhatsAppMessage(data: {
     phone: string
   }
   items: Array<{
-    name: string
+    name?: string
+    productName?: string
     quantity: number
     price: number
     total: number
@@ -87,51 +35,40 @@ export function buildOrderWhatsAppMessage(data: {
   tax: number
   discount: number
   total: number
-  paymentMethod: 'whatsapp' | 'cod'
-  couponCode?: string
+  paymentMethod: string
   notes?: string
 }): string {
-  const formatINR = (paise: number) => `₹${(paise / 100).toFixed(2)}`
-
-  const itemsText = data.items.map(item =>
-    `${item.name} × ${item.quantity} = ${formatINR(item.total)}`
-  ).join('\n')
-
-  const address = data.shippingAddress
-  const addressLines = [
-    `${address.firstName} ${address.lastName}`,
-    address.addressLine1,
-    address.addressLine2,
-    `${address.city}, ${address.state} ${address.pincode}`,
-    `Phone: ${address.phone}`,
-  ].filter(Boolean).join('\n')
+  const itemsList = data.items
+    .map(
+      (item, index) =>
+        `${index + 1}. ${item.productName || item.name || 'Product'} x${item.quantity} — ₹${(item.total / 100).toLocaleString('en-IN')}`
+    )
+    .join('\n')
 
   return `🌿 *New Order - Ayur Veda Global*
 
-*Order ID:* ${data.orderNumber}
+*Order ID:* ${data.orderNumber || data.orderId}
+
 *Customer:* ${data.customerName}
 *Phone:* ${data.customerPhone}
-${data.customerEmail ? `*Email:* ${data.customerEmail}` : ''}
-
+${data.customerEmail ? `*Email:* ${data.customerEmail}\n` : ''}
 *Delivery Address:*
-${addressLines}
+${data.shippingAddress.firstName} ${data.shippingAddress.lastName}
+${data.shippingAddress.addressLine1}
+${data.shippingAddress.addressLine2 || ''}
+${data.shippingAddress.city}, ${data.shippingAddress.state} ${data.shippingAddress.pincode}
 
-*Order Items:*
-${itemsText}
+*Items:*
+${itemsList}
 
-*Subtotal:* ${formatINR(data.subtotal)}
-*Shipping:* ${formatINR(data.shipping)}
-*Tax:* ${formatINR(data.tax)}
-${data.discount > 0 ? `*Discount (${data.couponCode}):* -${formatINR(data.discount)}` : ''}
-*Total:* ${formatINR(data.total)}
-
-*Payment:* ${data.paymentMethod === 'whatsapp' ? 'WhatsApp Pay (UPI/Card/NetBanking)' : 'Cash on Delivery'}
-
-${data.notes ? `*Notes:* ${data.notes}` : ''}
+*Subtotal:* ₹${(data.subtotal / 100).toLocaleString('en-IN')}
+*Shipping:* ${data.shipping === 0 ? 'Free' : `₹${(data.shipping / 100).toLocaleString('en-IN')}`}
+${data.discount > 0 ? `*Discount:* -₹${(data.discount / 100).toLocaleString('en-IN')}\n` : ''}*Total:* ₹${(data.total / 100).toLocaleString('en-IN')}
+*Payment Method:* ${data.paymentMethod.toUpperCase()}
+${data.notes ? `\n*Notes:* ${data.notes}` : ''}
 
 ---
-Please confirm this order and share payment details.
-Thank you for choosing Ayur Veda Global! 🌿`
+Please confirm this order. Thank you! 🌿`
 }
 
 export function buildProductEnquiryMessage(data: {
@@ -139,18 +76,16 @@ export function buildProductEnquiryMessage(data: {
   productName: string
   quantity: number
   enquiry: string
-  source: 'float' | 'product' | 'checkout' | 'contact'
+  source: string
 }): string {
-  return `🌿 *Product Enquiry - Ayur Veda Global*
+  return `🌿 *Enquiry - Ayur Veda Global*
 
-*Customer:* ${data.customerName}
+*Customer:* ${data.customerName || 'Not provided'}
 *Product:* ${data.productName}
-*Quantity Interested:* ${data.quantity}
-*Enquiry:* ${data.enquiry}
+*Quantity:* ${data.quantity}
 
-*Source:* ${data.source}
+*Message:* ${data.enquiry}
 
 ---
-Please respond with product details, pricing, and availability.
-Thank you! 🌿`
+Please share pricing and availability. Thank you! 🌿`
 }

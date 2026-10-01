@@ -9,9 +9,11 @@ interface Toast {
   duration?: number
 }
 
+export type ModalType = 'age-gate' | 'cart'
+
 interface Modal {
   isOpen: boolean
-  type: 'age-gate' | 'cart' | 'wishlist' | 'mobile-menu' | 'search' | 'checkout-success' | 'quick-view' | null
+  type: ModalType | null
   data?: unknown
 }
 
@@ -19,22 +21,13 @@ interface UIStore {
   toasts: Toast[]
   modals: Record<string, Modal>
   isCartDrawerOpen: boolean
-  isWishlistDrawerOpen: boolean
-  isMobileMenuOpen: boolean
-  isSearchOpen: boolean
   ageVerifiedProducts: string[]
   showToast: (toast: Omit<Toast, 'id'>) => void
   dismissToast: (id: string) => void
-  openModal: (type: Modal['type'], data?: unknown) => void
-  closeModal: (type: Modal['type']) => void
+  openModal: (type: ModalType, data?: unknown) => void
+  closeModal: (type: ModalType) => void
   openCartDrawer: () => void
   closeCartDrawer: () => void
-  openWishlistDrawer: () => void
-  closeWishlistDrawer: () => void
-  toggleMobileMenu: () => void
-  closeMobileMenu: () => void
-  toggleSearch: () => void
-  closeSearch: () => void
   verifyAge: (productId: string) => void
   isAgeVerified: (productId: string) => boolean
 }
@@ -67,6 +60,10 @@ export const useUIStore = create<UIStore>()(
       },
 
       openModal: (type, data) => {
+        if (type === 'cart') {
+          set({ isCartDrawerOpen: true })
+          return
+        }
         set(state => ({
           modals: {
             ...state.modals,
@@ -99,7 +96,9 @@ export const useUIStore = create<UIStore>()(
 
       verifyAge: (productId) => {
         set(state => ({
-          ageVerifiedProducts: [...new Set([...state.ageVerifiedProducts, productId])],
+          ageVerifiedProducts: state.ageVerifiedProducts.includes(productId)
+            ? state.ageVerifiedProducts
+            : [...state.ageVerifiedProducts, productId],
         }))
       },
 

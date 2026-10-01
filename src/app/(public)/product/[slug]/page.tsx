@@ -32,8 +32,8 @@ export default function ProductPage() {
 
       <div className="container py-6 sm:py-8 lg:py-10">
         {/* Clean Breadcrumb Navigation */}
-        <div className="mb-6 sm:mb-8 pb-3.5 border-b border-ayur-sand/40">
-          <Breadcrumb items={breadcrumbItems} className="mb-0 text-xs sm:text-sm" />
+        <div className="mb-6 sm:mb-8 pb-3.5 border-b border-[#D4AF37]/20">
+          <Breadcrumb items={breadcrumbItems} className="mb-0 text-xs sm:text-sm text-[#A7B3A9]" />
         </div>
 
         {/* Adult Age Verification Gate for Age Restricted Products */}
@@ -52,11 +52,11 @@ export default function ProductPage() {
 
         {/* Related Products Carousel / Grid */}
         {relatedProducts.length > 0 && (
-          <section className="mt-16 pt-12 border-t border-ayur-sand/40">
+          <section className="mt-16 pt-12 border-t border-[#D4AF37]/20">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <span className="text-xs font-bold text-ayur-forest uppercase tracking-wider">Synergistic Pairings</span>
-                <h2 className="font-heading text-2xl sm:text-3xl font-medium text-ayur-black mt-1">Complete Your Ayurvedic Regimen</h2>
+                <span className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider">Synergistic Pairings</span>
+                <h2 className="font-heading text-2xl sm:text-3xl font-medium text-white mt-1">Complete Your Ayurvedic Regimen</h2>
               </div>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

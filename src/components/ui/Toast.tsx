@@ -26,17 +26,17 @@ export function Toaster() {
   if (!mounted) return null
 
   const toastIcons = {
-    success: <CheckCircle className="w-5 h-5 text-green-600" />,
-    error: <AlertCircle className="w-5 h-5 text-red-600" />,
-    info: <Info className="w-5 h-5 text-blue-600" />,
-    warning: <AlertTriangle className="w-5 h-5 text-amber-600" />,
+    success: <CheckCircle className="w-5 h-5 text-ayur-gold" />,
+    error: <AlertCircle className="w-5 h-5 text-ayur-crimson-light" />,
+    info: <Info className="w-5 h-5 text-ayur-gold" />,
+    warning: <AlertTriangle className="w-5 h-5 text-ayur-copper" />,
   }
 
   const toastStyles = {
-    success: 'bg-green-50 border-green-200',
-    error: 'bg-red-50 border-red-200',
-    info: 'bg-blue-50 border-blue-200',
-    warning: 'bg-amber-50 border-amber-200',
+    success: 'bg-ayur-charcoal/95 border-ayur-gold/50 shadow-[0_8px_30px_rgba(201,168,76,0.15)]',
+    error: 'bg-ayur-charcoal/95 border-ayur-crimson/50 shadow-[0_8px_30px_rgba(139,0,0,0.15)]',
+    info: 'bg-ayur-charcoal/95 border-ayur-gold/35 shadow-[0_8px_30px_rgba(201,168,76,0.1)]',
+    warning: 'bg-ayur-charcoal/95 border-ayur-copper/50 shadow-[0_8px_30px_rgba(184,115,51,0.15)]',
   }
 
   const toastContent = (
@@ -50,7 +50,7 @@ export function Toaster() {
             exit={{ opacity: 0, x: 100, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className={classNames(
-              'flex items-start gap-3 p-4 rounded-xl border shadow-lg',
+              'flex items-start gap-3 p-4 rounded-xl border backdrop-blur-md',
               toastStyles[toast.type]
             )}
             role="alert"
@@ -58,14 +58,14 @@ export function Toaster() {
           >
             <div className="flex-shrink-0 mt-0.5">{toastIcons[toast.type]}</div>
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-ayur-black">{toast.title}</p>
+              <p className="font-heading font-normal text-ayur-ivory text-sm">{toast.title}</p>
               {toast.message && (
-                <p className="mt-0.5 text-sm text-ayur-stone">{toast.message}</p>
+                <p className="mt-0.5 text-xs text-ayur-stone">{toast.message}</p>
               )}
             </div>
             <button
               onClick={() => dismissToast(toast.id)}
-              className="flex-shrink-0 p-1 rounded-lg text-ayur-stone hover:text-ayur-black hover:bg-ayur-beige/50 transition-colors"
+              className="flex-shrink-0 p-1 rounded-lg text-ayur-stone hover:text-ayur-ivory hover:bg-ayur-ivory/10 transition-colors"
               aria-label="Dismiss"
             >
               <X className="w-4 h-4" />

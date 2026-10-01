@@ -143,8 +143,11 @@ export default function ContactPage() {
     <div className="container py-8 lg:py-12">
       <div className="max-w-5xl mx-auto">
         <div className="mb-12">
-          <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black mb-4">Contact Us</h1>
-          <p className="text-ayur-stone text-lg">We'd love to hear from you. Choose your preferred way to get in touch.</p>
+          <span className="px-3.5 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-3 inline-block">
+            We Are Here To Assist
+          </span>
+          <h1 className="font-heading text-3xl md:text-4xl font-semibold text-white mb-3">Contact Us</h1>
+          <p className="text-[#C4BDA8] text-base sm:text-lg">We&apos;d love to hear from you. Choose your preferred way to get in touch with our Ayurvedic team.</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
@@ -152,53 +155,60 @@ export default function ContactPage() {
             <button
               key={info.title}
               onClick={() => handleWhatsAppClick(info.title)}
-              className={index === 0 ? 'lg:col-span-2' : ''}
+              className={index === 0 ? 'lg:col-span-2 text-left' : 'text-left'}
             >
               <div className={index === 0 ? 'h-full' : ''}>
-                <div className="bg-white border border-ayur-beige rounded-2xl p-6 h-full hover:shadow-medium transition-shadow">
+                <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-6 h-full hover:border-[#D4AF37]/60 transition-all shadow-md">
                   <div className="flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${info.bgColor}`}>
-                      <info.icon className="w-6 h-6" style={{ color: info.color.replace('text-', '') }} />
+                    <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center flex-shrink-0 text-[#D4AF37]">
+                      <info.icon className="w-6 h-6 text-[#D4AF37]" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-medium text-ayur-black">{info.title}</h3>
-                      <p className="text-ayur-forest font-medium mt-1">{info.value}</p>
-                      <p className="text-ayur-stone text-sm mt-1">{info.desc}</p>
+                      <h3 className="font-medium text-white">{info.title}</h3>
+                      <p className="text-[#F4E295] font-semibold mt-1">{info.value}</p>
+                      <p className="text-[#C4BDA8] text-sm mt-1">{info.desc}</p>
                     </div>
-                    <Button variant="ghost" size="sm" className="mt-2">
+                    <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 mt-2">
                       {info.action}
-                    </Button>
+                    </span>
                   </div>
                 </div>
               </div>
             </button>
           ))}
 
-          <div className="bg-ayur-forest text-ayur-cream rounded-2xl p-6">
-            <h3 className="font-heading text-xl font-medium mb-4">Quick WhatsApp</h3>
-            <p className="text-ayur-beige mb-6">Skip the form - chat directly with our team on WhatsApp for instant support.</p>
-            <Button variant="gold" size="lg" className="w-full" onClick={() => window.open('https://wa.me/919123485451', '_blank')}>
-              <MessageSquare className="w-5 h-5 mr-2" />
-              Start WhatsApp Chat
-            </Button>
-            <p className="text-xs text-ayur-sand mt-3 text-center">Available Mon-Sat 9AM-7PM IST</p>
+          <div className="glass-luxury border border-[#D4AF37]/30 rounded-2xl p-6 text-white shadow-xl flex flex-col justify-between">
+            <div>
+              <h3 className="font-heading text-xl font-medium mb-3 text-white">Quick WhatsApp Desk</h3>
+              <p className="text-[#C4BDA8] text-sm mb-6">Skip the form — chat directly with our specialists on WhatsApp for instant guidance & order assistance.</p>
+            </div>
+            <div>
+              <button
+                className="btn-gold w-full py-3.5 rounded-xl font-bold text-sm shadow-xl flex items-center justify-center gap-2"
+                onClick={() => window.open('https://wa.me/919123485451', '_blank')}
+              >
+                <MessageSquare className="w-5 h-5" />
+                Start WhatsApp Chat
+              </button>
+              <p className="text-xs text-[#8A9B8F] mt-3 text-center">Available Mon-Sat 9AM-7PM IST</p>
+            </div>
           </div>
         </div>
 
         {/* Executive Management Desk */}
         <section className="mb-16">
           <div className="text-center max-w-2xl mx-auto mb-8">
-            <span className="px-3 py-1 rounded-full bg-ayur-gold/20 text-ayur-gold text-xs font-semibold uppercase tracking-wider mb-2 inline-block">
+            <span className="px-3.5 py-1 rounded-full bg-[#D4AF37]/20 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-2 inline-block">
               Direct Contact
             </span>
-            <h2 className="font-heading text-2xl md:text-3xl font-medium text-ayur-black">Owner & Management Desk</h2>
-            <p className="text-ayur-stone text-sm mt-1">Direct communication with our brand owner and operations manager</p>
+            <h2 className="font-heading text-2xl md:text-3xl font-medium text-white">Owner & Management Desk</h2>
+            <p className="text-[#C4BDA8] text-sm mt-1">Direct communication with our brand owner and operations manager</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* Owner Mageesh */}
-            <div className="bg-white border border-ayur-beige rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-24 h-24 rounded-2xl overflow-hidden relative border-2 border-ayur-gold/30 flex-shrink-0 shadow-sm">
+            <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-lg">
+              <div className="w-24 h-24 rounded-2xl overflow-hidden relative border-2 border-[#D4AF37]/40 flex-shrink-0 shadow-md">
                 <Image
                   src="/images/team/mageesh.jpg"
                   alt="Mageesh"
@@ -208,33 +218,33 @@ export default function ContactPage() {
                 />
               </div>
               <div className="text-center sm:text-left flex-1">
-                <span className="text-xs uppercase tracking-wider font-semibold text-ayur-gold bg-ayur-gold/10 px-2.5 py-0.5 rounded-full inline-block mb-1">
+                <span className="text-xs uppercase tracking-wider font-semibold text-[#D4AF37] bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full inline-block mb-1 border border-[#D4AF37]/30">
                   Owner
                 </span>
-                <h3 className="font-heading text-xl font-medium text-ayur-black">Mageesh</h3>
-                <p className="text-ayur-stone text-sm mt-1">Brand vision, partnerships & executive leadership</p>
+                <h3 className="font-heading text-xl font-medium text-white">Mageesh</h3>
+                <p className="text-[#C4BDA8] text-sm mt-1">Brand vision, partnerships & executive leadership</p>
                 <div className="mt-4 flex flex-wrap gap-2 justify-center sm:justify-start">
                   <a
                     href="tel:+919123485451"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-ayur-forest bg-ayur-cream hover:bg-ayur-beige px-3 py-1.5 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#061B12] hover:bg-[#0A261A] border border-[#D4AF37]/30 px-3 py-1.5 rounded-lg transition-colors"
                   >
-                    <Phone className="w-3.5 h-3.5 text-ayur-gold" />
+                    <Phone className="w-3.5 h-3.5 text-[#D4AF37]" />
                     +91 91234 85451
                   </a>
                   <button
-                    onClick={() => handleWhatsAppClick('Direct to Owner - Mageesh')}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-green-700 bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition-colors"
+                    onClick={() => handleWhatsAppClick('Executive Inquiry - Owner Mageesh')}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#061B12] hover:bg-[#0A261A] border border-[#25D366]/40 px-3 py-1.5 rounded-lg transition-colors"
                   >
-                    <MessageSquare className="w-3.5 h-3.5 text-green-600" />
-                    WhatsApp
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    Direct WhatsApp
                   </button>
                 </div>
               </div>
             </div>
 
             {/* Manager Umesh */}
-            <div className="bg-white border border-ayur-beige rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-24 h-24 rounded-2xl overflow-hidden relative border-2 border-ayur-gold/30 flex-shrink-0 shadow-sm">
+            <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-lg">
+              <div className="w-24 h-24 rounded-2xl overflow-hidden relative border-2 border-[#D4AF37]/40 flex-shrink-0 shadow-md">
                 <Image
                   src="/images/team/umesh.jpg"
                   alt="Umesh"
@@ -244,24 +254,24 @@ export default function ContactPage() {
                 />
               </div>
               <div className="text-center sm:text-left flex-1">
-                <span className="text-xs uppercase tracking-wider font-semibold text-ayur-gold bg-ayur-gold/10 px-2.5 py-0.5 rounded-full inline-block mb-1">
+                <span className="text-xs uppercase tracking-wider font-semibold text-[#D4AF37] bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full inline-block mb-1 border border-[#D4AF37]/30">
                   Manager
                 </span>
-                <h3 className="font-heading text-xl font-medium text-ayur-black">Umesh</h3>
-                <p className="text-ayur-stone text-sm mt-1">Brand operations, logistics & direct customer satisfaction</p>
+                <h3 className="font-heading text-xl font-medium text-white">Umesh</h3>
+                <p className="text-[#C4BDA8] text-sm mt-1">Brand operations, logistics & direct customer satisfaction</p>
                 <div className="mt-4 flex flex-wrap gap-2 justify-center sm:justify-start">
                   <a
                     href="mailto:umesh@ayurvedaglobal.com"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-ayur-forest bg-ayur-cream hover:bg-ayur-beige px-3 py-1.5 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#061B12] hover:bg-[#0A261A] border border-[#D4AF37]/30 px-3 py-1.5 rounded-lg transition-colors"
                   >
-                    <Mail className="w-3.5 h-3.5 text-ayur-forest" />
+                    <Mail className="w-3.5 h-3.5 text-[#D4AF37]" />
                     umesh@ayurvedaglobal.com
                   </a>
                   <button
                     onClick={() => handleWhatsAppClick('Operations Support - Manager Umesh')}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-green-700 bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#061B12] hover:bg-[#0A261A] border border-[#25D366]/40 px-3 py-1.5 rounded-lg transition-colors"
                   >
-                    <MessageSquare className="w-3.5 h-3.5 text-green-600" />
+                    <MessageSquare className="w-3.5 h-3.5" />
                     WhatsApp Desk
                   </button>
                 </div>
@@ -271,16 +281,16 @@ export default function ContactPage() {
         </section>
 
         <section>
-          <div className="bg-white border border-ayur-beige rounded-2xl p-6 md:p-8">
-            <h2 className="font-heading text-2xl font-medium text-ayur-black mb-6">Send Us a Message</h2>
-            <p className="text-ayur-stone mb-8">Fill out the form below and we'll get back to you within 24 hours.</p>
+          <div className="glass-luxury border border-[#D4AF37]/25 rounded-2xl p-6 md:p-8 shadow-2xl">
+            <h2 className="font-heading text-2xl font-medium text-white mb-2">Send Us a Message</h2>
+            <p className="text-[#C4BDA8] mb-8">Fill out the form below and we&apos;ll get back to you within 24 hours.</p>
 
             {submitStatus === 'success' && (
-              <div className="mb-6 p-4 rounded-xl bg-green-50 border border-green-200 flex items-center gap-3">
-                <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
+              <div className="mb-6 p-4 rounded-xl bg-[#09261A] border border-[#D4AF37]/40 flex items-center gap-3">
+                <CheckCircle className="w-6 h-6 text-[#D4AF37] flex-shrink-0" />
                 <div>
-                  <p className="font-medium text-green-700">Message Sent Successfully!</p>
-                  <p className="text-green-600 text-sm">We'll respond to your enquiry within 24 hours.</p>
+                  <p className="font-medium text-[#FAF7EE]">Message Sent Successfully!</p>
+                  <p className="text-[#C4BDA8] text-sm">We&apos;ll respond to your enquiry within 24 hours.</p>
                 </div>
               </div>
             )}
@@ -353,7 +363,7 @@ export default function ContactPage() {
                 rows={5}
               />
 
-              <Button variant="primary" size="lg" className="w-full sm:w-auto" disabled={isSubmitting} loading={isSubmitting}>
+              <Button variant="gold" size="lg" className="w-full sm:w-auto shadow-xl" disabled={isSubmitting} loading={isSubmitting}>
                 <Send className="w-5 h-5 mr-2" />
                 Send Message
               </Button>
@@ -362,7 +372,7 @@ export default function ContactPage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="font-heading text-2xl font-medium text-ayur-black mb-8 text-center">Frequently Asked</h2>
+          <h2 className="font-heading text-2xl font-medium text-white mb-8 text-center">Frequently Asked</h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {[
               { q: 'What is your shipping policy?', a: 'We offer free shipping on orders above ₹999. Standard shipping is ₹49 and takes 5-7 business days.' },
@@ -370,9 +380,9 @@ export default function ContactPage() {
               { q: 'What is your return policy?', a: 'We offer a 7-day return policy for unopened products. Contact us via WhatsApp to initiate a return.' },
               { q: 'Are your products authentic?', a: 'Yes, all our products are 100% genuine with sustainably sourced herbs. Each batch is tested for quality.' },
             ].map((faq, index) => (
-              <div key={index} className="p-6 rounded-2xl bg-ayur-cream">
-                <h3 className="font-medium text-ayur-black mb-2">{faq.q}</h3>
-                <p className="text-ayur-stone">{faq.a}</p>
+              <div key={index} className="p-6 rounded-2xl glass-luxury-card border border-[#D4AF37]/20 shadow-md">
+                <h3 className="font-medium text-white mb-2">{faq.q}</h3>
+                <p className="text-[#C4BDA8] text-sm leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>

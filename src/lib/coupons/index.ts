@@ -1,6 +1,78 @@
 import { db } from '@/lib/db'
 import type { Coupon } from '@/types'
 
+interface DbCoupon {
+  code: string
+  type: 'percentage' | 'fixed' | 'free_shipping'
+  value: number
+  min_order_amount: number
+  max_discount_amount?: number
+  usage_limit: number
+  used_count: number
+  expires_at: string
+  is_active: number | boolean
+  applicable_products_json?: string
+  applicable_categories_json?: string
+}
+
+function mapDbCoupon(row: DbCoupon): Coupon {
+  return {
+    code: row.code,
+    type: row.type,
+    value: row.value,
+    minOrderAmount: row.min_order_amount,
+    maxDiscountAmount: row.max_discount_amount,
+    usageLimit: row.usage_limit,
+    usedCount: row.used_count,
+    expiresAt: row.expires_at,
+    isActive: Boolean(row.is_active),
+    applicableProducts: JSON.parse(row.applicable_products_json || '[]'),
+    applicableCategories: JSON.parse(row.applicable_categories_json || '[]'),
+  }
+}
+
+const defaultCoupons: Record<string, DbCoupon> = {
+  AYUR10: {
+    code: 'AYUR10',
+    type: 'percentage',
+    value: 10,
+    min_order_amount: 0,
+    max_discount_amount: 100000,
+    usage_limit: 10000,
+    used_count: 0,
+    expires_at: '2028-12-31T23:59:59Z',
+    is_active: 1,
+    applicable_products_json: '[]',
+    applicable_categories_json: '[]',
+  },
+  WELCOME10: {
+    code: 'WELCOME10',
+    type: 'percentage',
+    value: 10,
+    min_order_amount: 0,
+    max_discount_amount: 100000,
+    usage_limit: 10000,
+    used_count: 0,
+    expires_at: '2028-12-31T23:59:59Z',
+    is_active: 1,
+    applicable_products_json: '[]',
+    applicable_categories_json: '[]',
+  },
+  AYUR20: {
+    code: 'AYUR20',
+    type: 'percentage',
+    value: 20,
+    min_order_amount: 250000,
+    max_discount_amount: 150000,
+    usage_limit: 5000,
+    used_count: 0,
+    expires_at: '2028-12-31T23:59:59Z',
+    is_active: 1,
+    applicable_products_json: '[]',
+    applicable_categories_json: '[]',
+  },
+}
+
 export function validateCoupon(
   code: string,
   subtotal: number,
@@ -8,33 +80,37 @@ export function validateCoupon(
   categories: string[]
 ): { valid: boolean; coupon?: Coupon; discount: number; error?: string } {
   const stmt = db.prepare('SELECT * FROM coupons WHERE code = ? AND is_active = 1')
-  const coupon = stmt.get(code.toUpperCase()) as Coupon | undefined
+  let row = stmt.get(code.toUpperCase()) as DbCoupon | undefined
 
-  if (!coupon) {
+  if (!row && defaultCoupons[code.toUpperCase()]) {
+    row = defaultCoupons[code.toUpperCase()]
+  }
+
+  if (!row) {
     return { valid: false, discount: 0, error: 'Invalid coupon code' }
   }
 
   const now = new Date()
-  const expiresAt = new Date(coupon.expires_at)
+  const expiresAt = new Date(row.expires_at)
 
   if (now > expiresAt) {
     return { valid: false, discount: 0, error: 'Coupon has expired' }
   }
 
-  if (coupon.used_count >= coupon.usage_limit) {
+  if (row.used_count >= row.usage_limit) {
     return { valid: false, discount: 0, error: 'Coupon usage limit reached' }
   }
 
-  if (subtotal < coupon.min_order_amount) {
+  if (subtotal < row.min_order_amount) {
     return {
       valid: false,
       discount: 0,
-      error: `Minimum order amount of ${formatINR(coupon.min_order_amount)} required`,
+      error: `Minimum order amount of ${formatINR(row.min_order_amount)} required`,
     }
   }
 
-  const applicableProducts = JSON.parse(coupon.applicable_products_json || '[]')
-  const applicableCategories = JSON.parse(coupon.applicable_categories_json || '[]')
+  const applicableProducts = JSON.parse(row.applicable_products_json || '[]')
+  const applicableCategories = JSON.parse(row.applicable_categories_json || '[]')
 
   if (applicableProducts.length > 0 && !productIds.some(id => applicableProducts.includes(id))) {
     return { valid: false, discount: 0, error: 'Coupon not applicable to items in cart' }
@@ -45,21 +121,22 @@ export function validateCoupon(
   }
 
   let discount = 0
-  switch (coupon.type) {
+  switch (row.type) {
     case 'percentage':
-      discount = Math.round((subtotal * coupon.value) / 100)
-      if (coupon.max_discount_amount && discount > coupon.max_discount_amount) {
-        discount = coupon.max_discount_amount
+      discount = Math.round((subtotal * row.value) / 100)
+      if (row.max_discount_amount && discount > row.max_discount_amount) {
+        discount = row.max_discount_amount
       }
       break
     case 'fixed':
-      discount = Math.min(coupon.value, subtotal)
+      discount = Math.min(row.value, subtotal)
       break
     case 'free_shipping':
       discount = 0
       break
   }
 
+  const coupon = mapDbCoupon(row)
   return { valid: true, coupon, discount }
 }
 
@@ -71,12 +148,14 @@ export function applyCoupon(code: string): Coupon | null {
 
 export function getCoupon(code: string): Coupon | null {
   const stmt = db.prepare('SELECT * FROM coupons WHERE code = ?')
-  return stmt.get(code.toUpperCase()) as Coupon | null
+  const row = stmt.get(code.toUpperCase()) as DbCoupon | undefined
+  return row ? mapDbCoupon(row) : null
 }
 
 export function getActiveCoupons(): Coupon[] {
   const stmt = db.prepare('SELECT * FROM coupons WHERE is_active = 1 AND expires_at > datetime("now")')
-  return stmt.all() as Coupon[]
+  const rows = stmt.all() as DbCoupon[]
+  return rows.map(mapDbCoupon)
 }
 
 function formatINR(paise: number): string {

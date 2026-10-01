@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { X, Plus, Minus, Trash2, Tag, Gift } from 'lucide-react'
+import { X, Plus, Minus, Trash2, Gift, Truck, Lock, Shield, RotateCcw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { classNames } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/Input'
 import { PriceDisplay } from '@/components/ui/PriceDisplay'
 import { QuantitySelector } from '@/components/ui/QuantitySelector'
 import { formatINR, calculateShipping } from '@/lib/utils/formatters'
+import { getProductImage } from '@/lib/products/registry'
 import { useCartStore } from '@/store/cartStore'
 import { useUIStore } from '@/store/uiStore'
 
@@ -23,10 +24,36 @@ export function CartDrawer() {
   const total = getTotal()
   const itemCount = getItemCount()
   const shippingCalc = calculateShipping(subtotal)
+  const [couponError, setCouponError] = useState<string | null>(null)
+  const [couponLoading, setCouponLoading] = useState(false)
 
-  const handleApplyCoupon = (code: string) => {
-    // This would call the API to validate coupon
-    applyCouponStore(code, 0) // Placeholder
+  const handleApplyCoupon = async (code: string) => {
+    if (!code.trim()) return
+    setCouponError(null)
+    setCouponLoading(true)
+    try {
+      const res = await fetch('/api/checkout/coupon', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: code.trim().toUpperCase(),
+          subtotal,
+          productIds: items.map(i => i.productId),
+          categories: items.map(i => i.product?.category).filter(Boolean),
+        }),
+      })
+      const data = await res.json()
+      if (data.valid) {
+        applyCouponStore(data.coupon?.code || code.trim().toUpperCase(), data.discount)
+        setCouponError(null)
+      } else {
+        setCouponError(data.error || 'Invalid coupon code')
+      }
+    } catch {
+      setCouponError('Unable to apply coupon. Please try again.')
+    } finally {
+      setCouponLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -61,7 +88,7 @@ export function CartDrawer() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[60] bg-ayur-void/80 backdrop-blur-sm"
             onClick={closeCartDrawer}
             aria-hidden="true"
           />
@@ -70,16 +97,16 @@ export function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="fixed right-0 top-0 bottom-0 z-[65] w-full max-w-md bg-white shadow-2xl flex flex-col"
+            className="fixed right-0 top-0 bottom-0 z-[65] w-full max-w-full sm:max-w-md bg-ayur-charcoal border-l border-ayur-gold/30 shadow-luxury flex flex-col text-ayur-cream"
             role="dialog"
             aria-modal="true"
             aria-label="Shopping cart"
           >
-            <div className="flex items-center justify-between p-4 border-b border-ayur-beige">
-              <h2 className="font-heading text-xl font-medium text-ayur-black">Shopping Cart</h2>
+            <div className="flex items-center justify-between p-4 border-b border-ayur-forest-dark/50">
+              <h2 className="font-heading text-xl font-medium text-ayur-ivory">Shopping Cart</h2>
               <button
                 onClick={closeCartDrawer}
-                className="p-2 rounded-lg text-ayur-stone hover:text-ayur-black hover:bg-ayur-beige transition-colors"
+                className="p-2 rounded-lg text-ayur-stone hover:text-ayur-ivory hover:bg-ayur-forest-dark/50 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -88,13 +115,13 @@ export function CartDrawer() {
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {items.length === 0 ? (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-ayur-beige flex items-center justify-center">
-                    <Trash2 className="w-8 h-8 text-ayur-stone" />
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-ayur-gold/15 border border-ayur-gold/30 flex items-center justify-center text-ayur-gold">
+                    <Gift className="w-8 h-8" />
                   </div>
-                  <h3 className="font-medium text-ayur-black mb-2">Your cart is empty</h3>
+                  <h3 className="font-medium text-ayur-ivory mb-2">Your cart is empty</h3>
                   <p className="text-ayur-stone mb-6">Add some products to get started</p>
-                  <Link href="/shop">
-                    <Button variant="primary" className="w-full">Continue Shopping</Button>
+                  <Link href="/shop" onClick={closeCartDrawer}>
+                    <Button variant="gold" className="w-full">Continue Shopping</Button>
                   </Link>
                 </div>
               ) : (
@@ -108,8 +135,13 @@ export function CartDrawer() {
                   <CouponInput
                     couponCode={couponCode}
                     onApply={handleApplyCoupon}
-                    onRemove={removeCoupon}
+                    onRemove={() => {
+                      removeCoupon()
+                      setCouponError(null)
+                    }}
                     subtotal={subtotal}
+                    error={couponError}
+                    loading={couponLoading}
                   />
 
                   <CartSummary
@@ -125,15 +157,33 @@ export function CartDrawer() {
             </div>
 
             {items.length > 0 && (
-              <div className="p-4 border-t border-ayur-sand/50 bg-white space-y-2.5">
+              <div className="p-4 border-t border-ayur-forest-dark/50 bg-ayur-charcoal space-y-2.5">
                 <Link href="/checkout" onClick={closeCartDrawer}>
-                  <Button variant="gold" size="lg" className="w-full text-base font-semibold shadow-md">
+                  <Button variant="gold" size="lg" className="w-full text-base font-semibold shadow-xl gold-shimmer">
                     Proceed to Checkout ({formatINR(total)})
                   </Button>
                 </Link>
                 <div className="flex items-center justify-center gap-4 text-xs text-ayur-stone pt-1">
-                  <span className="flex items-center gap-1">🔒 100% Secure Checkout</span>
-                  <span className="flex items-center gap-1">🌿 Pure Ayurveda</span>
+                  <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> 100% Secure Checkout</span>
+                  <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Ayush Certified</span>
+                </div>
+                <div className="grid grid-cols-4 gap-2 text-center pt-2">
+                  <div className="p-2 rounded-lg bg-ayur-forest-dark/50">
+                    <Truck className="w-4 h-4 text-ayur-gold mx-auto mb-1" />
+                    <span className="text-[10px] text-ayur-stone">Free Express</span>
+                  </div>
+                  <div className="p-2 rounded-lg bg-ayur-forest-dark/50">
+                    <Lock className="w-4 h-4 text-ayur-gold mx-auto mb-1" />
+                    <span className="text-[10px] text-ayur-stone">Discreet Box</span>
+                  </div>
+                  <div className="p-2 rounded-lg bg-ayur-forest-dark/50">
+                    <Shield className="w-4 h-4 text-ayur-gold mx-auto mb-1" />
+                    <span className="text-[10px] text-ayur-stone">COD Available</span>
+                  </div>
+                  <div className="p-2 rounded-lg bg-ayur-forest-dark/50">
+                    <RotateCcw className="w-4 h-4 text-ayur-gold mx-auto mb-1" />
+                    <span className="text-[10px] text-ayur-stone">Easy Returns</span>
+                  </div>
                 </div>
               </div>
             )}
@@ -149,19 +199,56 @@ function CartDrawerItem({
   onUpdateQuantity,
   onRemove,
 }: {
-  item: { id: string; productId: string; variantId?: string; quantity: number; price: number; product: { name: string; images: { src: string; alt: string }[] } }
+  item: {
+    id: string
+    productId: string
+    variantId?: string
+    quantity: number
+    price: number
+    product: {
+      name: string
+      images?: { src: string; alt: string; isPrimary?: boolean }[]
+      variants?: { id: string; name: string }[]
+    }
+  }
   onUpdateQuantity: (productId: string, variantId: string | undefined, quantity: number) => void
   onRemove: (productId: string, variantId?: string) => void
 }) {
-  const primaryImage = item.product.images.find(img => img.isPrimary) || item.product.images[0]
+  const resolvedImage = getProductImage(item.product, item.productId)
+  const [imgSrc, setImgSrc] = useState(resolvedImage.src)
+  const variantName = item.product.variants?.find(v => v.id === item.variantId)?.name
 
   return (
-    <div className="flex gap-3 p-3 bg-ayur-cream rounded-xl">
-      <Link href={`/product/${item.productId}`} className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-white relative">
-        <Image src={primaryImage.src} alt={primaryImage.alt} fill className="object-cover" sizes="64px" />
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -20 }}
+      className="flex items-start gap-3 p-3 bg-ayur-forest-dark/80 border border-ayur-gold/20 rounded-xl hover:border-ayur-gold/40 transition-colors"
+    >
+      <Link
+        href={`/product/${item.productId}`}
+        className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-ayur-void border border-ayur-gold/20 relative"
+      >
+        <Image
+          src={imgSrc}
+          alt={resolvedImage.alt}
+          fill
+          className="object-contain p-1"
+          sizes="64px"
+          onError={() => setImgSrc('/images/products/body-essential-nutrition.png')}
+        />
       </Link>
       <div className="flex-1 min-w-0">
-        <h4 className="font-medium text-ayur-black line-clamp-1">{item.product.name}</h4>
+        <Link href={`/product/${item.productId}`}>
+          <h4 className="font-medium text-ayur-ivory text-sm leading-snug line-clamp-2 hover:text-ayur-gold-light transition-colors">
+            {item.product.name}
+          </h4>
+        </Link>
+        {variantName && (
+          <p className="text-[11px] text-ayur-gold-light/90 font-medium mt-0.5 truncate">
+            {variantName}
+          </p>
+        )}
         <PriceDisplay price={item.price} size="sm" className="mt-1" />
         <QuantitySelector
           value={item.quantity}
@@ -174,12 +261,12 @@ function CartDrawerItem({
       </div>
       <button
         onClick={() => onRemove(item.productId, item.variantId)}
-        className="p-2 rounded-lg text-ayur-stone hover:text-ayur-copper hover:bg-white transition-colors flex-shrink-0"
+        className="p-2 rounded-lg text-ayur-stone hover:text-ayur-crimson-light hover:bg-ayur-crimson/10 transition-colors flex-shrink-0"
         aria-label="Remove item"
       >
-        <Trash2 className="w-5 h-5" />
+        <Trash2 className="w-4 h-4" />
       </button>
-    </div>
+    </motion.div>
   )
 }
 
@@ -188,41 +275,54 @@ export function CouponInput({
   onApply,
   onRemove,
   subtotal,
+  error,
+  loading = false,
 }: {
   couponCode?: string
   onApply: (code: string) => void
   onRemove: () => void
   subtotal: number
+  error?: string | null
+  loading?: boolean
 }) {
   const [code, setCode] = useState('')
 
   return (
-    <div className="bg-white border border-ayur-beige rounded-xl p-4">
-      <h3 className="font-medium text-ayur-black mb-3 flex items-center gap-2">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="card-luxury p-4"
+    >
+      <h3 className="font-medium text-ayur-ivory mb-3 flex items-center gap-2">
         <Gift className="w-5 h-5 text-ayur-gold" />
         Coupon Code
       </h3>
       {couponCode ? (
         <div className="flex items-center justify-between">
-          <span className="font-medium text-ayur-forest">{couponCode}</span>
-          <button onClick={onRemove} className="text-sm text-ayur-copper hover:underline">Remove</button>
+          <span className="font-medium text-emerald-400 font-mono tracking-wider">{couponCode}</span>
+          <button onClick={onRemove} className="text-sm text-ayur-stone hover:text-ayur-crimson-light transition-colors">Remove</button>
         </div>
       ) : (
-        <div className="flex gap-2">
-          <Input
-            type="text"
-            value={code}
-            onChange={e => setCode(e.target.value.toUpperCase())}
-            placeholder="Enter coupon code"
-            className="flex-1"
-            aria-label="Coupon code"
-          />
-          <Button onClick={() => onApply(code)} disabled={!code.trim()}>
-            Apply
-          </Button>
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <Input
+              type="text"
+              value={code}
+              onChange={e => setCode(e.target.value.toUpperCase())}
+              placeholder="Enter coupon code"
+              className="flex-1"
+              aria-label="Coupon code"
+            />
+            <Button variant="gold" onClick={() => onApply(code)} disabled={!code.trim() || loading}>
+              {loading ? 'Verifying...' : 'Apply'}
+            </Button>
+          </div>
+          {error && (
+            <p className="text-xs text-rose-400 font-medium">{error}</p>
+          )}
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
 
@@ -242,39 +342,43 @@ function CartSummary({
   freeShippingThreshold: number
 }) {
   return (
-    <div className="bg-white border border-ayur-beige rounded-xl p-4 space-y-3">
-      <h3 className="font-medium text-ayur-black">Order Summary</h3>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="card-luxury p-4 space-y-3"
+    >
+      <h3 className="font-medium text-ayur-ivory">Order Summary</h3>
       <div className="space-y-2 text-sm">
-        <div className="flex justify-between text-ayur-forest">
+        <div className="flex justify-between text-ayur-stone">
           <span>Subtotal</span>
-          <span>{formatINR(subtotal)}</span>
+          <span className="text-ayur-ivory font-medium">{formatINR(subtotal)}</span>
         </div>
         {discount > 0 && (
-          <div className="flex justify-between text-ayur-sage">
+          <div className="flex justify-between text-ayur-gold-light">
             <span>Discount</span>
-            <span>-{formatINR(discount)}</span>
+            <span className="font-medium">-{formatINR(discount)}</span>
           </div>
         )}
-        <div className="flex justify-between text-ayur-forest">
+        <div className="flex justify-between text-ayur-stone">
           <span>Shipping</span>
-          <span>{shipping === 0 ? 'Free' : formatINR(shipping)}</span>
+          <span className="text-ayur-gold-light font-medium">{shipping === 0 ? 'Free' : formatINR(shipping)}</span>
         </div>
         {tax > 0 && (
-          <div className="flex justify-between text-ayur-forest">
+          <div className="flex justify-between text-ayur-stone">
             <span>Tax</span>
-            <span>{formatINR(tax)}</span>
+            <span className="text-ayur-ivory font-medium">{formatINR(tax)}</span>
           </div>
         )}
-        <div className="flex justify-between border-t border-ayur-beige pt-2">
-          <span className="font-medium text-ayur-black">Total</span>
-          <span className="font-medium text-ayur-black text-lg">{formatINR(total)}</span>
+        <div className="flex justify-between border-t border-ayur-forest-dark/50 pt-2">
+          <span className="font-medium text-ayur-ivory">Total</span>
+          <span className="font-medium text-ayur-gold-light text-lg">{formatINR(total)}</span>
         </div>
       </div>
       {freeShippingThreshold > 0 && (
-        <p className="text-xs text-ayur-sage text-center">
-          Add {formatINR(freeShippingThreshold)} more for free shipping
+        <p className="text-xs text-ayur-gold-light text-center bg-ayur-gold/10 border border-ayur-gold/20 rounded-lg p-2">
+          Add {formatINR(freeShippingThreshold)} more for free express shipping
         </p>
       )}
-    </div>
+    </motion.div>
   )
 }

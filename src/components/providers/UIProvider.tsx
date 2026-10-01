@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, createContext, useContext, useSyncExternalStore } from 'react'
+import { ReactNode, createContext, useContext } from 'react'
 import { useUIStore } from '@/store/uiStore'
 
 interface UIContextType {
@@ -24,7 +24,6 @@ export function useUI() {
   return context.store
 }
 
-export function useUISelector<T>(selector: (state: ReturnType<typeof useUIStore>) => T) {
-  const store = useUI()
-  return useSyncExternalStore(store.subscribe, () => selector(store.getState()), () => selector(store.getState()))
+export function useUISelector<T>(selector: (state: ReturnType<typeof useUIStore.getState>) => T): T {
+  return useUIStore(selector)
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, createContext, useContext, useSyncExternalStore } from 'react'
+import { ReactNode, createContext, useContext } from 'react'
 import { useCartStore } from '@/store/cartStore'
 
 interface CartContextType {
@@ -24,7 +24,6 @@ export function useCart() {
   return context.store
 }
 
-export function useCartSelector<T>(selector: (state: ReturnType<typeof useCartStore>) => T) {
-  const store = useCart()
-  return useSyncExternalStore(store.subscribe, () => selector(store.getState()), () => selector(store.getState()))
+export function useCartSelector<T>(selector: (state: ReturnType<typeof useCartStore.getState>) => T): T {
+  return useCartStore(selector)
 }

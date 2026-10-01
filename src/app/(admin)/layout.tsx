@@ -17,7 +17,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (pathname === '/login') {
+    if (pathname === '/admin/login') {
       setLoading(false)
       return
     }
@@ -25,12 +25,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     if (auth) {
       setIsAuthenticated(true)
     } else {
-      router.push('/login')
+      router.push('/admin/login')
     }
     setLoading(false)
   }, [router, pathname])
 
-  if (pathname === '/login') {
+  if (pathname === '/admin/login') {
     return <>{children}</>
   }
 
@@ -54,7 +54,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const handleLogout = () => {
     localStorage.removeItem('admin_auth')
-    router.push('/admin/login')
+    router.push('/login')
   }
 
   return (

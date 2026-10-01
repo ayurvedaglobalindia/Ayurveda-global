@@ -42,7 +42,6 @@ export function Modal({
 
     document.addEventListener('keydown', handleEscape)
 
-    // Calculate scrollbar width to prevent desktop layout shift
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
     const originalOverflow = document.body.style.overflow
     const originalPaddingRight = document.body.style.paddingRight
@@ -77,7 +76,7 @@ export function Modal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[70] overflow-y-auto p-4 sm:p-6 flex min-h-full items-center justify-center bg-black/70 backdrop-blur-md"
+          className="fixed inset-0 z-[70] overflow-y-auto p-4 sm:p-6 flex min-h-full items-center justify-center bg-ayur-void/80 backdrop-blur-xl"
           onClick={closeOnOverlayClick ? onClose : undefined}
           role="dialog"
           aria-modal="true"
@@ -90,16 +89,16 @@ export function Modal({
             exit={{ opacity: 0, scale: 0.96, y: 16 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className={classNames(
-              'relative w-full max-h-[calc(100vh-3rem)] sm:max-h-[calc(100vh-4rem)] flex flex-col bg-white rounded-3xl shadow-2xl border border-ayur-sand/50 overflow-hidden my-auto',
+              'relative w-full max-h-[calc(100vh-3rem)] sm:max-h-[calc(100vh-4rem)] flex flex-col bg-ayur-charcoal rounded-3xl shadow-luxury border border-ayur-gold/25 overflow-hidden my-auto text-ayur-cream',
               sizeClasses[size]
             )}
-            onClick={e => e.stopPropagation()}
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
             {(title || showCloseButton) && (
-              <div className="flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5 border-b border-ayur-sand/40 bg-ayur-cream/80 backdrop-blur-sm flex-shrink-0">
+              <div className="flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5 border-b border-ayur-forest-dark/50 bg-ayur-forest-deep/90 backdrop-blur-md flex-shrink-0">
                 <div className="min-w-0 pr-4">
                   {title && (
-                    <h2 id="modal-title" className="text-lg sm:text-xl font-medium text-ayur-black font-heading truncate">
+                    <h2 id="modal-title" className="font-heading text-lg sm:text-xl font-normal text-ayur-ivory truncate">
                       {title}
                     </h2>
                   )}
@@ -112,7 +111,7 @@ export function Modal({
                 {showCloseButton && (
                   <button
                     onClick={onClose}
-                    className="p-1.5 rounded-full text-ayur-stone hover:text-ayur-black hover:bg-ayur-sand/30 transition-colors focus-visible-ring flex-shrink-0"
+                    className="p-1.5 rounded-full text-ayur-stone hover:text-ayur-gold hover:bg-ayur-gold/10 transition-colors focus-visible-ring flex-shrink-0"
                     aria-label="Close modal"
                   >
                     <X className="w-5 h-5" />

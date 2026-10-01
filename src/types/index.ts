@@ -78,6 +78,7 @@ export interface WishlistItem {
 }
 
 export interface Address {
+  id?: string
   firstName: string
   lastName: string
   company?: string
@@ -92,38 +93,41 @@ export interface Address {
 }
 
 export interface OrderItem {
-  id: string
-  productId: string
+  id?: string
+  productId?: string
   variantId?: string
-  productName: string
-  productImage: string
+  productName?: string
+  productImage?: string
+  name?: string
+  image?: string
   quantity: number
   price: number
-  total: number
+  total?: number
 }
 
 export interface Order {
   id: string
   orderNumber: string
-  customerName: string
-  customerPhone: string
+  customerName?: string
+  customerPhone?: string
   customerEmail?: string
   shippingAddress: Address
   billingAddress?: Address
   items: OrderItem[]
-  subtotal: number
-  shipping: number
-  tax: number
-  discount: number
+  subtotal?: number
+  shipping?: number
+  tax?: number
+  discount?: number
   total: number
-  paymentMethod: 'whatsapp' | 'cod'
-  paymentStatus: 'pending' | 'confirmed' | 'failed' | 'refunded'
-  orderStatus: 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+  paymentMethod: 'whatsapp' | 'cod' | string
+  paymentStatus?: 'pending' | 'confirmed' | 'failed' | 'refunded'
+  orderStatus?: 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+  status?: 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | string
   couponCode?: string
   notes?: string
-  whatsappMessageSent: boolean
+  whatsappMessageSent?: boolean
   createdAt: string
-  updatedAt: string
+  updatedAt?: string
 }
 
 export interface Coupon {
@@ -142,7 +146,7 @@ export interface Coupon {
 
 export interface WhatsAppLeadEvent {
   id?: number
-  source: 'float' | 'product' | 'checkout' | 'contact' | 'admin'
+  source: 'float' | 'product' | 'checkout' | 'contact' | 'admin' | '3d-showcase' | 'combo-spotlight' | 'video-player' | 'quick-view' | 'ag-mascot'
   productId?: string
   productName?: string
   customerName?: string
@@ -152,6 +156,7 @@ export interface WhatsAppLeadEvent {
   orderTotal?: number
   orderId?: string
   messagePreview?: string
+  pageUrl?: string
   userAgent: string
   referrer: string
   createdAt: string
@@ -163,7 +168,7 @@ export interface User {
   email: string
   phone: string
   addresses: Address[]
-  orders: string[]
+  orders: any[]
   wishlist: string[]
   createdAt: string
 }

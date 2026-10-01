@@ -13,6 +13,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
     title: {
       default: 'Ayur Veda Global | Authentic Ayurvedic Wellness Products',
       template: '%s | Ayur Veda Global',
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
   }
 
 export const viewport: Viewport = {
-  themeColor: '#1B3A2F',
+  themeColor: '#030F07',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -66,13 +67,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} antialiased dark`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://wa.me" />
       </head>
-      <body className="min-h-screen bg-ayur-cream font-body">
+      <body className="min-h-screen bg-ayur-void text-ayur-cream font-body selection:bg-ayur-gold selection:text-ayur-void">
         <Providers>
           {children}
           <Toaster />

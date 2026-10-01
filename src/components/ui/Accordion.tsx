@@ -36,20 +36,26 @@ export function Accordion({ items, allowMultiple = false, className }: Accordion
       {items.map((item, index) => {
         const isOpen = openIndices.includes(index)
         return (
-          <div key={index} className="border border-ayur-beige rounded-xl overflow-hidden bg-white">
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05 }}
+            className="card-luxury rounded-xl overflow-hidden"
+          >
             <button
               onClick={() => toggleItem(index)}
               className={classNames(
-                'w-full px-6 py-4 flex items-center justify-between text-left transition-colors focus-visible-ring',
-                isOpen ? 'bg-ayur-cream' : 'hover:bg-ayur-cream/50'
+                'w-full px-5 py-4 flex items-center justify-between text-left transition-colors focus-visible-ring',
+                isOpen ? 'bg-ayur-forest-dark/50' : 'hover:bg-ayur-forest-dark/30'
               )}
               aria-expanded={isOpen}
               aria-controls={`accordion-content-${index}`}
             >
-              <span className="font-medium text-ayur-black pr-4">{item.title}</span>
+              <span className="font-medium text-ayur-ivory pr-4">{item.title}</span>
               <ChevronDown
                 className={classNames(
-                  'w-5 h-5 text-ayur-sage flex-shrink-0 transition-transform duration-200',
+                  'w-5 h-5 text-ayur-gold flex-shrink-0 transition-transform duration-200',
                   isOpen && 'rotate-180'
                 )}
                 aria-hidden="true"
@@ -65,13 +71,13 @@ export function Accordion({ items, allowMultiple = false, className }: Accordion
                   transition={{ duration: 0.2 }}
                   className="overflow-hidden"
                 >
-                  <div className="px-6 pb-6 text-ayur-stone">
+                  <div className="px-5 pb-5 text-ayur-stone">
                     {item.content}
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </motion.div>
         )
       })}
     </div>

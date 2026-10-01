@@ -2,6 +2,7 @@
 
 import { SelectHTMLAttributes, forwardRef } from 'react'
 import { classNames } from '@/lib/utils/formatters'
+import { ChevronDown } from 'lucide-react'
 
 interface SelectOption {
   value: string
@@ -23,9 +24,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={selectId} className="block text-sm font-medium text-ayur-forest mb-1.5">
+          <label htmlFor={selectId} className="label">
             {label}
-            {props.required && <span className="text-ayur-copper ml-1" aria-hidden="true">*</span>}
+            {props.required && <span className="text-ayur-gold ml-1" aria-hidden="true">*</span>}
           </label>
         )}
         <div className="relative">
@@ -33,9 +34,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             id={selectId}
             className={classNames(
-              'w-full px-4 py-3 bg-white border rounded-lg text-ayur-black appearance-none transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ayur-gold focus:border-transparent pr-10',
-              error && 'border-ayur-copper focus:ring-ayur-copper',
-              !error && 'border-ayur-sand',
+              'input pr-10 appearance-none cursor-pointer',
+              error && 'input-error',
               className
             )}
             aria-invalid={error ? 'true' : 'false'}
@@ -43,24 +43,22 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             {...props}
           >
             {placeholder && (
-              <option value="" disabled>
+              <option value="" disabled className="bg-ayur-charcoal text-ayur-stone">
                 {placeholder}
               </option>
             )}
             {options.map(option => (
-              <option key={option.value} value={option.value}>
+              <option key={option.value} value={option.value} className="bg-ayur-charcoal text-ayur-ivory">
                 {option.label}
               </option>
             ))}
           </select>
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ayur-stone">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ayur-gold">
+            <ChevronDown className="w-5 h-5" />
           </div>
         </div>
         {error && (
-          <p id={`${selectId}-error`} className="mt-1.5 text-sm text-ayur-copper" role="alert">
+          <p id={`${selectId}-error`} className="mt-1.5 text-sm text-ayur-crimson-light" role="alert">
             {error}
           </p>
         )}
