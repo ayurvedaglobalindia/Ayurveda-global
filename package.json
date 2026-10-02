@@ -10,7 +10,8 @@
     "test": "tsx src/scripts/run-tests.ts",
     "diagnose": "bash diagnose.sh",
     "db:init": "tsx src/scripts/init-db.ts",
-    "db:seed": "tsx src/scripts/seed-products.ts"
+    "db:seed": "tsx src/scripts/seed-products.ts",
+    "build:cf": "npm run build && rm -rf .next/cache"
   
 },
   "dependencies": {
