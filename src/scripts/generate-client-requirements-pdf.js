@@ -797,7 +797,6 @@ async function generateClientRequirementsPDF() {
         fs.mkdirSync(dir, { recursive: true });
       }
       fs.writeFileSync(outPath, pdfBytes);
-      console.log(`Saved: ${outPath} (${(pdfBytes.length / 1024).toFixed(1)} KB)`);
     } catch (e) {
       console.error(`Error saving ${outPath}:`, e.message);
     }

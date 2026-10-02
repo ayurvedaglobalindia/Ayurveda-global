@@ -1,6 +1,5 @@
 import { db } from '@/lib/db'
 
-console.log('Initializing database...')
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS products (
@@ -105,4 +104,3 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_whatsapp_leads_created_at ON whatsapp_leads(created_at);
 `)
 
-console.log('Database initialized successfully!')

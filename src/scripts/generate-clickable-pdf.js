@@ -890,7 +890,6 @@ async function generateClickablePDF() {
 
   const pdfBytes = await pdfDoc.save();
   fs.writeFileSync(OUTPUT_PATH, pdfBytes);
-  console.log('Interactive Clickable PDF generated successfully:', OUTPUT_PATH, 'Size:', pdfBytes.length);
 }
 
 generateClickablePDF().catch(err => {

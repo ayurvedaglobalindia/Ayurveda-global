@@ -302,7 +302,6 @@ export function getDb() {
 }
 
 export function initializeDatabase() {
-  console.log('JSON database initialized successfully')
 }
 
 initializeDatabase()
