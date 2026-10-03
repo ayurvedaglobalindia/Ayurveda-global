@@ -1,16 +1,9 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/components/providers'
 import { Toaster } from '@/components/ui/Toast'
 import { WhatsAppFloatButton } from '@/components/layout/WhatsAppFloatButton'
 import { GlobalModals } from '@/components/layout/GlobalModals'
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-dm-sans',
-})
 
 export const metadata: Metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
@@ -67,10 +60,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased dark`}>
+    <html lang="en" className="antialiased dark">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
         <link rel="dns-prefetch" href="https://wa.me" />
       </head>
       <body className="min-h-screen bg-ayur-void text-ayur-cream font-body selection:bg-ayur-gold selection:text-ayur-void">

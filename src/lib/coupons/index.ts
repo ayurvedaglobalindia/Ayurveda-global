@@ -1,5 +1,15 @@
-import { db } from '@/lib/db'
 import type { Coupon } from '@/types'
+
+function getDbSafe() {
+  if (typeof window === 'undefined') {
+    try {
+      return require('@/lib/db').db
+    } catch {
+      return null
+    }
+  }
+  return null
+}
 
 interface DbCoupon {
   code: string
@@ -79,8 +89,14 @@ export function validateCoupon(
   productIds: string[],
   categories: string[]
 ): { valid: boolean; coupon?: Coupon; discount: number; error?: string } {
-  const stmt = db.prepare('SELECT * FROM coupons WHERE code = ? AND is_active = 1')
-  let row = stmt.get(code.toUpperCase()) as DbCoupon | undefined
+  const dbInstance = getDbSafe()
+  let row: DbCoupon | undefined
+  if (dbInstance) {
+    try {
+      const stmt = dbInstance.prepare('SELECT * FROM coupons WHERE code = ? AND is_active = 1')
+      row = stmt.get(code.toUpperCase()) as DbCoupon | undefined
+    } catch {}
+  }
 
   if (!row && defaultCoupons[code.toUpperCase()]) {
     row = defaultCoupons[code.toUpperCase()]
@@ -141,21 +157,41 @@ export function validateCoupon(
 }
 
 export function applyCoupon(code: string): Coupon | null {
-  const stmt = db.prepare('UPDATE coupons SET used_count = used_count + 1 WHERE code = ?')
-  stmt.run(code.toUpperCase())
+  const dbInstance = getDbSafe()
+  if (dbInstance) {
+    try {
+      const stmt = dbInstance.prepare('UPDATE coupons SET used_count = used_count + 1 WHERE code = ?')
+      stmt.run(code.toUpperCase())
+    } catch {}
+  }
   return getCoupon(code)
 }
 
 export function getCoupon(code: string): Coupon | null {
-  const stmt = db.prepare('SELECT * FROM coupons WHERE code = ?')
-  const row = stmt.get(code.toUpperCase()) as DbCoupon | undefined
+  const dbInstance = getDbSafe()
+  let row: DbCoupon | undefined
+  if (dbInstance) {
+    try {
+      const stmt = dbInstance.prepare('SELECT * FROM coupons WHERE code = ?')
+      row = stmt.get(code.toUpperCase()) as DbCoupon | undefined
+    } catch {}
+  }
+  if (!row && defaultCoupons[code.toUpperCase()]) {
+    row = defaultCoupons[code.toUpperCase()]
+  }
   return row ? mapDbCoupon(row) : null
 }
 
 export function getActiveCoupons(): Coupon[] {
-  const stmt = db.prepare('SELECT * FROM coupons WHERE is_active = 1 AND expires_at > datetime("now")')
-  const rows = stmt.all() as DbCoupon[]
-  return rows.map(mapDbCoupon)
+  const dbInstance = getDbSafe()
+  if (dbInstance) {
+    try {
+      const stmt = dbInstance.prepare('SELECT * FROM coupons WHERE is_active = 1 AND expires_at > datetime("now")')
+      const rows = stmt.all() as DbCoupon[]
+      return rows.map(mapDbCoupon)
+    } catch {}
+  }
+  return Object.values(defaultCoupons).map(mapDbCoupon)
 }
 
 function formatINR(paise: number): string {

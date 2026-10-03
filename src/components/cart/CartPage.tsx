@@ -12,6 +12,7 @@ import { ProductCard } from '@/components/product/ProductCard'
 import { formatINR, calculateShipping } from '@/lib/utils/formatters'
 import { useCartStore } from '@/store/cartStore'
 import { getProductsByCategory, getProductImage } from '@/lib/products/registry'
+import { validateCoupon } from '@/lib/coupons'
 import type { CartItem } from '@/types'
 import { motion } from 'framer-motion'
 import { CouponInput } from './CartDrawer'
@@ -36,22 +37,17 @@ export function CartPage() {
     setIsMounted(true)
   }, [])
 
-  const handleApplyCoupon = async (code: string) => {
+  const handleApplyCoupon = (code: string) => {
     if (!code.trim()) return
     setCouponError(null)
     setCouponLoading(true)
     try {
-      const res = await fetch('/api/checkout/coupon', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          code: code.trim().toUpperCase(),
-          subtotal,
-          productIds: items.map(i => i.productId),
-          categories: items.map(i => i.product?.category).filter(Boolean),
-        }),
-      })
-      const data = await res.json()
+      const data = validateCoupon(
+        code.trim().toUpperCase(),
+        subtotal,
+        items.map(i => i.productId),
+        items.map(i => i.product?.category).filter(Boolean) as string[]
+      )
       if (data.valid) {
         applyCoupon(data.coupon?.code || code.trim().toUpperCase(), data.discount)
         setCouponError(null)

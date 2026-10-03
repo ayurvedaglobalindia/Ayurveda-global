@@ -7,6 +7,7 @@ import { formatDateTime, formatINR, classNames } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Badge } from '@/components/ui/Badge'
+import { useUserStore } from '@/store/userStore'
 
 const mockTrackingData = {
   'ORD-20241215-ABC1': {
@@ -113,6 +114,27 @@ export default function TrackOrderPage() {
       }
     } catch {
       // Continue to mock fallback
+    }
+
+    // Check user store for client placed orders
+    const userOrders = useUserStore.getState().orders || []
+    const userOrder = userOrders.find(o => o.id === trimmedId || o.orderNumber === trimmedId)
+    if (userOrder) {
+      setTrackedOrder({
+        orderNumber: userOrder.orderNumber,
+        status: userOrder.status,
+        items: userOrder.items.map(i => ({ name: i.name, quantity: i.quantity, total: i.total })),
+        total: userOrder.total,
+        timeline: [
+          { status: 'confirmed', date: userOrder.createdAt, note: `Order confirmed (${userOrder.paymentMethod === 'whatsapp' ? 'WhatsApp' : 'Cash on Delivery'})` },
+          { status: 'processing', date: userOrder.createdAt, note: 'Order being prepared for dispatch' },
+        ],
+        trackingNumber: `EXP-${userOrder.orderNumber.slice(-8)}`,
+        carrier: 'BlueDart / Express Logistics',
+      })
+      setError('')
+      setLoading(false)
+      return
     }
 
     // Fallback to sample mock data if matching

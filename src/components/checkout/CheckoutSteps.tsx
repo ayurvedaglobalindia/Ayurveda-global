@@ -18,6 +18,7 @@ import { useUIStore } from '@/store/uiStore'
 import { useWhatsAppStore } from '@/store/whatsappStore'
 import { buildWhatsAppUrl, buildOrderWhatsAppMessage } from '@/store/whatsappStore'
 import { useUserStore } from '@/store/userStore'
+import { validateCoupon } from '@/lib/coupons'
 import { CouponInput } from '@/components/cart/CartDrawer'
 import type { CartItem, Address, Order } from '@/types'
 import { Truck, Shield, Lock, RotateCcw, CheckCircle2, CreditCard, Smartphone, Mail, MapPin, Phone, User, ArrowRight } from 'lucide-react'
@@ -116,22 +117,17 @@ export function CheckoutForm() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleApplyCoupon = async (code: string) => {
+  const handleApplyCoupon = (code: string) => {
     if (!code.trim()) return
     setCouponError(null)
     setCouponLoading(true)
     try {
-      const res = await fetch('/api/checkout/coupon', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          code: code.trim().toUpperCase(),
-          subtotal,
-          productIds: items.map(i => i.productId),
-          categories: items.map(i => i.product?.category).filter(Boolean),
-        }),
-      })
-      const data = await res.json()
+      const data = validateCoupon(
+        code.trim().toUpperCase(),
+        subtotal,
+        items.map(i => i.productId),
+        items.map(i => i.product?.category).filter(Boolean) as string[]
+      )
       if (data.valid) {
         applyCouponStore(data.coupon?.code || code.trim().toUpperCase(), data.discount)
         setCouponError(null)

@@ -8,6 +8,15 @@ const nextConfig = {
   typescript: { ignoreBuildErrors: true },
   experimental: { useWasmBinary: true },
   webpack: (config, { dev, isServer }) => {
+    if (!isServer) {
+      config.resolve = config.resolve || {}
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        crypto: false,
+      }
+    }
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
