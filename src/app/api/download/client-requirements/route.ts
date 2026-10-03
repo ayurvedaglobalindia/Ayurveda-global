@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 
-export const dynamic = 'force-dynamic'
-
 export async function GET(req: NextRequest) {
   try {
     const pdfPath = path.join(process.cwd(), 'public', 'Client_Requirements_Ayur_Veda_Global.pdf')

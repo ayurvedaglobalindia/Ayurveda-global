@@ -3,10 +3,10 @@ import { db } from '@/lib/db'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } | Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const resolvedParams = await Promise.resolve(params)
+    const resolvedParams = await params
     const id = resolvedParams.id
     const stmt = db.prepare('SELECT * FROM orders WHERE id = ?')
     const order = stmt.get(id)
@@ -24,10 +24,10 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } | Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const resolvedParams = await Promise.resolve(params)
+    const resolvedParams = await params
     const id = resolvedParams.id
     const body = await request.json()
     const { status, note } = body
