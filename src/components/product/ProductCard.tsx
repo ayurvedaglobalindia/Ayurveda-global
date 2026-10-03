@@ -137,7 +137,7 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
     }
     return {
       badge: 'Fast Action',
-      pill: 'Lidocaine 10% • Aloe • 30ml',
+      pill: 'Herbal Delay • Aloe & Vit E • 30ml',
       icon: '⚡',
     }
   }

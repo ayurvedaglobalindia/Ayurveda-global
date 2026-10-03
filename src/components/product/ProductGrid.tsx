@@ -46,13 +46,13 @@ export function ProductGrid({
   if (products.length === 0) {
     return (
       <div className="col-span-full text-center py-16">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-ayur-beige flex items-center justify-center">
-          <svg className="w-8 h-8 text-ayur-stone" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#061A10] border border-[#C2A265]/20 flex items-center justify-center">
+          <svg className="w-8 h-8 text-ayur-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-ayur-black mb-2">{emptyMessage}</h3>
-        <p className="text-ayur-stone mb-6">Try adjusting your filters or search terms</p>
+        <h3 className="text-lg font-medium text-ayur-ivory mb-2">{emptyMessage}</h3>
+        <p className="text-[#C4BDA8] mb-6">Try adjusting your filters or search terms</p>
         {emptyAction}
       </div>
     )

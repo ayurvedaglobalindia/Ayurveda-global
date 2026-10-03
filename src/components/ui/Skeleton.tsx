@@ -8,7 +8,7 @@ interface SkeletonProps {
 }
 
 export function Skeleton({ className, variant = 'text' }: SkeletonProps) {
-  const baseStyles = 'animate-pulse bg-ayur-beige rounded'
+  const baseStyles = 'animate-pulse bg-[#0E2015] border border-[#C2A265]/10 rounded'
 
   const variantStyles = {
     text: 'h-4 w-full',
@@ -25,8 +25,8 @@ export function Skeleton({ className, variant = 'text' }: SkeletonProps) {
 
 export function ProductCardSkeleton() {
   return (
-    <div className="card-hover group">
-      <div className="relative aspect-square overflow-hidden bg-ayur-beige">
+    <div className="card-luxury rounded-2xl overflow-hidden group">
+      <div className="relative aspect-square overflow-hidden bg-[#061A10]">
         <Skeleton variant="product" />
       </div>
       <div className="p-4 space-y-3">
@@ -75,7 +75,7 @@ export function ProductDetailSkeleton() {
 
 export function CartItemSkeleton() {
   return (
-    <div className="flex gap-4 p-4 bg-white rounded-xl border border-ayur-beige">
+    <div className="flex gap-4 p-4 bg-[#061A10] rounded-xl border border-[#C2A265]/20">
       <Skeleton variant="product" className="w-20 h-20 flex-shrink-0" />
       <div className="flex-1 space-y-3">
         <Skeleton variant="text" className="w-3/4" />

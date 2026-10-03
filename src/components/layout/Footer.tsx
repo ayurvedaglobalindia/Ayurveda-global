@@ -61,10 +61,10 @@ const footerLinks = {
 }
 
 const trustBadges = [
-  { icon: Truck, label: 'Free Express Shipping', desc: 'On all orders above ₹999 across India' },
-  { icon: Lock, label: '100% Discreet Packaging', desc: 'Plain unmarked brown box guarantee' },
-  { icon: Shield, label: 'Ayush & GMP Certified', desc: 'Tested for heavy metals and purity' },
-  { icon: RotateCcw, label: 'Cash on Delivery (COD)', desc: 'Pay safely at your doorstep' },
+  { icon: Lock, label: '100% Discreet Packaging', desc: 'Dispatched in plain unmarked boxes with zero sensitive labels' },
+  { icon: RotateCcw, label: 'Cash on Delivery (COD)', desc: 'Pay safely at your doorstep via cash or instant UPI' },
+  { icon: Truck, label: 'Free Express Shipping', desc: 'Pan-India delivery across 25,000+ pincodes on orders over ₹999' },
+  { icon: Shield, label: 'AYUSH & GMP Certified', desc: 'Tested for heavy metals and purity with zero synthetic chemicals' },
 ]
 
 export function Footer() {

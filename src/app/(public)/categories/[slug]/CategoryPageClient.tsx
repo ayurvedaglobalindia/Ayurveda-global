@@ -72,8 +72,8 @@ export default function CategoryPageClient() {
   if (!category) {
     return (
       <div className="container py-16 text-center">
-        <h1 className="font-heading text-3xl font-medium text-ayur-black mb-4">Category not found</h1>
-        <p className="text-ayur-stone">The category you&apos;re looking for doesn&apos;t exist.</p>
+        <h1 className="font-heading text-3xl font-medium text-ayur-ivory mb-4">Category not found</h1>
+        <p className="text-[#C4BDA8]">The category you&apos;re looking for doesn&apos;t exist.</p>
       </div>
     )
   }
@@ -81,41 +81,36 @@ export default function CategoryPageClient() {
   return (
     <div className="container py-8 lg:py-12">
       <div className="mb-8">
-        <div className="flex items-center gap-4">
-          <Logo variant="header" animate className="flex-shrink-0" />
-          <div>
-            <nav className="flex items-center gap-2 text-sm text-ayur-stone mb-4" aria-label="Breadcrumb">
-              <a href="/" className="hover:text-ayur-forest transition-colors">Home</a>
-              <span>/</span>
-              <a href="/categories" className="hover:text-ayur-forest transition-colors">Categories</a>
-              <span>/</span>
-              <span className="text-ayur-black font-medium">{category.name}</span>
-            </nav>
-            <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black">{category.name}</h1>
-            <p className="text-ayur-stone mt-2">{category.description}</p>
-          </div>
-        </div>
+        <nav className="flex items-center gap-2 text-xs text-[#C4BDA8] mb-3" aria-label="Breadcrumb">
+          <a href="/" className="hover:text-ayur-gold transition-colors">Home</a>
+          <span>/</span>
+          <a href="/categories" className="hover:text-ayur-gold transition-colors">Categories</a>
+          <span>/</span>
+          <span className="text-ayur-ivory font-medium">{category.name}</span>
+        </nav>
+        <h1 className="font-heading text-3xl md:text-4xl font-normal text-ayur-ivory">{category.name}</h1>
+        <p className="text-[#C4BDA8] text-sm mt-1.5">{category.description}</p>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <span className="text-ayur-stone text-sm">
+          <span className="text-[#C4BDA8] text-sm">
             {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} in this category
           </span>
         </div>
         <div className="flex items-center gap-3 ml-auto">
           <ProductSort selectedSort={sortBy} onSortChange={setSortBy} />
-          <div className="flex items-center gap-1 bg-ayur-cream rounded-lg p-1">
+          <div className="flex items-center gap-1 bg-[#061A10] border border-[#C2A265]/20 rounded-lg p-1">
             <button
               onClick={() => setViewMode('grid')}
-              className={classNames('p-2 rounded transition-colors', viewMode === 'grid' ? 'bg-white text-ayur-forest' : 'text-ayur-stone')}
+              className={classNames('p-2 rounded transition-colors', viewMode === 'grid' ? 'bg-ayur-gold text-[#0B150F] shadow-sm' : 'text-[#C4BDA8] hover:text-white')}
               aria-label="Grid view"
             >
               <Grid className="w-5 h-5" />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={classNames('p-2 rounded transition-colors', viewMode === 'list' ? 'bg-white text-ayur-forest' : 'text-ayur-stone')}
+              className={classNames('p-2 rounded transition-colors', viewMode === 'list' ? 'bg-ayur-gold text-[#0B150F] shadow-sm' : 'text-[#C4BDA8] hover:text-white')}
               aria-label="List view"
             >
               <List className="w-5 h-5" />

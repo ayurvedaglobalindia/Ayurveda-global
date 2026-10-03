@@ -58,7 +58,7 @@ export function ProductFilters({
   const filterContent = (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-heading text-lg font-medium text-ayur-black">Filters</h2>
+        <h2 className="font-heading text-lg font-medium text-ayur-ivory">Filters</h2>
         {hasActiveFilters && (
           <Button variant="ghost" size="sm" onClick={onClearFilters}>
             <X className="w-4 h-4 mr-1" />
@@ -78,9 +78,9 @@ export function ProductFilters({
                   name="category"
                   checked={!selectedCategory}
                   onChange={() => onCategoryChange(undefined)}
-                  className="w-4 h-4 text-ayur-forest border-ayur-sand focus:ring-ayur-gold"
+                  className="w-4 h-4 text-ayur-gold border-[#C2A265]/40 bg-[#061A10] focus:ring-ayur-gold"
                 />
-                <span className="text-ayur-forest">All Categories</span>
+                <span className="text-ayur-ivory">All Categories</span>
               </label>
               {categories.map(category => (
                 <label key={category.id} className="flex items-center gap-2 cursor-pointer">
@@ -89,10 +89,10 @@ export function ProductFilters({
                     name="category"
                     checked={selectedCategory === category.slug}
                     onChange={() => onCategoryChange(category.slug)}
-                    className="w-4 h-4 text-ayur-forest border-ayur-sand focus:ring-ayur-gold"
+                    className="w-4 h-4 text-ayur-gold border-[#C2A265]/40 bg-[#061A10] focus:ring-ayur-gold"
                   />
-                  <span className="text-ayur-forest">{category.name}</span>
-                  <span className="text-ayur-sand text-sm">({category.productCount})</span>
+                  <span className="text-ayur-ivory">{category.name}</span>
+                  <span className="text-[#C4BDA8] text-sm">({category.productCount})</span>
                 </label>
               ))}
             </div>
@@ -120,7 +120,7 @@ export function ProductFilters({
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm text-ayur-stone">
+                <label className="text-sm text-[#C4BDA8]">
                   ₹{priceMin.toLocaleString()} - ₹{priceMax.toLocaleString()}
                 </label>
                 <input
@@ -129,7 +129,7 @@ export function ProductFilters({
                   max="500000"
                   value={priceMin}
                   onChange={e => setPriceMin(Math.min(priceMax, parseInt(e.target.value)))}
-                  className="w-full h-2 bg-ayur-beige rounded-lg appearance-none cursor-pointer accent-ayur-forest"
+                  className="w-full h-2 bg-[#12241A] rounded-lg appearance-none cursor-pointer accent-ayur-gold"
                 />
                 <input
                   type="range"
@@ -137,10 +137,10 @@ export function ProductFilters({
                   max="500000"
                   value={priceMax}
                   onChange={e => setPriceMax(Math.max(priceMin, parseInt(e.target.value)))}
-                  className="w-full h-2 bg-ayur-beige rounded-lg appearance-none cursor-pointer accent-ayur-forest"
+                  className="w-full h-2 bg-[#12241A] rounded-lg appearance-none cursor-pointer accent-ayur-gold"
                 />
               </div>
-              <Button size="sm" onClick={handlePriceApply} className="w-full">Apply</Button>
+              <Button size="sm" variant="gold" onClick={handlePriceApply} className="w-full">Apply</Button>
             </div>
           ),
           defaultOpen: true,
@@ -165,8 +165,8 @@ export function ProductFilters({
                   <span className={classNames(
                     'px-3 py-1.5 rounded-full text-sm border transition-colors',
                     selectedTags.includes(tag)
-                      ? 'bg-ayur-forest text-ayur-cream border-ayur-forest'
-                      : 'bg-white text-ayur-forest border-ayur-sand hover:border-ayur-forest'
+                      ? 'bg-ayur-gold text-[#0B150F] border-ayur-gold font-medium'
+                      : 'bg-[#0B150F] text-[#FAF7EE] border-[#C2A265]/20 hover:border-ayur-gold/50'
                   )}>
                     {tag.replace(/-/g, ' ')}
                   </span>
@@ -184,9 +184,9 @@ export function ProductFilters({
                 type="checkbox"
                 checked={inStockOnly}
                 onChange={e => onInStockChange(e.target.checked)}
-                className="w-4 h-4 text-ayur-forest border-ayur-sand focus:ring-ayur-gold rounded"
+                className="w-4 h-4 text-ayur-gold border-[#C2A265]/40 bg-[#061A10] focus:ring-ayur-gold rounded"
               />
-              <span className="text-ayur-forest">In stock only</span>
+              <span className="text-ayur-ivory">In stock only</span>
             </label>
           ),
         },
@@ -205,7 +205,7 @@ export function ProductFilters({
           <Filter className="w-4 h-4" />
           Filters
           {hasActiveFilters && (
-            <span className="w-5 h-5 rounded-full bg-ayur-gold text-ayur-black text-xs font-medium flex items-center justify-center">
+            <span className="w-5 h-5 rounded-full bg-ayur-gold text-[#0B150F] text-xs font-bold flex items-center justify-center">
               {availableTags.filter(t => selectedTags.includes(t)).length +
                 (selectedCategory ? 1 : 0) +
                 (inStockOnly ? 1 : 0) +
@@ -220,7 +220,7 @@ export function ProductFilters({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-ayur-black/40 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
               onClick={() => setIsOpen(false)}
             >
               <motion.div
@@ -228,14 +228,14 @@ export function ProductFilters({
                 animate={{ x: 0 }}
                 exit={{ x: -300 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-white shadow-strong z-50 overflow-y-auto"
+                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-[#061A10] border-r border-[#C2A265]/20 shadow-2xl z-50 overflow-y-auto"
                 onClick={e => e.stopPropagation()}
               >
-                <div className="p-4 border-b border-ayur-beige flex items-center justify-between">
-                  <h2 className="font-heading text-lg font-medium text-ayur-black">Filters</h2>
+                <div className="p-4 border-b border-[#C2A265]/20 flex items-center justify-between bg-[#0B150F]">
+                  <h2 className="font-heading text-lg font-medium text-ayur-ivory">Filters</h2>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="p-2 rounded-lg text-ayur-stone hover:text-ayur-black hover:bg-ayur-beige transition-colors"
+                    className="p-2 rounded-lg text-ayur-stone hover:text-ayur-ivory hover:bg-white/5 transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -250,7 +250,7 @@ export function ProductFilters({
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-ayur-beige p-6 sticky top-24">
+    <div className="bg-[#061A10] rounded-2xl border border-[#C2A265]/20 p-6 sticky top-24 shadow-lg">
       {filterContent}
     </div>
   )

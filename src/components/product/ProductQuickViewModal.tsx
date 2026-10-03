@@ -132,41 +132,41 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
         <div className="md:col-span-6 space-y-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-semibold text-ayur-forest bg-ayur-mint-soft px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="text-[11px] font-semibold text-ayur-gold bg-[#0A2E1E] border border-ayur-gold/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                 {product.category === 'supplements' ? 'Herbal Supplement' : product.category === 'wellness' ? 'Power Combo' : 'Personal Care'}
               </span>
               <Rating rating={4.9} size="sm" showValue reviewsCount={1200} />
             </div>
-            <h3 className="font-heading text-xl sm:text-2xl font-medium text-ayur-black">
+            <h3 className="font-heading text-xl sm:text-2xl font-medium text-ayur-ivory">
               {product.name}
             </h3>
-            <p className="text-xs sm:text-sm text-ayur-stone">
+            <p className="text-xs sm:text-sm text-[#C4BDA8]">
               {product.tagline}
             </p>
           </div>
 
           {/* Price Box */}
-          <div className="p-3.5 rounded-2xl bg-ayur-cream/80 border border-ayur-sand/60 flex items-center justify-between">
+          <div className="p-3.5 rounded-2xl bg-[#0B150F] border border-ayur-gold/30 flex items-center justify-between">
             <PriceDisplay
               price={product.price}
               compareAtPrice={product.compareAtPrice}
               size="lg"
             />
             {product.compareAtPrice && product.compareAtPrice > product.price && (
-              <span className="text-xs font-bold bg-ayur-gold text-black px-2.5 py-1 rounded-lg shadow-sm">
+              <span className="text-xs font-bold bg-ayur-gold text-[#0B150F] px-2.5 py-1 rounded-lg shadow-sm">
                 SAVE {Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)}%
               </span>
             )}
           </div>
 
-          <p className="text-xs sm:text-sm text-ayur-stone/90 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#C4BDA8] leading-relaxed">
             {product.shortDescription}
           </p>
 
           {/* Quantity and Actions */}
           <div className="space-y-3 pt-2">
             <div className="flex items-center gap-3">
-              <span className="text-xs font-medium text-ayur-forest">Quantity:</span>
+              <span className="text-xs font-medium text-ayur-ivory">Quantity:</span>
               <QuantitySelector
                 value={quantity}
                 onChange={setQuantity}
@@ -181,7 +181,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
                 variant="outline"
                 size="md"
                 onClick={handleAddToCart}
-                className="w-full text-xs font-bold border-ayur-forest text-ayur-forest hover:bg-ayur-forest hover:text-white rounded-xl"
+                className="w-full text-xs font-bold border-[#C2A265]/40 text-[#FAF7EE] hover:bg-[#C2A265]/10 hover:border-ayur-gold rounded-xl"
               >
                 Add to Cart
               </Button>
@@ -206,11 +206,11 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
           </div>
 
           {/* Full Details Link */}
-          <div className="pt-2 border-t border-ayur-sand/30 flex items-center justify-between">
+          <div className="pt-2 border-t border-[#C2A265]/20 flex items-center justify-between">
             <Link
               href={`/product/${product.slug}`}
               onClick={onClose}
-              className="text-xs font-bold text-ayur-forest hover:text-ayur-gold flex items-center gap-1 transition-colors"
+              className="text-xs font-bold text-ayur-gold hover:text-ayur-gold-light flex items-center gap-1 transition-colors"
             >
               <span>View Complete Product Dossier</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -219,7 +219,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
             <button
               onClick={handleWishlistToggle}
               className={`p-2 rounded-xl border transition-colors ${
-                inWishlist ? 'border-red-300 bg-red-50 text-red-600' : 'border-ayur-sand text-ayur-stone hover:text-red-500'
+                inWishlist ? 'border-red-500/40 bg-red-950/30 text-red-400' : 'border-[#C2A265]/20 text-[#C4BDA8] hover:text-red-400 hover:border-red-400/40'
               }`}
               aria-label="Add to wishlist"
             >

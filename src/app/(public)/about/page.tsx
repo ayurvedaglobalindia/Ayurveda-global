@@ -155,10 +155,11 @@ export default function AboutPage() {
             <h2 className="font-heading text-3xl md:text-4xl font-medium text-white mb-4">Meet Our Team</h2>
             <p className="text-[#C4BDA8] text-lg">Experts dedicated to your wellness journey</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, index) => (
-              <div key={member.name} className="text-center p-6 rounded-2xl glass-luxury-card border border-[#D4AF37]/20 shadow-lg hover:border-[#D4AF37]/50 transition-all duration-300 group">
-                <div className="w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden bg-[#061B12] flex items-center justify-center relative border-2 border-[#D4AF37]/40 shadow-md group-hover:scale-105 transition-transform duration-300">
+          {/* Executive Leadership */}
+          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-8">
+            {team.slice(0, 2).map((member) => (
+              <div key={member.name} className="text-center p-6 rounded-2xl glass-luxury-card border border-[#D4AF37]/30 shadow-lg hover:border-[#D4AF37]/60 transition-all duration-300 group">
+                <div className="w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden bg-[#061B12] flex items-center justify-center relative border-2 border-[#D4AF37]/50 shadow-md group-hover:scale-105 transition-transform duration-300">
                   {member.image ? (
                     <Image
                       src={member.image}
@@ -174,6 +175,20 @@ export default function AboutPage() {
                 <h3 className="font-heading text-lg font-medium text-white mb-1">{member.name}</h3>
                 <p className="text-[#D4AF37] text-sm font-semibold mb-2">{member.role}</p>
                 <p className="text-[#C4BDA8] text-sm leading-relaxed">{member.bio}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Clinical & Botanical Specialists */}
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {team.slice(2).map((member) => (
+              <div key={member.name} className="text-center p-6 rounded-2xl glass-luxury-card border border-[#D4AF37]/20 shadow-lg hover:border-[#D4AF37]/50 transition-all duration-300 group">
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden bg-[#061B12] flex items-center justify-center relative border-2 border-[#D4AF37]/30 shadow-md group-hover:scale-105 transition-transform duration-300">
+                  <Users className="w-8 h-8 text-[#D4AF37]" />
+                </div>
+                <h3 className="font-heading text-base font-medium text-white mb-1">{member.name}</h3>
+                <p className="text-[#D4AF37] text-xs font-semibold mb-2">{member.role}</p>
+                <p className="text-[#C4BDA8] text-xs leading-relaxed">{member.bio}</p>
               </div>
             ))}
           </div>

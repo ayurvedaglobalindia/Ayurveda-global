@@ -21,16 +21,16 @@ const pillars = [
   {
     num: '03',
     icon: PackageCheck,
-    title: '100% Discreet Packaging',
-    subtitle: 'Absolute Privacy Guaranteed',
-    desc: 'Dispatched in plain unmarked brown boxes with zero product names or sensitive indicators on the label.',
+    title: 'Standardized Bioactives',
+    subtitle: 'HPLC Lab Calibrated',
+    desc: 'Every extract is quantitatively assayed for active withanolides, fulvic acid, and saponins with zero synthetic fillers.',
   },
   {
     num: '04',
     icon: Truck,
-    title: 'Doorstep Cash on Delivery',
-    subtitle: '25,000+ Pincodes Covered',
-    desc: 'Pay safely upon doorstep arrival via cash or UPI. Free express pan-India shipping on all qualifying orders.',
+    title: '100% Plant Cellulose',
+    subtitle: 'Zero Synthetic Binders',
+    desc: 'Formulated in pure vegetarian capsules with zero gelatin, animal byproducts, talc, or synthetic chemical glazes.',
   },
 ]
 

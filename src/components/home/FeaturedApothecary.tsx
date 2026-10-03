@@ -298,22 +298,6 @@ export function FeaturedApothecary() {
             )
           })}
         </div>
-
-        {/* Discreet Delivery Guarantee Banner */}
-        <div className="mt-12 p-4 sm:p-5 rounded-2xl bg-[#0E1E14] border border-[#C2A265]/20 flex flex-wrap items-center justify-between gap-4 text-xs text-[#A8A295]">
-          <div className="flex items-center gap-3">
-            <ShieldCheck className="w-5 h-5 text-[#C2A265] flex-shrink-0" />
-            <span>
-              <strong className="text-[#FAF7EE]">100% Confidential Delivery Guarantee:</strong> All orders are dispatched in unmarked, brown corrugated boxes without product names or sensitive labels.
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 text-[#C2A265] font-semibold">
-            <span>Pay Cash on Delivery (COD)</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </div>
-        </div>
-
       </div>
     </section>
   )

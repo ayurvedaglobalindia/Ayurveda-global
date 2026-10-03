@@ -115,15 +115,6 @@ export function Header() {
           : 'bg-[#0B150F]/85 backdrop-blur-xl border-b border-[#C2A265]/15'
       }`}
     >
-      {/* Top Heritage Notice Strip */}
-      <div className="bg-[#08100B] border-b border-[#C2A265]/15 py-1.5 px-4 text-center text-[10px] sm:text-[11px] text-[#A8A295] flex items-center justify-center gap-2.5 sm:gap-4 tracking-wider">
-        <span>Free Express Delivery Pan-India</span>
-        <span className="text-[#C2A265]">•</span>
-        <span>100% Classical Shodhana Purity</span>
-        <span className="text-[#C2A265] hidden sm:inline">•</span>
-        <span className="hidden sm:inline">Discreet Plain Box Packaging</span>
-      </div>
-
       <div className="container">
         <div className="flex items-center justify-between h-14 sm:h-16 gap-3 sm:gap-6">
           {/* Brand Logo */}
@@ -270,11 +261,11 @@ export function Header() {
                   onChange={e => setSearchQuery(e.target.value)}
                   onFocus={() => setIsSearchExpanded(true)}
                   onBlur={() => setTimeout(() => setIsSearchExpanded(false), 200)}
-                  placeholder="Search herbs, power combo, spray..."
-                  className="w-48 lg:w-60 focus:w-72 pl-9 pr-3 py-2 bg-ayur-charcoal/90 border border-ayur-forest-dark/50 focus:border-ayur-gold/50 rounded-full text-xs text-ayur-ivory placeholder-ayur-stone focus:outline-none focus:ring-1 focus:ring-ayur-gold transition-all duration-300 shadow-inner"
+                  placeholder="Search formulations, herbs..."
+                  className="w-48 lg:w-60 focus:w-72 pl-9 pr-3 py-2 bg-[#12241A] border border-[#C2A265]/30 focus:border-[#C2A265] rounded-full text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-all duration-300 shadow-inner"
                   aria-label="Search products"
                 />
-                <Search className="absolute left-3 w-4 h-4 text-ayur-gold/70 pointer-events-none" aria-hidden="true" />
+                <Search className="absolute left-3 w-4 h-4 text-[#C2A265] pointer-events-none" aria-hidden="true" />
                 {isSearchExpanded && searchQuery && (
                   <button
                     type="button"

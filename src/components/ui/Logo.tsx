@@ -49,7 +49,7 @@ export function Logo({ variant = 'default', className, showText = true, animate 
         <span className={classNames(
           'font-heading font-medium text-ayur-cream tracking-tight',
           text,
-          variant === 'header' && 'hidden sm:block text-ayur-black'
+          variant === 'header' && 'hidden sm:block text-ayur-cream'
         )}>
           Ayur Veda Global
         </span>

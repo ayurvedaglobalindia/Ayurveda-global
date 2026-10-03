@@ -12,6 +12,7 @@ const config: Config = {
       colors: {
         // Luxury Ayurvedic Color Palette
         ayur: {
+          black: '#0A120D',
           // Deep Emerald Greens
           void: '#010804',
           obsidian: '#030F07',

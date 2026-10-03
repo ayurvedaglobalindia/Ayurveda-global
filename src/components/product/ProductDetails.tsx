@@ -547,7 +547,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 260 }}
-            className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-ayur-charcoal/95 backdrop-blur-xl border-t border-ayur-gold/30 p-3 shadow-2xl flex items-center justify-between gap-3"
+            className="md:hidden fixed bottom-[56px] left-0 right-0 z-40 bg-[#0B150F]/95 backdrop-blur-xl border-t border-[#C2A265]/30 p-2.5 sm:p-3 shadow-2xl flex items-center justify-between gap-3"
           >
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-ayur-gold/25 flex-shrink-0 bg-ayur-forest-deep">

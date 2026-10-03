@@ -618,7 +618,7 @@ function PaymentStep({ formData, setFormData }: { formData: any; setFormData: an
               </div>
               <span className="font-medium text-ayur-ivory">WhatsApp Order (Recommended)</span>
             </div>
-            <p className="text-sm text-ayur-stone ml-13">Coordinate payment & delivery directly on WhatsApp</p>
+            <p className="text-sm text-ayur-stone ml-[52px]">Coordinate payment & delivery directly on WhatsApp</p>
           </div>
           <div className="ml-auto text-sm text-ayur-gold-light font-semibold hidden sm:block">
             Most Popular
@@ -655,7 +655,7 @@ function PaymentStep({ formData, setFormData }: { formData: any; setFormData: an
               </div>
               <span className="font-medium text-ayur-ivory">Cash on Delivery</span>
             </div>
-            <p className="text-sm text-ayur-stone ml-13">Pay when your order arrives at your doorstep</p>
+            <p className="text-sm text-ayur-stone ml-[52px]">Pay when your order arrives at your doorstep</p>
           </div>
         </label>
 
@@ -690,7 +690,7 @@ function PaymentStep({ formData, setFormData }: { formData: any; setFormData: an
               </div>
               <span className="font-medium text-ayur-ivory">Instant UPI (GPay / PhonePe / Paytm / BHIM)</span>
             </div>
-            <p className="text-sm text-ayur-stone ml-13">Instant transfer to ayurvedaglobal@okhdfcbank with zero fee</p>
+            <p className="text-sm text-ayur-stone ml-[52px]">Instant transfer to ayurvedaglobal@okhdfcbank with zero fee</p>
           </div>
           <div className="ml-auto text-xs text-purple-400 font-semibold hidden sm:block">
             Fastest
@@ -728,7 +728,7 @@ function PaymentStep({ formData, setFormData }: { formData: any; setFormData: an
               </div>
               <span className="font-medium text-ayur-ivory">Debit / Credit Cards &amp; Net Banking</span>
             </div>
-            <p className="text-sm text-ayur-stone ml-13">Visa, MasterCard, RuPay, and 50+ Net Banking banks</p>
+            <p className="text-sm text-ayur-stone ml-[52px]">Visa, MasterCard, RuPay, and 50+ Net Banking banks</p>
           </div>
         </label>
       </div>
