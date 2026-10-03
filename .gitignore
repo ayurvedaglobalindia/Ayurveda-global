@@ -17,6 +17,8 @@ dist
 # misc
 .DS_Store
 *.pem
+Thumbs.db
+.directory
 
 # debug
 npm-debug.log*
