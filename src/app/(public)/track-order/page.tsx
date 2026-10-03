@@ -117,13 +117,13 @@ export default function TrackOrderPage() {
     }
 
     // Check user store for client placed orders
-    const userOrders = useUserStore.getState().orders || []
-    const userOrder = userOrders.find(o => o.id === trimmedId || o.orderNumber === trimmedId)
+    const userOrders: any[] = useUserStore.getState().recentOrders || []
+    const userOrder = userOrders.find((o: any) => o.id === trimmedId || o.orderNumber === trimmedId)
     if (userOrder) {
       setTrackedOrder({
         orderNumber: userOrder.orderNumber,
         status: userOrder.status,
-        items: userOrder.items.map(i => ({ name: i.name, quantity: i.quantity, total: i.total })),
+        items: (userOrder.items || []).map((i: any) => ({ name: i.name, quantity: i.quantity, total: i.total })),
         total: userOrder.total,
         timeline: [
           { status: 'confirmed', date: userOrder.createdAt, note: `Order confirmed (${userOrder.paymentMethod === 'whatsapp' ? 'WhatsApp' : 'Cash on Delivery'})` },

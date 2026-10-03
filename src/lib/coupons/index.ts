@@ -1,15 +1,6 @@
 import type { Coupon } from '@/types'
 
-function getDbSafe() {
-  if (typeof window === 'undefined') {
-    try {
-      return require('@/lib/db').db
-    } catch {
-      return null
-    }
-  }
-  return null
-}
+// Static in-memory coupon engine for static export / Cloudflare Pages
 
 interface DbCoupon {
   code: string
@@ -89,18 +80,7 @@ export function validateCoupon(
   productIds: string[],
   categories: string[]
 ): { valid: boolean; coupon?: Coupon; discount: number; error?: string } {
-  const dbInstance = getDbSafe()
-  let row: DbCoupon | undefined
-  if (dbInstance) {
-    try {
-      const stmt = dbInstance.prepare('SELECT * FROM coupons WHERE code = ? AND is_active = 1')
-      row = stmt.get(code.toUpperCase()) as DbCoupon | undefined
-    } catch {}
-  }
-
-  if (!row && defaultCoupons[code.toUpperCase()]) {
-    row = defaultCoupons[code.toUpperCase()]
-  }
+  const row: DbCoupon | undefined = defaultCoupons[code.toUpperCase()]
 
   if (!row) {
     return { valid: false, discount: 0, error: 'Invalid coupon code' }
@@ -157,40 +137,19 @@ export function validateCoupon(
 }
 
 export function applyCoupon(code: string): Coupon | null {
-  const dbInstance = getDbSafe()
-  if (dbInstance) {
-    try {
-      const stmt = dbInstance.prepare('UPDATE coupons SET used_count = used_count + 1 WHERE code = ?')
-      stmt.run(code.toUpperCase())
-    } catch {}
+  const row = defaultCoupons[code.toUpperCase()]
+  if (row) {
+    row.used_count += 1
   }
   return getCoupon(code)
 }
 
 export function getCoupon(code: string): Coupon | null {
-  const dbInstance = getDbSafe()
-  let row: DbCoupon | undefined
-  if (dbInstance) {
-    try {
-      const stmt = dbInstance.prepare('SELECT * FROM coupons WHERE code = ?')
-      row = stmt.get(code.toUpperCase()) as DbCoupon | undefined
-    } catch {}
-  }
-  if (!row && defaultCoupons[code.toUpperCase()]) {
-    row = defaultCoupons[code.toUpperCase()]
-  }
+  const row = defaultCoupons[code.toUpperCase()]
   return row ? mapDbCoupon(row) : null
 }
 
 export function getActiveCoupons(): Coupon[] {
-  const dbInstance = getDbSafe()
-  if (dbInstance) {
-    try {
-      const stmt = dbInstance.prepare('SELECT * FROM coupons WHERE is_active = 1 AND expires_at > datetime("now")')
-      const rows = stmt.all() as DbCoupon[]
-      return rows.map(mapDbCoupon)
-    } catch {}
-  }
   return Object.values(defaultCoupons).map(mapDbCoupon)
 }
 

@@ -6,7 +6,10 @@ import { WhatsAppFloatButton } from '@/components/layout/WhatsAppFloatButton'
 import { GlobalModals } from '@/components/layout/GlobalModals'
 
 export const metadata: Metadata = {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ayurvedaglobal.com'),
+    alternates: {
+      canonical: '/',
+    },
     title: {
       default: 'Ayur Veda Global | Authentic Ayurvedic Wellness Products',
       template: '%s | Ayur Veda Global',

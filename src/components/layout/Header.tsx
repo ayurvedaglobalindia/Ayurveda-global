@@ -227,19 +227,21 @@ export function Header() {
             </Link>
 
             <Link
-              href="/blog"
+              href="/faq"
               className="relative px-3.5 py-2.5 rounded-xl text-ayur-cream hover:text-ayur-gold-light hover:bg-ayur-forest-dark/50 transition-all"
             >
-              Journal
+              FAQ
             </Link>
 
-            <Link
-              href="/consultation"
+            <a
+              href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor."
+              target="_blank"
+              rel="noopener noreferrer"
               className="relative px-3.5 py-2.5 rounded-xl text-ayur-cream hover:text-ayur-gold-light hover:bg-ayur-forest-dark/50 transition-all flex items-center gap-1"
             >
               <HeartPulse className="w-3.5 h-3.5 text-emerald-400" />
               <span>Doctor Consult</span>
-            </Link>
+            </a>
 
             <Link
               href="/about"
@@ -366,7 +368,7 @@ export function Header() {
               </div>
             ) : (
               <Link
-                href="/login"
+                href="/account"
                 className="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-xl text-xs font-semibold text-ayur-gold-light bg-ayur-gold/10 border border-ayur-gold/30 hover:bg-ayur-gold/20 hover:border-ayur-gold hover:text-ayur-ivory transition-all duration-300 shadow-[0_0_15px_rgba(201,168,76,0.1)]"
               >
                 Sign In
@@ -526,20 +528,22 @@ export function Header() {
                   Personal Care & Sprays
                 </Link>
                 <Link
-                  href="/blog"
+                  href="/faq"
                   onClick={closeMobileMenu}
                   className="block px-3 py-3 rounded-xl text-base font-semibold text-ayur-cream hover:bg-ayur-forest-dark/50 hover:text-ayur-gold-light transition-all"
                 >
-                  Health Journal &amp; Science
+                  Frequently Asked Questions
                 </Link>
-                <Link
-                  href="/consultation"
+                <a
+                  href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={closeMobileMenu}
                   className="flex items-center justify-between px-3 py-3 rounded-xl text-base font-semibold text-emerald-300 bg-emerald-950/40 border border-emerald-500/30 hover:bg-emerald-950/70 transition-all"
                 >
                   <span>Doctor Consultation</span>
                   <span className="text-[10px] font-bold bg-emerald-500 text-black px-2 py-0.5 rounded">BAMS Vaidya</span>
-                </Link>
+                </a>
                 <Link
                   href="/about"
                   onClick={closeMobileMenu}

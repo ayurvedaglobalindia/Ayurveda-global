@@ -36,7 +36,7 @@ const footerLinks = {
     { label: 'Personal Care & Sprays', href: '/shop?category=personal-care' },
   ],
   support: [
-    { label: 'Doctor Teleconsultation (BAMS)', href: '/consultation' },
+    { label: 'Doctor Teleconsultation (BAMS)', href: 'https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor.' },
     { label: 'WhatsApp Consultation Desk', href: 'https://wa.me/919123485451' },
     { label: 'Contact Us', href: '/contact' },
     { label: 'Frequently Asked Questions', href: '/faq' },
@@ -45,7 +45,7 @@ const footerLinks = {
     { label: 'Returns & Refunds', href: '/legal/returns' },
   ],
   company: [
-    { label: 'Health Journal & Research', href: '/blog' },
+    { label: 'Health Journal & Research', href: '/about' },
     { label: 'Our Ayurvedic Heritage', href: '/about' },
     { label: 'Botanical Science & Shilajit', href: '/about#ingredients' },
     { label: 'Lab Screening & GMP Certified', href: '/about#philosophy' },
@@ -56,7 +56,7 @@ const footerLinks = {
     { label: 'Privacy Policy', href: '/legal/privacy' },
     { label: 'Terms of Service', href: '/legal/terms' },
     { label: 'Discreet Delivery Guarantee', href: '/legal/shipping' },
-    { label: 'Cookie Policy', href: '/legal/cookies' },
+    { label: 'Cookie Policy', href: '/legal/privacy' },
   ],
 }
 
@@ -114,14 +114,14 @@ export function Footer() {
       const currentEmail = email.trim()
       setEmail('')
       try {
-        await fetch('/api/newsletter', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: currentEmail }),
-        })
-      } catch (err) {
-        console.error('Newsletter subscription note:', err)
-      }
+        if (typeof window !== 'undefined') {
+          const stored = JSON.parse(localStorage.getItem('avg_newsletter_subscribers') || '[]')
+          if (!stored.includes(currentEmail)) {
+            stored.push(currentEmail)
+            localStorage.setItem('avg_newsletter_subscribers', JSON.stringify(stored))
+          }
+        }
+      } catch {}
       setTimeout(() => setSubscribed(false), 5000)
     } else {
       setEmailError(true)
@@ -275,14 +275,27 @@ export function Footer() {
             </h3>
             <nav className="space-y-3">
               {footerLinks.support.map(link => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block text-sm text-ayur-stone hover:text-ayur-gold-light transition-colors group flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-ayur-gold/30 group-hover:bg-ayur-gold group-hover:scale-150 transition-all" />
-                  {link.label}
-                </Link>
+                link.href.startsWith('http') ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm text-ayur-stone hover:text-ayur-gold-light transition-colors group flex items-center gap-2"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-ayur-gold/30 group-hover:bg-ayur-gold group-hover:scale-150 transition-all" />
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="block text-sm text-ayur-stone hover:text-ayur-gold-light transition-colors group flex items-center gap-2"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-ayur-gold/30 group-hover:bg-ayur-gold group-hover:scale-150 transition-all" />
+                    {link.label}
+                  </Link>
+                )
               ))}
             </nav>
           </div>
