@@ -237,10 +237,14 @@ export function Header() {
               href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor."
               target="_blank"
               rel="noopener noreferrer"
-              className="relative px-3.5 py-2.5 rounded-xl text-ayur-cream hover:text-ayur-gold-light hover:bg-ayur-forest-dark/50 transition-all flex items-center gap-1"
+              className="relative px-3 py-1.5 rounded-full text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 hover:bg-emerald-900/90 hover:border-emerald-400 transition-all flex items-center gap-1.5 text-xs font-bold shadow-sm group"
             >
-              <HeartPulse className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Doctor Consult</span>
+              <HeartPulse className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition-transform" />
+              <span>Free Doctor Consult</span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
             </a>
 
             <Link

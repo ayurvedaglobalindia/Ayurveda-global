@@ -18,6 +18,7 @@ import {
   Shield,
   Tag,
   Leaf,
+  HeartPulse,
 } from 'lucide-react'
 
 interface MobileMenuDrawerProps {
@@ -112,6 +113,29 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   BODY Nutrition + STAYMAX+ Spray
                 </p>
               </Link>
+
+              {/* Doctor Consultation Banner */}
+              <a
+                href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor."
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+                className="flex items-center justify-between p-3 rounded-2xl bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/70 transition-colors"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-900/80 border border-emerald-400/40 flex items-center justify-center text-emerald-400 flex-shrink-0">
+                    <HeartPulse className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-white block">Free Doctor Consult</span>
+                    <span className="text-[10px] text-emerald-400 block">Talk to BAMS Ayurvedic Doctor</span>
+                  </div>
+                </div>
+                <span className="relative flex h-2 w-2 mr-1">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+              </a>
 
               {/* Shop Section */}
               <div>

@@ -13,7 +13,7 @@ import { getProductBySlug } from '@/lib/products/registry'
 export function ComboSpotlight() {
   const combo = getProductBySlug('vitality-power-combo')
   const { addItem } = useCartStore()
-  const { openModal, showToast } = useUIStore()
+  const { openModal, openCartDrawer, showToast } = useUIStore()
   const { trackLead } = useWhatsAppStore()
 
   if (!combo) return null
@@ -24,7 +24,7 @@ export function ComboSpotlight() {
       productName: combo.name,
       onVerify: () => {
         addItem(combo)
-        openModal('cart')
+        openCartDrawer()
         showToast({
           type: 'success',
           title: 'Combo Added to Cart!',

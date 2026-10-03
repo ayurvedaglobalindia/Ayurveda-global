@@ -16,7 +16,10 @@ import {
 import { getAllProducts, getCategories } from '@/lib/products/registry'
 import { generateWebsiteStructuredData, generateOrganizationStructuredData } from '@/lib/seo'
 import { HomeProductGrid } from '@/components/home/HomeProductGrid'
+import { ShopByConcern } from '@/components/home/ShopByConcern'
+import { AyurvedicTrustMetrics } from '@/components/home/AyurvedicTrustMetrics'
 import { ComboSpotlight } from '@/components/home/ComboSpotlight'
+import { AyurvedicDoctorConsultation } from '@/components/home/AyurvedicDoctorConsultation'
 import { HomeVideoSection } from '@/components/home/HomeVideoSection'
 import { Accordion } from '@/components/ui/Accordion'
 
@@ -157,8 +160,17 @@ export default function HomePage() {
       {/* 1. Hero & Product-First Immediate Showcase */}
       <HomeProductGrid />
 
-      {/* 2. Special Dedicated Flagship Combo Spotlight Section */}
+      {/* 2. Shop By Health Concern (Dr. Vaidya's Style Concern Selector) */}
+      <ShopByConcern />
+
+      {/* 3. Clinical Validation & Ayurvedic Heritage Metrics */}
+      <AyurvedicTrustMetrics />
+
+      {/* 4. Special Dedicated Flagship Combo Spotlight Section */}
       <ComboSpotlight />
+
+      {/* 5. Free Ayurvedic Doctor Consultation & WhatsApp Dosage Advisor */}
+      <AyurvedicDoctorConsultation />
 
       {/* 3. Curated Ayurvedic Category Cards */}
       <section className="bg-ayur-obsidian border-b border-ayur-gold/20 py-10 sm:py-14 relative overflow-hidden">

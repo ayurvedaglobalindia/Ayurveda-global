@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Heart, ShoppingBag, Eye, Sparkles, Shield, CheckCircle2, Plus, Truck, Lock, RotateCcw } from 'lucide-react'
 import { PriceDisplay } from '@/components/ui/PriceDisplay'
 import { Rating } from '@/components/ui/Rating'
@@ -20,6 +21,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, variant = 'default', showQuickActions = true }: ProductCardProps) {
+  const router = useRouter()
   const [isMounted, setIsMounted] = useState(false)
   const { addItem, isInCart, getItemQuantity } = useCartStore()
   const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
@@ -60,6 +62,24 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
         title: 'Added to cart',
         message: `${product.name} has been added to your cart.`,
       })
+    }
+  }
+
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (product.ageRestricted) {
+      openModal('age-gate', {
+        productId: product.id,
+        productName: product.name,
+        onVerify: () => {
+          addItem(product)
+          router.push('/checkout')
+        },
+      })
+    } else {
+      addItem(product)
+      router.push('/checkout')
     }
   }
 
@@ -313,9 +333,7 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
                   Add to Cart
                 </button>
                 <button
-                  onClick={e => {
-                    handleAddToCart(e)
-                  }}
+                  onClick={handleBuyNow}
                   disabled={product.inventory.trackQuantity && product.inventory.quantity === 0}
                   className="btn-gold w-full text-xs font-bold py-2.5 rounded-xl shadow-lg"
                 >
