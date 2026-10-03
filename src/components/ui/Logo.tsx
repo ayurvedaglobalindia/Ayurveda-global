@@ -31,7 +31,7 @@ export function Logo({ variant = 'default', className, showText = true, animate 
         variant === 'default' && 'w-8 h-8'
       )}>
         <Image
-          src="/images/logo.png"
+          src="/images/brand-logo.png"
           alt="Ayur Veda Global"
           width={icon}
           height={icon}

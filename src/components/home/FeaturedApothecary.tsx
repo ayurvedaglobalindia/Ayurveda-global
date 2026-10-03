@@ -126,10 +126,10 @@ export function FeaturedApothecary() {
             return (
               <div
                 key={product.id}
-                className="rounded-2xl bg-[#102016] border border-[#C2A265]/20 flex flex-col justify-between overflow-hidden group hover:border-[#C2A265]/50 hover:-translate-y-1.5 transition-all duration-300 ease-out shadow-xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.65),0_0_25px_rgba(194,162,101,0.15)]"
+                className="rounded-2xl bg-[#102016] border border-[#C2A265]/20 flex flex-col justify-between overflow-hidden group hover:border-[#C2A265]/50 hover:-translate-y-1 transition-all duration-300 ease-out shadow-lg hover:shadow-[0_16px_32px_rgba(0,0,0,0.6)] max-w-sm md:max-w-none mx-auto w-full"
               >
                 {/* Product Image Frame */}
-                <div className="relative aspect-square w-full bg-[#0D1B12] p-4 sm:p-5 flex items-center justify-center border-b border-[#C2A265]/15">
+                <div className="relative h-48 sm:h-56 md:h-64 w-full bg-[#0D1B12] p-3 sm:p-4 flex items-center justify-center border-b border-[#C2A265]/15">
                   {/* Subtle Badge */}
                   <div className="absolute top-2.5 left-2.5 z-10">
                     <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[8.5px] sm:text-[9.5px] uppercase tracking-wider font-semibold bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265]">

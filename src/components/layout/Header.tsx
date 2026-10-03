@@ -128,12 +128,12 @@ export function Header() {
             className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 group py-1"
             aria-label="Ayur Veda Global Home"
           >
-            <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
               <Image
-                src="/images/logo.png"
+                src="/images/brand-logo.png"
                 alt="Ayur Veda Global"
-                width={30}
-                height={30}
+                width={34}
+                height={34}
                 className="object-contain filter drop-shadow-[0_2px_6px_rgba(194,162,101,0.25)]"
                 priority
               />
@@ -470,7 +470,7 @@ export function Header() {
               <div className="flex items-center justify-between pb-4 border-b border-ayur-forest-dark/50">
                 <div className="flex items-center gap-3">
                   <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center flex-shrink-0">
-                    <Image src="/images/logo.png" alt="Ayur Veda Global Logo" width={32} height={32} className="object-contain filter drop-shadow-[0_2px_8px_rgba(194,162,101,0.25)]" />
+                    <Image src="/images/brand-logo.png" alt="Ayur Veda Global Logo" width={32} height={32} className="object-contain filter drop-shadow-[0_2px_8px_rgba(194,162,101,0.25)]" />
                   </div>
                   <span className="font-heading text-lg font-normal text-[#FAF7EE]">Ayur Veda Global</span>
                 </div>

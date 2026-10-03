@@ -67,7 +67,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
               <Link href="/" onClick={onClose} className="flex items-center gap-2.5">
                 <div className="w-8 h-8 relative flex-shrink-0">
                   <Image
-                    src="/images/logo.png"
+                    src="/images/brand-logo.png"
                     alt="Ayur Veda Global"
                     width={32}
                     height={32}

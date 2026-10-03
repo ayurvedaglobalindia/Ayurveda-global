@@ -165,12 +165,12 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6 footer-section">
             <Link href="/" className="flex items-center gap-2.5 sm:gap-3" aria-label="Ayur Veda Global Home">
-              <div className="relative w-8 h-8 sm:w-8.5 sm:h-8.5 flex items-center justify-center flex-shrink-0">
+              <div className="relative w-8.5 h-8.5 sm:w-9 sm:h-9 flex items-center justify-center flex-shrink-0">
                 <Image
-                  src="/images/logo.png"
+                  src="/images/brand-logo.png"
                   alt="Ayur Veda Global"
-                  width={32}
-                  height={32}
+                  width={34}
+                  height={34}
                   className="object-contain filter drop-shadow-[0_2px_6px_rgba(194,162,101,0.25)]"
                   priority
                 />

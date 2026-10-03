@@ -6,19 +6,19 @@ import { Sparkles, Scroll, Award, Leaf, ShieldCheck } from 'lucide-react'
 
 export function EditorialBrandStory() {
   return (
-    <section className="bg-[#0B150F] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 text-[#F5EFE6] relative overflow-hidden">
+    <section className="bg-[#0B150F] py-8 sm:py-10 lg:py-12 border-b border-[#C2A265]/20 text-[#F5EFE6] relative overflow-hidden">
       <div className="container relative z-10">
         <div className="max-w-6xl mx-auto">
           
           {/* Top Heritage Shloka Frame */}
-          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-            <span className="font-serif text-xs sm:text-sm text-[#C2A265] italic tracking-wide block mb-1.5">
+          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
+            <span className="font-serif text-xs text-[#C2A265] italic tracking-wide block mb-1">
               ॐ चरक संहिता • Charaka Samhita
             </span>
-            <p className="font-heading text-base sm:text-lg text-[#FAF7EE] font-normal leading-relaxed italic">
+            <p className="font-heading text-sm sm:text-base text-[#FAF7EE] font-normal leading-relaxed italic">
               &ldquo;प्रयोजनं चास्य स्वस्थस्य स्वास्थ्यरक्षणमातुरस्य विकारप्रशमनं च॥&rdquo;
             </p>
-            <p className="text-[11px] sm:text-xs text-[#A8A295] mt-1.5 font-sans">
+            <p className="text-[10.5px] sm:text-xs text-[#A8A295] mt-1 font-sans">
               &ldquo;The sacred purpose of Ayurveda is twofold: to preserve the constitutional vitality of the healthy, and to eradicate root imbalances in the afflicted.&rdquo;
             </p>
           </div>

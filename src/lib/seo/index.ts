@@ -56,7 +56,7 @@ export function generateOrganizationStructuredData() {
     '@type': 'Organization',
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/images/logo.png`,
+    logo: `${SITE_URL}/images/brand-logo.png`,
     founder: {
       '@type': 'Person',
       name: 'Mageesh',

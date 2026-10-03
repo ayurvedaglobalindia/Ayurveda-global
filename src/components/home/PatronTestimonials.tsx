@@ -38,21 +38,21 @@ const testimonials = [
 
 export function PatronTestimonials() {
   return (
-    <section className="bg-[#0E1E14] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#0E1E14] py-8 sm:py-10 lg:py-12 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-2.5">
-            <ShieldCheck className="w-3.5 h-3.5" />
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-2">
+            <ShieldCheck className="w-3 h-3" />
             <span>Verified Patron Accounts</span>
           </div>
 
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-[#FAF7EE] tracking-tight">
             Trusted by Discerning Patrons Across India
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-[11px] sm:text-xs text-[#C5BFB3] mt-2 max-w-lg mx-auto leading-relaxed font-sans">
             Real experiences from individuals who chose Classical Ayurvedic Rasayana over synthetic temporary fixes.
           </p>
         </div>

@@ -27,9 +27,9 @@ export function VaidyaConsultationDesk() {
   }
 
   return (
-    <section className="bg-[#0B150F] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#0B150F] py-8 sm:py-10 lg:py-12 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
-        <div className="max-w-5xl mx-auto rounded-3xl bg-[#12241A] border border-[#C2A265]/25 p-6 sm:p-8 lg:p-12 shadow-2xl relative overflow-hidden">
+        <div className="max-w-5xl mx-auto rounded-3xl bg-[#12241A] border border-[#C2A265]/25 p-5 sm:p-7 lg:p-9 shadow-2xl relative overflow-hidden">
           
           {/* Subtle Background Lighting */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#C2A265]/5 rounded-full blur-[100px] pointer-events-none" />
