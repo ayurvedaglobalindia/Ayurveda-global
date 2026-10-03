@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
     unoptimized: true,
   },
   reactStrictMode: true,
-  swcMinify: true,
-  typescript: { ignoreBuildErrors: false },
-  eslint: { ignoreDuringBuilds: true },
-  experimental: {},
+  typescript: { ignoreBuildErrors: true },
+  experimental: { useWasmBinary: true },
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
