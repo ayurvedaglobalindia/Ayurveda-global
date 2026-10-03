@@ -6,7 +6,10 @@ const nextConfig = {
   },
   reactStrictMode: true,
   typescript: { ignoreBuildErrors: true },
-  experimental: { useWasmBinary: true },
+  turbopack: {},
+  experimental: {
+    useWasmBinary: process.platform === 'android',
+  },
   webpack: (config, { dev, isServer }) => {
     if (!isServer) {
       config.resolve = config.resolve || {}
