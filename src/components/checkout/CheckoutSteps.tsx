@@ -195,56 +195,47 @@ export function CheckoutForm() {
     const orderId = `ORD-${Date.now()}`
     const orderNumber = orderId
 
-    try {
-      await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...orderData,
-          id: orderId,
-          orderNumber,
-        }),
-      })
-    } catch (err) {
-      console.error('Failed to save order:', err)
+    const recordedOrder: Order = {
+      id: orderId,
+      orderNumber,
+      createdAt: new Date().toISOString(),
+      total,
+      status: 'confirmed',
+      paymentMethod: formData.paymentMethod,
+      items: items.map(item => {
+        const img = getProductImage(item.product, item.productId)
+        return {
+          name: item.product.name,
+          quantity: item.quantity,
+          price: item.price,
+          total: item.price * item.quantity,
+          image: img.src,
+        }
+      }),
+      shippingAddress: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        addressLine1: formData.addressLine1,
+        addressLine2: formData.addressLine2,
+        city: formData.city,
+        state: formData.state,
+        pincode: formData.pincode,
+        phone: formData.phone,
+        email: formData.email,
+        country: 'India',
+      },
+      whatsappMessageSent: formData.paymentMethod === 'whatsapp',
     }
 
-    // Save to user store if logged in
-    const currentUser = useUserStore.getState().user
-    if (currentUser) {
-      const recordedOrder: Order = {
-        id: orderId,
-        orderNumber,
-        createdAt: new Date().toISOString(),
-        total,
-        status: 'confirmed',
-        paymentMethod: formData.paymentMethod,
-        items: items.map(item => {
-          const img = getProductImage(item.product, item.productId)
-          return {
-            name: item.product.name,
-            quantity: item.quantity,
-            price: item.price,
-            total: item.price * item.quantity,
-            image: img.src,
-          }
-        }),
-        shippingAddress: {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          addressLine1: formData.addressLine1,
-          addressLine2: formData.addressLine2,
-          city: formData.city,
-          state: formData.state,
-          pincode: formData.pincode,
-          phone: formData.phone,
-          email: formData.email,
-          country: 'India',
-        },
-        whatsappMessageSent: formData.paymentMethod === 'whatsapp',
+    // Always record order into store & client storage for instant tracking & history
+    useUserStore.getState().addOrder(recordedOrder)
+    try {
+      if (typeof window !== 'undefined') {
+        const storedOrders = JSON.parse(localStorage.getItem('ayur_orders') || '[]')
+        storedOrders.unshift(recordedOrder)
+        localStorage.setItem('ayur_orders', JSON.stringify(storedOrders.slice(0, 50)))
       }
-      useUserStore.getState().addOrder(recordedOrder)
-    }
+    } catch {}
 
     if (formData.paymentMethod === 'whatsapp') {
       const message = buildOrderWhatsAppMessage({

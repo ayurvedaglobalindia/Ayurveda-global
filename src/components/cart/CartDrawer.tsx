@@ -15,6 +15,7 @@ import { getProductImage } from '@/lib/products/registry'
 import { validateCoupon } from '@/lib/coupons'
 import { useCartStore } from '@/store/cartStore'
 import { useUIStore } from '@/store/uiStore'
+import { buildWhatsAppUrl, buildOrderWhatsAppMessage } from '@/store/whatsappStore'
 
 export function CartDrawer() {
   const { isCartDrawerOpen, closeCartDrawer } = useUIStore()
@@ -50,6 +51,39 @@ export function CartDrawer() {
     } finally {
       setCouponLoading(false)
     }
+  }
+
+  const handleWhatsAppOrder = () => {
+    const orderId = `ORD-WA-${Date.now().toString().slice(-6)}`
+    const message = buildOrderWhatsAppMessage({
+      orderId,
+      orderNumber: orderId,
+      customerName: 'Customer',
+      customerPhone: '',
+      shippingAddress: {
+        firstName: '',
+        lastName: '',
+        addressLine1: '',
+        city: '',
+        state: '',
+        pincode: '',
+        phone: '',
+      },
+      items: items.map(item => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        price: item.price,
+        total: item.price * item.quantity,
+      })),
+      subtotal,
+      shipping: shippingCalc.cost,
+      tax,
+      discount,
+      total,
+      paymentMethod: 'whatsapp',
+      couponCode,
+    })
+    window.open(buildWhatsAppUrl(message), '_blank')
   }
 
   useEffect(() => {
@@ -154,11 +188,25 @@ export function CartDrawer() {
 
             {items.length > 0 && (
               <div className="p-4 border-t border-ayur-forest-dark/50 bg-ayur-charcoal space-y-2.5">
-                <Link href="/checkout" onClick={closeCartDrawer}>
-                  <Button variant="gold" size="lg" className="w-full text-base font-semibold shadow-xl gold-shimmer">
-                    Proceed to Checkout ({formatINR(total)})
+                <div className="flex gap-2.5">
+                  <Link href="/checkout" onClick={closeCartDrawer} className="flex-1">
+                    <Button variant="gold" size="lg" className="w-full text-sm font-bold shadow-xl gold-shimmer">
+                      Proceed to Checkout ({formatINR(total)})
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="whatsapp"
+                    size="lg"
+                    onClick={handleWhatsAppOrder}
+                    className="px-3.5 py-3 shadow-lg shadow-emerald-500/10 flex-shrink-0"
+                    title="Order directly via WhatsApp"
+                    aria-label="Order directly via WhatsApp"
+                  >
+                    <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M17.5 14.4c-.3-.1-1.8-.9-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8 1-.9 1.2-.2.2-.4.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.2-.2-.2-.3-.3-.3-.5 0-.2 0-.4-.1-.5-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5-.2 0-.4 0-.6 0-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.5-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.6-.3" />
+                    </svg>
                   </Button>
-                </Link>
+                </div>
                 <div className="flex items-center justify-center gap-4 text-xs text-ayur-stone pt-1">
                   <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> 100% Secure Checkout</span>
                   <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Ayush Certified</span>

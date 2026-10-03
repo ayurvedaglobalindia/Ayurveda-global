@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Metadata } from 'next'
-import { Package, Truck, Search, CheckCircle, Clock, XCircle, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
+import { Package, Truck, Search, CheckCircle, Clock, XCircle, ArrowRight, Shield, MessageSquare, MapPin } from 'lucide-react'
 import { formatDateTime, formatINR, classNames } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -13,138 +13,119 @@ const mockTrackingData = {
   'ORD-20241215-ABC1': {
     orderNumber: 'ORD-20241215-ABC1',
     status: 'delivered',
-    items: [{ name: 'BODY Essential Nutrition', quantity: 1, total: 149900 }],
+    items: [{ name: 'BODY Essential Nutrition (60 Caps)', quantity: 1, total: 149900 }],
     total: 149900,
     timeline: [
       { status: 'confirmed', date: '2024-12-15T10:30:00Z', note: 'Order confirmed via WhatsApp' },
-      { status: 'processing', date: '2024-12-16T09:00:00Z', note: 'Order being prepared' },
-      { status: 'shipped', date: '2024-12-17T14:00:00Z', note: 'Shipped via BlueDart - Tracking: BD123456789' },
-      { status: 'delivered', date: '2024-12-18T11:30:00Z', note: 'Delivered to customer' },
+      { status: 'processing', date: '2024-12-16T09:00:00Z', note: 'Order inspected & packed in discreet unmarked packaging' },
+      { status: 'shipped', date: '2024-12-17T14:00:00Z', note: 'Dispatched via BlueDart Express - AWB #BD88920194' },
+      { status: 'delivered', date: '2024-12-18T11:30:00Z', note: 'Delivered securely to customer' },
     ],
-    trackingNumber: 'BD123456789',
-    carrier: 'BlueDart',
+    trackingNumber: 'BD88920194',
+    carrier: 'BlueDart Express',
   },
   'ORD-20241210-XYZ2': {
     orderNumber: 'ORD-20241210-XYZ2',
     status: 'shipped',
-    items: [{ name: 'STAYMAX+ Delay Spray', quantity: 1, total: 89900 }],
+    items: [{ name: 'STAYMAX+ Delay Spray (30ml)', quantity: 1, total: 89900 }],
     total: 94800,
     timeline: [
       { status: 'confirmed', date: '2024-12-10T14:20:00Z', note: 'Order confirmed - Cash on Delivery' },
-      { status: 'processing', date: '2024-12-11T10:00:00Z', note: 'Order being prepared' },
-      { status: 'shipped', date: '2024-12-12T10:00:00Z', note: 'Shipped via DTDC - Tracking: DTDC987654321' },
+      { status: 'processing', date: '2024-12-11T10:00:00Z', note: 'Formulation prepared in sterile facility' },
+      { status: 'shipped', date: '2024-12-12T10:00:00Z', note: 'Shipped via Express Logistics - AWB #EXP4928172' },
     ],
-    trackingNumber: 'DTDC987654321',
-    carrier: 'DTDC',
+    trackingNumber: 'EXP4928172',
+    carrier: 'Express Logistics',
   },
 }
 
 const statusConfig = {
-  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'bg-blue-100 text-blue-700', lineColor: 'bg-blue-500' },
-  processing: { label: 'Processing', icon: Clock, color: 'bg-amber-100 text-amber-700', lineColor: 'bg-amber-500' },
-  shipped: { label: 'Shipped', icon: Truck, color: 'bg-purple-100 text-purple-700', lineColor: 'bg-purple-500' },
-  delivered: { label: 'Delivered', icon: CheckCircle, color: 'bg-green-100 text-green-700', lineColor: 'bg-green-500' },
-  cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-red-100 text-red-700', lineColor: 'bg-red-500' },
+  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'text-emerald-400 bg-emerald-950/80 border border-emerald-500/30', lineColor: 'bg-emerald-500' },
+  processing: { label: 'Apothecary Processing', icon: Clock, color: 'text-amber-300 bg-amber-950/80 border border-amber-500/30', lineColor: 'bg-amber-500' },
+  shipped: { label: 'In Discreet Transit', icon: Truck, color: 'text-blue-300 bg-blue-950/80 border border-blue-500/30', lineColor: 'bg-blue-500' },
+  delivered: { label: 'Delivered', icon: CheckCircle, color: 'text-ayur-gold-bright bg-ayur-emerald-card border border-ayur-gold/40', lineColor: 'bg-ayur-gold' },
+  cancelled: { label: 'Cancelled', icon: XCircle, color: 'text-rose-400 bg-rose-950/80 border border-rose-500/30', lineColor: 'bg-rose-500' },
 }
-
 
 export default function TrackOrderPage() {
   const [orderId, setOrderId] = useState('')
   const [contact, setContact] = useState('')
-  const [trackedOrder, setTrackedOrder] = useState<typeof mockTrackingData[keyof typeof mockTrackingData] | null>(null)
+  const [trackedOrder, setTrackedOrder] = useState<any>(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleTrack = async () => {
+  const handleTrack = () => {
     setError('')
-    if (!orderId.trim() || !contact.trim()) {
-      setError('Please enter both Order ID and email/phone')
+    const trimmedId = orderId.trim().toUpperCase()
+    const trimmedContact = contact.trim().toLowerCase()
+
+    if (!trimmedId && !trimmedContact) {
+      setError('Please enter either your Order ID (e.g. ORD-...) or registered Phone/Email.')
       return
     }
 
     setLoading(true)
-    const trimmedId = orderId.trim()
-    const trimmedContact = contact.trim().toLowerCase()
 
+    // 1. Gather all stored client orders (userStore + localStorage)
+    let allOrders: any[] = [...(useUserStore.getState().recentOrders || [])]
     try {
-      const res = await fetch(`/api/orders/${encodeURIComponent(trimmedId)}`)
-      if (res.ok) {
-        const order = await res.json()
-        const orderPhone = (order.customer_phone || '').toLowerCase()
-        const orderEmail = (order.customer_email || '').toLowerCase()
-
-        if (orderPhone.includes(trimmedContact) || orderEmail.includes(trimmedContact) || trimmedContact.includes(orderPhone)) {
-          let items = []
-          try {
-            items = typeof order.items_json === 'string' ? JSON.parse(order.items_json) : (order.items || [])
-          } catch {
-            items = []
-          }
-
-          const status = (order.order_status || 'confirmed') as keyof typeof statusConfig
-          const statusKeys: Array<keyof typeof statusConfig> = ['confirmed', 'processing', 'shipped', 'delivered']
-          const currentIndex = statusKeys.indexOf(status)
-
-          const timeline = statusKeys
-            .filter((_, idx) => idx <= (currentIndex >= 0 ? currentIndex : 0))
-            .map((s, idx) => ({
-              status: s,
-              date: idx === 0 ? order.created_at : order.updated_at,
-              note: s === 'confirmed' ? `Order confirmed (${order.payment_method === 'whatsapp' ? 'WhatsApp' : 'Cash on Delivery'})` :
-                    s === 'processing' ? 'Order is being packaged and prepared for dispatch' :
-                    s === 'shipped' ? 'Dispatched via express courier' : 'Successfully delivered',
-            }))
-
-          setTrackedOrder({
-            orderNumber: order.order_number || order.id,
-            status,
-            items: items.map((i: any) => ({
-              name: i.name || i.productName || 'Ayurvedic Wellness Product',
-              quantity: i.quantity || 1,
-              total: i.total || i.price || order.total_amount,
-            })),
-            total: order.total_amount,
-            timeline,
-            trackingNumber: `EXP-${(order.order_number || order.id).slice(-8)}`,
-            carrier: 'BlueDart / Express Logistics',
-          })
-          setLoading(false)
-          return
-        }
+      if (typeof window !== 'undefined') {
+        const localOrders = JSON.parse(localStorage.getItem('ayur_orders') || '[]')
+        allOrders = [...allOrders, ...localOrders]
       }
-    } catch {
-      // Continue to mock fallback
-    }
+    } catch {}
 
-    // Check user store for client placed orders
-    const userOrders: any[] = useUserStore.getState().recentOrders || []
-    const userOrder = userOrders.find((o: any) => o.id === trimmedId || o.orderNumber === trimmedId)
-    if (userOrder) {
+    // Deduplicate by ID
+    const uniqueOrders = allOrders.filter((v, i, a) => a.findIndex(t => (t.id === v.id || t.orderNumber === v.orderNumber)) === i)
+
+    const matched = uniqueOrders.find((o: any) => {
+      const idMatch = trimmedId && (
+        o.id?.toUpperCase() === trimmedId ||
+        o.orderNumber?.toUpperCase() === trimmedId ||
+        o.id?.toUpperCase().includes(trimmedId) ||
+        o.orderNumber?.toUpperCase().includes(trimmedId)
+      )
+      const contactMatch = trimmedContact && (
+        o.shippingAddress?.phone?.includes(trimmedContact) ||
+        o.shippingAddress?.email?.toLowerCase().includes(trimmedContact) ||
+        o.customerPhone?.includes(trimmedContact) ||
+        o.customerEmail?.toLowerCase().includes(trimmedContact)
+      )
+      if (trimmedId && trimmedContact) return idMatch || contactMatch
+      if (trimmedId) return idMatch
+      return contactMatch
+    })
+
+    if (matched) {
       setTrackedOrder({
-        orderNumber: userOrder.orderNumber,
-        status: userOrder.status,
-        items: (userOrder.items || []).map((i: any) => ({ name: i.name, quantity: i.quantity, total: i.total })),
-        total: userOrder.total,
+        orderNumber: matched.orderNumber || matched.id,
+        status: matched.status || 'confirmed',
+        items: (matched.items || []).map((i: any) => ({
+          name: i.name || 'Ayurvedic Wellness Product',
+          quantity: i.quantity || 1,
+          total: i.total || i.price || matched.total,
+        })),
+        total: matched.total,
         timeline: [
-          { status: 'confirmed', date: userOrder.createdAt, note: `Order confirmed (${userOrder.paymentMethod === 'whatsapp' ? 'WhatsApp' : 'Cash on Delivery'})` },
-          { status: 'processing', date: userOrder.createdAt, note: 'Order being prepared for dispatch' },
+          { status: 'confirmed', date: matched.createdAt, note: `Order confirmed via ${matched.paymentMethod === 'whatsapp' ? 'WhatsApp Concierge' : matched.paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'Prepaid Express'}` },
+          { status: 'processing', date: matched.createdAt, note: 'Formulation authenticated & sealed in tamper-proof discreet box' },
         ],
-        trackingNumber: `EXP-${userOrder.orderNumber.slice(-8)}`,
-        carrier: 'BlueDart / Express Logistics',
+        trackingNumber: `EXP-${(matched.orderNumber || matched.id).slice(-8)}`,
+        carrier: 'BlueDart / Express Logistics India',
       })
       setError('')
       setLoading(false)
       return
     }
 
-    // Fallback to sample mock data if matching
+    // 2. Check mock orders
     const mockOrder = mockTrackingData[trimmedId as keyof typeof mockTrackingData]
     if (mockOrder) {
       setTrackedOrder(mockOrder)
       setError('')
     } else {
       setTrackedOrder(null)
-      setError('Order not found. Please verify your Order ID and contact details.')
+      setError('Order not found. Please verify your reference number or contact our WhatsApp Concierge desk.')
     }
     setLoading(false)
   }
@@ -154,83 +135,95 @@ export default function TrackOrderPage() {
     const StatusIcon = config.icon
 
     return (
-      <div className="container py-8 lg:py-12">
+      <div className="container py-10 lg:py-16">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-8 text-center">
-            <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black mb-4">Order Tracking</h1>
-            <p className="text-ayur-stone">Your order #{trackedOrder.orderNumber} is currently <strong className="text-ayur-black">{config.label}</strong></p>
+          <div className="mb-8 text-center space-y-2">
+            <span className="text-xs uppercase font-bold tracking-widest text-ayur-gold">Live Package Tracking</span>
+            <h1 className="font-heading text-3xl md:text-4xl font-semibold text-ayur-ivory">Order Status</h1>
+            <p className="text-sm text-ayur-sand/80">
+              Reference #{trackedOrder.orderNumber} is currently{' '}
+              <strong className="text-ayur-gold font-semibold">{config.label}</strong>
+            </p>
           </div>
 
-          <div className="bg-white border border-ayur-beige rounded-2xl p-6 mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <Badge variant={trackedOrder.status as any} className="text-base px-4 py-2">
-                  <StatusIcon className="w-4 h-4 mr-2" />
-                  {config.label}
-                </Badge>
+          <div className="card-luxury p-6 sm:p-8 rounded-3xl border border-ayur-gold/30 bg-ayur-charcoal/95 shadow-luxury">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-ayur-forest-dark/50 gap-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold shadow-inner" style={{ background: 'rgba(12, 56, 34, 0.6)' }}>
+                <StatusIcon className="w-4 h-4 text-ayur-gold" />
+                <span className="text-ayur-ivory">{config.label}</span>
               </div>
-              <div className="text-right">
-                <p className="font-medium text-ayur-black">{formatINR(trackedOrder.total)}</p>
-                <p className="text-sm text-ayur-stone">{trackedOrder.items.length} item{trackedOrder.items.length !== 1 ? 's' : ''}</p>
+              <div className="sm:text-right">
+                <p className="text-xs text-ayur-stone">Total Amount</p>
+                <p className="text-xl font-bold text-ayur-gold">{formatINR(trackedOrder.total)}</p>
+                <p className="text-xs text-ayur-stone/80">{trackedOrder.items.length} item{trackedOrder.items.length !== 1 ? 's' : ''}</p>
               </div>
             </div>
 
             {trackedOrder.trackingNumber && (
-              <div className="bg-ayur-cream rounded-xl p-4 mb-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-ayur-stone">Tracking Number</p>
-                    <p className="font-mono font-medium text-ayur-black">{trackedOrder.trackingNumber}</p>
-                  </div>
-                  <p className="text-sm text-ayur-stone">Carrier: {trackedOrder.carrier}</p>
+              <div className="my-6 p-4 rounded-2xl bg-ayur-forest-deep/60 border border-ayur-gold/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div>
+                  <p className="text-ayur-stone">Airway Bill (AWB) / Tracking</p>
+                  <p className="font-mono font-bold text-sm text-ayur-gold-light mt-0.5">{trackedOrder.trackingNumber}</p>
+                </div>
+                <div className="sm:text-right">
+                  <p className="text-ayur-stone">Logistics Partner</p>
+                  <p className="font-semibold text-ayur-ivory mt-0.5">{trackedOrder.carrier}</p>
                 </div>
               </div>
             )}
 
-            <h2 className="font-heading text-xl font-medium text-ayur-black mb-6">Delivery Timeline</h2>
-            <div className="relative pl-6 border-l-2 border-ayur-beige">
-              {trackedOrder.timeline.map((event, index) => {
-                const eventConfig = statusConfig[event.status as keyof typeof statusConfig]
-                const EventIcon = eventConfig?.icon || Clock
-                const isLast = index === trackedOrder.timeline.length - 1
-                const isCurrent = event.status === trackedOrder.status
+            <div className="my-8">
+              <h2 className="font-heading text-lg font-semibold text-ayur-ivory mb-6">Delivery Progress Timeline</h2>
+              <div className="relative pl-6 sm:pl-8 border-l-2 border-ayur-gold/30 space-y-6">
+                {trackedOrder.timeline.map((event: any, index: number) => {
+                  const eventConfig = statusConfig[event.status as keyof typeof statusConfig]
+                  const EventIcon = eventConfig?.icon || Clock
+                  const isCurrent = event.status === trackedOrder.status
 
-                return (
-                  <div key={event.date} className="relative pb-8 last:pb-0">
-                    <div className="absolute left-[-14px] top-1 w-6 h-6 rounded-full border-2 flex items-center justify-center bg-white z-10">
+                  return (
+                    <div key={index} className="relative">
                       <div className={classNames(
-                        'w-2.5 h-2.5 rounded-full',
-                        isCurrent ? (eventConfig?.lineColor || 'bg-blue-500') : 'bg-ayur-beige'
-                      )} />
-                    </div>
-                    <div className="ml-4">
-                      <div className="flex items-start gap-3">
-                        <div className={classNames(
-                          'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0',
-                          isCurrent ? (eventConfig?.lineColor || 'bg-blue-500') : 'bg-ayur-beige'
-                        )}>
-                          <EventIcon className={classNames('w-5 h-5', isCurrent ? 'text-white' : 'text-ayur-stone')} />
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-medium text-ayur-black">{eventConfig?.label || event.status}</p>
-                          <p className="text-sm text-ayur-stone">{event.note}</p>
-                          <p className="text-xs text-ayur-sand mt-1">{formatDateTime(event.date)}</p>
-                        </div>
+                        'absolute -left-[31px] sm:-left-[39px] top-1 w-6 h-6 rounded-full border-2 flex items-center justify-center bg-ayur-charcoal shadow',
+                        isCurrent ? 'border-ayur-gold text-ayur-gold' : 'border-ayur-gold/40 text-ayur-stone'
+                      )}>
+                        <div className={classNames('w-2 h-2 rounded-full', isCurrent ? 'bg-ayur-gold animate-ping' : 'bg-ayur-gold/50')} />
                       </div>
-                      {!isLast && (
-                        <div className="absolute left-4 top-10 bottom-0 w-0.5 bg-ayur-beige" />
-                      )}
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold text-sm text-ayur-ivory">{eventConfig?.label || event.status}</p>
+                          {isCurrent && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-ayur-gold/20 text-ayur-gold-light border border-ayur-gold/30">
+                              Current Status
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-ayur-sand/90 leading-relaxed">{event.note}</p>
+                        <p className="text-[10px] text-ayur-stone">{formatDateTime(event.date)}</p>
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+              </div>
             </div>
 
-            <div className="mt-8 text-center">
-              <Button variant="outline" onClick={() => { setTrackedOrder(null); setOrderId(''); setContact('') }}>
-                <Search className="w-4 h-4 mr-2" />
-                Track Another Order
+            <div className="pt-6 border-t border-ayur-forest-dark/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => { setTrackedOrder(null); setOrderId(''); setContact('') }}
+                className="w-full sm:w-auto text-xs border-ayur-gold/40 text-ayur-gold-light"
+              >
+                <Search className="w-3.5 h-3.5 mr-1.5" /> Track Another Order
               </Button>
+
+              <a
+                href={`https://wa.me/919123485451?text=${encodeURIComponent(`Hi Ayur Veda Global, I would like an update on my Order #${trackedOrder.orderNumber}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold bg-emerald-600/90 hover:bg-emerald-500 text-white transition shadow-lg"
+              >
+                <MessageSquare className="w-4 h-4" /> WhatsApp Dispatch Support
+              </a>
             </div>
           </div>
         </div>
@@ -239,56 +232,79 @@ export default function TrackOrderPage() {
   }
 
   return (
-    <div className="container py-8 lg:py-12">
+    <div className="container py-12 lg:py-20">
       <div className="max-w-md mx-auto">
-        <div className="text-center mb-10">
-          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-ayur-cream flex items-center justify-center">
-            <Package className="w-10 h-10 text-ayur-forest" />
+        <div className="text-center mb-10 space-y-3">
+          <div className="w-20 h-20 mx-auto rounded-full bg-ayur-emerald-card border border-ayur-gold/30 flex items-center justify-center shadow-luxury">
+            <Package className="w-10 h-10 text-ayur-gold" />
           </div>
-          <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-black mb-4">Track Your Order</h1>
-          <p className="text-ayur-stone">Enter your Order ID and registered email or phone number to track your delivery</p>
+          <h1 className="font-heading text-3xl md:text-4xl font-semibold text-ayur-ivory">Track Your Order</h1>
+          <p className="text-xs sm:text-sm text-ayur-sand/80 leading-relaxed">
+            Enter your Order ID (e.g. ORD-20241215-ABC1) or registered phone number to track your package in real-time.
+          </p>
         </div>
 
-        <div className="bg-white border border-ayur-beige rounded-2xl p-6 md:p-8 space-y-6">
+        <div className="card-luxury p-6 sm:p-8 rounded-3xl border border-ayur-gold/25 bg-ayur-charcoal/95 space-y-5 shadow-luxury">
           <div>
+            <label className="block text-xs font-semibold text-ayur-sand mb-1.5 uppercase tracking-wider">
+              Order ID
+            </label>
             <Input
-              label="Order ID"
               value={orderId}
               onChange={e => setOrderId(e.target.value.toUpperCase())}
-              placeholder="ORD-20241215-ABC1"
-              error={error && !trackedOrder ? error : undefined}
+              placeholder="ORD-..."
+              className="font-mono text-sm"
               autoFocus
             />
           </div>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-ayur-forest-dark/60" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-ayur-charcoal px-3 text-ayur-stone font-semibold">Or</span>
+            </div>
+          </div>
+
           <div>
+            <label className="block text-xs font-semibold text-ayur-sand mb-1.5 uppercase tracking-wider">
+              Registered Phone or Email
+            </label>
             <Input
-              label="Email or Phone"
               value={contact}
               onChange={e => setContact(e.target.value)}
-              placeholder="john@example.com or +91 98765 43210"
+              placeholder="e.g. 9123485451 or client@example.com"
               type="text"
             />
           </div>
+
+          {error && (
+            <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs text-center" role="alert">
+              {error}
+            </div>
+          )}
+
           <Button
-            variant="primary"
+            variant="gold"
             size="lg"
-            className="w-full"
+            className="w-full font-bold shadow-xl gold-shimmer py-3.5"
             onClick={handleTrack}
             loading={loading}
           >
-            <Search className="w-5 h-5 mr-2" />
-            Track Order
+            <Search className="w-4 h-4 mr-2" /> Track Shipment
           </Button>
 
-          {error && !trackedOrder && (
-            <p className="text-center text-ayur-copper text-sm" role="alert">{error}</p>
-          )}
-
-          <div className="pt-6 border-t border-ayur-beige">
-            <p className="text-center text-sm text-ayur-stone">
-              Can&apos;t find your order?{' '}
-              <a href="/contact" className="text-ayur-forest hover:text-ayur-gold underline font-medium">
-                Contact Support
+          <div className="pt-4 border-t border-ayur-forest-dark/40 text-center space-y-2">
+            <p className="text-xs text-ayur-stone">
+              Need immediate assistance?{' '}
+              <a
+                href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20need%20help%20tracking%20my%20order."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ayur-gold hover:underline font-semibold"
+              >
+                Chat on WhatsApp
               </a>
             </p>
           </div>

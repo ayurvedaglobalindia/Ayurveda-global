@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useParams, notFound } from 'next/navigation'
 import { ProductDetails } from '@/components/product/ProductDetails'
 import { ProductCard } from '@/components/product/ProductCard'
@@ -45,7 +46,9 @@ export default function ProductPageClient() {
         )}
 
         <div className="mb-12">
-          <ProductDetails product={product} />
+          <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center text-[#D4AF37]">Loading details...</div>}>
+            <ProductDetails product={product} />
+          </Suspense>
         </div>
 
         {relatedProducts.length > 0 && (

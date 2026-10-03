@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Heart, Share2, Truck, Shield, RotateCcw, Leaf, Check, X, Minus, Plus, Play, Star, ThumbsUp, MessageSquarePlus } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Heart, Share2, Truck, Shield, RotateCcw, Leaf, Check, X, Minus, Plus, Play, Star, ThumbsUp, MessageSquarePlus, Zap } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
@@ -39,6 +40,8 @@ interface ProductDetailsProps {
 }
 
 export function ProductDetails({ product, selectedVariant, onVariantChange }: ProductDetailsProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const { addItem, isInCart, getItemQuantity } = useCartStore()
   const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
   const { openModal, openCartDrawer, showToast } = useUIStore()
@@ -46,7 +49,33 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
 
   const [quantity, setQuantity] = useState(1)
   const [showVideoModal, setShowVideoModal] = useState(false)
+  const [showStickyBar, setShowStickyBar] = useState(false)
   const [selectedVariantId, setSelectedVariantId] = useState(selectedVariant?.id || product.variants[0]?.id)
+
+  const variantParam = searchParams?.get('variant')
+
+  // Auto-sync variant from URL parameter (?variant=120 or ?variant=deluxe)
+  useEffect(() => {
+    if (variantParam) {
+      const match = product.variants.find(
+        v => v.id === variantParam || v.id.toLowerCase().includes(variantParam.toLowerCase())
+      )
+      if (match) {
+        setSelectedVariantId(match.id)
+        onVariantChange?.(match)
+      }
+    }
+  }, [variantParam, product.variants, onVariantChange])
+
+  // Track scroll position to show sticky action bar on mobile
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowStickyBar(window.scrollY > 400)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const currentVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
 
   const inCart = isInCart(product.id, selectedVariantId)
@@ -78,12 +107,12 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
         productName: product.name,
         onVerify: () => {
           addItem(product, selectedVariantId, quantity)
-          window.location.href = '/checkout'
+          router.push('/checkout')
         },
       })
     } else {
       addItem(product, selectedVariantId, quantity)
-      window.location.href = '/checkout'
+      router.push('/checkout')
     }
   }
 
@@ -371,6 +400,23 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
           </motion.div>
         )}
 
+        {/* High Demand & Dispatch Trust Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="p-3 rounded-xl bg-ayur-gold/10 border border-ayur-gold/30 flex items-center justify-between text-xs text-ayur-gold-light"
+        >
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <span className="font-semibold text-ayur-ivory">In High Demand:</span>
+            <span>Batch {product.id.slice(0, 4).toUpperCase()}-2026 moving fast</span>
+          </div>
+          <span className="text-[11px] font-bold text-ayur-gold uppercase tracking-wider hidden sm:inline">
+            Same-Day Dispatch
+          </span>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -489,6 +535,60 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
                 />
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Sticky Mobile Buy Now Bar */}
+      <AnimatePresence>
+        {showStickyBar && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 260 }}
+            className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-ayur-charcoal/95 backdrop-blur-xl border-t border-ayur-gold/30 p-3 shadow-2xl flex items-center justify-between gap-3"
+          >
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+              <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-ayur-gold/25 flex-shrink-0 bg-ayur-forest-deep">
+                <Image
+                  src={product.images[0]?.src || '/images/products/body-essential-nutrition.png'}
+                  alt={product.name}
+                  fill
+                  className="object-contain p-1"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold text-ayur-ivory truncate">{product.name}</p>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-bold text-ayur-gold">{formatINR(currentVariant?.price || product.price)}</span>
+                  {currentVariant?.compareAtPrice && (
+                    <span className="text-[10px] text-ayur-stone line-through">{formatINR(currentVariant.compareAtPrice)}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Button
+                variant="gold-outline"
+                size="sm"
+                onClick={handleAddToCart}
+                disabled={product.inventory.trackQuantity && maxQuantity === 0}
+                className="text-xs px-3 py-2 border-ayur-gold/40 text-ayur-gold-light"
+              >
+                Add
+              </Button>
+              <Button
+                variant="gold"
+                size="sm"
+                onClick={handleBuyNow}
+                disabled={product.inventory.trackQuantity && maxQuantity === 0}
+                className="text-xs px-4 py-2 font-bold gold-shimmer shadow-lg"
+              >
+                Buy Now
+              </Button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -3,12 +3,13 @@
 import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { CheckCircle, Package, MessageSquare, ArrowRight, ShieldCheck, Compass } from 'lucide-react'
-// @ts-ignore
+import { CheckCircle, Package, MessageSquare, ArrowRight, ShieldCheck, Compass, MapPin } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { useUIStore } from '@/store/uiStore'
+import { useUserStore } from '@/store/userStore'
 import { buildWhatsAppUrl, buildOrderWhatsAppMessage } from '@/store/whatsappStore'
+import { formatINR } from '@/lib/utils/formatters'
 
 export default function CheckoutSuccessPage() {
   return (
@@ -23,17 +24,39 @@ export default function CheckoutSuccessPage() {
 }
 
 function CheckoutSuccessContent() {
-  const { closeModal } = useUIStore()
+  const { closeCartDrawer } = useUIStore()
   const searchParams = useSearchParams()
   const orderNumber = searchParams.get('order') || searchParams.get('orderNumber') || 'ORD-PROCESSING'
+  const [order, setOrder] = useState<any>(null)
+
+  useEffect(() => {
+    closeCartDrawer()
+    let allOrders: any[] = [...(useUserStore.getState().recentOrders || [])]
+    try {
+      if (typeof window !== 'undefined') {
+        const stored = JSON.parse(localStorage.getItem('ayur_orders') || '[]')
+        allOrders = [...allOrders, ...stored]
+      }
+    } catch {}
+
+    const found = allOrders.find(
+      (o: any) => o.id === orderNumber || o.orderNumber === orderNumber
+    )
+    if (found) {
+      setOrder(found)
+    }
+  }, [orderNumber, closeCartDrawer])
 
   const handleWhatsAppShare = () => {
+    const customerName = order?.shippingAddress
+      ? `${order.shippingAddress.firstName || ''} ${order.shippingAddress.lastName || ''}`.trim()
+      : ''
     const message = buildOrderWhatsAppMessage({
       orderId: orderNumber || 'PENDING',
       orderNumber: orderNumber || 'PENDING',
-      customerName: '',
-      customerPhone: '',
-      shippingAddress: {
+      customerName: customerName || 'Valued Client',
+      customerPhone: order?.shippingAddress?.phone || '',
+      shippingAddress: order?.shippingAddress || {
         firstName: '',
         lastName: '',
         addressLine1: '',
@@ -42,13 +65,13 @@ function CheckoutSuccessContent() {
         pincode: '',
         phone: '',
       },
-      items: [],
-      subtotal: 0,
-      shipping: 0,
+      items: order?.items || [],
+      subtotal: order?.subtotal || order?.total || 0,
+      shipping: order?.shipping || 0,
       tax: 0,
-      discount: 0,
-      total: 0,
-      paymentMethod: 'whatsapp',
+      discount: order?.discount || 0,
+      total: order?.total || 0,
+      paymentMethod: order?.paymentMethod || 'whatsapp',
     })
     window.open(buildWhatsAppUrl(message), '_blank')
   }
@@ -96,6 +119,36 @@ function CheckoutSuccessContent() {
             {orderNumber || 'ORD-PROCESSING'}
           </span>
         </motion.p>
+
+        {order && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="mb-8 p-5 rounded-2xl bg-ayur-charcoal/90 border border-ayur-gold/25 text-left space-y-3"
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-ayur-forest-dark/50">
+              <span className="text-xs uppercase tracking-wider text-ayur-gold font-bold">Summary</span>
+              <span className="text-sm font-bold text-ayur-ivory">{formatINR(order.total)}</span>
+            </div>
+            <div className="space-y-1.5 text-xs text-ayur-stone">
+              {(order.items || []).map((item: any, idx: number) => (
+                <div key={idx} className="flex justify-between">
+                  <span>{item.name} × {item.quantity}</span>
+                  <span className="text-ayur-ivory">{formatINR(item.total || item.price * item.quantity)}</span>
+                </div>
+              ))}
+            </div>
+            {order.shippingAddress && (
+              <div className="pt-2 border-t border-ayur-forest-dark/40 flex items-center gap-1.5 text-xs text-ayur-sand/90">
+                <MapPin className="w-3.5 h-3.5 text-ayur-gold flex-shrink-0" />
+                <span>
+                  Delivering to: {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}
+                </span>
+              </div>
+            )}
+          </motion.div>
+        )}
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

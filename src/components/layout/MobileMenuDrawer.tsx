@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -26,21 +26,31 @@ interface MobileMenuDrawerProps {
 }
 
 export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
-  if (!isOpen) return null
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = originalOverflow
+      }
+    }
+  }, [isOpen])
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 overflow-hidden lg:hidden">
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          onClick={onClose}
-          className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-          aria-hidden="true"
-        />
+      {isOpen && (
+        <div className="fixed inset-0 z-50 overflow-hidden lg:hidden">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/75 backdrop-blur-md"
+            aria-hidden="true"
+          />
+
 
         {/* Drawer Panel */}
         <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
@@ -244,6 +254,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
           </motion.div>
         </div>
       </div>
+      )}
     </AnimatePresence>
   )
 }
