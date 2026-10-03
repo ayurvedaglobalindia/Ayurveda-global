@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, LayoutGrid, User, ShoppingBag, MessageCircle, HeartPulse } from 'lucide-react'
+import { Home, Search, User, ShoppingBag, HeartPulse } from 'lucide-react'
 import { useCartStore } from '@/store/cartStore'
 import { useUIStore } from '@/store/uiStore'
 import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
@@ -43,18 +43,18 @@ export function MobileBottomNav() {
           <span>Home</span>
         </Link>
 
-        {/* 2. Categories */}
+        {/* 2. Search / Catalog (Nykaa / Purplle style) */}
         <Link
-          href="/categories"
+          href="/shop"
           className={`flex flex-col items-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
-            pathname?.startsWith('/categories') ? 'text-[#D4AF37] font-bold' : 'text-gray-400 hover:text-[#D4AF37]'
+            pathname?.startsWith('/shop') ? 'text-[#D4AF37] font-bold' : 'text-gray-400 hover:text-[#D4AF37]'
           }`}
         >
-          <LayoutGrid className="w-5 h-5" />
-          <span>Categories</span>
+          <Search className="w-5 h-5" />
+          <span>Search</span>
         </Link>
 
-        {/* 3. Center Action: Doctor Consult on WhatsApp */}
+        {/* 3. Center Action: Free Doctor Consult on WhatsApp */}
         <button
           onClick={handleDoctorWhatsApp}
           className="flex flex-col items-center gap-0.5 text-[10px] text-[#25D366] hover:text-green-300 transition-colors -mt-4"
@@ -63,7 +63,7 @@ export function MobileBottomNav() {
           <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#126827] via-[#1EBE5B] to-[#25D366] flex items-center justify-center shadow-lg shadow-green-950/80 border-2 border-[#D4AF37] text-white">
             <HeartPulse className="w-5 h-5 animate-pulse" />
           </div>
-          <span className="text-[9px] font-bold text-emerald-400 mt-0.5">Doctor Consult</span>
+          <span className="text-[9px] font-bold text-emerald-400 mt-0.5">Doctor</span>
         </button>
 
         {/* 4. Cart */}

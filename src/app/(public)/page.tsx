@@ -16,10 +16,17 @@ import {
 import { getAllProducts, getCategories } from '@/lib/products/registry'
 import { generateWebsiteStructuredData, generateOrganizationStructuredData } from '@/lib/seo'
 import { HomeProductGrid } from '@/components/home/HomeProductGrid'
+import { VedicShlokaBar } from '@/components/home/VedicShlokaBar'
+import { VaidyaOrderHotline } from '@/components/home/VaidyaOrderHotline'
 import { ShopByConcern } from '@/components/home/ShopByConcern'
+import { AyurvedaVsModernScience } from '@/components/home/AyurvedaVsModernScience'
+import { AyurvedicTransformationTimeline } from '@/components/home/AyurvedicTransformationTimeline'
 import { AyurvedicTrustMetrics } from '@/components/home/AyurvedicTrustMetrics'
 import { ComboSpotlight } from '@/components/home/ComboSpotlight'
 import { AyurvedicDoctorConsultation } from '@/components/home/AyurvedicDoctorConsultation'
+import { VedicPurityBhavana } from '@/components/home/VedicPurityBhavana'
+import { CircularCategoryShowcase } from '@/components/home/CircularCategoryShowcase'
+import { EssenceOfAyurveda } from '@/components/home/EssenceOfAyurveda'
 import { HomeVideoSection } from '@/components/home/HomeVideoSection'
 import { Accordion } from '@/components/ui/Accordion'
 
@@ -157,96 +164,41 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* 1. Hero & Product-First Immediate Showcase */}
+      {/* 1. Sacred Charaka Samhita Vedic Shloka Bar & Royal Seals */}
+      <VedicShlokaBar />
+
+      {/* 2. Hero & Product-First Immediate Showcase */}
       <HomeProductGrid />
 
-      {/* 2. Shop By Health Concern (Dr. Vaidya's Style Concern Selector) */}
+      {/* 3. Vaidya Order Hotline (Direct WhatsApp & Call Ordering with COD) */}
+      <VaidyaOrderHotline />
+
+      {/* 4. Rog Nidan: Shop By Health Concern (Arya Vaidya & Vaidban Style) */}
       <ShopByConcern />
 
-      {/* 3. Clinical Validation & Ayurvedic Heritage Metrics */}
-      <AyurvedicTrustMetrics />
+      {/* 5. Root Cause Science: Classical Ayurveda vs Synthetic Allopathy */}
+      <AyurvedaVsModernScience />
 
-      {/* 4. Special Dedicated Flagship Combo Spotlight Section */}
+      {/* 6. Special Dedicated Flagship Combo Spotlight Section */}
       <ComboSpotlight />
 
-      {/* 5. Free Ayurvedic Doctor Consultation & WhatsApp Dosage Advisor */}
+      {/* 7. 30-Day Dhatu Rejuvenation Journey Timeline */}
+      <AyurvedicTransformationTimeline />
+
+      {/* 8. Free Ayurvedic Doctor Consultation & WhatsApp Dosage Advisor */}
       <AyurvedicDoctorConsultation />
 
-      {/* 3. Curated Ayurvedic Category Cards */}
-      <section className="bg-ayur-obsidian border-b border-ayur-gold/20 py-10 sm:py-14 relative overflow-hidden">
-        <div className="container relative z-10">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-            <div>
-              <span className="text-xs font-bold text-ayur-gold uppercase tracking-wider">
-                Explore Collections
-              </span>
-              <h2 className="font-heading text-2xl sm:text-3xl font-medium text-ayur-ivory mt-1">
-                Targeted Ayurvedic Formulations
-              </h2>
-            </div>
-            <Link
-              href="/shop"
-              className="text-xs sm:text-sm font-semibold text-ayur-gold hover:text-ayur-gold-light flex items-center gap-1 transition-colors"
-            >
-              <span>View Full Catalog</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+      {/* 9. Sacred Vedic Extraction: 21-Cycle Bhavana & Shodhana Purity */}
+      <VedicPurityBhavana />
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <Link
-              href="/shop?category=supplements"
-              className="card-luxury p-5 rounded-2xl border border-ayur-forest-dark/50 hover:border-ayur-gold/50 hover:shadow-xl transition-all duration-300 group flex items-center gap-4"
-            >
-              <div className="w-12 h-12 rounded-xl bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                <Leaf className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm sm:text-base text-ayur-ivory group-hover:text-emerald-300 transition-colors">
-                  Herbal Supplements
-                </h3>
-                <p className="text-xs text-ayur-stone">BODY Nutrition (60 Veg Caps)</p>
-              </div>
-            </Link>
+      {/* 10. Clinical Validation & Ayurvedic Heritage Metrics */}
+      <AyurvedicTrustMetrics />
 
-            <Link
-              href="/shop?category=personal-care"
-              className="card-luxury p-5 rounded-2xl border border-ayur-forest-dark/50 hover:border-ayur-gold/50 hover:shadow-xl transition-all duration-300 group flex items-center gap-4"
-            >
-              <div className="w-12 h-12 rounded-xl bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm sm:text-base text-ayur-ivory group-hover:text-emerald-300 transition-colors">
-                  Men&apos;s Personal Care
-                </h3>
-                <p className="text-xs text-ayur-stone">STAYMAX+ Delay Spray (30 ml)</p>
-              </div>
-            </Link>
+      {/* 11. Circular & Card Category Navigation (App-Style Showcase) */}
+      <CircularCategoryShowcase />
 
-            <Link
-              href="/product/vitality-power-combo"
-              className="card-luxury p-5 rounded-2xl bg-gradient-to-r from-[#042417] to-[#083D28] text-ayur-ivory border-2 border-ayur-gold/50 hover:border-ayur-gold hover:shadow-2xl transition-all duration-300 group flex items-center justify-between"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-ayur-gold/20 border border-ayur-gold/40 flex items-center justify-center flex-shrink-0 text-ayur-gold">
-                  <Tag className="w-6 h-6" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-bold text-sm sm:text-base text-ayur-ivory">Power Combo</h3>
-                    <span className="text-[10px] font-black bg-gradient-to-r from-[#F4E295] to-[#D4AF37] text-black px-2 py-0.5 rounded shadow">
-                      29% OFF
-                    </span>
-                  </div>
-                  <p className="text-xs text-ayur-stone">Dual Action Synergy (Capsules + Spray)</p>
-                </div>
-              </div>
-              <ArrowRight className="w-5 h-5 text-ayur-gold group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* 12. The Essence of Pure Ayurveda: Royal Lineage & Brand Story */}
+      <EssenceOfAyurveda />
 
       {/* 4. Vedic Extraction & Packaging Demonstration Video Section */}
       <HomeVideoSection />
