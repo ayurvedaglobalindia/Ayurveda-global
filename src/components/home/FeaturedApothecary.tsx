@@ -46,7 +46,7 @@ export function FeaturedApothecary() {
   }
 
   const handleAddToCart = (product: Product) => {
-    const variantId = selectedVariants[product.id]
+    const variantId = selectedVariants[product.id] || product.variants?.[0]?.id || ''
     addItem(product, variantId, 1)
     setAddedNotice(product.id)
     setTimeout(() => {
@@ -56,8 +56,8 @@ export function FeaturedApothecary() {
   }
 
   const handleWhatsAppOrder = (product: Product) => {
-    const variantId = selectedVariants[product.id]
-    const variant = product.variants?.find((v) => v.id === variantId)
+    const variantId = selectedVariants[product.id] || product.variants?.[0]?.id
+    const variant = product.variants?.find((v) => v.id === variantId) || product.variants?.[0]
     const variantName = variant?.name || product.name
 
     const msg = buildProductEnquiryMessage({
@@ -71,26 +71,26 @@ export function FeaturedApothecary() {
   }
 
   return (
-    <section id="apothecary" className="bg-[#0B150F] py-16 sm:py-24 border-b border-[#C2A265]/20 relative">
+    <section id="apothecary" className="bg-[#0B150F] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-2.5">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Master Apothecary Catalog</span>
           </div>
 
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#FAF7EE] tracking-tight">
             Targeted Ayurvedic Formulations
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-3 max-w-xl mx-auto leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
             Classical rasayanas refined with pharmaceutical HPLC precision. Standardized bioactives, 100% vegetarian capsules, zero synthetic chemicals.
           </p>
 
           {/* Filter Pills */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mt-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mt-6">
             {[
               { id: 'all', label: 'All Master Formulations' },
               { id: 'supplements', label: 'Daily Stamina & Energy' },
@@ -100,7 +100,7 @@ export function FeaturedApothecary() {
               <button
                 key={tab.id}
                 onClick={() => setActiveCategory(tab.id as any)}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs font-medium transition-all ${
+                className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs transition-all duration-200 ${
                   activeCategory === tab.id
                     ? 'bg-[#C2A265] text-[#0B150F] font-semibold shadow-md'
                     : 'bg-[#12241A] text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#162C20] border border-[#C2A265]/15'
@@ -113,7 +113,7 @@ export function FeaturedApothecary() {
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {filteredProducts.map((product) => {
             const currentVariantId = selectedVariants[product.id] || product.variants?.[0]?.id
             const currentVariant = product.variants?.find((v) => v.id === currentVariantId) || product.variants?.[0]
@@ -126,13 +126,13 @@ export function FeaturedApothecary() {
             return (
               <div
                 key={product.id}
-                className="rounded-2xl bg-[#102016] border border-[#C2A265]/20 flex flex-col justify-between overflow-hidden group hover:border-[#C2A265]/50 transition-all duration-300 shadow-xl"
+                className="rounded-2xl bg-[#102016] border border-[#C2A265]/20 flex flex-col justify-between overflow-hidden group hover:border-[#C2A265]/50 hover:-translate-y-1.5 transition-all duration-300 ease-out shadow-xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.65),0_0_25px_rgba(194,162,101,0.15)]"
               >
                 {/* Product Image Frame */}
                 <div className="relative aspect-square w-full bg-[#0D1B12] p-8 flex items-center justify-center border-b border-[#C2A265]/15">
                   {/* Subtle Badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-semibold bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265]">
+                  <div className="absolute top-3.5 left-3.5 z-10">
+                    <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265]">
                       {product.id === 'vitality-power-combo'
                         ? 'Master Synergy'
                         : product.id === 'body-essential-nutrition'
@@ -142,8 +142,8 @@ export function FeaturedApothecary() {
                   </div>
 
                   {discountPercent > 0 && (
-                    <div className="absolute top-4 right-4 z-10">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#C2A265] text-[#0B150F]">
+                    <div className="absolute top-3.5 right-3.5 z-10">
+                      <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-bold bg-[#C2A265] text-[#0B150F]">
                         {discountPercent}% OFF
                       </span>
                     </div>
@@ -266,10 +266,10 @@ export function FeaturedApothecary() {
                     </div>
 
                     {/* Dual Action Buttons */}
-                    <div className="grid grid-cols-2 gap-2.5">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
                       <button
                         onClick={() => handleAddToCart(product)}
-                        className="py-3 px-3 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-xs tracking-wide transition-all shadow-md flex items-center justify-center gap-1.5"
+                        className="py-3 px-2 sm:px-3 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-1.5"
                       >
                         {addedNotice === product.id ? (
                           <>
@@ -286,11 +286,22 @@ export function FeaturedApothecary() {
 
                       <button
                         onClick={() => handleWhatsAppOrder(product)}
-                        className="py-3 px-3 rounded-xl bg-[#142A1D] hover:bg-[#183525] border border-[#C2A265]/30 text-[#FAF7EE] font-medium text-xs tracking-wide transition-all flex items-center justify-center gap-1.5"
+                        className="py-3 px-2 sm:px-3 rounded-xl bg-[#142A1D] hover:bg-[#183525] border border-[#C2A265]/30 text-[#FAF7EE] font-medium text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5"
                       >
                         <MessageCircle className="w-3.5 h-3.5 text-[#C2A265]" />
                         <span>Order via COD</span>
                       </button>
+                    </div>
+
+                    {/* Direct PDP Dossier Link */}
+                    <div className="mt-3 text-center">
+                      <Link
+                        href={`/product/${product.slug}`}
+                        className="inline-flex items-center gap-1 text-[11px] text-[#A8A295] hover:text-[#D4B678] transition-colors"
+                      >
+                        <span>View Full Formulation Dossier</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
                     </div>
                   </div>
                 </div>

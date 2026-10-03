@@ -5,6 +5,7 @@ import { Star, ShieldCheck, CheckCircle2 } from 'lucide-react'
 
 const testimonials = [
   {
+    initials: 'VS',
     name: 'Vikramaditya S.',
     location: 'South Delhi',
     verified: 'Verified Buyer (3-Month Regimen)',
@@ -14,6 +15,7 @@ const testimonials = [
       'I was tired of synthetic supplements that caused palpitations and digestive acid. The Vitality Power Combo changed everything within three weeks. BODY Nutrition restored my daily physical stamina without any jittery feelings, and STAYMAX+ delivers calm, dependable endurance without artificial numbness. The discreet brown box delivery is genuinely confidential.',
   },
   {
+    initials: 'RN',
     name: 'Rajesh Nair',
     location: 'Indiranagar, Bengaluru',
     verified: 'Verified Buyer (120 Caps Value Pack)',
@@ -23,6 +25,7 @@ const testimonials = [
       'As a 42-year-old managing long corporate hours and daily gym sessions, my energy reserves were constantly depleted. Taking two capsules after dinner has noticeably improved morning recovery, joint flexibility, and focus. You can immediately feel the quality of pure Shilajit and Ashwagandha.',
   },
   {
+    initials: 'AM',
     name: 'Amitabh M.',
     location: 'Bandra West, Mumbai',
     verified: 'Verified Buyer (Twin Pack)',
@@ -35,31 +38,31 @@ const testimonials = [
 
 export function PatronTestimonials() {
   return (
-    <section className="bg-[#0E1E14] py-16 sm:py-24 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#0E1E14] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-2.5">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Verified Patron Accounts</span>
           </div>
 
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#FAF7EE] tracking-tight">
             Trusted by Discerning Patrons Across India
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-3 max-w-xl mx-auto leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
             Real experiences from individuals who chose Classical Ayurvedic Rasayana over synthetic temporary fixes.
           </p>
         </div>
 
         {/* 3 Testimonial Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-7">
           {testimonials.map((t, idx) => (
             <div
               key={idx}
-              className="p-6 sm:p-8 rounded-2xl bg-[#12241A] border border-[#C2A265]/20 shadow-xl flex flex-col justify-between"
+              className="p-5 sm:p-7 rounded-2xl bg-[#12241A] border border-[#C2A265]/20 shadow-xl flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 ease-out"
             >
               <div>
                 {/* Star Rating */}
@@ -80,21 +83,26 @@ export function PatronTestimonials() {
                 </p>
               </div>
 
-              {/* Author Info */}
+              {/* Author Info with Monogram Avatar */}
               <div className="mt-6 pt-4 border-t border-[#C2A265]/15">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-heading text-sm font-semibold text-[#FAF7EE]">
-                      {t.name}
-                    </h4>
-                    <p className="text-[11px] text-[#C2A265] mt-0.5">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#183525] border border-[#C2A265]/40 flex items-center justify-center text-xs font-semibold text-[#D4B678] font-serif flex-shrink-0">
+                    {t.initials}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-1">
+                      <h4 className="font-heading text-sm font-semibold text-[#FAF7EE] truncate">
+                        {t.name}
+                      </h4>
+                      <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-medium flex-shrink-0">
+                        <CheckCircle2 className="w-3 h-3" />
+                        <span>Verified</span>
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#C2A265] truncate mt-0.5">
                       {t.product}
                     </p>
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-medium">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Verified</span>
-                  </span>
                 </div>
               </div>
             </div>

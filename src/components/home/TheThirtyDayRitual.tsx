@@ -1,12 +1,13 @@
 'use client'
 
 import React from 'react'
-import { Clock, ShieldCheck, Sparkles, ArrowRight } from 'lucide-react'
+import { Clock, ShieldCheck, Sparkles, Flame, Zap, CheckCircle2 } from 'lucide-react'
 
 const ritualPhases = [
   {
     phase: 'Phase 01',
     days: 'Days 1 – 7',
+    icon: Flame,
     sanskrit: 'आम निर्हरण • Ama Nirharana',
     title: 'Cellular Detoxification & Agni Kindle',
     desc: 'Metabolic toxins (Ama) obstructing micro-circulatory channels (Srotas) are gently metabolized. Triphala and Shilajit activate natural digestive Agni, ensuring optimal uptake of bioactive herbs.',
@@ -16,6 +17,7 @@ const ritualPhases = [
   {
     phase: 'Phase 02',
     days: 'Days 8 – 20',
+    icon: Zap,
     sanskrit: 'धातु पोषण • Dhatu Poshana',
     title: 'Deep Tissue Nourishment & Stamina',
     desc: 'Standardized Withanolides and Fulvic Acid penetrate cellular mitochondria, replenishing adenosine triphosphate (ATP) reserves across Mamsa (muscle) and Majja (bone marrow/nerve) tissues.',
@@ -25,6 +27,7 @@ const ritualPhases = [
   {
     phase: 'Phase 03',
     days: 'Days 21 – 30+',
+    icon: Sparkles,
     sanskrit: 'ओजस वर्धन • Ojas Vardhana',
     title: 'Peak Intimate Vigor & Vital Equilibrium',
     desc: 'Safed Musli and Kaunch Beej synthesize vital essence (Ojas), providing balanced endocrine stability, profound intimate endurance, and effortless physical recovery.',
@@ -35,38 +38,43 @@ const ritualPhases = [
 
 export function TheThirtyDayRitual() {
   return (
-    <section className="bg-[#0E1E14] py-16 sm:py-24 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#0E1E14] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-2.5">
             <Clock className="w-3.5 h-3.5" />
             <span>The Biological Timeline</span>
           </div>
 
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#FAF7EE] tracking-tight">
             The 30-Day Physiological Ritual
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-3 max-w-xl mx-auto leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
             How authentic Ayurvedic Rasayana works inside your biology over a consistent four-week protocol.
           </p>
         </div>
 
         {/* 3-Step Journey Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-7">
           {ritualPhases.map((phase, idx) => (
             <div
               key={idx}
-              className={`p-6 sm:p-8 rounded-2xl bg-[#12241A] border ${phase.color} shadow-xl flex flex-col justify-between relative overflow-hidden`}
+              className={`p-5 sm:p-7 rounded-2xl bg-[#12241A] border ${phase.color} shadow-xl flex flex-col justify-between relative overflow-hidden hover:-translate-y-1 transition-all duration-300 ease-out`}
             >
               <div>
                 {/* Phase Number & Timeline */}
                 <div className="flex items-center justify-between pb-4 border-b border-[#C2A265]/15">
-                  <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#C2A265]">
-                    {phase.phase}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-[#183525] border border-[#C2A265]/30 flex items-center justify-center text-[#C2A265]">
+                      <phase.icon className="w-3.5 h-3.5" />
+                    </div>
+                    <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#C2A265]">
+                      {phase.phase}
+                    </span>
+                  </div>
                   <span className="px-2.5 py-1 rounded-full bg-[#0E1E14] text-[11px] font-semibold text-[#D4B678] border border-[#C2A265]/20">
                     {phase.days}
                   </span>

@@ -70,30 +70,50 @@ export function BotanicalPharmacopeia() {
   const [selectedHerb, setSelectedHerb] = useState(0)
 
   return (
-    <section className="bg-[#0E1E14] py-16 sm:py-24 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#0E1E14] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-2.5">
             <Leaf className="w-3.5 h-3.5 text-[#C2A265]" />
             <span>Botanical Pharmacology</span>
           </div>
 
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#FAF7EE] tracking-tight">
             The Sacred Pharmacopeia
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-3 max-w-xl mx-auto leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
             Every milligram is backed by centuries of Charaka Samhita wisdom and validated through pharmaceutical-grade HPLC chromatography.
           </p>
+        </div>
+
+        {/* Mobile & Tablet Herb Selector Strip (Immediate switching without vertical scroll fatigue) */}
+        <div className="lg:hidden mb-6 -mx-4 px-4 overflow-x-auto flex gap-2 pb-2 scroll-smooth">
+          {botanicals.map((herb, idx) => (
+            <button
+              key={idx}
+              onClick={() => setSelectedHerb(idx)}
+              className={`px-3.5 py-2.5 rounded-xl text-xs whitespace-nowrap transition-all flex items-center gap-2 border flex-shrink-0 ${
+                selectedHerb === idx
+                  ? 'bg-[#183525] border-[#C2A265] text-[#FAF7EE] shadow-md font-semibold'
+                  : 'bg-[#102016] border-[#C2A265]/20 text-[#A8A295] hover:text-[#FAF7EE]'
+              }`}
+            >
+              <span>{herb.name}</span>
+              <span className="text-[9px] uppercase px-1.5 py-0.5 rounded bg-[#C2A265]/20 text-[#D4B678] font-bold">
+                {herb.badge}
+              </span>
+            </button>
+          ))}
         </div>
 
         {/* Desktop Editorial Layout: 2-Column Split Ledger */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
-          {/* Herb Selection Column (5 Cols) */}
-          <div className="lg:col-span-5 space-y-2.5">
+          {/* Herb Selection Column (5 Cols) - Desktop Only */}
+          <div className="hidden lg:block lg:col-span-5 space-y-2.5">
             {botanicals.map((herb, idx) => (
               <button
                 key={idx}
@@ -126,7 +146,7 @@ export function BotanicalPharmacopeia() {
             ))}
           </div>
 
-          {/* Detailed Herb Narrative Ledger Card (7 Cols) */}
+          {/* Detailed Herb Narrative Ledger Card (7 Cols on Desktop, Full Width on Mobile) */}
           <div className="lg:col-span-7">
             {botanicals[selectedHerb] && (
               <div className="p-6 sm:p-8 rounded-2xl bg-[#12241A] border border-[#C2A265]/30 shadow-2xl relative overflow-hidden">

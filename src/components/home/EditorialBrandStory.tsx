@@ -6,34 +6,34 @@ import { Sparkles, Scroll, Award, Leaf, ShieldCheck } from 'lucide-react'
 
 export function EditorialBrandStory() {
   return (
-    <section className="bg-[#0B150F] py-16 sm:py-24 border-b border-[#C2A265]/20 text-[#F5EFE6] relative overflow-hidden">
+    <section className="bg-[#0B150F] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 text-[#F5EFE6] relative overflow-hidden">
       <div className="container relative z-10">
         <div className="max-w-6xl mx-auto">
           
           {/* Top Heritage Shloka Frame */}
-          <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-16">
-            <span className="font-serif text-sm text-[#C2A265] italic tracking-wide block mb-2">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+            <span className="font-serif text-xs sm:text-sm text-[#C2A265] italic tracking-wide block mb-1.5">
               ॐ चरक संहिता • Charaka Samhita
             </span>
-            <p className="font-heading text-lg sm:text-xl text-[#FAF7EE] font-normal leading-relaxed italic">
+            <p className="font-heading text-base sm:text-lg text-[#FAF7EE] font-normal leading-relaxed italic">
               &ldquo;प्रयोजनं चास्य स्वस्थस्य स्वास्थ्यरक्षणमातुरस्य विकारप्रशमनं च॥&rdquo;
             </p>
-            <p className="text-xs text-[#A8A295] mt-2 font-sans">
+            <p className="text-[11px] sm:text-xs text-[#A8A295] mt-1.5 font-sans">
               &ldquo;The sacred purpose of Ayurveda is twofold: to preserve the constitutional vitality of the healthy, and to eradicate root imbalances in the afflicted.&rdquo;
             </p>
           </div>
 
           {/* Magazine Split Story Block */}
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Lineage Narrative */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.22em] uppercase">
+            <div className="lg:col-span-7 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.22em] uppercase">
                 <Scroll className="w-3.5 h-3.5" />
                 <span>The Classical Apothecary Tradition</span>
               </div>
 
-              <h2 className="font-heading text-3xl sm:text-4xl font-normal text-[#FAF7EE] tracking-tight leading-snug">
+              <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#FAF7EE] tracking-tight leading-snug">
                 Where Ancient Shodhana Meets{' '}
                 <span className="italic font-serif text-[#D4B678]">
                   Pharmaceutical Purity.
@@ -90,8 +90,24 @@ export function EditorialBrandStory() {
                 </h3>
 
                 <p className="text-xs text-[#C5BFB3] leading-relaxed">
-                  In classical Ayurveda, authentic healing operates through the Trisutra triad: identifying the constitutional root cause (Hetu), diagnosing physiological fatigue patterns (Linga), and administering calibrated herbal alchemy (Aushadha) to restore total homeostasis.
+                  In classical Ayurveda, authentic healing operates through the Trisutra triad: identifying constitutional root causes, diagnosing cellular fatigue patterns, and administering calibrated herbal alchemy to restore total homeostasis.
                 </p>
+
+                {/* Trisutra 3 Pillars */}
+                <div className="grid grid-cols-3 gap-2 pt-1 text-center">
+                  <div className="p-2.5 rounded-lg bg-[#0D1B12] border border-[#C2A265]/15">
+                    <span className="text-[10px] font-serif text-[#C2A265] block">हेतु • Hetu</span>
+                    <span className="text-[9px] text-[#A8A295] block mt-0.5">Root Etiology</span>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-[#0D1B12] border border-[#C2A265]/15">
+                    <span className="text-[10px] font-serif text-[#C2A265] block">लिङ्ग • Linga</span>
+                    <span className="text-[9px] text-[#A8A295] block mt-0.5">Symptomology</span>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-[#0D1B12] border border-[#C2A265]/15">
+                    <span className="text-[10px] font-serif text-[#C2A265] block">औषध • Aushadha</span>
+                    <span className="text-[9px] text-[#A8A295] block mt-0.5">Vedic Alchemy</span>
+                  </div>
+                </div>
 
                 <div className="p-4 rounded-xl bg-[#0D1B12] border border-[#C2A265]/20 flex items-center gap-3">
                   <ShieldCheck className="w-5 h-5 text-[#C2A265] flex-shrink-0" />

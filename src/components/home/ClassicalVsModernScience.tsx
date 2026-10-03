@@ -33,21 +33,21 @@ const comparisonPoints = [
 
 export function ClassicalVsModernScience() {
   return (
-    <section className="bg-[#0B150F] py-16 sm:py-24 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#0B150F] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-2.5">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Root-Cause Pharmacology</span>
           </div>
 
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#FAF7EE] tracking-tight">
             Classical Ayurveda vs Synthetic Quick-Fixes
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-3 max-w-xl mx-auto leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
             Why temporary allopathic stimulants fail long-term, and how authentic Ayurvedic Rasayana restores constitutional vigor from the ground up.
           </p>
         </div>
@@ -85,9 +85,14 @@ export function ClassicalVsModernScience() {
                   <div className="w-5 h-5 rounded-full bg-[#C2A265]/15 border border-[#C2A265]/40 flex items-center justify-center text-[#D4B678] flex-shrink-0 mt-0.5">
                     <Check className="w-3 h-3 stroke-[3]" />
                   </div>
-                  <p className="text-xs sm:text-[13px] text-[#FAF7EE] leading-relaxed">
-                    {item.classical}
-                  </p>
+                  <div>
+                    <span className="sm:hidden text-[10px] font-bold uppercase tracking-wider text-[#C2A265] block mb-0.5">
+                      Classical Rasayana:
+                    </span>
+                    <p className="text-xs sm:text-[13px] text-[#FAF7EE] leading-relaxed">
+                      {item.classical}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Synthetic Negative Point */}
@@ -95,9 +100,14 @@ export function ClassicalVsModernScience() {
                   <div className="w-5 h-5 rounded-full bg-red-950/40 border border-red-500/30 flex items-center justify-center text-red-400 flex-shrink-0 mt-0.5">
                     <X className="w-3 h-3 stroke-[3]" />
                   </div>
-                  <p className="text-xs sm:text-[13px] text-[#A8A295] leading-relaxed">
-                    {item.synthetic}
-                  </p>
+                  <div>
+                    <span className="sm:hidden text-[10px] font-bold uppercase tracking-wider text-red-400/90 block mb-0.5">
+                      Synthetic Stimulants:
+                    </span>
+                    <p className="text-xs sm:text-[13px] text-[#A8A295] leading-relaxed">
+                      {item.synthetic}
+                    </p>
+                  </div>
                 </div>
 
               </div>

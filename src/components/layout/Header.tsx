@@ -145,7 +145,7 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav
-            className="hidden lg:flex items-center gap-1 text-sm font-medium text-[#FAF7EE]"
+            className="hidden lg:flex items-center gap-1 text-sm font-medium text-[#FAF7EE] flex-shrink-0"
             aria-label="Main Navigation"
           >
             <Link
@@ -251,7 +251,7 @@ export function Header() {
           </nav>
 
           {/* Right Side Controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             {/* Desktop Search */}
             <div className="hidden md:block relative">
               <form onSubmit={handleSearchSubmit} className="relative flex items-center">
@@ -262,18 +262,18 @@ export function Header() {
                   onFocus={() => setIsSearchExpanded(true)}
                   onBlur={() => setTimeout(() => setIsSearchExpanded(false), 200)}
                   placeholder="Search formulations, herbs..."
-                  className="w-48 lg:w-60 focus:w-72 pl-9 pr-3 py-2 bg-[#12241A] border border-[#C2A265]/30 focus:border-[#C2A265] rounded-full text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-all duration-300 shadow-inner"
+                  className="w-44 lg:w-52 pl-9 pr-7 py-2 bg-[#12241A] border border-[#C2A265]/30 focus:border-[#C2A265] rounded-full text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-colors shadow-inner"
                   aria-label="Search products"
                 />
                 <Search className="absolute left-3 w-4 h-4 text-[#C2A265] pointer-events-none" aria-hidden="true" />
-                {isSearchExpanded && searchQuery && (
+                {searchQuery && (
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-3 w-4 h-4 text-ayur-stone hover:text-ayur-ivory"
+                    className="absolute right-2.5 w-4 h-4 text-[#8A8478] hover:text-[#FAF7EE] transition-colors"
                     aria-label="Clear search"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 )}
               </form>
@@ -467,10 +467,10 @@ export function Header() {
               {/* Header */}
               <div className="flex items-center justify-between pb-4 border-b border-ayur-forest-dark/50">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-ayur-gold/15 border border-ayur-gold/30 p-1 flex items-center justify-center">
-                    <Image src="/images/logo-dark.png" alt="Logo" width={30} height={30} className="object-contain" />
+                  <div className="w-9 h-9 rounded-xl bg-[#142A1D] border border-[#C2A265]/35 p-1 flex items-center justify-center">
+                    <Image src="/images/logo.png" alt="Ayur Veda Global Logo" width={30} height={30} className="object-contain" />
                   </div>
-                  <span className="font-heading text-lg font-bold text-ayur-gold-light">Ayur Veda Global</span>
+                  <span className="font-heading text-lg font-normal text-[#FAF7EE]">Ayur Veda Global</span>
                 </div>
                 <button
                   onClick={closeMobileMenu}
@@ -548,14 +548,14 @@ export function Header() {
                   onClick={closeMobileMenu}
                   className="block px-3 py-3 rounded-xl text-base font-semibold text-ayur-cream hover:bg-ayur-forest-dark/50 hover:text-ayur-gold-light transition-all"
                 >
-                  Contact & WhatsApp Desk
+                  Contact &amp; WhatsApp Desk
                 </Link>
                 <Link
-                  href="/faq"
+                  href="/track-order"
                   onClick={closeMobileMenu}
                   className="block px-3 py-3 rounded-xl text-base font-semibold text-ayur-cream hover:bg-ayur-forest-dark/50 hover:text-ayur-gold-light transition-all"
                 >
-                  FAQs
+                  Track Your Order
                 </Link>
               </nav>
 
@@ -581,11 +581,11 @@ export function Header() {
                   </Link>
                 ) : (
                   <Link
-                    href="/login"
+                    href="/account"
                     onClick={closeMobileMenu}
                     className="block text-center py-3 rounded-xl border border-ayur-gold/40 text-xs font-bold text-ayur-gold-light hover:bg-ayur-gold/10"
                   >
-                    Sign In to Your Account
+                    Sign In / Account
                   </Link>
                 )}
               </div>

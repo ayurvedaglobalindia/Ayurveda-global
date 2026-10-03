@@ -71,7 +71,7 @@ export function AnnouncementBar() {
   const current = announcements[currentIndex]
 
   return (
-    <div className="bg-gradient-to-r from-[#041B0E] via-[#072C18] to-[#041B0E] text-gray-200 py-2 px-3 text-xs sm:text-sm border-b border-[#D4AF37]/30 shadow-sm relative z-30">
+    <div className="bg-[#08140D] text-[#FAF7EE] py-2 px-3 text-xs sm:text-sm border-b border-[#C2A265]/25 shadow-sm relative z-30">
       <div className="container flex items-center justify-between gap-2">
         <div className="flex-1 flex items-center justify-center sm:justify-start min-w-0">
           <AnimatePresence mode="wait">
@@ -83,15 +83,15 @@ export function AnnouncementBar() {
               transition={{ duration: 0.25 }}
               className="flex items-center gap-2 truncate"
             >
-              <current.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 text-[#D4AF37]" />
+              <current.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 text-[#C2A265]" />
 
-              <span className="hidden sm:inline-block text-[10px] font-black uppercase tracking-wider bg-black/40 text-[#D4AF37] px-2 py-0.5 rounded border border-[#D4AF37]/30">
+              <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider bg-[#12241A] text-[#D4B678] px-2 py-0.5 rounded border border-[#C2A265]/30">
                 {current.badge}
               </span>
 
               <Link
                 href={current.href}
-                className="truncate hover:text-white transition-colors font-medium text-xs sm:text-sm text-gray-200"
+                className="truncate hover:text-[#D4B678] transition-colors font-medium text-xs sm:text-sm text-[#FAF7EE]"
               >
                 {current.text}
               </Link>
@@ -99,7 +99,7 @@ export function AnnouncementBar() {
               {current.badge === 'AYUR10' && (
                 <button
                   onClick={copyCoupon}
-                  className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold text-black bg-[#D4AF37] hover:bg-yellow-300 px-2 py-0.5 rounded shadow transition-colors ml-1"
+                  className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold text-[#0B150F] bg-[#C2A265] hover:bg-[#D4B678] px-2 py-0.5 rounded shadow transition-colors ml-1"
                   title="Copy Coupon"
                 >
                   {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}

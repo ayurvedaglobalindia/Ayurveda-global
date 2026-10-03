@@ -39,11 +39,11 @@ export default function HomePage() {
       {/* 1. Stately Magazine Editorial Hero */}
       <EditorialHero />
 
-      {/* 2. Four Apothecary Pillars & Quality Standards */}
-      <ApothecaryPillars />
-
-      {/* 3. Master Formulations Showcase & Instant COD Funnel */}
+      {/* 2. Master Formulations Showcase & Instant COD Funnel */}
       <FeaturedApothecary />
+
+      {/* 3. Four Apothecary Pillars & Quality Standards (Below Main Fold) */}
+      <ApothecaryPillars />
 
       {/* 4. The Sacred Pharmacopeia: Botanical Storytelling & Bioactives */}
       <BotanicalPharmacopeia />
