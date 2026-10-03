@@ -164,22 +164,22 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6 footer-section">
-            <Link href="/" className="flex items-center gap-3" aria-label="Ayur Veda Global Home">
-              <div className="relative w-10 h-10 flex items-center justify-center">
+            <Link href="/" className="flex items-center gap-2.5 sm:gap-3" aria-label="Ayur Veda Global Home">
+              <div className="relative w-8 h-8 sm:w-8.5 sm:h-8.5 flex items-center justify-center flex-shrink-0">
                 <Image
                   src="/images/logo.png"
                   alt="Ayur Veda Global"
-                  width={40}
-                  height={40}
-                  className="object-contain filter drop-shadow-[0_2px_8px_rgba(194,162,101,0.25)]"
+                  width={32}
+                  height={32}
+                  className="object-contain filter drop-shadow-[0_2px_6px_rgba(194,162,101,0.25)]"
                   priority
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-heading text-lg sm:text-xl font-normal tracking-tight text-[#FAF7EE]">
+                <span className="font-heading text-base sm:text-lg font-normal tracking-tight text-[#FAF7EE]">
                   Ayur Veda Global
                 </span>
-                <span className="text-[9px] uppercase font-semibold tracking-[0.22em] text-[#C2A265]">
+                <span className="text-[8px] sm:text-[8.5px] uppercase font-semibold tracking-[0.2em] text-[#C2A265] -mt-0.5">
                   Classical Apothecary
                 </span>
               </div>

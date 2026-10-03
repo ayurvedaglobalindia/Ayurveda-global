@@ -71,7 +71,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                     alt="Ayur Veda Global"
                     width={32}
                     height={32}
-                    className="object-contain"
+                    className="object-contain filter drop-shadow-[0_2px_8px_rgba(194,162,101,0.25)]"
                   />
                 </div>
                 <div>

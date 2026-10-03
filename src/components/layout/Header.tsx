@@ -64,14 +64,19 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (searchQuery.trim()) {
-      router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`)
+  const executeSearch = (query: string) => {
+    const q = query.trim()
+    if (q) {
+      router.push(`/shop?q=${encodeURIComponent(q)}`)
       setSearchQuery('')
       setIsSearchExpanded(false)
       setMobileSearchOpen(false)
     }
+  }
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    executeSearch(searchQuery)
   }
 
   const megaMenuContent = {
@@ -123,21 +128,21 @@ export function Header() {
             className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 group py-1"
             aria-label="Ayur Veda Global Home"
           >
-            <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+            <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
               <Image
                 src="/images/logo.png"
                 alt="Ayur Veda Global"
-                width={36}
-                height={36}
-                className="object-contain filter drop-shadow-[0_2px_8px_rgba(194,162,101,0.25)]"
+                width={30}
+                height={30}
+                className="object-contain filter drop-shadow-[0_2px_6px_rgba(194,162,101,0.25)]"
                 priority
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-heading text-base sm:text-lg md:text-xl font-normal tracking-tight text-[#FAF7EE] group-hover:text-[#D4B678] transition-colors">
+              <span className="font-heading text-sm sm:text-base md:text-lg font-normal tracking-tight text-[#FAF7EE] group-hover:text-[#D4B678] transition-colors">
                 Ayur Veda Global
               </span>
-              <span className="text-[8px] sm:text-[9px] uppercase font-semibold tracking-[0.22em] text-[#C2A265] -mt-0.5">
+              <span className="text-[7.5px] sm:text-[8.5px] uppercase font-semibold tracking-[0.2em] text-[#C2A265] -mt-0.5">
                 Classical Apothecary
               </span>
             </div>
@@ -426,10 +431,7 @@ export function Header() {
                     <button
                       key={term}
                       type="button"
-                      onClick={() => {
-                        setSearchQuery(term)
-                        handleSearchSubmit(new Event('submit') as unknown as React.FormEvent)
-                      }}
+                      onClick={() => executeSearch(term)}
                       className="px-4 py-2 rounded-full text-sm font-medium text-ayur-cream bg-ayur-forest-dark border border-ayur-gold/20 hover:border-ayur-gold hover:text-ayur-gold-light transition-all"
                     >
                       {term}
@@ -467,8 +469,8 @@ export function Header() {
               {/* Header */}
               <div className="flex items-center justify-between pb-4 border-b border-ayur-forest-dark/50">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#142A1D] border border-[#C2A265]/35 p-1 flex items-center justify-center">
-                    <Image src="/images/logo.png" alt="Ayur Veda Global Logo" width={30} height={30} className="object-contain" />
+                  <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center flex-shrink-0">
+                    <Image src="/images/logo.png" alt="Ayur Veda Global Logo" width={32} height={32} className="object-contain filter drop-shadow-[0_2px_8px_rgba(194,162,101,0.25)]" />
                   </div>
                   <span className="font-heading text-lg font-normal text-[#FAF7EE]">Ayur Veda Global</span>
                 </div>

@@ -30,28 +30,28 @@ export function EditorialHero() {
   }
 
   return (
-    <section className="relative bg-[#0B150F] text-[#F5EFE6] pt-6 sm:pt-8 lg:pt-12 pb-8 sm:pb-10 lg:pb-14 border-b border-[#C2A265]/20 overflow-hidden">
+    <section className="relative bg-[#0B150F] text-[#F5EFE6] pt-5 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 lg:pb-10 border-b border-[#C2A265]/20 overflow-hidden">
       {/* Subtle Warm Atmospheric Lighting - Restrained, non-neon */}
-      <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-[#C2A265]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-[350px] h-[350px] bg-[#1B3624]/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-[350px] h-[350px] bg-[#C2A265]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-[300px] h-[300px] bg-[#1B3624]/20 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Decorative Botanical Border Hairline */}
       <div className="container relative z-10">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           
           {/* Left Column (Editorial Narrative & Clinical Authority) */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-center lg:text-left">
+          <div className="lg:col-span-7 space-y-3.5 sm:space-y-4 text-center lg:text-left">
             
-            {/* Regal Heading - Balanced Scale */}
-            <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl xl:text-[40px] font-normal text-[#FAF7EE] leading-snug tracking-tight">
+            {/* Regal Heading - Balanced Compact Scale */}
+            <h1 className="font-heading text-xl sm:text-2xl lg:text-3xl xl:text-[34px] font-normal text-[#FAF7EE] leading-snug tracking-tight">
               Sacred Botanical Science,{' '}
               <span className="italic font-serif text-[#D4B678] block sm:inline">
                 Formulated for Sustained Vigor.
               </span>
             </h1>
 
-            {/* Editorial Thesis Statement - Crisp & Concise */}
-            <p className="text-xs sm:text-sm text-[#C5BFB3] max-w-xl mx-auto lg:mx-0 leading-relaxed font-sans font-normal">
+            {/* Editorial Thesis Statement - Crisp & Compact */}
+            <p className="text-[11px] sm:text-xs text-[#C5BFB3] max-w-lg mx-auto lg:mx-0 leading-relaxed font-sans font-normal">
               Rooted in the Charaka Samhita. Formulated with high-altitude Himalayan Shilajit, organic Ashwagandha, and sacred Rasayana botanicals for cellular ATP stamina, deep tissue rejuvenation, and natural endurance.
             </p>
 
@@ -125,37 +125,37 @@ export function EditorialHero() {
 
           {/* Right Column (Apothecary Arched Showcase & Product Pedestal) */}
           <div className="lg:col-span-5 flex justify-center relative">
-            <div className="relative w-full max-w-[340px] sm:max-w-sm aspect-[4/5] flex items-center justify-center">
+            <div className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[4/5] flex items-center justify-center">
               
               {/* Classical Arch Frame Background */}
-              <div className="absolute inset-0 rounded-t-[120px] rounded-b-2xl bg-gradient-to-b from-[#13281C] via-[#0E1E14] to-[#0A160F] border border-[#C2A265]/25 shadow-2xl p-5 sm:p-6 flex flex-col justify-between">
+              <div className="absolute inset-0 rounded-t-[100px] rounded-b-2xl bg-gradient-to-b from-[#13281C] via-[#0E1E14] to-[#0A160F] border border-[#C2A265]/25 shadow-2xl p-4 sm:p-5 flex flex-col justify-between">
                 
                 {/* Arch Top Header */}
-                <div className="text-center pt-1.5">
-                  <span className="inline-block px-3 py-0.5 rounded-full bg-[#162D1F] border border-[#C2A265]/30 text-[9px] sm:text-[10px] tracking-[0.22em] uppercase text-[#D4B678] font-semibold">
+                <div className="text-center pt-1">
+                  <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#162D1F] border border-[#C2A265]/30 text-[8.5px] sm:text-[9.5px] tracking-[0.2em] uppercase text-[#D4B678] font-semibold">
                     Master Rasayana Series
                   </span>
                 </div>
 
-                {/* Pedestal Base Hallmark Strip - Neatly integrated inside card */}
-                <div className="border-t border-[#C2A265]/20 pt-3 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-1.5 text-[#D4B678] font-medium text-[10px] sm:text-[11px]">
-                    <Leaf className="w-3.5 h-3.5 text-[#C2A265] flex-shrink-0" />
+                {/* Pedestal Base Hallmark Strip */}
+                <div className="border-t border-[#C2A265]/20 pt-2.5 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1.5 text-[#D4B678] font-medium text-[9.5px] sm:text-[10.5px]">
+                    <Leaf className="w-3 h-3 text-[#C2A265] flex-shrink-0" />
                     <span>100% Herbal Actives • Non-Hormonal</span>
                   </div>
-                  <span className="text-[9px] sm:text-[10px] text-[#A6A094] uppercase tracking-wider font-mono">AVG-2026-R</span>
+                  <span className="text-[8.5px] sm:text-[9.5px] text-[#A6A094] uppercase tracking-wider font-mono">AVG-2026-R</span>
                 </div>
               </div>
 
               {/* Product Photography on Architectural Pedestal */}
-              <div className="relative z-10 w-52 sm:w-60 md:w-68 h-60 sm:h-68 md:h-76">
+              <div className="relative z-10 w-44 sm:w-52 h-52 sm:h-60">
                 <Image
                   src="/images/products/vitality-power-combo.jpg"
                   alt="Ayur Veda Global Vitality Power Combo - Ayurvedic Rasayana Capsules & Topical Elixir"
                   fill
                   priority
-                  className="object-contain drop-shadow-[0_16px_30px_rgba(0,0,0,0.85)]"
-                  sizes="(max-width: 768px) 240px, 320px"
+                  className="object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 200px, 280px"
                 />
               </div>
 

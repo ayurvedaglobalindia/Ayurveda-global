@@ -71,21 +71,21 @@ export function FeaturedApothecary() {
   }
 
   return (
-    <section id="apothecary" className="bg-[#0B150F] py-12 sm:py-16 lg:py-20 border-b border-[#C2A265]/20 relative">
+    <section id="apothecary" className="bg-[#0B150F] py-8 sm:py-10 lg:py-12 border-b border-[#C2A265]/20 relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.25em] uppercase mb-2.5">
-            <Sparkles className="w-3.5 h-3.5" />
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265] text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-2">
+            <Sparkles className="w-3 h-3" />
             <span>Master Apothecary Catalog</span>
           </div>
 
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-[#FAF7EE] tracking-tight">
             Targeted Ayurvedic Formulations
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#C5BFB3] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-[11px] sm:text-xs text-[#C5BFB3] mt-2 max-w-lg mx-auto leading-relaxed font-sans">
             Classical rasayanas refined with pharmaceutical HPLC precision. Standardized bioactives, 100% vegetarian capsules, zero synthetic chemicals.
           </p>
 
@@ -129,10 +129,10 @@ export function FeaturedApothecary() {
                 className="rounded-2xl bg-[#102016] border border-[#C2A265]/20 flex flex-col justify-between overflow-hidden group hover:border-[#C2A265]/50 hover:-translate-y-1.5 transition-all duration-300 ease-out shadow-xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.65),0_0_25px_rgba(194,162,101,0.15)]"
               >
                 {/* Product Image Frame */}
-                <div className="relative aspect-square w-full bg-[#0D1B12] p-8 flex items-center justify-center border-b border-[#C2A265]/15">
+                <div className="relative aspect-square w-full bg-[#0D1B12] p-4 sm:p-5 flex items-center justify-center border-b border-[#C2A265]/15">
                   {/* Subtle Badge */}
-                  <div className="absolute top-3.5 left-3.5 z-10">
-                    <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265]">
+                  <div className="absolute top-2.5 left-2.5 z-10">
+                    <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[8.5px] sm:text-[9.5px] uppercase tracking-wider font-semibold bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265]">
                       {product.id === 'vitality-power-combo'
                         ? 'Master Synergy'
                         : product.id === 'body-essential-nutrition'
@@ -142,8 +142,8 @@ export function FeaturedApothecary() {
                   </div>
 
                   {discountPercent > 0 && (
-                    <div className="absolute top-3.5 right-3.5 z-10">
-                      <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-bold bg-[#C2A265] text-[#0B150F]">
+                    <div className="absolute top-2.5 right-2.5 z-10">
+                      <span className="px-2 py-0.5 rounded-full text-[8.5px] sm:text-[9.5px] font-bold bg-[#C2A265] text-[#0B150F]">
                         {discountPercent}% OFF
                       </span>
                     </div>
@@ -154,37 +154,37 @@ export function FeaturedApothecary() {
                       src={product.images[0]?.src || '/images/products/vitality-power-combo.jpg'}
                       alt={product.name}
                       fill
-                      className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                      className="object-contain p-2 sm:p-3 group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 768px) 300px, 400px"
                     />
                   </Link>
                 </div>
 
                 {/* Card Body */}
-                <div className="p-6 sm:p-7 flex flex-col flex-1 justify-between">
+                <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between">
                   <div>
                     {/* Rating & AYUSH Standard */}
-                    <div className="flex items-center justify-between text-xs text-[#A8A295] mb-2.5">
+                    <div className="flex items-center justify-between text-xs text-[#A8A295] mb-2">
                       <div className="flex items-center gap-1.5">
                         <div className="flex text-[#C2A265]">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                            <Star key={i} className="w-3 h-3 fill-current" />
                           ))}
                         </div>
-                        <span className="font-semibold text-[#FAF7EE]">4.9★</span>
+                        <span className="font-semibold text-[#FAF7EE] text-[11px]">4.9★</span>
                       </div>
-                      <span className="text-[11px] text-[#C2A265]">AYUSH Certified</span>
+                      <span className="text-[10px] text-[#C2A265]">AYUSH Certified</span>
                     </div>
 
                     {/* Product Title */}
                     <Link href={`/product/${product.slug}`}>
-                      <h3 className="font-heading text-lg sm:text-xl font-normal text-[#FAF7EE] group-hover:text-[#D4B678] transition-colors leading-snug">
+                      <h3 className="font-heading text-base sm:text-lg font-normal text-[#FAF7EE] group-hover:text-[#D4B678] transition-colors leading-snug">
                         {product.name}
                       </h3>
                     </Link>
 
                     {/* Short Description */}
-                    <p className="text-xs text-[#A8A295] mt-2 line-clamp-2 leading-relaxed">
+                    <p className="text-[11px] sm:text-xs text-[#A8A295] mt-1.5 line-clamp-2 leading-relaxed">
                       {product.shortDescription}
                     </p>
 
@@ -240,36 +240,36 @@ export function FeaturedApothecary() {
                   </div>
 
                   {/* Price & Action Area */}
-                  <div className="mt-6 pt-4 border-t border-[#C2A265]/15">
-                    <div className="flex items-baseline justify-between mb-4">
+                  <div className="mt-4 pt-3 border-t border-[#C2A265]/15">
+                    <div className="flex items-baseline justify-between mb-3">
                       <div>
                         <div className="flex items-baseline gap-2">
-                          <span className="font-heading text-2xl font-semibold text-[#FAF7EE]">
+                          <span className="font-heading text-xl sm:text-2xl font-semibold text-[#FAF7EE]">
                             {formatPrice(activePrice)}
                           </span>
                           {activeComparePrice && (
-                            <span className="text-xs text-[#8A8478] line-through">
+                            <span className="text-[11px] text-[#8A8478] line-through">
                               {formatPrice(activeComparePrice)}
                             </span>
                           )}
                         </div>
-                        <p className="text-[11px] text-[#A8A295] mt-0.5">
+                        <p className="text-[10px] text-[#A8A295] mt-0.5">
                           Taxes included • Free Express Delivery
                         </p>
                       </div>
 
                       {discountPercent > 0 && (
-                        <span className="text-[11px] text-[#C2A265] font-semibold bg-[#142A1D] px-2 py-0.5 rounded border border-[#C2A265]/20">
+                        <span className="text-[10px] text-[#C2A265] font-semibold bg-[#142A1D] px-2 py-0.5 rounded border border-[#C2A265]/20">
                           Save {formatPrice(activeComparePrice! - activePrice)}
                         </span>
                       )}
                     </div>
 
                     {/* Dual Action Buttons */}
-                    <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
+                    <div className="grid grid-cols-2 gap-2">
                       <button
                         onClick={() => handleAddToCart(product)}
-                        className="py-3 px-2 sm:px-3 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-1.5"
+                        className="py-2.5 px-2 sm:px-2.5 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-1.5"
                       >
                         {addedNotice === product.id ? (
                           <>
