@@ -57,25 +57,25 @@ export function MobileBottomNav() {
         {/* 3. Center Action: Free Doctor Consult on WhatsApp */}
         <button
           onClick={handleDoctorWhatsApp}
-          className="flex flex-col items-center gap-0.5 text-[10px] text-[#25D366] hover:text-green-300 transition-colors -mt-4"
+          className="flex flex-col items-center gap-0.5 text-[10px] text-[#C2A265] hover:text-[#D4B678] transition-colors -mt-4"
           aria-label="Free Doctor Consultation"
         >
-          <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#126827] via-[#1EBE5B] to-[#25D366] flex items-center justify-center shadow-lg shadow-green-950/80 border-2 border-[#D4AF37] text-white">
-            <HeartPulse className="w-5 h-5 animate-pulse" />
+          <div className="w-11 h-11 rounded-full bg-[#142A1D] border border-[#C2A265] flex items-center justify-center shadow-xl text-[#D4B678]">
+            <HeartPulse className="w-5 h-5 text-[#C2A265]" />
           </div>
-          <span className="text-[9px] font-bold text-emerald-400 mt-0.5">Doctor</span>
+          <span className="text-[9px] font-medium text-[#C2A265] mt-0.5">Vaidya</span>
         </button>
 
         {/* 4. Cart */}
         <button
           onClick={openCartDrawer}
-          className="flex flex-col items-center gap-0.5 text-[10px] relative text-gray-400 hover:text-[#D4AF37] transition-colors py-1 px-2"
+          className="flex flex-col items-center gap-0.5 text-[10px] relative text-gray-400 hover:text-[#C2A265] transition-colors py-1 px-2"
           aria-label="Open Shopping Cart"
         >
           <div className="relative">
             <ShoppingBag className="w-5 h-5" />
             {cartCount > 0 && (
-              <span className="absolute -top-1.5 -right-2 bg-gradient-to-r from-amber-400 to-[#D4AF37] text-black text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-md">
+              <span className="absolute -top-1.5 -right-2 bg-[#C2A265] text-[#0B150F] text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-md">
                 {cartCount}
               </span>
             )}

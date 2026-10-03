@@ -111,10 +111,19 @@ export function Header() {
     <header
       className={`w-full transition-all duration-300 z-50 ${
         isScrolled
-          ? 'bg-ayur-void/95 backdrop-blur-2xl border-b border-ayur-gold/20 shadow-luxury'
-          : 'bg-ayur-void/80 backdrop-blur-xl border-b border-ayur-gold/10'
+          ? 'bg-[#0B150F]/95 backdrop-blur-2xl border-b border-[#C2A265]/20 shadow-2xl'
+          : 'bg-[#0B150F]/85 backdrop-blur-xl border-b border-[#C2A265]/15'
       }`}
     >
+      {/* Top Heritage Notice Strip */}
+      <div className="bg-[#08100B] border-b border-[#C2A265]/15 py-1.5 px-4 text-center text-[10px] sm:text-[11px] text-[#A8A295] flex items-center justify-center gap-2.5 sm:gap-4 tracking-wider">
+        <span>Free Express Delivery Pan-India</span>
+        <span className="text-[#C2A265]">•</span>
+        <span>100% Classical Shodhana Purity</span>
+        <span className="text-[#C2A265] hidden sm:inline">•</span>
+        <span className="hidden sm:inline">Discreet Plain Box Packaging</span>
+      </div>
+
       <div className="container">
         <div className="flex items-center justify-between h-14 sm:h-16 gap-3 sm:gap-6">
           {/* Brand Logo */}
@@ -123,47 +132,54 @@ export function Header() {
             className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 group py-1"
             aria-label="Ayur Veda Global Home"
           >
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
               <Image
                 src="/images/logo.png"
                 alt="Ayur Veda Global"
-                width={40}
-                height={40}
-                className="object-contain filter drop-shadow-[0_2px_10px_rgba(201,168,76,0.3)]"
+                width={36}
+                height={36}
+                className="object-contain filter drop-shadow-[0_2px_8px_rgba(194,162,101,0.25)]"
                 priority
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-heading text-base sm:text-lg md:text-xl font-bold tracking-tight text-ayur-ivory group-hover:text-emerald-300 transition-colors">
+              <span className="font-heading text-base sm:text-lg md:text-xl font-normal tracking-tight text-[#FAF7EE] group-hover:text-[#D4B678] transition-colors">
                 Ayur Veda Global
               </span>
-              <span className="text-[8px] sm:text-[9px] uppercase font-bold tracking-[0.2em] text-emerald-400 -mt-0.5">
-                Authentic Herbal Wellness
+              <span className="text-[8px] sm:text-[9px] uppercase font-semibold tracking-[0.22em] text-[#C2A265] -mt-0.5">
+                Classical Apothecary
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <nav
-            className="hidden lg:flex items-center gap-1 text-sm font-medium text-ayur-cream"
+            className="hidden lg:flex items-center gap-1 text-sm font-medium text-[#FAF7EE]"
             aria-label="Main Navigation"
           >
             <Link
               href="/"
-              className="relative px-4 py-2.5 rounded-xl text-ayur-cream hover:text-ayur-gold-light hover:bg-ayur-forest-dark/50 transition-all"
+              className="relative px-3.5 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-all"
             >
               Home
+            </Link>
+
+            <Link
+              href="/#apothecary"
+              className="relative px-3.5 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-all"
+            >
+              Formulations
             </Link>
 
             {/* Shop Mega Menu */}
             <div className="relative" onMouseEnter={() => setIsMegaMenuOpen('shop')} onMouseLeave={() => setIsMegaMenuOpen(null)}>
               <button
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-ayur-cream hover:text-ayur-gold-light hover:bg-ayur-forest-dark/50 transition-all font-medium"
+                className="flex items-center gap-1 px-3.5 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-all font-medium"
                 aria-haspopup="true"
                 aria-expanded={isMegaMenuOpen === 'shop'}
               >
-                Shop All
-                <ChevronDown className="w-4 h-4 transition-transform" style={{ transform: isMegaMenuOpen === 'shop' ? 'rotate(180deg)' : 'rotate(0)' }} />
+                Catalog
+                <ChevronDown className="w-3.5 h-3.5 transition-transform" style={{ transform: isMegaMenuOpen === 'shop' ? 'rotate(180deg)' : 'rotate(0)' }} />
               </button>
 
               <AnimatePresence>
@@ -173,25 +189,25 @@ export function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute left-0 top-full mt-3 w-96 bg-ayur-charcoal/98 backdrop-blur-2xl border border-ayur-gold/20 rounded-2xl shadow-luxury py-4 z-50"
+                    className="absolute left-0 top-full mt-3 w-96 bg-[#102016]/98 backdrop-blur-2xl border border-[#C2A265]/25 rounded-2xl shadow-2xl py-4 z-50"
                     role="menu"
                   >
                     {Object.entries(megaMenuContent).map(([key, content]) => (
-                      <div key={key} className="px-4 py-3 border-b border-ayur-forest-dark/50 last:border-0">
-                        <div className="mb-3">
-                          <Link href={content.cta.href} className="font-heading font-semibold text-ayur-ivory text-sm">{content.title}</Link>
-                          <p className="text-xs text-ayur-stone mt-0.5">{content.description}</p>
+                      <div key={key} className="px-4 py-3 border-b border-[#C2A265]/10 last:border-0">
+                        <div className="mb-2">
+                          <Link href={content.cta.href} className="font-heading font-medium text-[#FAF7EE] text-sm hover:text-[#D4B678] transition-colors">{content.title}</Link>
+                          <p className="text-xs text-[#A8A295] mt-0.5">{content.description}</p>
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-1.5">
                           {content.items.map((item) => (
                             <Link
                               key={item.label}
                               href={item.href}
-                              className="flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-sm text-ayur-sand hover:text-ayur-ivory hover:bg-ayur-forest-dark/50 transition-all"
+                              className="flex items-center justify-between gap-2 px-3 py-1.5 rounded-lg text-xs text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#142A1D] transition-all"
                             >
                               <span>{item.label}</span>
                               {item.badge && (
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-ayur-gold/15 text-ayur-gold-light border border-ayur-gold/30">
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C2A265]/15 text-[#D4B678] border border-[#C2A265]/30">
                                   {item.badge}
                                 </span>
                               )}
@@ -200,13 +216,12 @@ export function Header() {
                         </div>
                       </div>
                     ))}
-                    <div className="pt-3 border-t border-ayur-forest-dark/50">
+                    <div className="pt-3 px-4">
                       <Link
                         href="/shop"
-                        className="btn-gold-outline w-full text-center text-sm py-2.5"
+                        className="block w-full py-2.5 rounded-xl bg-[#C2A265] text-[#0B150F] text-center font-semibold text-xs tracking-wider uppercase hover:bg-[#D4B678] transition-all shadow-md"
                       >
-                        Browse Complete Catalog
-                        <ArrowRight className="w-4 h-4 ml-1" />
+                        Browse Complete Catalog →
                       </Link>
                     </div>
                   </motion.div>
@@ -217,48 +232,30 @@ export function Header() {
             {/* Quick Links */}
             <Link
               href="/product/vitality-power-combo"
-              className="relative px-4 py-2.5 rounded-xl text-ayur-gold-light font-semibold hover:text-ayur-ivory hover:bg-ayur-gold/10 transition-all flex items-center gap-1.5 group"
+              className="relative px-3.5 py-2 rounded-xl text-[#D4B678] font-medium hover:text-[#FAF7EE] hover:bg-[#142A1D] transition-all flex items-center gap-1.5"
             >
-              <Sparkles className="w-3.5 h-3.5 text-ayur-gold animate-pulse" />
-              Power Combo
-              <span className="text-[10px] bg-ayur-gold/20 text-ayur-gold-light px-2 py-0.5 rounded-full border border-ayur-gold/40 font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-[#C2A265]" />
+              <span>Power Combo</span>
+              <span className="text-[10px] bg-[#C2A265]/20 text-[#D4B678] px-2 py-0.5 rounded-full border border-[#C2A265]/40 font-bold">
                 29% OFF
               </span>
-            </Link>
-
-            <Link
-              href="/faq"
-              className="relative px-3.5 py-2.5 rounded-xl text-ayur-cream hover:text-ayur-gold-light hover:bg-ayur-forest-dark/50 transition-all"
-            >
-              FAQ
             </Link>
 
             <a
               href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor."
               target="_blank"
               rel="noopener noreferrer"
-              className="relative px-3 py-1.5 rounded-full text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 hover:bg-emerald-900/90 hover:border-emerald-400 transition-all flex items-center gap-1.5 text-xs font-bold shadow-sm group"
+              className="relative px-3.5 py-1.5 rounded-full text-[#D4B678] bg-[#142A1D] border border-[#C2A265]/35 hover:bg-[#183525] transition-all flex items-center gap-1.5 text-xs font-semibold shadow-sm group"
             >
-              <HeartPulse className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition-transform" />
-              <span>Free Doctor Consult</span>
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
+              <HeartPulse className="w-3.5 h-3.5 text-[#C2A265]" />
+              <span>Chief Vaidya Desk</span>
             </a>
 
             <Link
               href="/about"
-              className="relative px-3.5 py-2.5 rounded-xl text-ayur-cream hover:text-ayur-gold-light hover:bg-ayur-forest-dark/50 transition-all"
+              className="relative px-3 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-all"
             >
               Heritage
-            </Link>
-
-            <Link
-              href="/contact"
-              className="relative px-3.5 py-2.5 rounded-xl text-ayur-cream hover:text-ayur-gold-light hover:bg-ayur-forest-dark/50 transition-all"
-            >
-              Contact
             </Link>
           </nav>
 
@@ -303,12 +300,12 @@ export function Header() {
             {/* Wishlist */}
             <Link
               href="/wishlist"
-              className="relative p-2 rounded-xl text-ayur-cream hover:text-emerald-300 hover:bg-emerald-950/40 transition-colors focus-visible-ring group"
+              className="relative p-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-colors focus-visible-ring group"
               aria-label={isMounted ? `Wishlist, ${wishlistCount} items` : 'Wishlist'}
             >
               <Heart className="w-5 h-5 transition-transform group-hover:scale-110" />
               {isMounted && wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-ayur-crimson text-ayur-cream text-[10px] font-bold flex items-center justify-center shadow-md animate-scale-in">
+                <span className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-[#8B0000] text-[#FAF7EE] text-[10px] font-bold flex items-center justify-center shadow-md animate-scale-in">
                   {wishlistCount > 99 ? '99+' : wishlistCount}
                 </span>
               )}
@@ -317,12 +314,12 @@ export function Header() {
             {/* Cart */}
             <button
               onClick={openCartDrawer}
-              className="relative p-2 rounded-xl text-ayur-cream hover:text-emerald-300 hover:bg-emerald-950/40 transition-colors focus-visible-ring group"
+              className="relative p-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-colors focus-visible-ring group"
               aria-label={isMounted ? `Cart, ${cartCount} items` : 'Cart'}
             >
-              <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-110 text-emerald-400" />
+              <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-110 text-[#C2A265]" />
               {isMounted && cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 text-black text-[10px] font-bold flex items-center justify-center shadow-md animate-scale-in">
+                <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#C2A265] text-[#0B150F] text-[10px] font-bold flex items-center justify-center shadow-md animate-scale-in">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}

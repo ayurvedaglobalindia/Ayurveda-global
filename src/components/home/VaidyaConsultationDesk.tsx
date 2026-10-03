@@ -1,0 +1,133 @@
+'use client'
+
+import React, { useState } from 'react'
+import Image from 'next/image'
+import { MessageCircle, PhoneCall, ShieldCheck, Clock, Award, CheckCircle2 } from 'lucide-react'
+import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
+
+export function VaidyaConsultationDesk() {
+  const [selectedConcern, setSelectedConcern] = useState('Daily Fatigue & Workout Stamina')
+
+  const concerns = [
+    'Daily Fatigue & Workout Stamina',
+    'Intimate Endurance & Performance Timing',
+    'Vitality Power Combo Course Guidance',
+    'Dosha Imbalance & Agni Cleansing',
+  ]
+
+  const handleStartConsultation = () => {
+    const msg = buildProductEnquiryMessage({
+      customerName: '',
+      productName: 'Vaidya Teleconsultation Desk',
+      quantity: 1,
+      enquiry: `Pranam Vaidya Ji. I would like private Ayurvedic guidance regarding: "${selectedConcern}". Please advise me on suitable formulations and dietary routine.`,
+      source: 'doctor-section',
+    })
+    window.open(buildWhatsAppUrl(msg), '_blank')
+  }
+
+  return (
+    <section className="bg-[#0B150F] py-16 sm:py-24 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+      <div className="container relative z-10">
+        <div className="max-w-5xl mx-auto rounded-3xl bg-[#12241A] border border-[#C2A265]/25 p-8 sm:p-12 lg:p-16 shadow-2xl relative overflow-hidden">
+          
+          {/* Subtle Background Lighting */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#C2A265]/5 rounded-full blur-[100px] pointer-events-none" />
+
+          <div className="grid lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left Column: Doctor Profile & Narrative */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#183525] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.22em] uppercase">
+                <Award className="w-3.5 h-3.5" />
+                <span>Certified BAMS / MD Ayurvedic Vaidyas</span>
+              </div>
+
+              <h2 className="font-heading text-2xl sm:text-4xl font-normal text-[#FAF7EE] tracking-tight leading-snug">
+                Confidential Ayurvedic Consultation,{' '}
+                <span className="italic font-serif text-[#D4B678]">
+                  Tailored to Your Constitution.
+                </span>
+              </h2>
+
+              <p className="text-xs sm:text-sm text-[#C5BFB3] leading-relaxed font-sans font-normal">
+                Every human constitution (Prakriti) possesses distinct biological requirements. Our in-house Ayurvedic physicians assess your lifestyle, doshic balance, and stamina goals to provide discreet, individualized herbal dosage protocols.
+              </p>
+
+              {/* Consultation Features */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs text-[#FAF7EE]">
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#C2A265] flex-shrink-0" />
+                  <span>100% Confidential &amp; Private</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#C2A265] flex-shrink-0" />
+                  <span>No Consultation Fees</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#C2A265] flex-shrink-0" />
+                  <span>Personalized Diet &amp; Herb Regimen</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#C2A265] flex-shrink-0" />
+                  <span>Instant WhatsApp / Phone Callback</span>
+                </div>
+              </div>
+
+              {/* Verified Physician Badge */}
+              <div className="pt-4 border-t border-[#C2A265]/15 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-[#142A1D] border border-[#C2A265]/30 flex items-center justify-center text-[#C2A265] font-serif text-lg font-bold">
+                  वै
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-[#FAF7EE]">Dr. Vaidya Panel (BAMS, MD Ayu)</p>
+                  <p className="text-[11px] text-[#A8A295]">Over 25+ Years of Classical Rasayana Practice</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Interactive Consultation Card */}
+            <div className="lg:col-span-5 p-6 sm:p-7 rounded-2xl bg-[#0D1B12] border border-[#C2A265]/30 shadow-xl space-y-5">
+              <div>
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#C2A265] block mb-1">
+                  Step 1: Select Your Primary Concern
+                </span>
+                <div className="space-y-2 mt-2">
+                  {concerns.map((c) => (
+                    <button
+                      key={c}
+                      onClick={() => setSelectedConcern(c)}
+                      className={`w-full text-left p-2.5 rounded-lg text-xs transition-all border ${
+                        selectedConcern === c
+                          ? 'bg-[#183525] border-[#C2A265] text-[#FAF7EE] font-medium'
+                          : 'bg-[#12241A] border-[#C2A265]/15 text-[#A8A295] hover:text-[#FAF7EE]'
+                      }`}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  onClick={handleStartConsultation}
+                  className="w-full py-3.5 px-4 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-xs tracking-wide transition-all shadow-md flex items-center justify-center gap-2"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Start WhatsApp Doctor Consult</span>
+                </button>
+
+                <p className="text-[10px] text-center text-[#8A8478] mt-2.5">
+                  Available Mon–Sat: 9:00 AM – 8:00 PM IST • Free Service
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  )
+}
