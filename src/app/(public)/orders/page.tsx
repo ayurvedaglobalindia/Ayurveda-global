@@ -17,7 +17,7 @@ const mockOrders = [
     status: 'delivered' as const,
     paymentMethod: 'whatsapp' as const,
     items: [
-      { name: 'BODY Essential Nutrition', quantity: 1, price: 149900, image: '/images/products/body-nutrition/01-primary.svg' },
+      { name: 'BODY Essential Nutrition', quantity: 1, price: 149900, image: '/images/products/body-essential-nutrition-thumb.jpg' },
     ],
   },
   {
@@ -28,7 +28,7 @@ const mockOrders = [
     status: 'shipped' as const,
     paymentMethod: 'cod' as const,
     items: [
-      { name: 'STAYMAX+ Delay Spray', quantity: 1, price: 89900, image: '/images/products/staymax/01-primary.svg' },
+      { name: 'STAYMAX+ Delay Spray', quantity: 1, price: 89900, image: '/images/products/staymax-delay-spray-thumb.jpg' },
     ],
   },
   {
@@ -39,17 +39,17 @@ const mockOrders = [
     status: 'processing' as const,
     paymentMethod: 'whatsapp' as const,
     items: [
-      { name: 'BODY Essential Nutrition', quantity: 2, price: 149900, image: '/images/products/body-nutrition/01-primary.svg' },
+      { name: 'BODY Essential Nutrition', quantity: 2, price: 149900, image: '/images/products/body-essential-nutrition-thumb.jpg' },
     ],
   },
 ]
 
 const statusConfig = {
-  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'bg-blue-100 text-blue-700' },
-  processing: { label: 'Processing', icon: Clock, color: 'bg-amber-100 text-amber-700' },
-  shipped: { label: 'Shipped', icon: Truck, color: 'bg-purple-100 text-purple-700' },
-  delivered: { label: 'Delivered', icon: CheckCircle, color: 'bg-green-100 text-green-700' },
-  cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-red-100 text-red-700' },
+  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/30' },
+  processing: { label: 'Processing', icon: Clock, color: 'bg-amber-950/80 text-[#D4B678] border border-[#C2A265]/40' },
+  shipped: { label: 'Dispatched', icon: Truck, color: 'bg-[#142A1D] text-[#FAF7EE] border border-[#C2A265]/30' },
+  delivered: { label: 'Delivered', icon: CheckCircle, color: 'bg-[#183525] text-[#D4B678] border border-[#C2A265]/50' },
+  cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-rose-950/80 text-rose-300 border border-rose-500/30' },
 }
 
 

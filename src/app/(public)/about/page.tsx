@@ -109,8 +109,21 @@ export default function AboutPage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#061B12] border border-[#D4AF37]/25 relative flex items-center justify-center shadow-xl">
-              <Leaf className="w-32 h-32 text-[#D4AF37]/20" />
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#061B12] border border-[#D4AF37]/30 relative shadow-xl group">
+              <Image
+                src="/images/products/vitality-power-combo-card.jpg"
+                alt="Ayur Veda Global Botanical Formulations & Heritage"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#061B12]/85 via-[#061B12]/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs">
+                <span className="px-3 py-1 rounded-full bg-[#061B12]/90 border border-[#D4AF37]/40 text-[#D4AF37] font-semibold backdrop-blur-md">
+                  Vedic Botanical Science
+                </span>
+                <span className="text-[#FAF7EE]/80 text-[11px] font-mono">EST. 2020</span>
+              </div>
             </div>
             <div>
               <h2 className="font-heading text-3xl font-medium text-white mb-6">Our Mission</h2>

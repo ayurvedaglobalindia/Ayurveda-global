@@ -104,12 +104,22 @@ export function VaidyaConsultationDesk() {
 
               {/* Verified Physician Badge */}
               <div className="pt-4 border-t border-[#C2A265]/15 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#142A1D] border border-[#C2A265]/30 flex items-center justify-center text-[#C2A265] font-serif text-lg font-bold">
-                  वै
+                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#C2A265]/60 shadow-md flex-shrink-0 bg-[#142A1D]">
+                  <Image
+                    src="/images/team/mageesh.jpg"
+                    alt="Ayurvedic Vaidya Panel Lead"
+                    fill
+                    className="object-cover object-top"
+                    sizes="48px"
+                  />
+                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#0B150F]" />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-[#FAF7EE]">Dr. Vaidya Panel (BAMS, MD Ayu)</p>
-                  <p className="text-[11px] text-[#A8A295]">Over 25+ Years of Classical Rasayana Practice</p>
+                  <p className="text-xs font-semibold text-[#FAF7EE] flex items-center gap-1.5">
+                    <span>Dr. Vaidya Panel (BAMS, MD Ayu)</span>
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#C2A265]" />
+                  </p>
+                  <p className="text-[11px] text-[#A8A295]">Over 25+ Years of Classical Rasayana &amp; Clinical Practice</p>
                 </div>
               </div>
             </div>

@@ -103,12 +103,12 @@ h1, h2, h3, h4, h5, h6 {
   color: #FAF7EF;
 }
 
-h1 { font-size: clamp(1.2rem, 2vw, 1.65rem); }
-h2 { font-size: clamp(1.05rem, 1.6vw, 1.35rem); }
-h3 { font-size: clamp(0.92rem, 1.3vw, 1.15rem); }
-h4 { font-size: clamp(0.85rem, 1.1vw, 1rem); }
-h5 { font-size: clamp(0.78rem, 1vw, 0.9rem); }
-h6 { font-size: clamp(0.72rem, 0.9vw, 0.82rem); }
+h1 { font-size: clamp(1.35rem, 2.5vw, 2.25rem); }
+h2 { font-size: clamp(1.15rem, 2vw, 1.75rem); }
+h3 { font-size: clamp(1rem, 1.5vw, 1.35rem); }
+h4 { font-size: clamp(0.9rem, 1.2vw, 1.15rem); }
+h5 { font-size: clamp(0.82rem, 1vw, 1rem); }
+h6 { font-size: clamp(0.75rem, 0.9vw, 0.88rem); }
 
 p {
   color: #C4BDB1;

@@ -22,6 +22,7 @@ import { ImageGallery } from '@/components/ui/ImageGallery'
 import { Accordion } from '@/components/ui/Accordion'
 import { ProductVideoPlayer } from '@/components/ui/ProductVideoPlayer'
 import type { Product, ProductVariant } from '@/types'
+import { getProductImage } from '@/lib/products/registry'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useUserStore } from '@/store/userStore'
@@ -582,10 +583,10 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-ayur-gold/25 flex-shrink-0 bg-ayur-forest-deep">
                 <Image
-                  src={product.images[0]?.src || '/images/products/body-essential-nutrition.png'}
+                  src={getProductImage(product, product.id, 'thumb').src}
                   alt={product.name}
                   fill
-                  className="object-contain p-1"
+                  className="object-cover"
                 />
               </div>
               <div className="min-w-0 flex-1">

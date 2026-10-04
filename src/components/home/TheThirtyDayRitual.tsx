@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Clock, ShieldCheck, Sparkles, Flame, Zap, CheckCircle2 } from 'lucide-react'
 
 const ritualPhases = [
@@ -60,9 +61,13 @@ export function TheThirtyDayRitual() {
         {/* 3-Step Journey Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 lg:gap-4">
           {ritualPhases.map((phase, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className={`p-4 sm:p-5 rounded-xl bg-[#12241A] border ${phase.color} shadow-lg flex flex-col justify-between relative overflow-hidden hover:-translate-y-0.5 transition-all duration-300 ease-out`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.4, delay: idx * 0.12 }}
+              className={`p-4 sm:p-5 rounded-xl bg-[#12241A] border ${phase.color} shadow-lg flex flex-col justify-between relative overflow-hidden hover:-translate-y-1 transition-all duration-300 ease-out`}
             >
               <div>
                 {/* Phase Number & Timeline */}
@@ -105,7 +110,7 @@ export function TheThirtyDayRitual() {
                   {phase.milestone}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { motion } from 'framer-motion'
 import { FlaskConical, Shield, PackageCheck, Leaf, CheckCircle2 } from 'lucide-react'
 
 const pillars = [
@@ -57,9 +58,13 @@ export function ApothecaryPillars() {
         {/* Compact 4-Block Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {pillars.map((pillar, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="p-3 sm:p-3.5 rounded-xl bg-[#12241A]/70 border border-[#C2A265]/20 hover:border-[#C2A265]/45 hover:bg-[#142A1D] transition-all duration-300 shadow-sm flex flex-col justify-between group hover:-translate-y-0.5"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.35, delay: idx * 0.08 }}
+              className="p-3 sm:p-3.5 rounded-xl bg-[#12241A]/70 border border-[#C2A265]/20 hover:border-[#C2A265]/45 hover:bg-[#142A1D] transition-all duration-300 shadow-sm flex flex-col justify-between group hover:-translate-y-1"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
@@ -86,7 +91,7 @@ export function ApothecaryPillars() {
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#C2A265]" />
                 <span className="font-medium">Vedic Standard Verified</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

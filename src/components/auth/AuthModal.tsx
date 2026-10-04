@@ -21,6 +21,7 @@ import { useUserStore } from '@/store/userStore'
 import { useCartStore } from '@/store/cartStore'
 import { useUIStore } from '@/store/uiStore'
 import { formatINR, validatePhone, validateEmail } from '@/lib/utils/formatters'
+import { getProductImage } from '@/lib/products/registry'
 import type { Product, User } from '@/types'
 
 export interface AuthModalProps {
@@ -201,10 +202,10 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
           <div className="mt-3.5 p-2 rounded-xl bg-ayur-forest-deep/80 border border-ayur-gold/25 flex items-center gap-3 text-left max-w-xs mx-auto">
             <div className="w-10 h-10 rounded-lg overflow-hidden bg-ayur-void relative flex-shrink-0">
               <Image
-                src={pendingItem.product.images[0]?.src || '/images/products/vitality-power-combo.jpg'}
+                src={getProductImage(pendingItem.product, pendingItem.product.id, 'thumb').src}
                 alt={pendingItem.product.name}
                 fill
-                className="object-contain p-0.5"
+                className="object-cover"
                 sizes="40px"
               />
             </div>
