@@ -36,30 +36,30 @@ const pillars = [
 
 export function ApothecaryPillars() {
   return (
-    <section className="bg-[#0E1E14] border-b border-[#C2A265]/20 py-8 sm:py-10 text-[#F5EFE6] relative overflow-hidden">
+    <section className="bg-[#0E1E14] border-b border-[#C2A265]/20 py-5 sm:py-7 text-[#F5EFE6] relative overflow-hidden">
       <div className="container relative z-10">
         
         {/* Compact Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 mb-5 sm:mb-6 pb-3 border-b border-[#C2A265]/15">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-4 sm:mb-5 pb-2.5 border-b border-[#C2A265]/15">
           <div>
-            <span className="text-[9.5px] uppercase tracking-[0.22em] font-semibold text-[#C2A265] block">
+            <span className="text-[9px] uppercase tracking-[0.22em] font-semibold text-[#C2A265] block">
               Classical Quality Standards
             </span>
-            <h2 className="font-heading text-lg sm:text-xl font-normal text-[#FAF7EE] tracking-tight mt-0.5">
+            <h2 className="font-heading text-base sm:text-lg font-medium text-[#FAF7EE] tracking-tight mt-0.5">
               The Four Vedic Pillars of Potency
             </h2>
           </div>
-          <p className="text-[11px] sm:text-xs text-[#A8A295] max-w-md leading-relaxed font-sans">
+          <p className="text-[11px] text-[#A8A295] max-w-md leading-relaxed font-sans">
             Every formulation is prepared under strict Charaka Samhita directives and validated by NABL-accredited laboratory assays.
           </p>
         </div>
 
         {/* Compact 4-Block Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {pillars.map((pillar, idx) => (
             <div
               key={idx}
-              className="p-3.5 sm:p-4 rounded-xl bg-[#12241A]/70 border border-[#C2A265]/20 hover:border-[#C2A265]/45 hover:bg-[#142A1D] transition-all duration-300 shadow-sm flex flex-col justify-between group hover:-translate-y-1"
+              className="p-3 sm:p-3.5 rounded-xl bg-[#12241A]/70 border border-[#C2A265]/20 hover:border-[#C2A265]/45 hover:bg-[#142A1D] transition-all duration-300 shadow-sm flex flex-col justify-between group hover:-translate-y-0.5"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">

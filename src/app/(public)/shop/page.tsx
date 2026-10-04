@@ -2,36 +2,58 @@
 
 import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-import { Loader2, Filter, X, Grid, List, ChevronRight } from 'lucide-react'
-import { motion } from 'framer-motion'
-import { useGSAP } from '@gsap/react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Link from 'next/link'
+import { Filter, X, Grid, List, Search, Sparkles, ArrowRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { classNames } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
-import { Select } from '@/components/ui/Select'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { ProductFilters } from '@/components/product/ProductFilters'
 import { ProductSort } from '@/components/product/ProductSort'
 import { Pagination } from '@/components/ui/Pagination'
-import { getAllProducts, getProductsByCategory, searchProducts, getCategories } from '@/lib/products/registry'
+import { getAllProducts, getCategories } from '@/lib/products/registry'
 import type { Product, Category } from '@/types'
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
-const sortOptions = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'best-selling', label: 'Best Selling' },
-  { value: 'newest', label: 'Newest' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'name-asc', label: 'Name: A to Z' },
-  { value: 'name-desc', label: 'Name: Z to A' },
-]
-
 const ITEMS_PER_PAGE = 12
+
+function matchesProductSearch(p: Product, query: string): boolean {
+  if (!query) return true
+  const q = query.toLowerCase().trim()
+  const cleanQ = q.replace(/[^a-z0-9\s]/g, ' ')
+  const terms = cleanQ.split(/\s+/).filter(t => t.length > 0)
+
+  const allText = [
+    p.name,
+    p.tagline,
+    p.description,
+    p.shortDescription || '',
+    p.category,
+    ...(p.tags || []),
+    ...(p.ingredients || []),
+  ].join(' ').toLowerCase()
+
+  // 1. Direct substring match
+  if (allText.includes(q)) return true
+
+  // 2. Keyword/token-based match
+  if (terms.length > 0) {
+    const isMatch = terms.every(term => {
+      if (term === 'caps' || term === 'capsule' || term === 'capsules') {
+        return allText.includes('capsule') || allText.includes('caps')
+      }
+      if (term === 'spray' || term === 'delay') {
+        return allText.includes('staymax') || allText.includes('spray') || allText.includes('delay')
+      }
+      if (term === 'combo' || term === 'kit') {
+        return allText.includes('combo') || allText.includes('power')
+      }
+      return allText.includes(term)
+    })
+    if (isMatch) return true
+  }
+
+  return false
+}
 
 function ShopContent() {
   const searchParams = useSearchParams()
@@ -45,7 +67,6 @@ function ShopContent() {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [showFilters, setShowFilters] = useState(false)
 
   const [filters, setFilters] = useState({
     category: searchParams.get('category') || '',
@@ -56,7 +77,17 @@ function ShopContent() {
     sort: searchParams.get('sort') || 'featured',
   })
 
-  const availableTags = ['daily-wellness', 'immunity', 'energy', 'ayurvedic', 'herbal-supplement', 'mens-wellness', 'endurance', 'personal-care', 'topical-spray']
+  const availableTags = [
+    'daily-wellness',
+    'immunity',
+    'energy',
+    'ayurvedic',
+    'herbal-supplement',
+    'mens-wellness',
+    'endurance',
+    'personal-care',
+    'topical-spray',
+  ]
 
   useEffect(() => {
     const allProducts = getAllProducts()
@@ -87,12 +118,7 @@ function ShopContent() {
     }
 
     if (filters.search) {
-      result = result.filter(p =>
-        p.name.toLowerCase().includes(filters.search.toLowerCase()) ||
-        p.tagline.toLowerCase().includes(filters.search.toLowerCase()) ||
-        p.description.toLowerCase().includes(filters.search.toLowerCase()) ||
-        p.tags.some(tag => tag.toLowerCase().includes(filters.search.toLowerCase()))
-      )
+      result = result.filter(p => matchesProductSearch(p, filters.search))
     }
 
     if (filters.priceRange[0] > 0 || filters.priceRange[1] < 500000) {
@@ -185,84 +211,72 @@ function ShopContent() {
     filters.inStockOnly
   )
 
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.shop-header', {
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        ease: 'power3.out',
-      })
-      gsap.from('.filter-sidebar', {
-        opacity: 0,
-        x: -30,
-        duration: 0.6,
-        ease: 'power3.out',
-        delay: 0.1,
-      })
-      gsap.from('.product-grid-item', {
-        opacity: 0,
-        y: 40,
-        duration: 0.6,
-        stagger: 0.08,
-        ease: 'power3.out',
-        delay: 0.2,
-        scrollTrigger: {
-          trigger: '.products-grid',
-          start: 'top 80%',
-        },
-      })
-    })
-    return () => ctx.revert()
-  }, [filteredProducts])
-
   return (
-    <div className="container py-8 lg:py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="shop-header mb-8 pb-4 border-b border-ayur-gold/20"
-      >
+    <div className="container py-4 sm:py-6 lg:py-8 pb-16">
+      
+      {/* Compact Page Header (Fixed layout stability - No disappearing bug) */}
+      <div className="pb-3.5 mb-5 border-b border-[#C2A265]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <span className="text-xs font-bold text-ayur-gold uppercase tracking-wider">Ayurvedic Formulations</span>
-          <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-ivory mt-1">Shop All Products</h1>
-          <p className="text-ayur-stone mt-2 text-sm sm:text-base">Discover our complete range of authentic Ayurvedic wellness & performance products</p>
+          <span className="text-[9.5px] font-semibold text-[#C2A265] uppercase tracking-[0.2em] block">
+            Authentic Ayurvedic Apothecary
+          </span>
+          <h1 className="font-heading text-lg sm:text-xl md:text-2xl font-medium text-[#FAF7EE] tracking-tight mt-0.5">
+            {filters.search ? `Search Results: "${filters.search}"` : 'Shop All Formulations'}
+          </h1>
+          <p className="text-[#A8A295] text-xs sm:text-[13px] mt-0.5">
+            Lab-certified classical Rasayana formulations, standardized bioactives &amp; 100% discreet packaging.
+          </p>
         </div>
-      </motion.div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Desktop Sidebar */}
-        <motion.aside
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="hidden lg:block lg:w-64 flex-shrink-0 filter-sidebar"
-        >
-          <ProductFilters
-            categories={categories}
-            selectedCategory={filters.category || undefined}
-            onCategoryChange={category => updateFilters({ category: category || '' })}
-            priceRange={filters.priceRange}
-            onPriceRangeChange={range => updateFilters({ priceRange: range })}
-            selectedTags={filters.tags}
-            onTagsChange={tags => updateFilters({ tags })}
-            availableTags={availableTags}
-            inStockOnly={filters.inStockOnly}
-            onInStockChange={value => updateFilters({ inStockOnly: value })}
-            sortBy={filters.sort}
-            onSortChange={sort => updateFilters({ sort })}
-            hasActiveFilters={hasActiveFilters}
-            onClearFilters={handleClearFilters}
-            isMobile={false}
-          />
-        </motion.aside>
+        {/* Active Search / Filter Pill */}
+        {filters.search && (
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <span className="px-2.5 py-1 rounded-full bg-[#142A1D] border border-[#C2A265]/35 text-[#D4B678] text-xs font-medium flex items-center gap-1.5 shadow-sm">
+              <Search className="w-3 h-3 text-[#C2A265]" />
+              <span>&ldquo;{filters.search}&rdquo;</span>
+              <button
+                onClick={() => updateFilters({ search: '' })}
+                className="ml-1 p-0.5 hover:text-white rounded-full"
+                aria-label="Clear search"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          </div>
+        )}
+      </div>
 
-        <div className="flex-1">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6"
-          >
-            <div className="flex items-center gap-3">
+      <div className="flex flex-col lg:flex-row gap-5 lg:gap-6 items-start">
+        
+        {/* Desktop Sidebar Filters */}
+        <aside className="hidden lg:block lg:w-60 flex-shrink-0">
+          <div className="sticky top-20">
+            <ProductFilters
+              categories={categories}
+              selectedCategory={filters.category || undefined}
+              onCategoryChange={category => updateFilters({ category: category || '' })}
+              priceRange={filters.priceRange}
+              onPriceRangeChange={range => updateFilters({ priceRange: range })}
+              selectedTags={filters.tags}
+              onTagsChange={tags => updateFilters({ tags })}
+              availableTags={availableTags}
+              inStockOnly={filters.inStockOnly}
+              onInStockChange={value => updateFilters({ inStockOnly: value })}
+              sortBy={filters.sort}
+              onSortChange={sort => updateFilters({ sort })}
+              hasActiveFilters={hasActiveFilters}
+              onClearFilters={handleClearFilters}
+              isMobile={false}
+            />
+          </div>
+        </aside>
+
+        {/* Main Products Area */}
+        <div className="flex-1 w-full min-w-0">
+          
+          {/* Controls Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#102016] border border-[#C2A265]/20 mb-4">
+            <div className="flex items-center gap-2.5">
               {/* Mobile Filter Button */}
               <div className="lg:hidden">
                 <ProductFilters
@@ -284,46 +298,75 @@ function ShopContent() {
                 />
               </div>
 
-              <span className="text-ayur-stone text-sm">
-                {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+              <span className="text-[#FAF7EE] text-xs font-medium">
+                {filteredProducts.length} {filteredProducts.length === 1 ? 'Formulation' : 'Formulations'} Available
               </span>
+
               {hasActiveFilters && (
-                <Button variant="ghost" size="sm" onClick={handleClearFilters} className="text-ayur-gold hover:bg-ayur-gold/10">
-                  <X className="w-4 h-4 mr-1" />
-                  Clear Filters
-                </Button>
+                <button
+                  onClick={handleClearFilters}
+                  className="text-[11px] text-[#C2A265] hover:underline flex items-center gap-1 font-medium ml-1"
+                >
+                  <X className="w-3 h-3" />
+                  <span>Reset</span>
+                </button>
               )}
             </div>
-            <div className="flex items-center gap-3 ml-auto">
+
+            <div className="flex items-center gap-2.5 ml-auto">
               <ProductSort selectedSort={filters.sort} onSortChange={sort => updateFilters({ sort })} />
-              <div className="flex items-center gap-1 bg-ayur-charcoal border border-ayur-gold/30 rounded-lg p-1">
+              
+              <div className="flex items-center gap-1 bg-[#0D1B12] border border-[#C2A265]/25 rounded-lg p-0.5">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={classNames('p-2 rounded transition-colors', viewMode === 'grid' ? 'bg-ayur-gold text-ayur-void font-bold shadow-sm' : 'text-ayur-stone hover:text-ayur-ivory')}
+                  className={classNames(
+                    'p-1.5 rounded transition-colors',
+                    viewMode === 'grid' ? 'bg-[#C2A265] text-[#0B150F]' : 'text-[#8A8478] hover:text-[#FAF7EE]'
+                  )}
                   aria-label="Grid view"
                 >
-                  <Grid className="w-5 h-5" />
+                  <Grid className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={classNames('p-2 rounded transition-colors', viewMode === 'list' ? 'bg-ayur-gold text-ayur-void font-bold shadow-sm' : 'text-ayur-stone hover:text-ayur-ivory')}
+                  className={classNames(
+                    'p-1.5 rounded transition-colors',
+                    viewMode === 'list' ? 'bg-[#C2A265] text-[#0B150F]' : 'text-[#8A8478] hover:text-[#FAF7EE]'
+                  )}
                   aria-label="List view"
                 >
-                  <List className="w-5 h-5" />
+                  <List className="w-4 h-4" />
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
 
+          {/* Product Cards Stream */}
           {loading ? (
             <ProductGrid products={[]} loading={true} />
           ) : filteredProducts.length === 0 ? (
-            <ProductGrid products={[]} emptyMessage={filters.search ? `No products found for "${filters.search}"` : 'No products match your filters'} />
+            <div className="py-12 px-4 text-center rounded-2xl bg-[#102016] border border-[#C2A265]/20 space-y-3">
+              <div className="w-12 h-12 rounded-full bg-[#142A1D] border border-[#C2A265]/30 flex items-center justify-center mx-auto text-[#C2A265]">
+                <Search className="w-5 h-5" />
+              </div>
+              <h3 className="font-heading text-sm sm:text-base font-medium text-[#FAF7EE]">
+                No formulations found {filters.search && `for "${filters.search}"`}
+              </h3>
+              <p className="text-xs text-[#A8A295] max-w-sm mx-auto">
+                Try searching for &ldquo;Ashwagandha&rdquo;, &ldquo;Shilajit&rdquo;, &ldquo;Delay Spray&rdquo;, or &ldquo;Power Combo&rdquo;.
+              </p>
+              <button
+                onClick={handleClearFilters}
+                className="mt-2 px-4 py-2 rounded-xl bg-[#142A1D] hover:bg-[#183525] border border-[#C2A265]/40 text-[#FAF7EE] text-xs font-semibold transition-all inline-block"
+              >
+                Browse All Products
+              </button>
+            </div>
           ) : (
-            <>
+            <div className="space-y-6">
               <ProductGrid
                 products={paginatedProducts}
-                columns={{ base: 1, sm: 2, md: 3, lg: 3, xl: 4 }}
+                columns={{ base: 1, sm: 2, md: 3, lg: 3, xl: 3 }}
                 variant={viewMode === 'list' ? 'compact' : 'default'}
               />
               {totalPages > 1 && (
@@ -331,21 +374,28 @@ function ShopContent() {
                   currentPage={currentPage}
                   totalPages={totalPages}
                   onPageChange={setCurrentPage}
-                  className="mt-8"
+                  className="mt-6"
                 />
               )}
-            </>
+            </div>
           )}
+
         </div>
+
       </div>
+
     </div>
   )
 }
 
 export default function ShopPage() {
   return (
-    <div className="bg-ayur-void min-h-screen">
-      <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-[#D4AF37]">Loading catalog...</div>}>
+    <div className="bg-[#0B150F] min-h-screen text-[#F5EFE6]">
+      <Suspense fallback={
+        <div className="min-h-[50vh] flex items-center justify-center text-[#D4B678] text-xs">
+          Loading catalog...
+        </div>
+      }>
         <ShopContent />
       </Suspense>
     </div>

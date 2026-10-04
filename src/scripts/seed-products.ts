@@ -112,20 +112,4 @@ const insertCoupons = db.transaction((couponList: typeof coupons) => {
 insertCoupons(coupons)
 console.log(`Seeded ${coupons.length} coupons successfully`)
 
-// Seed admin user
-const passwordHash = bcrypt.hashSync('admin123', 10)
-
-const adminStmt = db.prepare(`
-  INSERT OR REPLACE INTO admin_users (username, password_hash, role)
-  VALUES (@username, @passwordHash, @role)
-`)
-
-adminStmt.run({
-  username: 'admin',
-  passwordHash,
-  role: 'admin',
-})
-
-console.log('Admin user seeded successfully (username: admin, password: admin123)')
-
 console.log('Database seeding completed!')

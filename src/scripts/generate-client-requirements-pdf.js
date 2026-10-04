@@ -3,7 +3,6 @@ const path = require('path');
 const { PDFDocument, PDFName, PDFString, rgb, StandardFonts } = require('pdf-lib');
 
 const LIVE_URL = 'https://widescreen-reasonable-lending-seal.trycloudflare.com';
-const ADMIN_URL = `${LIVE_URL}/admin`;
 const WHATSAPP_NUM = '919123485451';
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUM}`;
 const GITHUB_URL = 'https://github.com/rawatriya7514-lab/Ayur-Veda-Global';
@@ -676,7 +675,6 @@ async function generateClientRequirementsPDF() {
     '',
     'Preview the live staging website here:',
     `• Storefront: ${LIVE_URL}`,
-    `• Admin Portal: ${ADMIN_URL} (Login: admin / admin123)`,
     '',
     'Looking forward to launching the site!'
   ];

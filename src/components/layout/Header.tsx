@@ -23,7 +23,9 @@ import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
-import { getCategories } from '@/lib/products/registry'
+import { getCategories, getAllProducts, getProductImage } from '@/lib/products/registry'
+import { formatINR } from '@/lib/utils/formatters'
+import type { Product } from '@/types'
 
 export function Header() {
   const [isMounted, setIsMounted] = useState(false)
@@ -63,6 +65,24 @@ export function Header() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const allProductsList = getAllProducts()
+
+  const liveMatchingProducts = searchQuery.trim()
+    ? allProductsList.filter(p => {
+        const q = searchQuery.toLowerCase().trim()
+        const text = [
+          p.name,
+          p.tagline,
+          p.description,
+          p.shortDescription || '',
+          p.category,
+          ...(p.tags || []),
+          ...(p.ingredients || []),
+        ].join(' ').toLowerCase()
+        return text.includes(q)
+      })
+    : []
 
   const executeSearch = (query: string) => {
     const q = query.trim()
@@ -265,9 +285,9 @@ export function Header() {
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                   onFocus={() => setIsSearchExpanded(true)}
-                  onBlur={() => setTimeout(() => setIsSearchExpanded(false), 200)}
+                  onBlur={() => setTimeout(() => setIsSearchExpanded(false), 250)}
                   placeholder="Search formulations, herbs..."
-                  className="w-44 lg:w-52 pl-9 pr-7 py-2 bg-[#12241A] border border-[#C2A265]/30 focus:border-[#C2A265] rounded-full text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-colors shadow-inner"
+                  className="w-44 lg:w-56 pl-9 pr-7 py-2 bg-[#12241A] border border-[#C2A265]/30 focus:border-[#C2A265] rounded-full text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-colors shadow-inner"
                   aria-label="Search products"
                 />
                 <Search className="absolute left-3 w-4 h-4 text-[#C2A265] pointer-events-none" aria-hidden="true" />
@@ -282,6 +302,116 @@ export function Header() {
                   </button>
                 )}
               </form>
+
+              {/* Desktop Live Dropdown */}
+              <AnimatePresence>
+                {isSearchExpanded && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.15 }}
+                    onMouseDown={(e) => e.preventDefault()}
+                    className="absolute right-0 top-full mt-2 w-80 lg:w-96 bg-[#102016]/98 backdrop-blur-2xl rounded-2xl shadow-2xl border border-[#C2A265]/35 p-3.5 z-50 space-y-3"
+                  >
+                    {searchQuery.trim() ? (
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-[10px] text-[#A8A295] px-1 uppercase tracking-wider font-semibold">
+                          <span>Matching Formulations</span>
+                          <span>{liveMatchingProducts.length} Found</span>
+                        </div>
+                        {liveMatchingProducts.length > 0 ? (
+                          <div className="space-y-1.5 max-h-64 overflow-y-auto">
+                            {liveMatchingProducts.map(product => {
+                              const img = getProductImage(product, product.id)
+                              return (
+                                <Link
+                                  key={product.id}
+                                  href={`/product/${product.id}`}
+                                  onClick={() => {
+                                    setIsSearchExpanded(false)
+                                    setSearchQuery('')
+                                  }}
+                                  className="flex items-center gap-3 p-2 rounded-xl bg-[#0D1B12] hover:bg-[#142A1D] border border-[#C2A265]/15 hover:border-[#C2A265]/40 transition-all group"
+                                >
+                                  <div className="relative w-10 h-10 rounded-lg bg-[#08120C] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
+                                    <Image
+                                      src={img.src}
+                                      alt={product.name}
+                                      fill
+                                      className="object-contain p-1"
+                                      sizes="40px"
+                                    />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-xs font-medium text-[#FAF7EE] group-hover:text-[#D4B678] truncate leading-tight">
+                                      {product.name}
+                                    </p>
+                                    <span className="text-[10px] text-[#8A8478] block truncate">
+                                      {product.category === 'supplements' ? 'Herbal Supplement' : product.category === 'personal-care' ? 'Personal Care & Spray' : 'Vitality Power Combo'}
+                                    </span>
+                                  </div>
+                                  <span className="text-xs font-semibold text-[#D4B678] flex-shrink-0">
+                                    {formatINR(product.price)}
+                                  </span>
+                                </Link>
+                              )
+                            })}
+                          </div>
+                        ) : (
+                          <div className="p-3 text-center rounded-xl bg-[#0D1B12] text-xs text-[#8A8478]">
+                            No formulation matching &ldquo;{searchQuery}&rdquo;.
+                          </div>
+                        )}
+                        <button
+                          onClick={() => executeSearch(searchQuery)}
+                          className="w-full py-2 px-3 rounded-xl bg-[#142A1D] hover:bg-[#183525] border border-[#C2A265]/35 text-[#FAF7EE] text-xs font-medium transition-all text-center flex items-center justify-center gap-1.5"
+                        >
+                          <span>View all results in Shop</span>
+                          <ArrowRight className="w-3.5 h-3.5 text-[#C2A265]" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="space-y-2.5">
+                        <div className="flex items-center justify-between text-[10px] text-[#C2A265] uppercase tracking-wider font-semibold px-1">
+                          <span className="flex items-center gap-1">
+                            <Sparkles className="w-3 h-3" />
+                            Popular Searches
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {[
+                            'Vitality Power Combo',
+                            'BODY Essential Nutrition',
+                            'STAYMAX+ Delay Spray',
+                            'Himalayan Shilajit',
+                            'Ashwagandha',
+                            'Safed Musli',
+                          ].map(term => (
+                            <button
+                              key={term}
+                              type="button"
+                              onClick={() => executeSearch(term)}
+                              className="px-2.5 py-1 rounded-full text-[11px] font-medium text-[#FAF7EE] bg-[#0D1B12] hover:bg-[#183525] border border-[#C2A265]/25 hover:border-[#C2A265] transition-all"
+                            >
+                              {term}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="pt-2 border-t border-[#C2A265]/15">
+                          <Link
+                            href="/shop"
+                            onClick={() => setIsSearchExpanded(false)}
+                            className="block w-full py-2 rounded-xl bg-[#142A1D] hover:bg-[#183525] text-center text-xs font-semibold text-[#D4B678] border border-[#C2A265]/30 transition-all"
+                          >
+                            Browse All 3 Master Formulations →
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Mobile Search Button */}
@@ -417,26 +547,100 @@ export function Header() {
                 />
               </div>
 
+              {/* If user typed, show live matching products */}
+              {searchQuery.trim() && (
+                <div className="mb-6 space-y-2">
+                  <div className="flex items-center justify-between text-xs text-[#A8A295] px-1 uppercase tracking-wider font-semibold">
+                    <span>Matching Formulations</span>
+                    <span>{liveMatchingProducts.length} Found</span>
+                  </div>
+                  {liveMatchingProducts.length > 0 ? (
+                    <div className="space-y-2 max-h-60 overflow-y-auto">
+                      {liveMatchingProducts.map(product => {
+                        const img = getProductImage(product, product.id)
+                        return (
+                          <Link
+                            key={product.id}
+                            href={`/product/${product.id}`}
+                            onClick={() => {
+                              setMobileSearchOpen(false)
+                              setSearchQuery('')
+                            }}
+                            className="flex items-center gap-3 p-2.5 rounded-xl bg-[#102016] border border-[#C2A265]/20 hover:border-[#C2A265]/50 transition-all"
+                          >
+                            <div className="relative w-11 h-11 rounded-lg bg-[#08120C] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
+                              <Image
+                                src={img.src}
+                                alt={product.name}
+                                fill
+                                className="object-contain p-1"
+                                sizes="44px"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-medium text-[#FAF7EE] truncate leading-tight">
+                                {product.name}
+                              </p>
+                              <span className="text-[10px] text-[#A8A295] block truncate mt-0.5">
+                                {product.tagline}
+                              </span>
+                            </div>
+                            <span className="text-xs font-semibold text-[#D4B678] flex-shrink-0">
+                              {formatINR(product.price)}
+                            </span>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-[#8A8478] p-3 text-center bg-[#102016] rounded-xl border border-[#C2A265]/15">
+                      No formulation matching &ldquo;{searchQuery}&rdquo;.
+                    </p>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => executeSearch(searchQuery)}
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#C2A265] text-[#0B150F] text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 shadow-md"
+                  >
+                    <span>View all matching results in Shop</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
+
               <div>
-                <p className="text-xs uppercase font-bold tracking-wider text-ayur-gold mb-3">Popular Searches</p>
+                <p className="text-xs uppercase font-bold tracking-wider text-[#C2A265] mb-3 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Popular Formulations
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {[
                     'Vitality Power Combo',
-                    'BODY Nutrition (60 Caps)',
+                    'BODY Essential Nutrition',
                     'STAYMAX+ Delay Spray',
-                    'Ashwagandha',
                     'Himalayan Shilajit',
+                    'Ashwagandha',
                     'Safed Musli',
                   ].map(term => (
                     <button
                       key={term}
                       type="button"
                       onClick={() => executeSearch(term)}
-                      className="px-4 py-2 rounded-full text-sm font-medium text-ayur-cream bg-ayur-forest-dark border border-ayur-gold/20 hover:border-ayur-gold hover:text-ayur-gold-light transition-all"
+                      className="px-3.5 py-1.5 rounded-full text-xs font-medium text-[#FAF7EE] bg-[#12241A] border border-[#C2A265]/25 hover:border-[#C2A265] hover:text-[#D4B678] transition-all"
                     >
                       {term}
                     </button>
                   ))}
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-[#C2A265]/15">
+                  <Link
+                    href="/shop"
+                    onClick={() => setMobileSearchOpen(false)}
+                    className="block w-full py-2.5 rounded-xl bg-[#142A1D] border border-[#C2A265]/35 text-[#D4B678] text-center text-xs font-semibold hover:bg-[#183525] transition-all"
+                  >
+                    Browse All 3 Master Formulations in Shop →
+                  </Link>
                 </div>
               </div>
             </form>

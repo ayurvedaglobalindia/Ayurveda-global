@@ -266,15 +266,15 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
       </div>
 
       {/* Card Content Stage */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3 bg-ayur-forest-deep/90">
+      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2.5 bg-ayur-forest-deep/90">
         <div>
           {/* Rating & Category Pill */}
-          <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="flex items-center justify-between gap-2 mb-1.5">
             <div className="flex items-center gap-1">
               <Rating rating={4.9} size="sm" />
-              <span className="text-ayur-stone text-[11px] font-medium ml-1">4.9 (1.2k+)</span>
+              <span className="text-ayur-stone text-[10px] sm:text-[11px] font-medium ml-1">4.9 (1.2k+)</span>
             </div>
-            <span className="text-[10px] font-bold text-ayur-gold-light bg-ayur-gold/15 border border-ayur-gold/35 px-2.5 py-0.5 rounded-full">
+            <span className="text-[9px] sm:text-[10px] font-bold text-ayur-gold-light bg-ayur-gold/15 border border-ayur-gold/35 px-2 py-0.5 rounded-full">
               {product.category === 'supplements'
                 ? 'Supplements'
                 : product.category === 'wellness'
@@ -284,27 +284,27 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
           </div>
 
           {/* Title */}
-          <h3 className="font-heading font-semibold text-base sm:text-lg text-ayur-ivory line-clamp-1 group-hover:text-ayur-gold-light transition-colors">
+          <h3 className="font-heading font-semibold text-sm sm:text-base text-ayur-ivory line-clamp-1 group-hover:text-ayur-gold-light transition-colors">
             <Link href={`/product/${product.slug}`}>{product.name}</Link>
           </h3>
 
           {/* Pill Subtitle */}
-          <p className="text-xs text-ayur-sand font-medium mt-1 tracking-wide flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-ayur-gold flex-shrink-0" />
+          <p className="text-[11px] sm:text-xs text-ayur-sand font-medium mt-1 tracking-wide flex items-center gap-1">
+            <Sparkles className="w-2.5 h-2.5 text-ayur-gold flex-shrink-0" />
             <span className="truncate">{feature.pill}</span>
           </p>
 
           {/* Description */}
-          <p className="text-xs text-ayur-stone line-clamp-2 mt-1.5 leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-ayur-stone line-clamp-2 mt-1 leading-snug">
             {product.shortDescription}
           </p>
         </div>
 
         {/* Pricing & CTA Block */}
-        <div className="pt-3 border-t border-ayur-gold/20 space-y-3">
+        <div className="pt-2.5 border-t border-ayur-gold/20 space-y-2.5">
           <div className="flex items-baseline justify-between">
-            <PriceDisplay price={product.price} compareAtPrice={product.compareAtPrice} size="md" />
-            <span className="text-[10px] font-semibold text-ayur-gold-light bg-ayur-charcoal px-2.5 py-0.5 rounded-md border border-ayur-gold/30">
+            <PriceDisplay price={product.price} compareAtPrice={product.compareAtPrice} size="sm" />
+            <span className="text-[9px] sm:text-[10px] font-semibold text-ayur-gold-light bg-ayur-charcoal px-2 py-0.5 rounded-md border border-ayur-gold/30">
               Free Express Shipping
             </span>
           </div>
@@ -313,7 +313,7 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
           <div className="grid grid-cols-2 gap-2">
             {inCart ? (
               <div className="col-span-2 flex items-center justify-between bg-ayur-gold/15 p-1.5 rounded-xl border border-ayur-gold/35">
-                <span className="text-xs font-semibold text-ayur-gold-light pl-2.5">
+                <span className="text-xs font-semibold text-ayur-gold-light pl-2">
                   In Cart ({cartQuantity})
                 </span>
                 <button
@@ -328,14 +328,14 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
                 <button
                   onClick={handleAddToCart}
                   disabled={product.inventory.trackQuantity && product.inventory.quantity === 0}
-                  className="btn-gold-outline w-full text-xs font-semibold py-2.5 rounded-xl"
+                  className="btn-gold-outline w-full text-[11px] sm:text-xs font-semibold py-2 rounded-xl"
                 >
                   Add to Cart
                 </button>
                 <button
                   onClick={handleBuyNow}
                   disabled={product.inventory.trackQuantity && product.inventory.quantity === 0}
-                  className="btn-gold w-full text-xs font-bold py-2.5 rounded-xl shadow-lg"
+                  className="btn-gold w-full text-[11px] sm:text-xs font-bold py-2 rounded-xl shadow-lg"
                 >
                   Buy Now (COD)
                 </button>

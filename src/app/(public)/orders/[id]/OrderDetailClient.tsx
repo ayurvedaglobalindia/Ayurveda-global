@@ -3,6 +3,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { Package, Truck, CheckCircle, Clock, XCircle, MapPin, Phone, Mail, ArrowLeft, ChevronDown, ChevronUp, Download, MessageSquare } from 'lucide-react'
 import { formatDate, formatDateTime, formatINR, classNames } from '@/lib/utils/formatters'
@@ -176,7 +177,7 @@ export default function OrderDetailPage() {
               {order.items.map((item, index) => (
                 <div key={index} className="flex gap-4 p-4 bg-[#0B150F] border border-[#C2A265]/15 rounded-xl">
                   <div className="w-16 h-16 rounded-lg bg-[#04180E] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                    <Image src={item.image} alt={item.name} width={64} height={64} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium text-ayur-ivory">{item.name}</h3>

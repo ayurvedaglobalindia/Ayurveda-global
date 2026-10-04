@@ -38,55 +38,55 @@ const testimonials = [
 
 export function PatronTestimonials() {
   return (
-    <section className="bg-[#0E1E14] py-8 sm:py-10 lg:py-12 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#0E1E14] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-2">
+        <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-6">
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
             <ShieldCheck className="w-3 h-3" />
             <span>Verified Patron Accounts</span>
           </div>
 
-          <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-lg sm:text-xl lg:text-2xl font-normal text-[#FAF7EE] tracking-tight">
             Trusted by Discerning Patrons Across India
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#C5BFB3] mt-2 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-[11px] sm:text-xs text-[#C5BFB3] mt-1.5 max-w-lg mx-auto leading-relaxed font-sans">
             Real experiences from individuals who chose Classical Ayurvedic Rasayana over synthetic temporary fixes.
           </p>
         </div>
 
         {/* 3 Testimonial Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 lg:gap-4">
           {testimonials.map((t, idx) => (
             <div
               key={idx}
-              className="p-5 sm:p-7 rounded-2xl bg-[#12241A] border border-[#C2A265]/20 shadow-xl flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 ease-out"
+              className="p-4 sm:p-5 rounded-xl bg-[#12241A] border border-[#C2A265]/20 shadow-lg flex flex-col justify-between hover:-translate-y-0.5 transition-all duration-300 ease-out"
             >
               <div>
                 {/* Star Rating */}
-                <div className="flex items-center justify-between pb-4 border-b border-[#C2A265]/15">
+                <div className="flex items-center justify-between pb-3 border-b border-[#C2A265]/15">
                   <div className="flex text-[#C2A265]">
                     {[...Array(t.rating)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                      <Star key={i} className="w-3 h-3 fill-current" />
                     ))}
                   </div>
-                  <span className="text-[10px] uppercase tracking-wider text-[#A8A295] font-medium">
+                  <span className="text-[9.5px] uppercase tracking-wider text-[#A8A295] font-medium">
                     {t.location}
                   </span>
                 </div>
 
                 {/* Review Text */}
-                <p className="text-xs sm:text-[13px] text-[#C5BFB3] leading-relaxed mt-4 italic font-serif">
+                <p className="text-xs sm:text-[12.5px] text-[#C5BFB3] leading-relaxed mt-3 italic font-serif">
                   &ldquo;{t.quote}&rdquo;
                 </p>
               </div>
 
               {/* Author Info with Monogram Avatar */}
-              <div className="mt-6 pt-4 border-t border-[#C2A265]/15">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#183525] border border-[#C2A265]/40 flex items-center justify-center text-xs font-semibold text-[#D4B678] font-serif flex-shrink-0">
+              <div className="mt-4 pt-3 border-t border-[#C2A265]/15">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-[#183525] border border-[#C2A265]/40 flex items-center justify-center text-xs font-semibold text-[#D4B678] font-serif flex-shrink-0">
                     {t.initials}
                   </div>
                   <div className="min-w-0 flex-1">

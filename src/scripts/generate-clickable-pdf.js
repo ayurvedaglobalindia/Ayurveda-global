@@ -209,7 +209,7 @@ async function generateClickablePDF() {
   drawClickableRow('About Ayur Veda Global', '/about', 'Mission, heritage & leadership (Mageesh & Umesh)', 'About Us >', forest);
   drawClickableRow('Owner & Manager Desk', '/contact', 'Owner: Mageesh (+91 91234 85451) | Manager: Umesh', 'Direct Desk >', forest);
   drawClickableRow('WhatsApp Direct Support', `${WHATSAPP_URL}?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20an%20enquiry`, 'Direct line with Owner Mageesh & Manager Umesh', 'Chat on WA >', emeraldBtn);
-  drawClickableRow('Admin Management Panel', '/admin', 'Full inventory, orders, customer leads & AI tools', 'Admin Login >', charcoal);
+
 
   // Big Banner at Bottom of Page 1
   const bigBtnH = 34;

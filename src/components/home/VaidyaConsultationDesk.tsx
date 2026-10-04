@@ -27,24 +27,24 @@ export function VaidyaConsultationDesk() {
   }
 
   return (
-    <section className="bg-[#0B150F] py-8 sm:py-10 lg:py-12 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#0B150F] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
-        <div className="max-w-5xl mx-auto rounded-3xl bg-[#12241A] border border-[#C2A265]/25 p-5 sm:p-7 lg:p-9 shadow-2xl relative overflow-hidden">
+        <div className="max-w-5xl mx-auto rounded-2xl bg-[#12241A] border border-[#C2A265]/25 p-4 sm:p-6 lg:p-7 shadow-xl relative overflow-hidden">
           
           {/* Subtle Background Lighting */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#C2A265]/5 rounded-full blur-[100px] pointer-events-none" />
 
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          <div className="grid lg:grid-cols-12 gap-5 lg:gap-6 items-center">
             
             {/* Left Column: Doctor Profile & Narrative */}
-            <div className="lg:col-span-7 space-y-5">
-              <div className="flex flex-wrap items-center gap-2.5">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#183525] border border-[#C2A265]/30 text-[#C2A265] text-[10px] font-semibold tracking-[0.22em] uppercase">
-                  <Award className="w-3.5 h-3.5" />
+            <div className="lg:col-span-7 space-y-3.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#183525] border border-[#C2A265]/30 text-[#C2A265] text-[9.5px] font-semibold tracking-[0.22em] uppercase">
+                  <Award className="w-3 h-3" />
                   <span>Certified BAMS / MD Ayurvedic Vaidyas</span>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-[10px] text-emerald-400 font-medium">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-[9.5px] text-emerald-400 font-medium">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -53,14 +53,14 @@ export function VaidyaConsultationDesk() {
                 </div>
               </div>
 
-              <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-[#FAF7EE] tracking-tight leading-snug">
+              <h2 className="font-heading text-lg sm:text-xl lg:text-2xl font-normal text-[#FAF7EE] tracking-tight leading-snug">
                 Confidential Ayurvedic Consultation,{' '}
                 <span className="italic font-serif text-[#D4B678]">
                   Tailored to Your Constitution.
                 </span>
               </h2>
 
-              <p className="text-xs sm:text-sm text-[#C5BFB3] leading-relaxed font-sans font-normal">
+              <p className="text-xs sm:text-[13px] text-[#C5BFB3] leading-relaxed font-sans font-normal">
                 Every human constitution (Prakriti) possesses distinct biological requirements. Our in-house Ayurvedic physicians assess your lifestyle, doshic balance, and stamina goals to provide discreet, individualized herbal dosage protocols.
               </p>
 
@@ -97,23 +97,23 @@ export function VaidyaConsultationDesk() {
             </div>
 
             {/* Right Column: Interactive Consultation Card */}
-            <div className="lg:col-span-5 p-6 sm:p-7 rounded-2xl bg-[#0D1B12] border border-[#C2A265]/30 shadow-xl space-y-5">
+            <div className="lg:col-span-5 p-4 sm:p-5 rounded-xl bg-[#0D1B12] border border-[#C2A265]/30 shadow-lg space-y-3.5">
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#C2A265] block mb-1">
+                <span className="text-[9.5px] uppercase tracking-wider font-semibold text-[#C2A265] block mb-1">
                   Step 1: Select Your Primary Concern
                 </span>
-                <div className="space-y-2 mt-2">
+                <div className="space-y-1.5 mt-1.5">
                   {concerns.map((c) => (
                     <button
                       key={c}
                       onClick={() => setSelectedConcern(c)}
-                      className={`w-full text-left p-2.5 rounded-lg text-xs transition-all border flex items-center justify-between ${
+                      className={`w-full text-left p-2 rounded-lg text-xs transition-all border flex items-center justify-between ${
                         selectedConcern === c
                           ? 'bg-[#183525] border-[#C2A265] text-[#FAF7EE] font-medium'
                           : 'bg-[#12241A] border-[#C2A265]/15 text-[#A8A295] hover:text-[#FAF7EE]'
                       }`}
                     >
-                      <span>{c}</span>
+                      <span className="text-[11px] sm:text-xs">{c}</span>
                       {selectedConcern === c && (
                         <CheckCircle2 className="w-3.5 h-3.5 text-[#C2A265] flex-shrink-0" />
                       )}
@@ -122,16 +122,16 @@ export function VaidyaConsultationDesk() {
                 </div>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-1">
                 <button
                   onClick={handleStartConsultation}
-                  className="w-full py-3.5 px-4 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-xs tracking-wide transition-all shadow-md flex items-center justify-center gap-2"
+                  className="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-xs tracking-wide transition-all shadow-md flex items-center justify-center gap-2"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <MessageCircle className="w-3.5 h-3.5" />
                   <span>Start WhatsApp Doctor Consult</span>
                 </button>
 
-                <p className="text-[10px] text-center text-[#8A8478] mt-2.5">
+                <p className="text-[9.5px] text-center text-[#8A8478] mt-2">
                   Available Mon–Sat: 9:00 AM – 8:00 PM IST • Free Service
                 </p>
               </div>

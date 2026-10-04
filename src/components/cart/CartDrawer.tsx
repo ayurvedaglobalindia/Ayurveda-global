@@ -196,13 +196,13 @@ export function CartDrawer() {
               <div className="p-3.5 sm:p-4 border-t border-ayur-forest-dark/50 bg-ayur-charcoal space-y-2">
                 <div className="flex gap-2">
                   <Link href="/checkout" onClick={closeCartDrawer} className="flex-1">
-                    <Button variant="gold" size="default" className="w-full text-xs font-bold py-2.5 shadow-lg gold-shimmer">
+                    <Button variant="gold" size="md" className="w-full text-xs font-bold py-2.5 shadow-lg gold-shimmer">
                       Proceed to Checkout ({formatINR(total)})
                     </Button>
                   </Link>
                   <Button
                     variant="whatsapp"
-                    size="default"
+                    size="md"
                     onClick={handleWhatsAppOrder}
                     className="px-3 py-2.5 shadow-md shadow-emerald-500/10 flex-shrink-0"
                     title="Order directly via WhatsApp"

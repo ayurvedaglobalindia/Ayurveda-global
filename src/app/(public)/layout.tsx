@@ -29,14 +29,8 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       {/* Footer */}
       <Footer />
 
-      {/* WhatsApp Float Button (Desktop) */}
-      <WhatsAppFloatButton />
-
-      {/* Small Interactive AG Mascot Guide */}
+      {/* Interactive AG Mascot Guide */}
       <AGMascotGuide />
-
-      {/* Global Modals */}
-      <GlobalModals />
     </div>
   )
 }

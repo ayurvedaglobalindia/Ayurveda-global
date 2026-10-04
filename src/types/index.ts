@@ -146,7 +146,7 @@ export interface Coupon {
 
 export interface WhatsAppLeadEvent {
   id?: number
-  source: 'float' | 'product' | 'checkout' | 'contact' | 'admin' | '3d-showcase' | 'combo-spotlight' | 'video-player' | 'quick-view' | 'ag-mascot'
+  source: 'float' | 'product' | 'checkout' | 'checkout_whatsapp' | 'contact' | '3d-showcase' | 'combo-spotlight' | 'video-player' | 'quick-view' | 'ag-mascot'
   productId?: string
   productName?: string
   customerName?: string
@@ -170,14 +170,6 @@ export interface User {
   addresses: Address[]
   orders: any[]
   wishlist: string[]
-  createdAt: string
-}
-
-export interface AdminUser {
-  id: number
-  username: string
-  passwordHash: string
-  role: string
   createdAt: string
 }
 

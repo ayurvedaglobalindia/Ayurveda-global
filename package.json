@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "sh -c 'if [ -d /data/data/com.termux ]; then next build --webpack; else next build; fi' && mkdir -p .vercel/output/static && cp -r out/* .vercel/output/static/ 2>/dev/null || true",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint src",
     "test": "tsx src/scripts/run-tests.ts",
     "diagnose": "bash diagnose.sh",
     "db:init": "tsx src/scripts/init-db.ts",

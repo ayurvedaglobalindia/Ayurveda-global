@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Package, Truck, CheckCircle, Clock, XCircle, ArrowLeft } from 'lucide-react'
 import { formatDate, formatINR, generateId } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
@@ -77,7 +78,7 @@ export default function OrdersPage() {
                     <div className="flex items-center gap-4">
                       <div className="w-20 h-20 rounded-xl bg-[#0B150F] border border-[#C2A265]/20 flex items-center justify-center flex-shrink-0">
                         {order.items[0] && (
-                          <img src={order.items[0].image} alt={order.items[0].name} className="w-full h-full object-cover rounded-lg" />
+                          <Image src={order.items[0].image} alt={order.items[0].name} width={80} height={80} className="w-full h-full object-cover rounded-lg" />
                         )}
                       </div>
                       <div>

@@ -15,7 +15,6 @@ if (!existsSync(dbPath)) {
     orderStatusHistory: [],
     coupons: [],
     whatsappLeads: [],
-    adminUsers: [],
   }, null, 2))
 }
 
@@ -23,7 +22,7 @@ function readDB() {
   try {
     return JSON.parse(readFileSync(dbPath, 'utf8'))
   } catch {
-    return { products: [], orders: [], orderStatusHistory: [], coupons: [], whatsappLeads: [], adminUsers: [] }
+    return { products: [], orders: [], orderStatusHistory: [], coupons: [], whatsappLeads: [] }
   }
 }
 
@@ -124,22 +123,6 @@ function createStatement(sql: string) {
         return { changes: 1 }
       }
 
-      if (sql.includes('INSERT INTO admin_users') || sql.includes('INSERT OR REPLACE INTO admin_users')) {
-        const a = isObject ? firstArg : {}
-        const adminUser = {
-          id: Date.now(),
-          username: isObject ? (a.username || a['@username']) : params[0],
-          password_hash: isObject ? (a.passwordHash || a.password_hash || a['@passwordHash']) : params[1],
-          role: isObject ? (a.role || a['@role'] || 'admin') : (params[2] || 'admin'),
-          created_at: new Date().toISOString(),
-        }
-        const idx = db.adminUsers.findIndex((u: any) => u.username === adminUser.username)
-        if (idx >= 0) db.adminUsers[idx] = adminUser
-        else db.adminUsers.push(adminUser)
-        writeDB(db)
-        return { changes: 1 }
-      }
-
       if (sql.includes('INSERT INTO order_status_history')) {
         db.orderStatusHistory.push({
           id: Date.now(),
@@ -229,9 +212,6 @@ function createStatement(sql: string) {
         }
         const query = params[0]
         return db.orders.find((o: any) => o.id === query || o.order_number === query || o.customer_phone === query)
-      }
-      if (sql.includes('FROM admin_users')) {
-        return db.adminUsers.find((u: any) => u.username === params[0])
       }
       if (sql.includes('FROM coupons')) {
         const code = (params[0] || '').toString().toUpperCase()
