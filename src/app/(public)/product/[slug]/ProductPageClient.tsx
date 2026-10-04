@@ -32,8 +32,8 @@ export default function ProductPageClient() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateProductSEO(product).structuredData) }}
       />
 
-      <div className="container py-6 sm:py-8 lg:py-10">
-        <div className="mb-6 sm:mb-8 pb-3.5 border-b border-[#D4AF37]/20">
+      <div className="container py-4 sm:py-6 lg:py-8">
+        <div className="mb-4 sm:mb-5 pb-2.5 border-b border-[#D4AF37]/20">
           <Breadcrumb items={breadcrumbItems} className="mb-0 text-xs sm:text-sm text-[#A7B3A9]" />
         </div>
 
@@ -45,21 +45,21 @@ export default function ProductPageClient() {
           />
         )}
 
-        <div className="mb-12">
+        <div className="mb-6 sm:mb-8">
           <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center text-[#D4AF37]">Loading details...</div>}>
             <ProductDetails product={product} />
           </Suspense>
         </div>
 
         {relatedProducts.length > 0 && (
-          <section className="mt-16 pt-12 border-t border-[#D4AF37]/20">
-            <div className="flex items-center justify-between mb-8">
+          <section className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-[#D4AF37]/20">
+            <div className="flex items-center justify-between mb-5">
               <div>
-                <span className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider">Synergistic Pairings</span>
-                <h2 className="font-heading text-2xl sm:text-3xl font-medium text-white mt-1">Complete Your Ayurvedic Regimen</h2>
+                <span className="text-[10px] sm:text-xs font-bold text-[#D4AF37] uppercase tracking-wider">Synergistic Pairings</span>
+                <h2 className="font-heading text-lg sm:text-xl md:text-2xl font-medium text-white mt-0.5">Complete Your Ayurvedic Regimen</h2>
               </div>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {relatedProducts.map(relatedProduct => (
                 <ProductCard key={relatedProduct.id} product={relatedProduct} />
               ))}

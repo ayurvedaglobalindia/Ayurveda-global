@@ -107,16 +107,16 @@ export default function OrderDetailPage() {
   const StatusIcon = config.icon
 
   return (
-    <div className="container py-8 lg:py-12">
-      <div className="mb-8">
-        <Link href="/orders" className="inline-flex items-center gap-2 text-ayur-stone hover:text-ayur-gold transition-colors mb-4">
-          <ArrowLeft className="w-5 h-5" />
+    <div className="container py-5 sm:py-7 lg:py-9">
+      <div className="mb-5 sm:mb-6">
+        <Link href="/orders" className="inline-flex items-center gap-1.5 text-xs text-ayur-stone hover:text-ayur-gold transition-colors mb-3">
+          <ArrowLeft className="w-4 h-4" />
           Back to Orders
         </Link>
-        <div className="flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
           <div>
-            <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-ivory">Order #{order.orderNumber}</h1>
-            <p className="text-[#C4BDA8] mt-1">Placed on {formatDate(order.createdAt)}</p>
+            <h1 className="font-heading text-xl sm:text-2xl md:text-3xl font-medium text-ayur-ivory">Order #{order.orderNumber}</h1>
+            <p className="text-xs text-[#C4BDA8] mt-1">Placed on {formatDate(order.createdAt)}</p>
           </div>
           <Badge variant={order.status as any} className="whitespace-nowrap">
             <StatusIcon className="w-3 h-3 mr-1" />
@@ -125,10 +125,10 @@ export default function OrderDetailPage() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-6">
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-6 shadow-lg">
-            <h2 className="font-heading text-xl font-medium text-ayur-ivory mb-6">Order Timeline</h2>
+      <div className="grid lg:grid-cols-3 gap-5 sm:gap-6">
+        <div className="lg:col-span-2 space-y-4">
+          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-4">Order Timeline</h2>
             <div className="relative pl-6 border-l-2 border-[#C2A265]/20">
               {order.timeline.map((event, index) => {
                 const eventConfig = statusConfig[event.status as keyof typeof statusConfig]
@@ -136,7 +136,7 @@ export default function OrderDetailPage() {
                 const isLast = index === order.timeline.length - 1
 
                 return (
-                  <div key={event.date} className="relative pb-8 last:pb-0">
+                  <div key={event.date} className="relative pb-6 last:pb-0">
                     <div className="absolute left-[-14px] top-1 w-6 h-6 rounded-full border-2 border-[#C2A265]/40 flex items-center justify-center bg-[#0B150F] z-10">
                       <div className={classNames(
                         'w-2.5 h-2.5 rounded-full',
@@ -148,17 +148,17 @@ export default function OrderDetailPage() {
                     <div className="ml-4">
                       <div className="flex items-start gap-3">
                         <div className={classNames(
-                          'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0',
+                          'w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0',
                           event.status === order.status || index < order.timeline.findIndex(e => e.status === order.status)
                             ? eventConfig.lineColor.replace('bg-', 'bg-')
                             : 'bg-[#0B150F] border border-[#C2A265]/20'
                         )}>
-                          <EventIcon className={classNames('w-5 h-5', event.status === order.status || index < order.timeline.findIndex(e => e.status === order.status) ? 'text-white' : 'text-ayur-stone')} />
+                          <EventIcon className={classNames('w-4.5 h-4.5', event.status === order.status || index < order.timeline.findIndex(e => e.status === order.status) ? 'text-white' : 'text-ayur-stone')} />
                         </div>
                         <div className="flex-1">
-                          <p className="font-medium text-ayur-ivory">{eventConfig?.label || event.status}</p>
-                          <p className="text-sm text-[#C4BDA8]">{event.note}</p>
-                          <p className="text-xs text-[#C4BDA8]/70 mt-1">{formatDateTime(event.date)}</p>
+                          <p className="font-medium text-ayur-ivory text-sm">{eventConfig?.label || event.status}</p>
+                          <p className="text-xs text-[#C4BDA8]">{event.note}</p>
+                          <p className="text-[11px] text-[#C4BDA8]/70 mt-0.5">{formatDateTime(event.date)}</p>
                         </div>
                       </div>
                       {!isLast && (
@@ -171,27 +171,27 @@ export default function OrderDetailPage() {
             </div>
           </section>
 
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-6 shadow-lg">
-            <h2 className="font-heading text-xl font-medium text-ayur-ivory mb-6">Order Items</h2>
-            <div className="space-y-4">
+          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-4">Order Items</h2>
+            <div className="space-y-3">
               {order.items.map((item, index) => (
-                <div key={index} className="flex gap-4 p-4 bg-[#0B150F] border border-[#C2A265]/15 rounded-xl">
-                  <div className="w-16 h-16 rounded-lg bg-[#04180E] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
-                    <Image src={item.image} alt={item.name} width={64} height={64} className="w-full h-full object-cover" />
+                <div key={index} className="flex gap-3.5 p-3 sm:p-3.5 bg-[#0B150F] border border-[#C2A265]/15 rounded-xl items-center">
+                  <div className="w-14 h-14 rounded-lg bg-[#04180E] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
+                    <Image src={item.image} alt={item.name} width={56} height={56} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-medium text-ayur-ivory">{item.name}</h3>
-                    {item.variant && <p className="text-sm text-[#C4BDA8]">{item.variant}</p>}
-                    <p className="text-sm text-ayur-gold font-medium">{formatINR(item.total)}</p>
+                    <h3 className="font-medium text-ayur-ivory text-sm">{item.name}</h3>
+                    {item.variant && <p className="text-xs text-[#C4BDA8]">{item.variant}</p>}
+                    <p className="text-xs text-ayur-gold font-medium">{formatINR(item.total)}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-[#C4BDA8]">Qty: {item.quantity}</p>
-                    <p className="font-medium text-ayur-ivory">{formatINR(item.price)} each</p>
+                    <p className="text-xs text-[#C4BDA8]">Qty: {item.quantity}</p>
+                    <p className="font-medium text-ayur-ivory text-xs sm:text-sm">{formatINR(item.price)} each</p>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-6 pt-6 border-t border-[#C2A265]/20 space-y-2 text-sm">
+            <div className="mt-5 pt-4 border-t border-[#C2A265]/20 space-y-1.5 text-xs sm:text-sm">
               <div className="flex justify-between text-[#C4BDA8]">
                 <span>Subtotal</span>
                 <span>{formatINR(order.subtotal)}</span>
@@ -214,7 +214,7 @@ export default function OrderDetailPage() {
                   <span>-{formatINR(order.discount)}</span>
                 </div>
               )}
-              <div className="flex justify-between border-t border-[#C2A265]/20 pt-3 text-lg font-medium text-ayur-ivory">
+              <div className="flex justify-between border-t border-[#C2A265]/20 pt-2.5 text-base font-semibold text-ayur-ivory">
                 <span>Total</span>
                 <span>{formatINR(order.total)}</span>
               </div>
@@ -222,30 +222,30 @@ export default function OrderDetailPage() {
           </section>
         </div>
 
-        <div className="space-y-6">
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-6 shadow-lg">
-            <h2 className="font-heading text-xl font-medium text-ayur-ivory mb-6">Shipping Address</h2>
-            <address className="text-[#C4BDA8] not-italic space-y-2">
+        <div className="space-y-4">
+          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-3">Shipping Address</h2>
+            <address className="text-[#C4BDA8] not-italic space-y-1.5 text-xs sm:text-sm">
               <p className="font-medium text-ayur-ivory">{order.shippingAddress.firstName} {order.shippingAddress.lastName}</p>
               <p>{order.shippingAddress.addressLine1}</p>
               {Boolean((order.shippingAddress as any).addressLine2) && <p>{(order.shippingAddress as any).addressLine2}</p>}
               <p>{order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.pincode}</p>
-              <div className="flex items-center gap-2 text-sm">
-                <Phone className="w-4 h-4 text-ayur-gold" />
+              <div className="flex items-center gap-2 text-xs pt-1">
+                <Phone className="w-3.5 h-3.5 text-ayur-gold" />
                 <a href={`tel:${order.shippingAddress.phone}`} className="hover:text-ayur-gold transition-colors">{order.shippingAddress.phone}</a>
               </div>
               {order.customerEmail && (
-                <div className="flex items-center gap-2 text-sm">
-                  <Mail className="w-4 h-4 text-ayur-gold" />
+                <div className="flex items-center gap-2 text-xs">
+                  <Mail className="w-3.5 h-3.5 text-ayur-gold" />
                   <a href={`mailto:${order.customerEmail}`} className="hover:text-ayur-gold transition-colors">{order.customerEmail}</a>
                 </div>
               )}
             </address>
           </section>
 
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-6 shadow-lg">
-            <h2 className="font-heading text-xl font-medium text-ayur-ivory mb-6">Payment Details</h2>
-            <dl className="space-y-3 text-sm">
+          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-3">Payment Details</h2>
+            <dl className="space-y-2 text-xs sm:text-sm">
               <div className="flex justify-between">
                 <dt className="text-ayur-stone">Payment Method</dt>
                 <dd className="font-medium text-ayur-ivory">
@@ -261,16 +261,16 @@ export default function OrderDetailPage() {
             </dl>
           </section>
 
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-6 shadow-lg">
-            <h2 className="font-heading text-xl font-medium text-ayur-ivory mb-4">Need Help?</h2>
-            <p className="text-[#C4BDA8] mb-4">Contact us for any questions about your order.</p>
-            <div className="flex gap-3">
-              <Button variant="whatsapp" className="flex-1" onClick={() => window.open('https://wa.me/919123485451', '_blank')}>
-                <MessageSquare className="w-4 h-4 mr-2" />
+          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-2">Need Help?</h2>
+            <p className="text-xs text-[#C4BDA8] mb-3.5">Contact us for any questions about your order.</p>
+            <div className="flex gap-2.5">
+              <Button variant="whatsapp" size="sm" className="flex-1 text-xs" onClick={() => window.open('https://wa.me/919123485451', '_blank')}>
+                <MessageSquare className="w-3.5 h-3.5 mr-1.5" />
                 WhatsApp Support
               </Button>
-              <Button variant="outline" className="flex-1" onClick={() => window.location.href = 'mailto:support@ayurvedaglobal.com'}>
-                <Mail className="w-4 h-4 mr-2" />
+              <Button variant="outline" size="sm" className="flex-1 text-xs" onClick={() => window.location.href = 'mailto:support@ayurvedaglobal.com'}>
+                <Mail className="w-3.5 h-3.5 mr-1.5" />
                 Email Us
               </Button>
             </div>

@@ -174,10 +174,59 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
         icon: '🌿',
       }
     }
+    if (product.id === 'hair-regrow-kit') {
+      return {
+        badge: 'Dual Kit',
+        pill: '100ml Oil + 60 Botanical Capsules',
+        icon: '✨',
+      }
+    }
+    if (product.id === 'hair-regrow-capsules') {
+      return {
+        badge: 'Hair Nutrients',
+        pill: 'Bhringraj & Amla Root Micronutrients',
+        icon: '🌱',
+      }
+    }
+    if (product.id === 'hair-regrow-oil') {
+      return {
+        badge: 'Scalp Taila',
+        pill: 'Bhringraj & Rosemary Scalp Oil (100ml)',
+        icon: '💧',
+      }
+    }
+    if (product.id === 'himalayan-shilajit-resin') {
+      return {
+        badge: 'Gold Grade',
+        pill: '16,000+ Ft Pure Himalayan Resin (20g)',
+        icon: '🏔️',
+      }
+    }
+    if (product.id === 'ksm66-ashwagandha-root-extract') {
+      return {
+        badge: 'Pure Extract',
+        pill: 'KSM-66 5% Withanolides Adaptogen',
+        icon: '🌿',
+      }
+    }
+    if (product.id === 'vajikara-gold-vitality-oil') {
+      return {
+        badge: '7-Day Taila',
+        pill: 'Vajikara Medicated Muscular Oil (50ml)',
+        icon: '✨',
+      }
+    }
+    if (product.id === 'staymax-delay-spray') {
+      return {
+        badge: 'Fast Action',
+        pill: 'Herbal Delay • Aloe & Vit E • 30ml',
+        icon: '⚡',
+      }
+    }
     return {
-      badge: 'Fast Action',
-      pill: 'Herbal Delay • Aloe & Vit E • 30ml',
-      icon: '⚡',
+      badge: 'Pure Ayurvedic',
+      pill: product.tagline || 'Classical Rasayana Formulation',
+      icon: '🌿',
     }
   }
 

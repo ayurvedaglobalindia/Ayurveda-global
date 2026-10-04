@@ -16,15 +16,15 @@ export default function PrivacyPolicyPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateWebsiteStructuredData()) }}
       />
 
-      <div className="container py-8 lg:py-16">
+      <div className="container py-5 sm:py-7 lg:py-9">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-8">
-            <span className="text-[#D4AF37] text-xs uppercase tracking-widest font-semibold block mb-2">Legal Transparency</span>
-            <h1 className="font-serif text-3xl md:text-5xl font-normal text-white mb-3">Privacy Policy</h1>
-            <p className="text-[#8A9B8F] text-sm">Effective: {lastUpdated}</p>
+          <div className="mb-5 sm:mb-6">
+            <span className="text-[#D4AF37] text-[10px] sm:text-xs uppercase tracking-widest font-semibold block mb-1.5">Legal Transparency</span>
+            <h1 className="font-serif text-xl sm:text-2xl md:text-3xl font-normal text-white mb-2">Privacy Policy</h1>
+            <p className="text-[#8A9B8F] text-xs sm:text-sm">Effective: {lastUpdated}</p>
           </div>
 
-          <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-6 md:p-10 text-[#C4BDA8] leading-relaxed space-y-8 text-sm md:text-base">
+          <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-5 sm:p-7 text-[#C4BDA8] leading-relaxed space-y-6 text-xs sm:text-sm">
             <section>
               <h2 className="font-serif text-xl font-medium text-white mb-3 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />

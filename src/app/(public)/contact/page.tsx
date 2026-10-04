@@ -177,17 +177,17 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container py-8 lg:py-12">
+    <div className="container py-4 sm:py-6 lg:py-8">
       <div className="max-w-5xl mx-auto">
-        <div className="mb-12">
-          <span className="px-3.5 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-3 inline-block">
+        <div className="mb-5">
+          <span className="px-3 py-0.5 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] text-[10.5px] font-semibold uppercase tracking-wider mb-2 inline-block">
             We Are Here To Assist
           </span>
-          <h1 className="font-heading text-3xl md:text-4xl font-semibold text-white mb-3">Contact Us</h1>
-          <p className="text-[#C4BDA8] text-base sm:text-lg">We&apos;d love to hear from you. Choose your preferred way to get in touch with our Ayurvedic team.</p>
+          <h1 className="font-heading text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-1.5">Contact Us</h1>
+          <p className="text-[#C4BDA8] text-xs sm:text-sm">We&apos;d love to hear from you. Choose your preferred way to get in touch with our Ayurvedic team.</p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid lg:grid-cols-3 gap-4 sm:gap-5 mb-8 sm:mb-10">
           {contactInfo.map((info, index) => (
             <button
               key={info.title}
@@ -195,17 +195,17 @@ export default function ContactPage() {
               className={index === 0 ? 'lg:col-span-2 text-left' : 'text-left'}
             >
               <div className={index === 0 ? 'h-full' : ''}>
-                <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-6 h-full hover:border-[#D4AF37]/60 transition-all shadow-md">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center flex-shrink-0 text-[#D4AF37]">
-                      <info.icon className="w-6 h-6 text-[#D4AF37]" />
+                <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-4 sm:p-5 h-full hover:border-[#D4AF37]/60 transition-all shadow-md">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center flex-shrink-0 text-[#D4AF37]">
+                      <info.icon className="w-5 h-5 text-[#D4AF37]" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-medium text-white">{info.title}</h3>
-                      <p className="text-[#F4E295] font-semibold mt-1">{info.value}</p>
-                      <p className="text-[#C4BDA8] text-sm mt-1">{info.desc}</p>
+                      <h3 className="font-medium text-sm text-white">{info.title}</h3>
+                      <p className="text-[#F4E295] text-xs sm:text-sm font-semibold mt-0.5">{info.value}</p>
+                      <p className="text-[#C4BDA8] text-xs mt-0.5">{info.desc}</p>
                     </div>
-                    <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 mt-2">
+                    <span className="px-2.5 py-1 rounded-lg text-[10.5px] font-semibold bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 mt-1">
                       {info.action}
                     </span>
                   </div>
@@ -214,63 +214,63 @@ export default function ContactPage() {
             </button>
           ))}
 
-          <div className="glass-luxury border border-[#D4AF37]/30 rounded-2xl p-6 text-white shadow-xl flex flex-col justify-between">
+          <div className="glass-luxury border border-[#D4AF37]/30 rounded-2xl p-4 sm:p-5 text-white shadow-xl flex flex-col justify-between">
             <div>
-              <h3 className="font-heading text-xl font-medium mb-3 text-white">Quick WhatsApp Desk</h3>
-              <p className="text-[#C4BDA8] text-sm mb-6">Skip the form — chat directly with our specialists on WhatsApp for instant guidance & order assistance.</p>
+              <h3 className="font-heading text-base font-medium mb-1.5 text-white">Quick WhatsApp Desk</h3>
+              <p className="text-[#C4BDA8] text-xs mb-4">Skip the form — chat directly with our specialists on WhatsApp for instant guidance & order assistance.</p>
             </div>
             <div>
               <button
-                className="btn-gold w-full py-3.5 rounded-xl font-bold text-sm shadow-xl flex items-center justify-center gap-2"
+                className="btn-gold w-full py-2.5 rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-2"
                 onClick={() => window.open('https://wa.me/919123485451', '_blank')}
               >
-                <MessageSquare className="w-5 h-5" />
+                <MessageSquare className="w-4 h-4" />
                 Start WhatsApp Chat
               </button>
-              <p className="text-xs text-[#8A9B8F] mt-3 text-center">Available Mon-Sat 9AM-7PM IST</p>
+              <p className="text-[10px] text-[#8A9B8F] mt-2 text-center">Available Mon-Sat 9AM-7PM IST</p>
             </div>
           </div>
         </div>
 
         {/* Executive Management Desk */}
-        <section className="mb-16">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <span className="px-3.5 py-1 rounded-full bg-[#D4AF37]/20 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-2 inline-block">
+        <section className="mb-8 sm:mb-10">
+          <div className="text-center max-w-2xl mx-auto mb-4 sm:mb-5">
+            <span className="px-3 py-0.5 rounded-full bg-[#D4AF37]/20 text-[#D4AF37] text-[10.5px] font-semibold uppercase tracking-wider mb-1.5 inline-block">
               Direct Contact
             </span>
-            <h2 className="font-heading text-2xl md:text-3xl font-medium text-white">Owner & Management Desk</h2>
-            <p className="text-[#C4BDA8] text-sm mt-1">Direct communication with our brand owner and operations manager</p>
+            <h2 className="font-heading text-lg sm:text-xl font-medium text-white">Owner & Management Desk</h2>
+            <p className="text-[#C4BDA8] text-xs mt-0.5">Direct communication with our brand owner and operations manager</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-4">
             {/* Owner Mageesh */}
-            <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-lg">
-              <div className="w-24 h-24 rounded-2xl overflow-hidden relative border-2 border-[#D4AF37]/40 flex-shrink-0 shadow-md">
+            <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 shadow-md">
+              <div className="w-20 h-20 rounded-2xl overflow-hidden relative border-2 border-[#D4AF37]/40 flex-shrink-0 shadow-md">
                 <Image
                   src="/images/team/mageesh.jpg"
                   alt="Mageesh"
                   fill
-                  sizes="96px"
+                  sizes="80px"
                   className="object-cover object-top"
                 />
               </div>
               <div className="text-center sm:text-left flex-1">
-                <span className="text-xs uppercase tracking-wider font-semibold text-[#D4AF37] bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full inline-block mb-1 border border-[#D4AF37]/30">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-full inline-block mb-1 border border-[#D4AF37]/30">
                   Owner
                 </span>
-                <h3 className="font-heading text-xl font-medium text-white">Mageesh</h3>
-                <p className="text-[#C4BDA8] text-sm mt-1">Brand vision, partnerships & executive leadership</p>
-                <div className="mt-4 flex flex-wrap gap-2 justify-center sm:justify-start">
+                <h3 className="font-heading text-base font-medium text-white">Mageesh</h3>
+                <p className="text-[#C4BDA8] text-xs mt-0.5">Brand vision, partnerships & executive leadership</p>
+                <div className="mt-3 flex flex-wrap gap-2 justify-center sm:justify-start">
                   <a
                     href="tel:+919123485451"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#061B12] hover:bg-[#0A261A] border border-[#D4AF37]/30 px-3 py-1.5 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#061B12] hover:bg-[#0A261A] border border-[#D4AF37]/30 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <Phone className="w-3.5 h-3.5 text-[#D4AF37]" />
                     +91 91234 85451
                   </a>
                   <button
                     onClick={() => handleWhatsAppClick('Executive Inquiry - Owner Mageesh')}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#061B12] hover:bg-[#0A261A] border border-[#25D366]/40 px-3 py-1.5 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#061B12] hover:bg-[#0A261A] border border-[#25D366]/40 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     Direct WhatsApp
@@ -280,33 +280,33 @@ export default function ContactPage() {
             </div>
 
             {/* Manager Umesh */}
-            <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-lg">
-              <div className="w-24 h-24 rounded-2xl overflow-hidden relative border-2 border-[#D4AF37]/40 flex-shrink-0 shadow-md">
+            <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 shadow-md">
+              <div className="w-20 h-20 rounded-2xl overflow-hidden relative border-2 border-[#D4AF37]/40 flex-shrink-0 shadow-md">
                 <Image
                   src="/images/team/umesh.jpg"
                   alt="Umesh"
                   fill
-                  sizes="96px"
+                  sizes="80px"
                   className="object-cover object-top"
                 />
               </div>
               <div className="text-center sm:text-left flex-1">
-                <span className="text-xs uppercase tracking-wider font-semibold text-[#D4AF37] bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full inline-block mb-1 border border-[#D4AF37]/30">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-full inline-block mb-1 border border-[#D4AF37]/30">
                   Manager
                 </span>
-                <h3 className="font-heading text-xl font-medium text-white">Umesh</h3>
-                <p className="text-[#C4BDA8] text-sm mt-1">Brand operations, logistics & direct customer satisfaction</p>
-                <div className="mt-4 flex flex-wrap gap-2 justify-center sm:justify-start">
+                <h3 className="font-heading text-base font-medium text-white">Umesh</h3>
+                <p className="text-[#C4BDA8] text-xs mt-0.5">Brand operations, logistics & direct customer satisfaction</p>
+                <div className="mt-3 flex flex-wrap gap-2 justify-center sm:justify-start">
                   <a
                     href="mailto:umesh@ayurvedaglobal.com"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#061B12] hover:bg-[#0A261A] border border-[#D4AF37]/30 px-3 py-1.5 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#061B12] hover:bg-[#0A261A] border border-[#D4AF37]/30 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5 text-[#D4AF37]" />
                     umesh@ayurvedaglobal.com
                   </a>
                   <button
                     onClick={() => handleWhatsAppClick('Operations Support - Manager Umesh')}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#061B12] hover:bg-[#0A261A] border border-[#25D366]/40 px-3 py-1.5 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#061B12] hover:bg-[#0A261A] border border-[#25D366]/40 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     WhatsApp Desk

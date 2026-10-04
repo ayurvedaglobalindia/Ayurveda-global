@@ -79,20 +79,20 @@ export default function CategoryPageClient() {
   }
 
   return (
-    <div className="container py-8 lg:py-12">
-      <div className="mb-8">
-        <nav className="flex items-center gap-2 text-xs text-[#C4BDA8] mb-3" aria-label="Breadcrumb">
+    <div className="container py-4 sm:py-6 lg:py-8">
+      <div className="mb-4 sm:mb-5">
+        <nav className="flex items-center gap-2 text-xs text-[#C4BDA8] mb-2" aria-label="Breadcrumb">
           <a href="/" className="hover:text-ayur-gold transition-colors">Home</a>
           <span>/</span>
           <a href="/categories" className="hover:text-ayur-gold transition-colors">Categories</a>
           <span>/</span>
           <span className="text-ayur-ivory font-medium">{category.name}</span>
         </nav>
-        <h1 className="font-heading text-3xl md:text-4xl font-normal text-ayur-ivory">{category.name}</h1>
-        <p className="text-[#C4BDA8] text-sm mt-1.5">{category.description}</p>
+        <h1 className="font-heading text-xl sm:text-2xl font-normal text-ayur-ivory">{category.name}</h1>
+        <p className="text-[#C4BDA8] text-xs sm:text-sm mt-1">{category.description}</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <div className="flex items-center gap-3">
           <span className="text-[#C4BDA8] text-sm">
             {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} in this category

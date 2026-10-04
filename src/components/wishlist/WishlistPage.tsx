@@ -45,15 +45,15 @@ export function WishlistPage() {
 
   if (items.length === 0) {
     return (
-      <div className="container py-16 lg:py-24">
+      <div className="container py-10 sm:py-14 lg:py-16">
         <div className="max-w-md mx-auto text-center">
-          <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-[#061A10] border border-[#C2A265]/20 flex items-center justify-center">
-            <Heart className="w-12 h-12 text-ayur-gold" />
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#061A10] border border-[#C2A265]/20 flex items-center justify-center">
+            <Heart className="w-8 h-8 text-ayur-gold" />
           </div>
-          <h1 className="font-heading text-3xl font-medium text-ayur-ivory mb-4">Your wishlist is empty</h1>
-          <p className="text-[#C4BDA8] mb-8">Save products you love for later.</p>
+          <h1 className="font-heading text-xl sm:text-2xl font-medium text-ayur-ivory mb-2">Your wishlist is empty</h1>
+          <p className="text-xs sm:text-sm text-[#C4BDA8] mb-6">Save products you love for later.</p>
           <Link href="/shop">
-            <Button variant="gold" size="lg" className="w-full sm:w-auto">
+            <Button variant="gold" size="md" className="w-full sm:w-auto text-xs font-bold">
               Start Shopping
             </Button>
           </Link>
@@ -63,15 +63,15 @@ export function WishlistPage() {
   }
 
   return (
-    <div className="container py-8 lg:py-12">
-      <div className="flex items-center gap-4 mb-8">
+    <div className="container py-5 sm:py-7 lg:py-9">
+      <div className="flex items-center gap-3 mb-5 sm:mb-6">
         <Link href="/" className="p-2 rounded-lg text-ayur-stone hover:text-ayur-gold hover:bg-[#061A10] transition-colors">
           <ArrowLeft className="w-5 h-5" />
         </Link>
-        <h1 className="font-heading text-3xl font-medium text-ayur-ivory">My Wishlist ({itemCount})</h1>
+        <h1 className="font-heading text-xl sm:text-2xl font-medium text-ayur-ivory">My Wishlist ({itemCount})</h1>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {items.map(item => (
           <WishlistItemCard key={item.id} item={item} onMoveToCart={handleMoveToCart} onRemove={handleRemove} />
         ))}

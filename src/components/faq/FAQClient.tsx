@@ -42,20 +42,20 @@ export function FAQClient({ faqs }: FAQClientProps) {
   return (
     <div className="max-w-4xl mx-auto">
       {/* Header */}
-      <div className="text-center mb-10">
+      <div className="text-center mb-6 sm:mb-8">
         <span className="text-[10px] font-bold text-[#C2A265] uppercase tracking-[0.2em] block mb-2">
           Knowledge Base &amp; Apothecary Guidance
         </span>
-        <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-normal text-[#FAF7EE] mb-3">
+        <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-normal text-[#FAF7EE] mb-2 sm:mb-3">
           Frequently Asked Questions
         </h1>
-        <p className="text-[#C4BDA8] text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-[#C4BDA8] text-xs sm:text-sm max-w-xl mx-auto">
           Direct, honest answers regarding our classical formulations, discrete courier logistics, COD, and dosages.
         </p>
       </div>
 
       {/* Interactive Search Bar */}
-      <div className="mb-10 max-w-lg mx-auto">
+      <div className="mb-6 max-w-lg mx-auto">
         <div className="relative flex items-center">
           <Search className="absolute left-4 w-5 h-5 text-[#C2A265] pointer-events-none" />
           <input
@@ -87,15 +87,15 @@ export function FAQClient({ faqs }: FAQClientProps) {
 
       {/* FAQ Categories Accordion */}
       {filteredFaqs.length > 0 ? (
-        <div className="space-y-8">
+        <div className="space-y-4 sm:space-y-5">
           {filteredFaqs.map((category) => (
-            <section key={category.category} className="bg-[#09180E] border border-[#C2A265]/20 rounded-2xl p-5 sm:p-6 shadow-xl">
-              <h2 className="font-heading text-lg sm:text-xl font-normal text-[#FAF7EE] mb-4 flex items-center gap-3">
-                <span className="w-8 h-8 rounded-lg bg-[#142E1E] border border-[#C2A265]/30 flex items-center justify-center text-[#C2A265]">
-                  <ChevronDown className="w-4 h-4" />
+            <section key={category.category} className="bg-[#09180E] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-xl">
+              <h2 className="font-heading text-base sm:text-lg font-normal text-[#FAF7EE] mb-3 flex items-center gap-3">
+                <span className="w-7 h-7 rounded-lg bg-[#142E1E] border border-[#C2A265]/30 flex items-center justify-center text-[#C2A265]">
+                  <ChevronDown className="w-3.5 h-3.5" />
                 </span>
                 <span>{category.category}</span>
-                <span className="text-xs text-[#8A8478] font-sans font-normal ml-auto">
+                <span className="text-[11px] text-[#8A8478] font-sans font-normal ml-auto">
                   {category.items.length} {category.items.length === 1 ? 'topic' : 'topics'}
                 </span>
               </h2>
@@ -111,7 +111,7 @@ export function FAQClient({ faqs }: FAQClientProps) {
           ))}
         </div>
       ) : (
-        <div className="py-12 px-4 text-center rounded-2xl bg-[#09180E] border border-[#C2A265]/20 space-y-3">
+        <div className="py-10 px-4 text-center rounded-2xl bg-[#09180E] border border-[#C2A265]/20 space-y-3">
           <div className="w-12 h-12 rounded-full bg-[#12241A] border border-[#C2A265]/30 flex items-center justify-center mx-auto text-[#C2A265]">
             <Search className="w-5 h-5" />
           </div>
@@ -132,9 +132,9 @@ export function FAQClient({ faqs }: FAQClientProps) {
       )}
 
       {/* Concierge Help Callout */}
-      <div className="mt-14 text-center p-6 rounded-2xl bg-[#08150D] border border-[#C2A265]/20">
-        <p className="text-sm text-[#FAF7EE] font-medium mb-1">Still have questions or need personal wellness advice?</p>
-        <p className="text-xs text-[#A8A295] mb-4">Our Ayurvedic team responds promptly to all enquiries with 100% discretion.</p>
+      <div className="mt-8 sm:mt-10 text-center p-4 sm:p-5 rounded-2xl bg-[#08150D] border border-[#C2A265]/20">
+        <p className="text-xs sm:text-sm text-[#FAF7EE] font-medium mb-1">Still have questions or need personal wellness advice?</p>
+        <p className="text-[11px] sm:text-xs text-[#A8A295] mb-3">Our Ayurvedic team responds promptly to all enquiries with 100% discretion.</p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
             href="/contact"

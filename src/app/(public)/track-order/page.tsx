@@ -136,32 +136,32 @@ export default function TrackOrderPage() {
     const StatusIcon = config.icon
 
     return (
-      <div className="container py-6 sm:py-10 lg:py-12">
+      <div className="container py-5 sm:py-7 lg:py-9">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-6 text-center space-y-1.5">
+          <div className="mb-4 sm:mb-5 text-center space-y-1">
             <span className="text-[10px] uppercase font-bold tracking-widest text-[#C2A265]">Live Package Tracking</span>
-            <h1 className="font-heading text-xl sm:text-2xl font-medium text-[#FAF7EE]">Order Status</h1>
+            <h1 className="font-heading text-lg sm:text-xl md:text-2xl font-medium text-[#FAF7EE]">Order Status</h1>
             <p className="text-xs sm:text-sm text-[#A8A295]">
               Reference #{trackedOrder.orderNumber} is currently{' '}
               <strong className="text-[#D4B678] font-semibold">{config.label}</strong>
             </p>
           </div>
 
-          <div className="card-luxury p-6 sm:p-8 rounded-3xl border border-ayur-gold/30 bg-ayur-charcoal/95 shadow-luxury">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-ayur-forest-dark/50 gap-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold shadow-inner" style={{ background: 'rgba(12, 56, 34, 0.6)' }}>
+          <div className="card-luxury p-5 sm:p-6 rounded-2xl border border-ayur-gold/30 bg-ayur-charcoal/95 shadow-luxury">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 sm:pb-5 border-b border-ayur-forest-dark/50 gap-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold shadow-inner" style={{ background: 'rgba(12, 56, 34, 0.6)' }}>
                 <StatusIcon className="w-4 h-4 text-ayur-gold" />
                 <span className="text-ayur-ivory">{config.label}</span>
               </div>
               <div className="sm:text-right">
-                <p className="text-xs text-ayur-stone">Total Amount</p>
-                <p className="text-xl font-bold text-ayur-gold">{formatINR(trackedOrder.total)}</p>
-                <p className="text-xs text-ayur-stone/80">{trackedOrder.items.length} item{trackedOrder.items.length !== 1 ? 's' : ''}</p>
+                <p className="text-[11px] text-ayur-stone">Total Amount</p>
+                <p className="text-lg sm:text-xl font-bold text-ayur-gold">{formatINR(trackedOrder.total)}</p>
+                <p className="text-[11px] text-ayur-stone/80">{trackedOrder.items.length} item{trackedOrder.items.length !== 1 ? 's' : ''}</p>
               </div>
             </div>
 
             {/* 4-Day Animated Delivery Timeline */}
-            <div className="my-6">
+            <div className="my-5">
               <DeliveryTracker4Day
                 orderNumber={trackedOrder.orderNumber}
                 createdAt={trackedOrder.timeline?.[0]?.date}
@@ -179,7 +179,7 @@ export default function TrackOrderPage() {
               />
             </div>
 
-            <div className="pt-6 border-t border-ayur-forest-dark/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="pt-5 border-t border-ayur-forest-dark/50 flex flex-col sm:flex-row items-center justify-between gap-3">
               <Button
                 variant="outline"
                 size="sm"
@@ -193,9 +193,9 @@ export default function TrackOrderPage() {
                 href={`https://wa.me/919123485451?text=${encodeURIComponent(`Hi Ayur Veda Global, I would like an update on my Order #${trackedOrder.orderNumber}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold bg-emerald-600/90 hover:bg-emerald-500 text-white transition shadow-lg"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-emerald-600/90 hover:bg-emerald-500 text-white transition shadow-lg"
               >
-                <MessageSquare className="w-4 h-4" /> WhatsApp Dispatch Support
+                <MessageSquare className="w-3.5 h-3.5" /> WhatsApp Dispatch Support
               </a>
             </div>
           </div>
@@ -205,19 +205,19 @@ export default function TrackOrderPage() {
   }
 
   return (
-    <div className="container py-8 sm:py-12 lg:py-14">
+    <div className="container py-5 sm:py-7 lg:py-9">
       <div className="max-w-md mx-auto">
-        <div className="text-center mb-6 space-y-2">
-          <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full bg-ayur-emerald-card border border-ayur-gold/30 flex items-center justify-center shadow-luxury">
-            <Package className="w-7 h-7 sm:w-8 sm:h-8 text-ayur-gold" />
+        <div className="text-center mb-4 sm:mb-5 space-y-1.5">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-full bg-ayur-emerald-card border border-ayur-gold/30 flex items-center justify-center shadow-luxury">
+            <Package className="w-6 h-6 sm:w-7 sm:h-7 text-ayur-gold" />
           </div>
-          <h1 className="font-heading text-xl sm:text-2xl font-medium text-ayur-ivory">Track Your Order</h1>
-          <p className="text-xs sm:text-sm text-ayur-sand/80 leading-relaxed">
+          <h1 className="font-heading text-lg sm:text-xl md:text-2xl font-medium text-ayur-ivory">Track Your Order</h1>
+          <p className="text-xs sm:text-[13px] text-ayur-sand/80 leading-relaxed">
             Enter your Order ID (e.g. AVG-123456) or registered phone number to track your package in real-time.
           </p>
         </div>
 
-        <div className="card-luxury p-6 sm:p-8 rounded-3xl border border-ayur-gold/25 bg-ayur-charcoal/95 space-y-5 shadow-luxury">
+        <div className="card-luxury p-5 sm:p-6 rounded-2xl border border-ayur-gold/25 bg-ayur-charcoal/95 space-y-4 shadow-luxury">
           <div>
             <label className="block text-xs font-semibold text-ayur-sand mb-1.5 uppercase tracking-wider">
               Order ID

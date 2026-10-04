@@ -241,6 +241,31 @@ async function runAllTests() {
 
     const validRes = await verifyOTP(phone, correctCode)
     if (!validRes.success) throw new Error(`Correct OTP rejected: ${validRes.message}`)
+    if (!validRes.token) throw new Error('Verification did not return secure verification token')
+  })
+
+  await test('isPhoneAlreadyVerified verifies authenticated phone sessions and rejects unverified', () => {
+    const { isPhoneAlreadyVerified } = require('@/lib/auth/otpService')
+    if (!isPhoneAlreadyVerified('9876543211')) {
+      throw new Error('Expected 9876543211 to be recorded as verified')
+    }
+    if (isPhoneAlreadyVerified('9111122222')) {
+      throw new Error('Unverified phone 9111122222 falsely marked as verified')
+    }
+  })
+
+  await test('Cloudflare Pages edge rate limiter blocks excessive requests', () => {
+    const { checkRateLimit, recordOtpDispatch } = require('../../functions/api/otp/_shared')
+    const testPhone = '9999988888'
+    
+    // First request allowed
+    const initialCheck = checkRateLimit(testPhone)
+    if (!initialCheck.allowed) throw new Error('Initial rate check failed')
+
+    // Simulate dispatches
+    recordOtpDispatch(testPhone)
+    const immediateCheck = checkRateLimit(testPhone)
+    if (immediateCheck.allowed) throw new Error('Immediate re-request was not blocked by cooldown')
   })
 
   // 7. Database Storage & Retrieval Tests

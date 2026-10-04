@@ -166,7 +166,7 @@ export default function FAQPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <div className="container py-8 lg:py-12">
+      <div className="container py-5 sm:py-7 lg:py-9">
         <FAQClient faqs={faqs} />
       </div>
     </>

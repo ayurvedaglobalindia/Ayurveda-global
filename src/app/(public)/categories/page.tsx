@@ -34,18 +34,18 @@ export default function CategoriesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateWebsiteStructuredData()) }}
       />
 
-      <div className="container py-8 lg:py-12">
-        <div className="mb-10">
-          <nav className="flex items-center gap-2 text-xs text-[#C4BDA8] mb-3" aria-label="Breadcrumb">
+      <div className="container py-4 sm:py-6 lg:py-8">
+        <div className="mb-5">
+          <nav className="flex items-center gap-2 text-xs text-[#C4BDA8] mb-2" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-ayur-gold transition-colors">Home</Link>
             <span>/</span>
             <span className="text-ayur-ivory font-medium">Categories</span>
           </nav>
-          <h1 className="font-heading text-3xl md:text-4xl font-normal text-ayur-ivory">Shop by Category</h1>
-          <p className="text-[#C4BDA8] text-sm mt-1.5">Explore our curated collections of authentic Ayurvedic formulations</p>
+          <h1 className="font-heading text-xl sm:text-2xl font-normal text-ayur-ivory">Shop by Category</h1>
+          <p className="text-[#C4BDA8] text-xs sm:text-sm mt-1">Explore our curated collections of authentic Ayurvedic formulations</p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map(category => {
             const products = getProductsByCategory(category.slug)
             const Icon = categoryIcons[category.slug as keyof typeof categoryIcons] || Leaf
@@ -66,17 +66,17 @@ export default function CategoriesPage() {
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#061A10] via-[#061A10]/75 to-[#061A10]/30 transition-opacity group-hover:opacity-90" />
-                <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[#0E1E14]/80 border border-[#C2A265]/30 flex items-center justify-center backdrop-blur-sm group-hover:border-[#C2A265] transition-colors z-10">
-                  <Icon className="w-5 h-5 text-[#C2A265]" />
+                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#0E1E14]/80 border border-[#C2A265]/30 flex items-center justify-center backdrop-blur-sm group-hover:border-[#C2A265] transition-colors z-10">
+                  <Icon className="w-4.5 h-4.5 text-[#C2A265]" />
                 </div>
-                <div className="relative p-6 h-full flex flex-col justify-end z-10">
-                  <h2 className="font-heading text-xl sm:text-2xl font-medium text-ayur-ivory group-hover:text-ayur-gold transition-colors">
+                <div className="relative p-5 h-full flex flex-col justify-end z-10">
+                  <h2 className="font-heading text-lg sm:text-xl font-medium text-ayur-ivory group-hover:text-ayur-gold transition-colors">
                     {category.name}
                   </h2>
-                  <p className="text-[#C4BDA8] mt-1.5 text-xs line-clamp-2 leading-relaxed">{category.description}</p>
-                  <div className="mt-4 flex items-center gap-2 text-ayur-gold text-xs font-semibold group-hover:gap-3 transition-all">
+                  <p className="text-[#C4BDA8] mt-1 text-xs line-clamp-2 leading-relaxed">{category.description}</p>
+                  <div className="mt-3 flex items-center gap-2 text-ayur-gold text-xs font-semibold group-hover:gap-3 transition-all">
                     <span>{products.length} formulation{products.length !== 1 ? 's' : ''}</span>
-                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                   </div>
@@ -86,11 +86,11 @@ export default function CategoriesPage() {
           })}
         </div>
 
-        <section className="mt-24">
-          <h2 className="font-heading text-3xl md:text-4xl font-medium text-ayur-ivory text-center mb-12">
-            Our Commitment
+        <section className="mt-10 sm:mt-12">
+          <h2 className="font-heading text-lg sm:text-xl font-medium text-ayur-ivory text-center mb-6">
+            Our Classical Commitment
           </h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
             {[
               {
                 icon: Leaf,
