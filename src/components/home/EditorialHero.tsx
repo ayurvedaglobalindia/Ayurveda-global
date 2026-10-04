@@ -102,7 +102,7 @@ export function EditorialHero() {
             </div>
 
             {/* Trust Proof Metrics Line */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 pt-1 text-xs text-[#A6A094]">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 pt-1 text-xs text-[#A8A295]">
               <div className="flex items-center gap-1.5">
                 <div className="flex text-[#C2A265]">
                   {[...Array(5)].map((_, i) => (
@@ -115,10 +115,8 @@ export function EditorialHero() {
               <span className="hidden sm:inline text-[#C2A265]/40">•</span>
               <span className="text-[#D4B678] font-medium flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#C2A265]" />
-                AYUSH Licensed
+                Pan-India Free Express Delivery
               </span>
-              <span className="hidden sm:inline text-[#C2A265]/40">•</span>
-              <span>100% Discreet Packaging</span>
             </div>
 
           </div>

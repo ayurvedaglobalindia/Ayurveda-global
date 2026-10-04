@@ -110,7 +110,7 @@ export function PatronTestimonials() {
         </div>
 
         {/* Trust Badges Bar */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-[#A8A295] pt-6 border-t border-[#C2A265]/15">
+        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-5 sm:gap-8 text-xs text-[#A8A295] pt-5 border-t border-[#C2A265]/15">
           <div className="flex items-center gap-2">
             <span className="font-heading text-base font-bold text-[#FAF7EE]">4.9 / 5</span>
             <span>Average Patron Rating</span>

@@ -1,14 +1,13 @@
 import { Metadata } from 'next'
 import { generateWebsiteStructuredData, generateOrganizationStructuredData } from '@/lib/seo'
 import { EditorialHero } from '@/components/home/EditorialHero'
-import { ApothecaryPillars } from '@/components/home/ApothecaryPillars'
+import { ApothecaryTrustTicker } from '@/components/home/ApothecaryTrustTicker'
 import { FeaturedApothecary } from '@/components/home/FeaturedApothecary'
+import { ApothecaryPillars } from '@/components/home/ApothecaryPillars'
 import { BotanicalPharmacopeia } from '@/components/home/BotanicalPharmacopeia'
-import { ClassicalVsModernScience } from '@/components/home/ClassicalVsModernScience'
 import { TheThirtyDayRitual } from '@/components/home/TheThirtyDayRitual'
 import { VaidyaConsultationDesk } from '@/components/home/VaidyaConsultationDesk'
 import { PatronTestimonials } from '@/components/home/PatronTestimonials'
-import { EditorialBrandStory } from '@/components/home/EditorialBrandStory'
 import { ApothecaryFAQ } from '@/components/home/ApothecaryFAQ'
 
 export const metadata: Metadata = {
@@ -39,17 +38,17 @@ export default function HomePage() {
       {/* 1. Stately Magazine Editorial Hero */}
       <EditorialHero />
 
-      {/* 2. Master Formulations Showcase & Instant COD Funnel */}
+      {/* 2. Sleek Four-Point Trust Ribbon (AYUSH, HPLC, Discreet, COD) */}
+      <ApothecaryTrustTicker />
+
+      {/* 3. Master Formulations Showcase & Dynamic Catalog */}
       <FeaturedApothecary />
 
-      {/* 3. Four Apothecary Pillars & Quality Standards (Below Main Fold) */}
+      {/* 4. Four Vedic Pillars of Classical Quality */}
       <ApothecaryPillars />
 
-      {/* 4. The Sacred Pharmacopeia: Botanical Storytelling & Bioactives */}
+      {/* 5. The Sacred Pharmacopeia: Interactive Botanical Explorer */}
       <BotanicalPharmacopeia />
-
-      {/* 5. Classical Rasayana vs Synthetic Stimulants Pharmacology */}
-      <ClassicalVsModernScience />
 
       {/* 6. The 30-Day Physiological Rejuvenation Ritual */}
       <TheThirtyDayRitual />
@@ -60,10 +59,7 @@ export default function HomePage() {
       {/* 8. Verified Patron Experiences & Real Accounts */}
       <PatronTestimonials />
 
-      {/* 9. The Royal Lineage & Charaka Samhita Heritage Narrative */}
-      <EditorialBrandStory />
-
-      {/* 10. Apothecary Guidance & Frequently Asked Questions */}
+      {/* 9. Apothecary Guidance & Frequently Asked Questions */}
       <ApothecaryFAQ />
     </>
   )

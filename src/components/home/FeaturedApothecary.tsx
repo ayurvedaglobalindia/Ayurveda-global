@@ -90,30 +90,47 @@ export function FeaturedApothecary() {
           </p>
 
           {/* Filter Pills */}
-          <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mt-6">
+          <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mt-5">
             {[
-              { id: 'all', label: 'All Master Formulations' },
-              { id: 'supplements', label: 'Daily Stamina & Energy' },
-              { id: 'personal-care', label: 'Intimate Control & Delay' },
-              { id: 'combos', label: 'Master Synergy Kits' },
+              { id: 'all', label: 'All Formulations', count: allProducts.length },
+              { id: 'supplements', label: 'Daily Stamina & Energy', count: allProducts.filter(p => p.category === 'supplements').length },
+              { id: 'personal-care', label: 'Intimate Control & Delay', count: allProducts.filter(p => p.category === 'personal-care').length },
+              { id: 'combos', label: 'Master Synergy Kits', count: allProducts.filter(p => p.category === 'wellness').length },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveCategory(tab.id as any)}
-                className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs transition-all duration-200 ${
+                className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs transition-all duration-200 flex items-center gap-1.5 ${
                   activeCategory === tab.id
                     ? 'bg-[#C2A265] text-[#0B150F] font-semibold shadow-md'
                     : 'bg-[#12241A] text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#162C20] border border-[#C2A265]/15'
                 }`}
               >
-                {tab.label}
+                <span>{tab.label}</span>
+                <span
+                  className={`text-[9.5px] px-1.5 py-0.5 rounded-full font-semibold ${
+                    activeCategory === tab.id
+                      ? 'bg-[#0B150F]/20 text-[#0B150F]'
+                      : 'bg-[#183525] text-[#D4B678]'
+                  }`}
+                >
+                  {tab.count}
+                </span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Product Grid - Dynamic centering so filtered categories never show empty columns */}
+        <div
+          className={`gap-6 lg:gap-8 ${
+            filteredProducts.length === 1
+              ? 'max-w-md mx-auto w-full'
+              : filteredProducts.length === 2
+              ? 'grid grid-cols-1 md:grid-cols-2 max-w-3xl mx-auto'
+              : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+          }`}
+        >
           {filteredProducts.map((product) => {
             const currentVariantId = selectedVariants[product.id] || product.variants?.[0]?.id
             const currentVariant = product.variants?.find((v) => v.id === currentVariantId) || product.variants?.[0]
@@ -126,7 +143,7 @@ export function FeaturedApothecary() {
             return (
               <div
                 key={product.id}
-                className="rounded-2xl bg-[#102016] border border-[#C2A265]/20 flex flex-col justify-between overflow-hidden group hover:border-[#C2A265]/50 hover:-translate-y-1 transition-all duration-300 ease-out shadow-lg hover:shadow-[0_16px_32px_rgba(0,0,0,0.6)] max-w-sm md:max-w-none mx-auto w-full"
+                className="rounded-2xl bg-[#102016] border border-[#C2A265]/20 flex flex-col justify-between overflow-hidden group hover:border-[#C2A265]/60 hover:-translate-y-1.5 transition-all duration-300 ease-out shadow-lg hover:shadow-[0_16px_36px_rgba(0,0,0,0.7),0_0_24px_rgba(194,162,101,0.12)] max-w-sm md:max-w-none mx-auto w-full"
               >
                 {/* Product Image Frame */}
                 <div className="relative h-48 sm:h-56 md:h-64 w-full bg-[#0D1B12] p-3 sm:p-4 flex items-center justify-center border-b border-[#C2A265]/15">

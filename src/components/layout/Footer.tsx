@@ -138,13 +138,13 @@ export function Footer() {
       <div className="h-px bg-gradient-to-r from-transparent via-[#C2A265]/30 to-transparent" aria-hidden="true" />
 
       {/* Trust Badges Bar */}
-      <div className="border-b border-[#C2A265]/15 py-10 relative z-10">
+      <div className="border-b border-[#C2A265]/15 py-6 sm:py-8 relative z-10">
         <div className="container">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {trustBadges.map((badge, idx) => (
               <div
                 key={idx}
-                className="footer-badge flex items-start gap-3.5 p-4 rounded-xl bg-[#0D1A12] border border-[#C2A265]/15 hover:border-[#C2A265]/40 transition-all duration-300"
+                className="footer-badge flex items-start gap-3.5 p-3.5 sm:p-4 rounded-xl bg-[#0D1A12] border border-[#C2A265]/15 hover:border-[#C2A265]/40 transition-all duration-300"
               >
                 <div className="w-10 h-10 rounded-xl bg-[#14281D] border border-[#C2A265]/25 flex items-center justify-center flex-shrink-0 text-[#C2A265]">
                   <badge.icon className="w-5 h-5" />
@@ -160,7 +160,7 @@ export function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="container py-14 lg:py-20 relative z-10">
+      <div className="container py-8 sm:py-10 lg:py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6 footer-section">

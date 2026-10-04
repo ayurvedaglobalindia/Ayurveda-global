@@ -99,7 +99,7 @@ export function ApothecaryFAQ() {
         </div>
 
         {/* Bottom Contact Help */}
-        <div className="mt-12 text-center text-xs text-[#A8A295]">
+        <div className="mt-8 sm:mt-10 text-center text-xs text-[#A8A295]">
           <span>Still have an unanswered question? </span>
           <a
             href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20a%20question%20regarding%20your%20products."

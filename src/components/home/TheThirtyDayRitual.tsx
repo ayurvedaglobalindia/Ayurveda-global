@@ -110,8 +110,8 @@ export function TheThirtyDayRitual() {
         </div>
 
         {/* Bottom Recommendation */}
-        <div className="mt-12 text-center">
-          <p className="text-xs text-[#A8A295]">
+        <div className="mt-8 sm:mt-10 text-center">
+          <p className="text-[11px] sm:text-xs text-[#A8A295]">
             *Recommended protocol: 1 to 2 capsules of BODY Essential Nutrition twice daily after meals. Use STAYMAX+ spray 10–15 mins prior to intimate moments.
           </p>
         </div>
