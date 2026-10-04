@@ -7,6 +7,7 @@ import { AgeVerificationGate } from '@/components/layout/AgeVerificationGate'
 import { CartDrawer } from '@/components/cart/CartDrawer'
 import { MobileMenuDrawer } from '@/components/layout/MobileMenuDrawer'
 import { AuthModal } from '@/components/auth/AuthModal'
+import { SearchModal } from '@/components/layout/SearchModal'
 import type { Product } from '@/types'
 
 export function GlobalModals() {
@@ -72,6 +73,9 @@ export function GlobalModals() {
         isOpen={Boolean(mobileMenuModal?.isOpen)}
         onClose={() => closeModal('mobile-menu')}
       />
+
+      {/* Global Luxury Apothecary Search Modal */}
+      <SearchModal />
     </>
   )
 }

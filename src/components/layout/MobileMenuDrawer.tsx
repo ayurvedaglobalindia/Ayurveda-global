@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   X,
+  Search,
   Sparkles,
   ShoppingBag,
   Package,
@@ -20,6 +21,7 @@ import {
   Leaf,
   HeartPulse,
 } from 'lucide-react'
+import { useUIStore } from '@/store/uiStore'
 
 interface MobileMenuDrawerProps {
   isOpen: boolean
@@ -27,6 +29,8 @@ interface MobileMenuDrawerProps {
 }
 
 export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
+  const { openSearch } = useUIStore()
+
   useEffect(() => {
     if (isOpen) {
       const originalOverflow = document.body.style.overflow
@@ -93,7 +97,24 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
             </div>
 
             {/* Drawer Navigation Links */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-6">
+            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+              {/* Mobile Drawer Search Bar Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  onClose()
+                  openSearch()
+                }}
+                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-[#0B1D12] hover:bg-[#122A1A] border border-[#C2A265]/35 text-xs text-[#FAF7EE] shadow-inner transition-all group"
+                aria-label="Search apothecary catalog"
+              >
+                <Search className="w-4 h-4 text-[#C2A265] group-hover:scale-110 transition-transform" />
+                <span className="text-[#A8A295] group-hover:text-[#FAF7EE] transition-colors">Search formulations, herbs...</span>
+                <span className="ml-auto text-[10px] font-mono text-[#C2A265] bg-[#07130B] px-1.5 py-0.5 rounded border border-[#C2A265]/20">
+                  ⌘K
+                </span>
+              </button>
+
               {/* Highlighted Banner */}
               <Link
                 href="/product/vitality-power-combo"

@@ -1,8 +1,6 @@
-import { Metadata } from 'next'
-import { Search, ChevronDown, ChevronUp, MessageSquare } from 'lucide-react'
-import { Accordion } from '@/components/ui/Accordion'
+import type { Metadata } from 'next'
 import { generateFAQStructuredData, generateWebsiteStructuredData } from '@/lib/seo'
-import { Logo } from '@/components/ui/Logo'
+import { FAQClient } from '@/components/faq/FAQClient'
 
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions',
@@ -169,56 +167,7 @@ export default function FAQPage() {
       />
 
       <div className="container py-8 lg:py-12">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="font-heading text-3xl md:text-4xl font-medium text-ayur-ivory mb-4">Frequently Asked Questions</h1>
-            <p className="text-[#C4BDA8] text-lg">Quick answers to common questions about our products, orders, and policies</p>
-          </div>
-
-          <div className="mb-8">
-            <div className="relative max-w-md mx-auto">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ayur-stone" />
-              <input
-                type="search"
-                id="faq-search"
-                placeholder="Search questions..."
-                className="w-full pl-12 pr-4 py-3 bg-[#061A10] border border-ayur-gold/20 rounded-xl text-ayur-cream placeholder-ayur-stone focus:outline-none focus:ring-2 focus:ring-ayur-gold"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-8">
-            {faqs.map((category, catIndex) => (
-              <section key={category.category}>
-                <h2 className="font-heading text-2xl font-medium text-ayur-ivory mb-6 flex items-center gap-3">
-                  <span className="w-10 h-10 rounded-xl bg-ayur-gold/10 border border-ayur-gold/20 flex items-center justify-center">
-                    <ChevronDown className="w-5 h-5 text-ayur-gold" />
-                  </span>
-                  {category.category}
-                </h2>
-                <Accordion
-                  items={category.items.map((item, idx) => ({
-                    title: item.question,
-                    content: <p className="text-[#C4BDA8] leading-relaxed">{item.answer}</p>,
-                    defaultOpen: false,
-                  }))}
-                  allowMultiple
-                />
-              </section>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <p className="text-[#C4BDA8] mb-4">Still have questions? We&apos;re here to help.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/contact" className="btn-gold inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-bold">Contact Support</a>
-              <a href="https://wa.me/919123485451" target="_blank" rel="noopener noreferrer" className="btn-emerald inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold">
-                <MessageSquare className="w-4 h-4 mr-2" />
-                WhatsApp Us
-              </a>
-            </div>
-          </div>
-        </div>
+        <FAQClient faqs={faqs} />
       </div>
     </>
   )

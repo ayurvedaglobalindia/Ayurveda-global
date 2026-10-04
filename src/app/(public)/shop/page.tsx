@@ -70,9 +70,9 @@ function ShopContent() {
 
   const [filters, setFilters] = useState({
     category: searchParams.get('category') || '',
-    search: searchParams.get('q') || '',
+    search: searchParams.get('q') || searchParams.get('search') || '',
     priceRange: [0, 500000] as [number, number],
-    tags: [] as string[],
+    tags: searchParams.get('tags') ? searchParams.get('tags')!.split(',') : [] as string[],
     inStockOnly: searchParams.get('in_stock') === 'true',
     sort: searchParams.get('sort') || 'featured',
   })
@@ -96,15 +96,18 @@ function ShopContent() {
   }, [])
 
   useEffect(() => {
-    const q = searchParams.get('q') || ''
+    const q = searchParams.get('q') || searchParams.get('search') || ''
     const cat = searchParams.get('category') || ''
     const inStock = searchParams.get('in_stock') === 'true'
     const sort = searchParams.get('sort') || 'featured'
+    const tagsParam = searchParams.get('tags')
+    const tags = tagsParam ? tagsParam.split(',') : []
 
     setFilters(prev => ({
       ...prev,
       search: q,
       category: cat,
+      tags,
       inStockOnly: inStock,
       sort: sort,
     }))
@@ -170,18 +173,32 @@ function ShopContent() {
   }, [applyFilters, products])
 
   const updateFilters = (newFilters: Partial<typeof filters>) => {
-    setFilters(prev => ({ ...prev, ...newFilters }))
-    const params = new URLSearchParams(searchParams.toString())
-    Object.entries({ ...filters, ...newFilters }).forEach(([key, value]) => {
-      if (value === '' || value === false || (Array.isArray(value) && value.length === 0)) {
-        params.delete(key)
-      } else if (Array.isArray(value)) {
-        params.set(key, value.join(','))
-      } else {
-        params.set(key, String(value))
-      }
-    })
-    router.push(`${pathname}?${params.toString()}`, { scroll: false })
+    const updated = { ...filters, ...newFilters }
+    setFilters(updated)
+    const params = new URLSearchParams()
+
+    if (updated.search && updated.search.trim()) {
+      params.set('q', updated.search.trim())
+    }
+    if (updated.category) {
+      params.set('category', updated.category)
+    }
+    if (updated.inStockOnly) {
+      params.set('in_stock', 'true')
+    }
+    if (updated.sort && updated.sort !== 'featured') {
+      params.set('sort', updated.sort)
+    }
+    if (updated.tags && updated.tags.length > 0) {
+      params.set('tags', updated.tags.join(','))
+    }
+    if (updated.priceRange && (updated.priceRange[0] > 0 || updated.priceRange[1] < 500000)) {
+      params.set('min_price', String(updated.priceRange[0]))
+      params.set('max_price', String(updated.priceRange[1]))
+    }
+
+    const qs = params.toString()
+    router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
   }
 
   const handleClearFilters = () => {
@@ -281,7 +298,8 @@ function ShopContent() {
             'Shilajit',
             'Ashwagandha',
             'Delay Spray',
-            'Vitality Combo',
+            'Vitality Oil',
+            'Power Combo',
             'Capsules',
           ].map((tag) => {
             const isSelected = filters.search.toLowerCase() === tag.toLowerCase()

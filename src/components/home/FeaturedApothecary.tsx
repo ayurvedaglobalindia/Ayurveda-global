@@ -27,6 +27,9 @@ export function FeaturedApothecary() {
     'body-essential-nutrition': 'body-essential-nutrition-60',
     'staymax-delay-spray': 'staymax-delay-spray-30ml',
     'vitality-power-combo': 'vitality-power-combo-standard',
+    'himalayan-shilajit-resin': 'himalayan-shilajit-resin-20g',
+    'ksm66-ashwagandha-root-extract': 'ksm66-ashwagandha-60',
+    'vajikara-gold-vitality-oil': 'vajikara-gold-vitality-oil-50ml',
   })
   const [addedNotice, setAddedNotice] = useState<string | null>(null)
 
