@@ -24,6 +24,7 @@ import { ProductVideoPlayer } from '@/components/ui/ProductVideoPlayer'
 import type { Product, ProductVariant } from '@/types'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
+import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
 import { useWhatsAppStore } from '@/store/whatsappStore'
 import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
@@ -44,6 +45,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
   const searchParams = useSearchParams()
   const { addItem, isInCart, getItemQuantity } = useCartStore()
   const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
+  const { user, isAuthenticated } = useUserStore()
   const { openModal, openCartDrawer, showToast } = useUIStore()
   const { trackLead } = useWhatsAppStore()
 
@@ -84,6 +86,16 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
   const maxQuantity = currentVariant?.inventory || product.inventory.quantity
 
   const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        product,
+        variantId: selectedVariantId,
+        quantity,
+        mode: 'add-to-cart',
+      })
+      return
+    }
+
     if (product.ageRestricted) {
       openModal('age-gate', {
         productId: product.id,
@@ -101,6 +113,16 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
   }
 
   const handleBuyNow = () => {
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        product,
+        variantId: selectedVariantId,
+        quantity,
+        mode: 'buy-now',
+      })
+      return
+    }
+
     if (product.ageRestricted) {
       openModal('age-gate', {
         productId: product.id,
@@ -126,17 +148,25 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
   }
 
   const handleWhatsAppClick = () => {
+    const primaryAddr = user?.addresses?.[0]
+    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
+    const currentPrice = currentVariant ? currentVariant.price : product.price
     const message = buildProductEnquiryMessage({
-      customerName: '',
-      productName: product.name,
+      customerName: user?.name || '',
+      customerPhone: user?.phone || '',
+      customerCity: userCity,
+      productName: `${product.name}${currentVariant ? ` (${currentVariant.name})` : ''}`,
       quantity,
-      enquiry: `Hi, I'm interested in ${product.name}${currentVariant ? ` (${currentVariant.name})` : ''}. Could you provide more details about availability and delivery?`,
+      price: currentPrice * quantity,
+      enquiry: `Hi Ayur Veda Global, I would like to order ${product.name}${currentVariant ? ` (${currentVariant.name})` : ''} x${quantity} with Cash on Delivery (COD). Please assist with dispatch & delivery details.`,
       source: 'product',
     })
     trackLead({
       source: 'product',
       productId: product.id,
       productName: product.name,
+      customerName: user?.name,
+      customerPhone: user?.phone,
       quantity,
       pageUrl: typeof window !== 'undefined' ? window.location.href : '',
       userAgent: '',

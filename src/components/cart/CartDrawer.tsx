@@ -14,11 +14,13 @@ import { formatINR, calculateShipping } from '@/lib/utils/formatters'
 import { getProductImage } from '@/lib/products/registry'
 import { validateCoupon } from '@/lib/coupons'
 import { useCartStore } from '@/store/cartStore'
+import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
 import { buildWhatsAppUrl, buildOrderWhatsAppMessage } from '@/store/whatsappStore'
 
 export function CartDrawer() {
   const { isCartDrawerOpen, closeCartDrawer } = useUIStore()
+  const { user } = useUserStore()
   const { items, couponCode, discount, shipping, tax, getSubtotal, getTotal, updateQuantity, removeItem, removeCoupon, getItemCount } = useCartStore()
   const { applyCoupon: applyCouponStore } = useCartStore()
 
@@ -55,19 +57,22 @@ export function CartDrawer() {
 
   const handleWhatsAppOrder = () => {
     const orderId = `ORD-WA-${Date.now().toString().slice(-6)}`
+    const primaryAddr = user?.addresses?.[0]
     const message = buildOrderWhatsAppMessage({
       orderId,
       orderNumber: orderId,
-      customerName: 'Customer',
-      customerPhone: '',
+      customerName: user?.name || 'Customer Patron',
+      customerPhone: user?.phone || primaryAddr?.phone || '',
+      customerEmail: user?.email || '',
       shippingAddress: {
-        firstName: '',
-        lastName: '',
-        addressLine1: '',
-        city: '',
-        state: '',
-        pincode: '',
-        phone: '',
+        firstName: primaryAddr?.firstName || user?.name?.split(' ')[0] || '',
+        lastName: primaryAddr?.lastName || user?.name?.split(' ').slice(1).join(' ') || '',
+        addressLine1: primaryAddr?.addressLine1 || '',
+        addressLine2: primaryAddr?.addressLine2 || '',
+        city: primaryAddr?.city || '',
+        state: primaryAddr?.state || '',
+        pincode: primaryAddr?.pincode || '',
+        phone: primaryAddr?.phone || user?.phone || '',
       },
       items: items.map(item => ({
         name: item.product.name,

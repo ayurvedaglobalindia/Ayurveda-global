@@ -10,6 +10,7 @@ import type { Product } from '@/types'
 import { getProductImage } from '@/lib/products/registry'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
+import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
 import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
 import { motion } from 'framer-motion'
@@ -25,6 +26,7 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
   const [isMounted, setIsMounted] = useState(false)
   const { addItem, isInCart, getItemQuantity } = useCartStore()
   const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
+  const { user, isAuthenticated } = useUserStore()
   const { openModal, openCartDrawer, showToast } = useUIStore()
   const { trackLead } = useWhatsAppStore()
 
@@ -45,6 +47,16 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        product,
+        mode: 'add-to-cart',
+        quantity: 1,
+      })
+      return
+    }
+
     if (product.ageRestricted) {
       openModal('age-gate', {
         productId: product.id,
@@ -68,6 +80,16 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
   const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        product,
+        mode: 'buy-now',
+        quantity: 1,
+      })
+      return
+    }
+
     if (product.ageRestricted) {
       openModal('age-gate', {
         productId: product.id,
@@ -101,17 +123,24 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
   const handleWhatsAppClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    const primaryAddr = user?.addresses?.[0]
+    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
     const message = buildProductEnquiryMessage({
-      customerName: '',
+      customerName: user?.name || '',
+      customerPhone: user?.phone || '',
+      customerCity: userCity,
       productName: product.name,
       quantity: 1,
-      enquiry: `Hi Ayur Veda Global, I want to order ${product.name} (Special Price: ₹${(product.price / 100).toFixed(0)}). Please assist with COD/Delivery!`,
+      price: product.price,
+      enquiry: `Hi Ayur Veda Global, I want to order ${product.name} with Cash on Delivery (COD). Please assist with dispatch and delivery details.`,
       source: 'product',
     })
     trackLead({
       source: 'product',
       productId: product.id,
       productName: product.name,
+      customerName: user?.name,
+      customerPhone: user?.phone,
       quantity: 1,
       pageUrl: typeof window !== 'undefined' ? window.location.href : '',
       userAgent: '',

@@ -45,10 +45,14 @@ export function Header() {
     openCartDrawer,
     isMobileMenuOpen,
     isSearchOpen,
+    openSearch,
     toggleSearch,
     closeSearch,
     closeMobileMenu,
+    showToast,
   } = useUIStore()
+
+  const isSearchActive = isSearchOpen || mobileSearchOpen
 
   useEffect(() => {
     setIsMounted(true)
@@ -91,6 +95,7 @@ export function Header() {
       setSearchQuery('')
       setIsSearchExpanded(false)
       setMobileSearchOpen(false)
+      closeSearch()
     }
   }
 
@@ -416,7 +421,7 @@ export function Header() {
 
             {/* Mobile Search Button */}
             <button
-              onClick={() => setMobileSearchOpen(true)}
+              onClick={() => openSearch()}
               className="p-2 md:hidden rounded-xl text-ayur-cream hover:text-ayur-gold hover:bg-ayur-forest-dark/50 transition-colors focus-visible-ring"
               aria-label="Search products"
             >
@@ -490,16 +495,26 @@ export function Header() {
                     >
                       Wishlist
                     </Link>
+                    <button
+                      onClick={() => {
+                        useUserStore.getState().logout()
+                        setIsAccountOpen(false)
+                        showToast({ type: 'info', title: 'Signed Out' })
+                      }}
+                      className="block w-full text-left px-4 py-2 text-xs text-rose-300 hover:bg-rose-950/30 transition-colors border-t border-ayur-forest-dark/50"
+                    >
+                      Sign Out
+                    </button>
                   </motion.div>
                 )}
               </div>
             ) : (
-              <Link
-                href="/account"
-                className="hidden sm:inline-flex items-center justify-center px-5 py-2 rounded-xl text-xs font-semibold text-ayur-gold-light bg-ayur-gold/10 border border-ayur-gold/30 hover:bg-ayur-gold/20 hover:border-ayur-gold hover:text-ayur-ivory transition-all duration-300 shadow-[0_0_15px_rgba(201,168,76,0.1)]"
+              <button
+                onClick={() => openModal('auth-gate')}
+                className="hidden sm:inline-flex items-center justify-center px-4 py-1.5 rounded-xl text-xs font-semibold text-ayur-gold-light bg-ayur-gold/10 border border-ayur-gold/30 hover:bg-ayur-gold/20 hover:border-ayur-gold hover:text-ayur-ivory transition-all duration-300 shadow-[0_0_15px_rgba(201,168,76,0.1)]"
               >
                 Sign In
-              </Link>
+              </button>
             )}
 
             {/* Mobile Menu Button */}
@@ -516,35 +531,53 @@ export function Header() {
 
       {/* Mobile Search Modal */}
       <AnimatePresence>
-        {mobileSearchOpen && (
+        {isSearchActive && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-ayur-void/95 backdrop-blur-xl flex flex-col p-4 md:p-8"
+            className="fixed inset-0 z-50 bg-[#070E0A]/95 backdrop-blur-2xl flex flex-col p-4 md:p-8"
           >
-            <div className="flex items-center justify-between pb-4 border-b border-ayur-forest-dark/50 mb-6">
-              <span className="font-heading text-lg font-bold text-gradient-gold">Search Products</span>
+            <div className="flex items-center justify-between pb-3.5 border-b border-[#C2A265]/25 mb-4">
+              <div className="flex items-center gap-2">
+                <Search className="w-5 h-5 text-[#C2A265]" />
+                <span className="font-heading text-base sm:text-lg font-medium text-[#FAF7EE]">
+                  Search Apothecary
+                </span>
+              </div>
               <button
-                onClick={() => setMobileSearchOpen(false)}
-                className="p-2 rounded-xl text-ayur-cream hover:bg-ayur-forest-dark/50"
+                onClick={() => {
+                  setMobileSearchOpen(false)
+                  closeSearch()
+                }}
+                className="p-2 rounded-xl text-[#FAF7EE] hover:bg-[#12241A] transition-colors"
                 aria-label="Close search"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSearchSubmit} className="mt-8 max-w-xl mx-auto w-full">
-              <div className="relative mb-6">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-ayur-gold" />
+            <form onSubmit={handleSearchSubmit} className="mt-4 max-w-xl mx-auto w-full">
+              <div className="relative mb-5">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#C2A265]" />
                 <input
                   type="search"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search herbs, power combo, spray..."
-                  className="w-full pl-12 pr-4 py-4 bg-ayur-charcoal border border-ayur-forest-dark/50 focus:border-ayur-gold rounded-2xl text-base text-ayur-ivory placeholder-ayur-stone focus:outline-none focus:ring-2 focus:ring-ayur-gold"
+                  placeholder="Search formulations, Shilajit, Delay Spray, capsules..."
+                  className="w-full pl-12 pr-10 py-3.5 bg-[#102016] border border-[#C2A265]/35 focus:border-[#C2A265] rounded-2xl text-sm sm:text-base text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-2 focus:ring-[#C2A265] transition-all shadow-inner"
                   autoFocus
                 />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#8A8478] hover:text-[#FAF7EE]"
+                    aria-label="Clear search query"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
               </div>
 
               {/* If user typed, show live matching products */}
@@ -564,6 +597,7 @@ export function Header() {
                             href={`/product/${product.id}`}
                             onClick={() => {
                               setMobileSearchOpen(false)
+                              closeSearch()
                               setSearchQuery('')
                             }}
                             className="flex items-center gap-3 p-2.5 rounded-xl bg-[#102016] border border-[#C2A265]/20 hover:border-[#C2A265]/50 transition-all"
@@ -636,7 +670,10 @@ export function Header() {
                 <div className="mt-6 pt-4 border-t border-[#C2A265]/15">
                   <Link
                     href="/shop"
-                    onClick={() => setMobileSearchOpen(false)}
+                    onClick={() => {
+                      setMobileSearchOpen(false)
+                      closeSearch()
+                    }}
                     className="block w-full py-2.5 rounded-xl bg-[#142A1D] border border-[#C2A265]/35 text-[#D4B678] text-center text-xs font-semibold hover:bg-[#183525] transition-all"
                   >
                     Browse All 3 Master Formulations in Shop →

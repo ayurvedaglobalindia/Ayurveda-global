@@ -11,16 +11,27 @@ import { ProductCard } from '@/components/product/ProductCard'
 import { formatINR } from '@/lib/utils/formatters'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useCartStore } from '@/store/cartStore'
+import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
 import type { WishlistItem } from '@/types'
 
 export function WishlistPage() {
   const { items, removeItem, getItemCount } = useWishlistStore()
   const { addItem } = useCartStore()
-  const { showToast } = useUIStore()
+  const { isAuthenticated } = useUserStore()
+  const { showToast, openModal } = useUIStore()
   const itemCount = getItemCount()
 
   const handleMoveToCart = (item: WishlistItem) => {
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        product: item.product,
+        variantId: item.variantId,
+        quantity: 1,
+        mode: 'add-to-cart',
+      })
+      return
+    }
     addItem(item.product, item.variantId, 1)
     removeItem(item.productId, item.variantId)
     showToast({ type: 'success', title: 'Moved to cart', message: `${item.product.name} added to your cart` })

@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { WhatsAppLeadEvent } from '@/types'
+import { useUserStore } from './userStore'
 
 interface WhatsAppStore {
   leads: WhatsAppLeadEvent[]
@@ -117,8 +118,22 @@ export function buildOrderWhatsAppMessage(data: {
     year: 'numeric',
   })
 
+  let user: any = null
+  if (typeof window !== 'undefined') {
+    try {
+      user = useUserStore.getState().user
+    } catch {
+      // ignore
+    }
+  }
+
+  const customerName = (data.customerName && data.customerName !== 'Customer' ? data.customerName : '') || user?.name || 'Customer Patron'
+  const customerPhone = data.customerPhone || user?.phone || data.shippingAddress.phone || ''
+  const customerEmail = data.customerEmail || user?.email || ''
+
   const addressLine2Str = data.shippingAddress.addressLine2 ? `\n${data.shippingAddress.addressLine2}` : ''
-  const emailStr = data.customerEmail ? `\n• *Email:* ${data.customerEmail}` : ''
+  const emailStr = customerEmail ? `\n• *Email:* ${customerEmail}` : ''
+  const phoneStr = customerPhone ? `\n• *Phone:* ${customerPhone}` : ''
   const discountStr = data.discount > 0 ? `\n• *Discount (${data.couponCode || 'Promo'}):* -₹${formatPaiseToINR(data.discount)}` : ''
   const notesStr = data.notes && data.notes.trim() ? `\n\n📝 *Delivery Note:* ${data.notes.trim()}` : ''
 
@@ -130,20 +145,25 @@ export function buildOrderWhatsAppMessage(data: {
   }
   const paymentLabel = paymentLabels[data.paymentMethod.toLowerCase()] || data.paymentMethod.toUpperCase()
 
+  const hasSpecificAddress = Boolean(data.shippingAddress.addressLine1 && !data.shippingAddress.addressLine1.includes('will be shared'))
+  const addressBlock = hasSpecificAddress
+    ? `📍 *DELIVERY ADDRESS:*
+${customerName}
+${data.shippingAddress.addressLine1}${addressLine2Str}
+${data.shippingAddress.city ? `${data.shippingAddress.city}, ` : ''}${data.shippingAddress.state || ''} ${data.shippingAddress.pincode ? `- ${data.shippingAddress.pincode}` : ''}
+Contact: ${data.shippingAddress.phone || customerPhone || 'Via WhatsApp'}`
+    : `📍 *DELIVERY ADDRESS:*
+• Address to be confirmed via WhatsApp chat (COD Available across India)`
+
   return `🌿 *ORDER CONFIRMATION — AYUR VEDA GLOBAL*
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 📦 *Order ID:* ${data.orderNumber || data.orderId || 'AVG-DIRECT'}
 📅 *Date:* ${dateStr}
 
 👤 *CUSTOMER DETAILS:*
-• *Name:* ${data.customerName}
-• *Phone:* ${data.customerPhone}${emailStr}
+• *Name:* ${customerName}${phoneStr}${emailStr}
 
-📍 *DELIVERY ADDRESS:*
-${data.customerName}
-${data.shippingAddress.addressLine1}${addressLine2Str}
-${data.shippingAddress.city}, ${data.shippingAddress.state} - ${data.shippingAddress.pincode}
-Contact: ${data.shippingAddress.phone || data.customerPhone}
+${addressBlock}
 
 🛍️ *ORDERED ITEMS:*
 ${itemsList}
@@ -161,21 +181,129 @@ Dispatched in plain unmarked packaging with zero product labels on exterior cart
 Please confirm and share tracking details. Pranam! 🌿`
 }
 
-export function buildProductEnquiryMessage(data: {
+export interface ProductEnquiryData {
   customerName?: string
+  customerPhone?: string
+  customerCity?: string
+  customerEmail?: string
   productName: string
-  quantity: number
+  quantity?: number
+  price?: number
   enquiry: string
-  source: string
-}): string {
-  return `🌿 *Enquiry - Ayur Veda Global*
+  source?: string
+}
 
-*Customer:* ${data.customerName || 'Interested Customer'}
-*Product:* ${data.productName}
-*Quantity:* ${data.quantity}
+export function buildProductEnquiryMessage(data: ProductEnquiryData): string {
+  let name = (data.customerName && data.customerName.trim()) || ''
+  let phone = (data.customerPhone && data.customerPhone.trim()) || ''
+  let city = (data.customerCity && data.customerCity.trim()) || ''
+  let email = (data.customerEmail && data.customerEmail.trim()) || ''
 
-*Message:* ${data.enquiry}
+  if (typeof window !== 'undefined') {
+    try {
+      const user = useUserStore.getState().user
+      if (user) {
+        if (!name && user.name) name = user.name
+        if (!phone && user.phone) phone = user.phone
+        if (!email && user.email) email = user.email
+        if (!city && user.addresses?.[0]) {
+          const addr = user.addresses[0]
+          city = [addr.city, addr.state, addr.pincode].filter(Boolean).join(', ')
+        }
+      }
+    } catch {
+      // fallback
+    }
+  }
 
----
-Please share pricing, delivery time, and availability. Thank you! 🌿`
+  const customerDisplay = name || 'Customer Patron'
+  const contactLines: string[] = []
+  if (name) contactLines.push(`• *Name:* ${name}`)
+  if (phone) contactLines.push(`• *Phone:* ${phone}`)
+  if (email) contactLines.push(`• *Email:* ${email}`)
+  if (city) contactLines.push(`• *Location:* ${city}`)
+
+  const customerBlock = contactLines.length > 0
+    ? `👤 *CUSTOMER DETAILS:*\n${contactLines.join('\n')}`
+    : `👤 *CUSTOMER:* ${customerDisplay}`
+
+  const qty = data.quantity || 1
+  const priceLine = data.price ? `\n• *Price:* ₹${formatPaiseToINR(data.price)}` : ''
+
+  return `🌿 *AYUR VEDA GLOBAL — PRODUCT ENQUIRY*
+━━━━━━━━━━━━━━━━━━━━━━━━━
+${customerBlock}
+
+📦 *FORMULATION INQUIRY:*
+• *Product:* ${data.productName}
+• *Quantity:* ${qty} Unit(s)${priceLine}
+
+💬 *CUSTOMER MESSAGE:*
+${data.enquiry}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━
+🌿 100% Classical Rasayana • NABL Purity Tested
+Discreet Packaging • Free Pan-India Delivery • Doorstep COD
+Please share availability, guidance & confirm delivery timeline. Pranam! 🌿`
+}
+
+export interface VaidyaConsultationData {
+  patientName?: string
+  patientPhone?: string
+  patientCity?: string
+  patientAge?: string
+  concern?: string
+  enquiry?: string
+  source?: string
+}
+
+export function buildVaidyaConsultationMessage(data: VaidyaConsultationData): string {
+  let name = (data.patientName && data.patientName.trim()) || ''
+  let phone = (data.patientPhone && data.patientPhone.trim()) || ''
+  let city = (data.patientCity && data.patientCity.trim()) || ''
+
+  if (typeof window !== 'undefined') {
+    try {
+      const user = useUserStore.getState().user
+      if (user) {
+        if (!name && user.name) name = user.name
+        if (!phone && user.phone) phone = user.phone
+        if (!city && user.addresses?.[0]) {
+          const addr = user.addresses[0]
+          city = [addr.city, addr.state, addr.pincode].filter(Boolean).join(', ')
+        }
+      }
+    } catch {
+      // fallback
+    }
+  }
+
+  const patientDisplay = name || 'Patron'
+  const contactLines: string[] = []
+  if (name) contactLines.push(`• *Patient Name:* ${name}`)
+  if (phone) contactLines.push(`• *Contact Number:* ${phone}`)
+  if (city) contactLines.push(`• *City / Region:* ${city}`)
+  if (data.patientAge) contactLines.push(`• *Age:* ${data.patientAge}`)
+
+  const patientBlock = contactLines.length > 0
+    ? `👤 *PATIENT / CUSTOMER DETAILS:*\n${contactLines.join('\n')}`
+    : `👤 *PATIENT:* ${patientDisplay} (Details via WhatsApp)`
+
+  const concern = data.concern || 'Classical Rasayana Regimen & Lifestyle Protocol'
+  const note = data.enquiry || `Pranam Vaidya Ji. I would like confidential Ayurvedic guidance regarding: "${concern}". Please recommend the right herbal formulations, dosage, and dietary routine.`
+
+  return `🌿 *AYURVEDIC VAIDYA TELECONSULTATION DESK*
+━━━━━━━━━━━━━━━━━━━━━━━━━
+${patientBlock}
+
+🩺 *CLINICAL INQUIRY:*
+• *Primary Health Focus:* ${concern}
+• *Consultation Type:* BAMS Ayurvedic Physician Guidance
+
+💬 *PATIENT NOTE:*
+${note}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━
+🔒 100% Confidential Doctor-Patient Consultation
+Ayur Veda Global • Certified BAMS / MD Vaidya Panel`
 }

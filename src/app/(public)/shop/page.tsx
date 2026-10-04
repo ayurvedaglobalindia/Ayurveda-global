@@ -246,6 +246,63 @@ function ShopContent() {
         )}
       </div>
 
+      {/* Live Catalog Search Bar & Quick Suggestion Pills */}
+      <div className="mb-5 space-y-2.5">
+        <div className="relative max-w-2xl">
+          <div className="relative flex items-center">
+            <Search className="absolute left-3.5 w-4 h-4 text-[#C2A265] pointer-events-none" />
+            <input
+              type="search"
+              value={filters.search}
+              onChange={(e) => updateFilters({ search: e.target.value })}
+              placeholder="Search by herb, formulation, stamina, spray, combo..."
+              className="w-full pl-10 pr-10 py-2.5 sm:py-3 bg-[#102016] border border-[#C2A265]/35 focus:border-[#C2A265] rounded-xl text-xs sm:text-sm text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-all shadow-inner"
+              aria-label="Search all catalog formulations"
+            />
+            {filters.search && (
+              <button
+                type="button"
+                onClick={() => updateFilters({ search: '' })}
+                className="absolute right-3 p-1 text-[#8A8478] hover:text-[#FAF7EE] transition-colors rounded-full"
+                aria-label="Clear search query"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Quick Filter Tags / Suggestion Pills */}
+        <div className="flex items-center gap-1.5 flex-wrap text-xs">
+          <span className="text-[11px] text-[#A8A295] font-medium mr-1 flex items-center gap-1">
+            <Sparkles className="w-3 h-3 text-[#C2A265]" /> Quick Search:
+          </span>
+          {[
+            'Shilajit',
+            'Ashwagandha',
+            'Delay Spray',
+            'Vitality Combo',
+            'Capsules',
+          ].map((tag) => {
+            const isSelected = filters.search.toLowerCase() === tag.toLowerCase()
+            return (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => updateFilters({ search: isSelected ? '' : tag })}
+                className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all ${
+                  isSelected
+                    ? 'bg-[#C2A265] text-[#0B150F] font-semibold shadow-sm'
+                    : 'bg-[#12241A] text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#183222] border border-[#C2A265]/20'
+                }`}
+              >
+                {tag}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
       <div className="flex flex-col lg:flex-row gap-5 lg:gap-6 items-start">
         
         {/* Desktop Sidebar Filters */}

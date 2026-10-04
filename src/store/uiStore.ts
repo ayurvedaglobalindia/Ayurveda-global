@@ -36,6 +36,7 @@ interface UIStore {
   toggleMobileMenu: () => void
   closeMobileMenu: () => void
   toggleSearch: () => void
+  openSearch: () => void
   closeSearch: () => void
   verifyAge: (productId: string) => void
   isAgeVerified: (productId: string) => boolean
@@ -101,6 +102,7 @@ export const useUIStore = create<UIStore>()(
       closeMobileMenu: () => set({ isMobileMenuOpen: false }),
 
       toggleSearch: () => set(state => ({ isSearchOpen: !state.isSearchOpen })),
+      openSearch: () => set({ isSearchOpen: true }),
       closeSearch: () => set({ isSearchOpen: false }),
 
       verifyAge: (productId) => {

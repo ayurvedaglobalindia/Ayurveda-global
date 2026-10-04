@@ -118,11 +118,14 @@ export default function ContactPage() {
   }
 
   const handleWhatsAppClick = (type: string) => {
+    const fullName = `${formData.firstName} ${formData.lastName}`.trim()
     const message = buildProductEnquiryMessage({
-      customerName: `${formData.firstName} ${formData.lastName}`,
+      customerName: fullName,
+      customerPhone: formData.phone.trim(),
+      customerEmail: formData.email.trim(),
       productName: type,
       quantity: 1,
-      enquiry: formData.message || 'Hi, I have an enquiry.',
+      enquiry: formData.message || 'Hi, I have an enquiry regarding your Ayurvedic formulations.',
       source: 'contact',
     })
     trackLead({

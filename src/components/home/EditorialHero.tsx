@@ -15,15 +15,21 @@ import {
   PhoneCall,
   MessageCircle,
 } from 'lucide-react'
-import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
+import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from '@/store/whatsappStore'
+import { useUserStore } from '@/store/userStore'
 
 export function EditorialHero() {
+  const { user } = useUserStore()
+
   const handleVaidyaConsult = () => {
-    const message = buildProductEnquiryMessage({
-      customerName: '',
-      productName: 'Ayurvedic Formulations & Regimen',
-      quantity: 1,
-      enquiry: 'Pranam. I would like a confidential consultation with your Chief Ayurvedic Vaidya regarding physical stamina and intimate wellness.',
+    const primaryAddr = user?.addresses?.[0]
+    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
+    const message = buildVaidyaConsultationMessage({
+      patientName: user?.name || '',
+      patientPhone: user?.phone || '',
+      patientCity: userCity,
+      concern: 'Sustained Stamina & Classical Rasayana Regimen',
+      enquiry: 'Pranam Chief Vaidya Ji. I would like a confidential consultation regarding physical stamina, wellness, and dosage guidelines for your formulations.',
       source: 'hero',
     })
     window.open(buildWhatsAppUrl(message), '_blank')

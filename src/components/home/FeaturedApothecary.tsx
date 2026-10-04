@@ -16,6 +16,7 @@ import {
 import { getAllProducts } from '@/lib/products/registry'
 import { formatINR as formatPrice } from '@/lib/utils/formatters'
 import { useCartStore } from '@/store/cartStore'
+import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
 import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
 import type { Product } from '@/types'
@@ -30,7 +31,8 @@ export function FeaturedApothecary() {
   const [addedNotice, setAddedNotice] = useState<string | null>(null)
 
   const { addItem } = useCartStore()
-  const { openCartDrawer } = useUIStore()
+  const { user, isAuthenticated } = useUserStore()
+  const { openCartDrawer, openModal } = useUIStore()
   const allProducts = getAllProducts()
 
   const filteredProducts = allProducts.filter((p) => {
@@ -47,6 +49,15 @@ export function FeaturedApothecary() {
 
   const handleAddToCart = (product: Product) => {
     const variantId = selectedVariants[product.id] || product.variants?.[0]?.id || ''
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        product,
+        variantId,
+        quantity: 1,
+        mode: 'add-to-cart',
+      })
+      return
+    }
     addItem(product, variantId, 1)
     setAddedNotice(product.id)
     setTimeout(() => {
@@ -59,12 +70,17 @@ export function FeaturedApothecary() {
     const variantId = selectedVariants[product.id] || product.variants?.[0]?.id
     const variant = product.variants?.find((v) => v.id === variantId) || product.variants?.[0]
     const variantName = variant?.name || product.name
+    const primaryAddr = user?.addresses?.[0]
+    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
 
     const msg = buildProductEnquiryMessage({
-      customerName: '',
+      customerName: user?.name || '',
+      customerPhone: user?.phone || '',
+      customerCity: userCity,
       productName: `${product.name} (${variantName})`,
       quantity: 1,
-      enquiry: `Hi Ayur Veda Global, I would like to order ${product.name} (${variantName}) with Cash on Delivery (COD). Please confirm my order.`,
+      price: variant?.price || product.price,
+      enquiry: `Hi Ayur Veda Global, I would like to order ${product.name} (${variantName}) with Cash on Delivery (COD). Please confirm my order and delivery timeline.`,
       source: 'catalog',
     })
     window.open(buildWhatsAppUrl(msg), '_blank')

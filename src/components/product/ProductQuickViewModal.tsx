@@ -12,6 +12,7 @@ import { Rating } from '@/components/ui/Rating'
 import { QuantitySelector } from '@/components/ui/QuantitySelector'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
+import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
 import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
 import type { Product } from '@/types'
@@ -28,6 +29,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
 
   const { addItem } = useCartStore()
   const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
+  const { user, isAuthenticated } = useUserStore()
   const { openModal, showToast } = useUIStore()
   const { trackLead } = useWhatsAppStore()
 
@@ -37,6 +39,15 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
   const currentImage = product.images[selectedImageIndex] || product.images[0]
 
   const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      onClose()
+      openModal('auth-gate', {
+        product,
+        quantity,
+        mode: 'add-to-cart',
+      })
+      return
+    }
     addItem(product, undefined, quantity)
     showToast({
       type: 'success',
@@ -47,23 +58,39 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
   }
 
   const handleBuyNow = () => {
+    if (!isAuthenticated) {
+      onClose()
+      openModal('auth-gate', {
+        product,
+        quantity,
+        mode: 'buy-now',
+      })
+      return
+    }
     addItem(product, undefined, quantity)
     onClose()
     openModal('cart')
   }
 
   const handleWhatsAppOrder = () => {
+    const primaryAddr = user?.addresses?.[0]
+    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
     const message = buildProductEnquiryMessage({
-      customerName: '',
+      customerName: user?.name || '',
+      customerPhone: user?.phone || '',
+      customerCity: userCity,
       productName: product.name,
       quantity,
-      enquiry: `Hi Mageesh / Ayur Veda Global team! I would like to order ${quantity}x ${product.name} (Special Price: ₹${((product.price * quantity) / 100).toFixed(0)}). Please confirm COD availability.`,
+      price: product.price * quantity,
+      enquiry: `Hi Ayur Veda Global team! I would like to order ${quantity}x ${product.name} with Cash on Delivery (COD). Please confirm dispatch & delivery timeline.`,
       source: 'quick-view',
     })
     trackLead({
       source: 'quick-view',
       productId: product.id,
       productName: product.name,
+      customerName: user?.name,
+      customerPhone: user?.phone,
       quantity,
       pageUrl: typeof window !== 'undefined' ? window.location.href : '',
       userAgent: '',

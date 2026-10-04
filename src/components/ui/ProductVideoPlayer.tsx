@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import { Play, Pause, Volume2, VolumeX, Maximize, Sparkles, ShoppingBag } from 'lucide-react'
 import { Button } from './Button'
 import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
+import { useUserStore } from '@/store/userStore'
 
 interface ProductVideoPlayerProps {
   videoSrc?: string
@@ -28,6 +29,7 @@ export function ProductVideoPlayer({
   const [isPlaying, setIsPlaying] = useState(true)
   const [isMuted, setIsMuted] = useState(true)
   const { trackLead } = useWhatsAppStore()
+  const { user } = useUserStore()
 
   const togglePlay = () => {
     if (!videoRef.current) return
@@ -54,16 +56,22 @@ export function ProductVideoPlayer({
   }
 
   const handleWhatsAppOrder = () => {
+    const primaryAddr = user?.addresses?.[0]
+    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
     const message = buildProductEnquiryMessage({
-      customerName: '',
+      customerName: user?.name || '',
+      customerPhone: user?.phone || '',
+      customerCity: userCity,
       productName: 'BODY Essential Nutrition & Power Combo',
       quantity: 1,
-      enquiry: 'Hi Ayur Veda Global! I watched the official product video and would like to place an order.',
+      enquiry: 'Hi Ayur Veda Global! I watched the official product video and would like to place an order with Cash on Delivery.',
       source: 'video-player',
     })
     trackLead({
       source: 'video-player',
       productName: 'BODY Essential Nutrition',
+      customerName: user?.name,
+      customerPhone: user?.phone,
       quantity: 1,
       pageUrl: typeof window !== 'undefined' ? window.location.href : '',
       userAgent: '',

@@ -5,11 +5,13 @@ import { MessageCircle, X, Zap, ShoppingBag } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { classNames } from '@/lib/utils/formatters'
 import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
+import { useUserStore } from '@/store/userStore'
 
 export function WhatsAppFloatButton() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [showTooltip, setShowTooltip] = useState(true)
   const { trackLead } = useWhatsAppStore()
+  const { user } = useUserStore()
 
   useEffect(() => {
     const timer = setTimeout(() => setShowTooltip(false), 5000)
@@ -17,17 +19,22 @@ export function WhatsAppFloatButton() {
   }, [])
 
   const handleWhatsAppClick = (source: 'float' | 'product' | 'checkout' | 'contact') => {
+    const primaryAddr = user?.addresses?.[0]
+    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
     const message = buildProductEnquiryMessage({
-      customerName: '',
-      productName: source === 'product' ? 'Product Enquiry' : 'General Enquiry',
+      customerName: user?.name || '',
+      customerPhone: user?.phone || '',
+      customerCity: userCity,
+      productName: source === 'product' ? 'Product Enquiry' : 'Customer Support & Guidance',
       quantity: 1,
-      enquiry: `Hi Mageesh / Ayur Veda Global team! I would like to enquire about your products and Cash on Delivery.`,
+      enquiry: `Hi Mageesh / Ayur Veda Global team! I would like to enquire about your products, recommended dosage, and Cash on Delivery.`,
       source,
     })
 
     trackLead({
       source,
-      customerName: '',
+      customerName: user?.name,
+      customerPhone: user?.phone,
       productName: source === 'product' ? 'Product Enquiry' : undefined,
       quantity: 1,
       pageUrl: typeof window !== 'undefined' ? window.location.href : '',

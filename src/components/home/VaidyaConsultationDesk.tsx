@@ -1,12 +1,29 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { MessageCircle, PhoneCall, ShieldCheck, Clock, Award, CheckCircle2 } from 'lucide-react'
-import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
+import { MessageCircle, PhoneCall, ShieldCheck, Clock, Award, CheckCircle2, User, Phone, MapPin } from 'lucide-react'
+import { useUserStore } from '@/store/userStore'
+import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from '@/store/whatsappStore'
 
 export function VaidyaConsultationDesk() {
+  const { user } = useUserStore()
   const [selectedConcern, setSelectedConcern] = useState('Daily Fatigue & Workout Stamina')
+  const [patientName, setPatientName] = useState('')
+  const [patientPhone, setPatientPhone] = useState('')
+  const [patientCity, setPatientCity] = useState('')
+
+  useEffect(() => {
+    if (user) {
+      setPatientName(prev => prev || user.name || '')
+      setPatientPhone(prev => prev || user.phone || '')
+      setPatientCity(prev => {
+        if (prev) return prev
+        const addr = user.addresses?.[0]
+        return addr ? [addr.city, addr.state].filter(Boolean).join(', ') : ''
+      })
+    }
+  }, [user])
 
   const concerns = [
     'Daily Fatigue & Workout Stamina',
@@ -16,11 +33,12 @@ export function VaidyaConsultationDesk() {
   ]
 
   const handleStartConsultation = () => {
-    const msg = buildProductEnquiryMessage({
-      customerName: '',
-      productName: 'Vaidya Teleconsultation Desk',
-      quantity: 1,
-      enquiry: `Pranam Vaidya Ji. I would like private Ayurvedic guidance regarding: "${selectedConcern}". Please advise me on suitable formulations and dietary routine.`,
+    const msg = buildVaidyaConsultationMessage({
+      patientName: patientName.trim() || user?.name || '',
+      patientPhone: patientPhone.trim() || user?.phone || '',
+      patientCity: patientCity.trim() || (user?.addresses?.[0]?.city ? `${user.addresses[0].city}, ${user.addresses[0].state || ''}` : ''),
+      concern: selectedConcern,
+      enquiry: `Pranam Vaidya Ji. I would like confidential Ayurvedic guidance regarding: "${selectedConcern}". Please advise me on the recommended herbal dosage, timing, and dietary lifestyle guidelines.`,
       source: 'doctor-section',
     })
     window.open(buildWhatsAppUrl(msg), '_blank')
@@ -119,6 +137,45 @@ export function VaidyaConsultationDesk() {
                       )}
                     </button>
                   ))}
+                </div>
+              </div>
+
+              {/* Step 2: Patient Context (Prefilled / Editable) */}
+              <div className="space-y-2 pt-2 border-t border-[#C2A265]/15">
+                <span className="text-[9.5px] uppercase tracking-wider font-semibold text-[#C2A265] block">
+                  Step 2: Patient Details
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="relative">
+                    <User className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#C2A265]/60 pointer-events-none" />
+                    <input
+                      type="text"
+                      value={patientName}
+                      onChange={(e) => setPatientName(e.target.value)}
+                      placeholder="Your Full Name"
+                      className="w-full pl-8 pr-2.5 py-1.5 rounded-lg bg-[#12241A] border border-[#C2A265]/25 text-xs text-[#FAF7EE] placeholder-[#7A7468] focus:border-[#C2A265] focus:outline-none"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Phone className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#C2A265]/60 pointer-events-none" />
+                    <input
+                      type="tel"
+                      value={patientPhone}
+                      onChange={(e) => setPatientPhone(e.target.value)}
+                      placeholder="Mobile / WhatsApp No."
+                      className="w-full pl-8 pr-2.5 py-1.5 rounded-lg bg-[#12241A] border border-[#C2A265]/25 text-xs text-[#FAF7EE] placeholder-[#7A7468] focus:border-[#C2A265] focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div className="relative">
+                  <MapPin className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#C2A265]/60 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={patientCity}
+                    onChange={(e) => setPatientCity(e.target.value)}
+                    placeholder="City / State (e.g. Pune, Maharashtra)"
+                    className="w-full pl-8 pr-2.5 py-1.5 rounded-lg bg-[#12241A] border border-[#C2A265]/25 text-xs text-[#FAF7EE] placeholder-[#7A7468] focus:border-[#C2A265] focus:outline-none"
+                  />
                 </div>
               </div>
 
