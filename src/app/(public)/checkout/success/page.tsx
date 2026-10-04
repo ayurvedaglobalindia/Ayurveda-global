@@ -10,6 +10,7 @@ import { useUIStore } from '@/store/uiStore'
 import { useUserStore } from '@/store/userStore'
 import { buildWhatsAppUrl, buildOrderWhatsAppMessage } from '@/store/whatsappStore'
 import { formatINR } from '@/lib/utils/formatters'
+import { DeliveryTracker4Day } from '@/components/checkout/DeliveryTracker4Day'
 
 export default function CheckoutSuccessPage() {
   return (
@@ -77,15 +78,15 @@ function CheckoutSuccessContent() {
   }
 
   return (
-    <div className="container py-16 lg:py-24">
+    <div className="container py-8 sm:py-12 lg:py-14">
       <div className="max-w-2xl mx-auto text-center">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', damping: 15, stiffness: 200 }}
-          className="w-24 h-24 mx-auto mb-8 rounded-full bg-[#1A4D36]/80 border-2 border-[#D4AF37] shadow-[0_0_30px_rgba(212,175,55,0.25)] flex items-center justify-center relative"
+          className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full bg-[#1A4D36]/80 border-2 border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.25)] flex items-center justify-center relative"
         >
-          <CheckCircle className="w-12 h-12 text-[#F4E295]" />
+          <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-[#F4E295]" />
           <div className="absolute inset-0 rounded-full border border-[#D4AF37]/40 animate-ping opacity-25" />
         </motion.div>
 
@@ -103,7 +104,7 @@ function CheckoutSuccessContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="font-serif text-3xl md:text-5xl font-normal text-white mb-4 tracking-tight"
+          className="font-heading text-xl sm:text-2xl md:text-3xl font-medium text-[#FAF7EE] mb-2 tracking-tight"
         >
           Namaste, Your Order is Confirmed
         </motion.h1>
@@ -112,38 +113,53 @@ function CheckoutSuccessContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-[#C4BDA8] text-base md:text-lg mb-8 leading-relaxed max-w-xl mx-auto"
+          className="text-[#C5BFB3] text-xs sm:text-sm mb-6 leading-relaxed max-w-lg mx-auto"
         >
-          Thank you for choosing Ayur Veda Global. Your order reference code is{' '}
-          <span className="font-mono font-bold text-[#F4E295] bg-[#061B12] px-3 py-1 rounded-lg border border-[#D4AF37]/30 inline-block ml-1">
+          Thank you for choosing Ayur Veda Global. Your confidential order reference is{' '}
+          <span className="font-mono font-bold text-[#D4B678] bg-[#0E1E14] px-2.5 py-0.5 rounded-md border border-[#C2A265]/35 inline-block ml-1">
             {orderNumber || 'ORD-PROCESSING'}
           </span>
         </motion.p>
+
+        {/* 4-Day Animated Delivery Tracking Feature */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="mb-6"
+        >
+          <DeliveryTracker4Day
+            orderNumber={orderNumber}
+            createdAt={order?.createdAt}
+            currentDay={1}
+            shippingCity={order?.shippingAddress?.city || 'Your City'}
+          />
+        </motion.div>
 
         {order && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35 }}
-            className="mb-8 p-5 rounded-2xl bg-ayur-charcoal/90 border border-ayur-gold/25 text-left space-y-3"
+            transition={{ delay: 0.4 }}
+            className="mb-6 p-4 rounded-2xl bg-[#102016] border border-[#C2A265]/25 text-left space-y-2.5"
           >
-            <div className="flex items-center justify-between pb-3 border-b border-ayur-forest-dark/50">
-              <span className="text-xs uppercase tracking-wider text-ayur-gold font-bold">Summary</span>
-              <span className="text-sm font-bold text-ayur-ivory">{formatINR(order.total)}</span>
+            <div className="flex items-center justify-between pb-2 border-b border-[#C2A265]/15">
+              <span className="text-[11px] uppercase tracking-wider text-[#C2A265] font-semibold">Order Summary</span>
+              <span className="text-xs font-bold text-[#FAF7EE]">{formatINR(order.total)}</span>
             </div>
-            <div className="space-y-1.5 text-xs text-ayur-stone">
+            <div className="space-y-1.5 text-xs text-[#A8A295]">
               {(order.items || []).map((item: any, idx: number) => (
                 <div key={idx} className="flex justify-between">
                   <span>{item.name} × {item.quantity}</span>
-                  <span className="text-ayur-ivory">{formatINR(item.total || item.price * item.quantity)}</span>
+                  <span className="text-[#FAF7EE]">{formatINR(item.total || item.price * item.quantity)}</span>
                 </div>
               ))}
             </div>
             {order.shippingAddress && (
-              <div className="pt-2 border-t border-ayur-forest-dark/40 flex items-center gap-1.5 text-xs text-ayur-sand/90">
-                <MapPin className="w-3.5 h-3.5 text-ayur-gold flex-shrink-0" />
+              <div className="pt-2 border-t border-[#C2A265]/15 flex items-center gap-1.5 text-[11px] text-[#D4B678]">
+                <MapPin className="w-3.5 h-3.5 text-[#C2A265] flex-shrink-0" />
                 <span>
-                  Delivering to: {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}
+                  Delivering to: {order.shippingAddress.addressLine1}, {order.shippingAddress.city} - {order.shippingAddress.pincode}
                 </span>
               </div>
             )}

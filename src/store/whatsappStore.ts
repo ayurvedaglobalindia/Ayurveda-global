@@ -63,6 +63,12 @@ export function buildWhatsAppUrl(message: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`
 }
 
+function formatPaiseToINR(amount: number | undefined): string {
+  if (!amount || amount === 0) return '0'
+  const rupees = amount >= 10000 ? Math.round(amount / 100) : Math.round(amount)
+  return rupees.toLocaleString('en-IN')
+}
+
 export function buildOrderWhatsAppMessage(data: {
   orderId?: string
   orderNumber?: string
@@ -82,9 +88,10 @@ export function buildOrderWhatsAppMessage(data: {
   items: Array<{
     name?: string
     productName?: string
+    variantName?: string
     quantity: number
     price: number
-    total: number
+    total?: number
   }>
   subtotal: number
   shipping: number
@@ -96,36 +103,62 @@ export function buildOrderWhatsAppMessage(data: {
   notes?: string
 }): string {
   const itemsList = data.items
-    .map(
-      (item, index) =>
-        `${index + 1}. ${item.productName || item.name || 'Product'} x${item.quantity} — ₹${(item.total / 100).toLocaleString('en-IN')}`
-    )
+    .map((item, index) => {
+      const title = item.productName || item.name || 'Product'
+      const variant = item.variantName ? ` (${item.variantName})` : ''
+      const itemTotal = item.total !== undefined ? item.total : item.price * item.quantity
+      return `• *${index + 1}. ${title}${variant}* x${item.quantity} — ₹${formatPaiseToINR(itemTotal)}`
+    })
     .join('\n')
 
-  return `🌿 *New Order - Ayur Veda Global*
+  const dateStr = new Date().toLocaleDateString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  })
 
-*Order ID:* ${data.orderNumber || data.orderId || 'AVG-DIRECT'}
+  const addressLine2Str = data.shippingAddress.addressLine2 ? `\n${data.shippingAddress.addressLine2}` : ''
+  const emailStr = data.customerEmail ? `\n• *Email:* ${data.customerEmail}` : ''
+  const discountStr = data.discount > 0 ? `\n• *Discount (${data.couponCode || 'Promo'}):* -₹${formatPaiseToINR(data.discount)}` : ''
+  const notesStr = data.notes && data.notes.trim() ? `\n\n📝 *Delivery Note:* ${data.notes.trim()}` : ''
 
-*Customer:* ${data.customerName}
-*Phone:* ${data.customerPhone}
-${data.customerEmail ? `*Email:* ${data.customerEmail}\n` : ''}
-*Delivery Address:*
-${data.shippingAddress.firstName} ${data.shippingAddress.lastName}
-${data.shippingAddress.addressLine1}
-${data.shippingAddress.addressLine2 || ''}
-${data.shippingAddress.city}, ${data.shippingAddress.state} ${data.shippingAddress.pincode}
+  const paymentLabels: Record<string, string> = {
+    whatsapp: 'WhatsApp Direct Confirmation / Concierge',
+    cod: 'Cash on Delivery (Doorstep COD)',
+    upi: 'Instant UPI (PhonePe / GPay / Paytm)',
+    card: 'Online / Card Payment',
+  }
+  const paymentLabel = paymentLabels[data.paymentMethod.toLowerCase()] || data.paymentMethod.toUpperCase()
 
-*Items:*
+  return `🌿 *ORDER CONFIRMATION — AYUR VEDA GLOBAL*
+━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 *Order ID:* ${data.orderNumber || data.orderId || 'AVG-DIRECT'}
+📅 *Date:* ${dateStr}
+
+👤 *CUSTOMER DETAILS:*
+• *Name:* ${data.customerName}
+• *Phone:* ${data.customerPhone}${emailStr}
+
+📍 *DELIVERY ADDRESS:*
+${data.customerName}
+${data.shippingAddress.addressLine1}${addressLine2Str}
+${data.shippingAddress.city}, ${data.shippingAddress.state} - ${data.shippingAddress.pincode}
+Contact: ${data.shippingAddress.phone || data.customerPhone}
+
+🛍️ *ORDERED ITEMS:*
 ${itemsList}
 
-*Subtotal:* ₹${(data.subtotal / 100).toLocaleString('en-IN')}
-*Shipping:* ${data.shipping === 0 ? 'Free' : `₹${(data.shipping / 100).toLocaleString('en-IN')}`}
-${data.discount > 0 ? `*Discount (${data.couponCode || 'Promo'}):* -₹${(data.discount / 100).toLocaleString('en-IN')}\n` : ''}*Total:* ₹${(data.total / 100).toLocaleString('en-IN')}
-*Payment Method:* ${data.paymentMethod.toUpperCase()}
-${data.notes ? `\n*Notes:* ${data.notes}` : ''}
+━━━━━━━━━━━━━━━━━━━━━━━━━
+💰 *ORDER SUMMARY:*
+• *Subtotal:* ₹${formatPaiseToINR(data.subtotal)}
+• *Shipping:* ${data.shipping === 0 ? 'FREE (Express Courier)' : `₹${formatPaiseToINR(data.shipping)}`}${discountStr}
+• *Total Payable:* ₹${formatPaiseToINR(data.total)}
+• *Payment Mode:* ${paymentLabel}${notesStr}
 
----
-Please confirm this order. Thank you! 🌿`
+━━━━━━━━━━━━━━━━━━━━━━━━━
+🔒 *100% Confidential Delivery Guarantee*
+Dispatched in plain unmarked packaging with zero product labels on exterior carton.
+Please confirm and share tracking details. Pranam! 🌿`
 }
 
 export function buildProductEnquiryMessage(data: {

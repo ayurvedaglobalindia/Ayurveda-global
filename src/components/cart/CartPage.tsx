@@ -95,25 +95,27 @@ export function CartPage() {
   const relatedProducts = getProductsByCategory('supplements').slice(0, 4)
 
   return (
-    <div className="container py-8 lg:py-12 pb-32 lg:pb-16">
+    <div className="container py-5 sm:py-7 lg:py-8 pb-16">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-4 mb-8"
+        className="flex items-center gap-3 mb-6"
       >
-        <Link href="/shop" className="p-2.5 rounded-xl text-ayur-gold bg-ayur-charcoal border border-ayur-gold/30 hover:border-ayur-gold hover:bg-ayur-forest-dark transition-colors">
-          <ArrowLeft className="w-5 h-5" />
+        <Link href="/shop" className="p-2 rounded-xl text-ayur-gold bg-ayur-charcoal border border-ayur-gold/30 hover:border-ayur-gold hover:bg-ayur-forest-dark transition-colors">
+          <ArrowLeft className="w-4 h-4" />
         </Link>
-        <h1 className="font-heading text-3xl font-semibold text-ayur-ivory">Shopping Cart ({itemCount})</h1>
+        <h1 className="font-heading text-lg sm:text-xl font-medium text-ayur-ivory">
+          Shopping Cart ({itemCount})
+        </h1>
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="grid lg:grid-cols-3 gap-8"
+        className="grid lg:grid-cols-3 gap-6"
       >
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-3">
           {items.map((item, index) => (
             <motion.div
               key={item.id}
@@ -126,12 +128,12 @@ export function CartPage() {
           ))}
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="card-luxury border border-ayur-gold/30 rounded-2xl p-6 sticky top-24 shadow-luxury"
+            className="card-luxury border border-ayur-gold/30 rounded-2xl p-4 sm:p-5 sticky top-24 shadow-luxury"
           >
             <CouponInput
               couponCode={couponCode}
@@ -145,9 +147,9 @@ export function CartPage() {
               loading={couponLoading}
             />
 
-            <div className="mt-6 space-y-3">
-              <h3 className="font-heading font-semibold text-ayur-ivory text-lg">Order Summary</h3>
-              <div className="space-y-2.5 text-sm">
+            <div className="mt-4 space-y-2.5">
+              <h3 className="font-heading text-xs font-semibold uppercase tracking-wider text-[#C2A265]">Order Summary</h3>
+              <div className="space-y-2 text-xs">
                 <div className="flex justify-between text-ayur-stone">
                   <span>Subtotal ({itemCount} items)</span>
                   <span className="text-ayur-ivory font-medium">{formatINR(subtotal)}</span>
@@ -160,7 +162,7 @@ export function CartPage() {
                 )}
                 <div className="flex justify-between text-ayur-stone">
                   <span>Shipping</span>
-                  <span className="text-ayur-gold-light font-semibold">{shippingCalc.freeShipping ? 'Free Express' : formatINR(shippingCalc.cost)}</span>
+                  <span className="text-ayur-gold-light font-semibold">{shippingCalc.freeShipping ? 'FREE' : formatINR(shippingCalc.cost)}</span>
                 </div>
                 {tax > 0 && (
                   <div className="flex justify-between text-ayur-stone">
@@ -168,22 +170,22 @@ export function CartPage() {
                     <span>{formatINR(tax)}</span>
                   </div>
                 )}
-                <div className="flex justify-between border-t border-ayur-forest-dark/50 pt-3">
-                  <span className="font-heading font-semibold text-ayur-ivory text-lg">Total</span>
-                  <span className="font-heading font-bold text-ayur-gold-light text-2xl">{formatINR(total)}</span>
+                <div className="flex justify-between border-t border-ayur-forest-dark/50 pt-2.5">
+                  <span className="font-medium text-ayur-ivory text-xs sm:text-sm">Total</span>
+                  <span className="font-bold text-ayur-gold-light text-base sm:text-lg">{formatINR(total)}</span>
                 </div>
               </div>
               {freeShippingRemaining > 0 && (
-                <p className="text-xs text-ayur-gold-light text-center mt-3 font-medium bg-ayur-gold/10 border border-ayur-gold/20 rounded-lg p-2">
+                <p className="text-[10.5px] text-ayur-gold-light text-center mt-2.5 font-medium bg-ayur-gold/10 border border-ayur-gold/20 rounded-lg p-1.5">
                   Add {formatINR(freeShippingRemaining)} more for free express shipping
                 </p>
               )}
-              <Link href="/checkout" className="mt-6 block">
-                <Button variant="gold" className="w-full py-3.5 rounded-xl font-bold text-sm shadow-xl gold-shimmer">
-                  Proceed to Checkout
+              <Link href="/checkout" className="mt-4 block">
+                <Button variant="gold" className="w-full py-2.5 rounded-xl font-bold text-xs shadow-xl gold-shimmer">
+                  Proceed to Checkout ({formatINR(total)})
                 </Button>
               </Link>
-              <p className="text-center text-xs text-ayur-stone mt-4">
+              <p className="text-center text-[10.5px] text-ayur-stone mt-3">
                 🔒 100% Confidential packaging • Cash on Delivery available
               </p>
             </div>
@@ -195,11 +197,11 @@ export function CartPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <h3 className="font-heading text-lg font-medium text-ayur-ivory mb-4 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-ayur-gold" />
-                You may also like
+              <h3 className="font-heading text-xs font-semibold uppercase tracking-wider text-[#C2A265] mb-2.5 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-ayur-gold" />
+                Recommended Formulations
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {relatedProducts.map(product => (
                   <ProductCard key={product.id} product={product} variant="compact" showQuickActions={false} />
                 ))}
@@ -230,53 +232,53 @@ function CartPageItem({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="card-luxury border border-ayur-gold/25 rounded-2xl overflow-hidden hover:border-ayur-gold/60 transition-all shadow-xl"
+      className="card-luxury border border-ayur-gold/25 rounded-xl overflow-hidden hover:border-ayur-gold/60 transition-all shadow-md"
     >
-      <div className="flex gap-4 p-4 sm:p-5 md:p-6">
+      <div className="flex gap-3.5 p-3 sm:p-4">
         <Link
           href={`/product/${item.productId}`}
-          className="flex-shrink-0 w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-xl overflow-hidden bg-ayur-void border border-ayur-gold/20 relative"
+          className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-ayur-void border border-ayur-gold/20 relative"
         >
           <Image
             src={imgSrc}
             alt={resolvedImage.alt}
             fill
-            className="object-contain p-2"
-            sizes="(max-width: 640px) 80px, 128px"
+            className="object-contain p-1.5"
+            sizes="(max-width: 640px) 64px, 80px"
             onError={() => setImgSrc('/images/products/body-essential-nutrition.png')}
           />
         </Link>
         <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start justify-between gap-2.5">
             <div>
               <Link href={`/product/${item.productId}`}>
-                <h3 className="font-heading font-semibold text-base sm:text-lg text-ayur-ivory hover:text-ayur-gold-light transition-colors leading-snug">
+                <h3 className="font-heading font-normal text-xs sm:text-sm text-ayur-ivory hover:text-ayur-gold-light transition-colors leading-snug">
                   {item.product.name}
                 </h3>
               </Link>
               {variantName && (
-                <span className="inline-block text-xs text-ayur-gold-light mt-1 font-medium bg-ayur-gold/10 px-2 py-0.5 rounded-md border border-ayur-gold/20">
+                <span className="inline-block text-[10px] text-ayur-gold-light mt-0.5 font-medium bg-ayur-gold/10 px-1.5 py-0.2 rounded border border-ayur-gold/20">
                   {variantName}
                 </span>
               )}
             </div>
             <button
               onClick={() => onRemove(item.productId, item.variantId)}
-              className="p-2 rounded-xl text-ayur-crimson-light hover:text-ayur-ivory hover:bg-ayur-crimson/60 border border-transparent hover:border-ayur-crimson/40 transition-colors flex-shrink-0"
+              className="p-1.5 rounded-lg text-ayur-stone hover:text-ayur-crimson-light hover:bg-ayur-crimson/10 transition-colors flex-shrink-0"
               aria-label="Remove item"
             >
-              <Trash2 className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+              <Trash2 className="w-3.5 h-3.5" />
             </button>
           </div>
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
+          <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2">
             <QuantitySelector
               value={item.quantity}
               onChange={qty => onUpdateQuantity(item.productId, item.variantId, qty)}
               min={1}
               max={99}
-              size="md"
+              size="sm"
             />
-            <PriceDisplay price={lineTotal} size="lg" className="font-bold text-ayur-gold-light" />
+            <PriceDisplay price={lineTotal} size="sm" className="font-semibold text-ayur-gold-light text-xs sm:text-sm" />
           </div>
         </div>
       </div>

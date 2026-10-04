@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Badge } from '@/components/ui/Badge'
 import { useUserStore } from '@/store/userStore'
+import { DeliveryTracker4Day } from '@/components/checkout/DeliveryTracker4Day'
 
 const mockTrackingData = {
   'ORD-20241215-ABC1': {
@@ -135,14 +136,14 @@ export default function TrackOrderPage() {
     const StatusIcon = config.icon
 
     return (
-      <div className="container py-10 lg:py-16">
+      <div className="container py-6 sm:py-10 lg:py-12">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-8 text-center space-y-2">
-            <span className="text-xs uppercase font-bold tracking-widest text-ayur-gold">Live Package Tracking</span>
-            <h1 className="font-heading text-3xl md:text-4xl font-semibold text-ayur-ivory">Order Status</h1>
-            <p className="text-sm text-ayur-sand/80">
+          <div className="mb-6 text-center space-y-1.5">
+            <span className="text-[10px] uppercase font-bold tracking-widest text-[#C2A265]">Live Package Tracking</span>
+            <h1 className="font-heading text-xl sm:text-2xl font-medium text-[#FAF7EE]">Order Status</h1>
+            <p className="text-xs sm:text-sm text-[#A8A295]">
               Reference #{trackedOrder.orderNumber} is currently{' '}
-              <strong className="text-ayur-gold font-semibold">{config.label}</strong>
+              <strong className="text-[#D4B678] font-semibold">{config.label}</strong>
             </p>
           </div>
 
@@ -159,51 +160,23 @@ export default function TrackOrderPage() {
               </div>
             </div>
 
-            {trackedOrder.trackingNumber && (
-              <div className="my-6 p-4 rounded-2xl bg-ayur-forest-deep/60 border border-ayur-gold/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                <div>
-                  <p className="text-ayur-stone">Airway Bill (AWB) / Tracking</p>
-                  <p className="font-mono font-bold text-sm text-ayur-gold-light mt-0.5">{trackedOrder.trackingNumber}</p>
-                </div>
-                <div className="sm:text-right">
-                  <p className="text-ayur-stone">Logistics Partner</p>
-                  <p className="font-semibold text-ayur-ivory mt-0.5">{trackedOrder.carrier}</p>
-                </div>
-              </div>
-            )}
-
-            <div className="my-8">
-              <h2 className="font-heading text-lg font-semibold text-ayur-ivory mb-6">Delivery Progress Timeline</h2>
-              <div className="relative pl-6 sm:pl-8 border-l-2 border-ayur-gold/30 space-y-6">
-                {trackedOrder.timeline.map((event: any, index: number) => {
-                  const eventConfig = statusConfig[event.status as keyof typeof statusConfig]
-                  const EventIcon = eventConfig?.icon || Clock
-                  const isCurrent = event.status === trackedOrder.status
-
-                  return (
-                    <div key={index} className="relative">
-                      <div className={classNames(
-                        'absolute -left-[31px] sm:-left-[39px] top-1 w-6 h-6 rounded-full border-2 flex items-center justify-center bg-ayur-charcoal shadow',
-                        isCurrent ? 'border-ayur-gold text-ayur-gold' : 'border-ayur-gold/40 text-ayur-stone'
-                      )}>
-                        <div className={classNames('w-2 h-2 rounded-full', isCurrent ? 'bg-ayur-gold animate-ping' : 'bg-ayur-gold/50')} />
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <p className="font-semibold text-sm text-ayur-ivory">{eventConfig?.label || event.status}</p>
-                          {isCurrent && (
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-ayur-gold/20 text-ayur-gold-light border border-ayur-gold/30">
-                              Current Status
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-xs text-ayur-sand/90 leading-relaxed">{event.note}</p>
-                        <p className="text-[10px] text-ayur-stone">{formatDateTime(event.date)}</p>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
+            {/* 4-Day Animated Delivery Timeline */}
+            <div className="my-6">
+              <DeliveryTracker4Day
+                orderNumber={trackedOrder.orderNumber}
+                createdAt={trackedOrder.timeline?.[0]?.date}
+                carrier={trackedOrder.carrier}
+                trackingNumber={trackedOrder.trackingNumber}
+                currentDay={
+                  trackedOrder.status === 'delivered'
+                    ? 4
+                    : trackedOrder.status === 'shipped'
+                    ? 3
+                    : trackedOrder.status === 'processing'
+                    ? 2
+                    : 1
+                }
+              />
             </div>
 
             <div className="pt-6 border-t border-ayur-forest-dark/50 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -232,15 +205,15 @@ export default function TrackOrderPage() {
   }
 
   return (
-    <div className="container py-12 lg:py-20">
+    <div className="container py-8 sm:py-12 lg:py-14">
       <div className="max-w-md mx-auto">
-        <div className="text-center mb-10 space-y-3">
-          <div className="w-20 h-20 mx-auto rounded-full bg-ayur-emerald-card border border-ayur-gold/30 flex items-center justify-center shadow-luxury">
-            <Package className="w-10 h-10 text-ayur-gold" />
+        <div className="text-center mb-6 space-y-2">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full bg-ayur-emerald-card border border-ayur-gold/30 flex items-center justify-center shadow-luxury">
+            <Package className="w-7 h-7 sm:w-8 sm:h-8 text-ayur-gold" />
           </div>
-          <h1 className="font-heading text-3xl md:text-4xl font-semibold text-ayur-ivory">Track Your Order</h1>
+          <h1 className="font-heading text-xl sm:text-2xl font-medium text-ayur-ivory">Track Your Order</h1>
           <p className="text-xs sm:text-sm text-ayur-sand/80 leading-relaxed">
-            Enter your Order ID (e.g. ORD-20241215-ABC1) or registered phone number to track your package in real-time.
+            Enter your Order ID (e.g. AVG-123456) or registered phone number to track your package in real-time.
           </p>
         </div>
 
