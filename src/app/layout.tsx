@@ -69,7 +69,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://wa.me" />
       </head>
-      <body className="min-h-screen bg-ayur-void text-ayur-cream font-body selection:bg-ayur-gold selection:text-ayur-void">
+      <body className="min-h-screen bg-ayur-void text-ayur-cream font-body selection:bg-ayur-gold selection:text-ayur-void overflow-x-hidden w-full max-w-full">
         <Providers>
           {children}
           <Toaster />

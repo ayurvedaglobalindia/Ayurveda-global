@@ -277,7 +277,7 @@ export function BotanicalPharmacopeia() {
                   </div>
 
                   <Link
-                    href={`/products/${current.productSlug}`}
+                    href={`/product/${current.productSlug}`}
                     className="text-[#FAF7EE] hover:text-[#D4B678] font-medium flex items-center gap-1 transition-colors group"
                   >
                     <span>Used in {current.productName}</span>

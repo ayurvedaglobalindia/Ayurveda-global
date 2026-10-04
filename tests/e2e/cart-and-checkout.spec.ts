@@ -26,7 +26,40 @@ test.describe('Ayur Veda Global - Cart & Checkout User Journeys', () => {
     await expect(page.locator('h1')).toContainText('BODY Essential Nutrition')
   })
 
-  test('Cart Drawer: Add product, change quantity, and view subtotal', async ({ page }) => {
+  test('Unauthenticated user triggers Auth Modal on Add to Cart', async ({ page }) => {
+    await page.goto('/product/body-essential-nutrition')
+
+    // Click Add to Cart
+    const addToCartButton = page.locator('button:has-text("Add to Cart")')
+    await expect(addToCartButton).toBeVisible()
+    await addToCartButton.click()
+
+    // Verify Auth Modal opens for unauthenticated user
+    const authModal = page.locator('[role="dialog"]')
+    await expect(authModal).toBeVisible()
+    await expect(authModal).toContainText(/Sign In|Join Ayur Veda/i)
+  })
+
+  test('Cart Drawer: Authenticated user adds product and opens Cart Drawer', async ({ page }) => {
+    // Mock authenticated user session
+    await page.addInitScript(() => {
+      window.localStorage.setItem(
+        'ayur-user-storage',
+        JSON.stringify({
+          state: {
+            user: {
+              id: 'test-user-verified',
+              name: 'Dr. Arjun Verma',
+              phone: '9876543210',
+              email: 'arjun@ayurvedaglobal.com',
+            },
+            token: 'test-session-token',
+          },
+          version: 0,
+        })
+      )
+    })
+
     await page.goto('/product/body-essential-nutrition')
 
     // Click Add to Cart
@@ -60,7 +93,7 @@ test.describe('Ayur Veda Global - Cart & Checkout User Journeys', () => {
                   slug: 'body-essential-nutrition',
                   name: 'BODY Essential Nutrition (60 Capsules)',
                   price: 149900,
-                  images: [{ src: '/images/products/body-essential-nutrition.png', alt: 'Product', isPrimary: true }],
+                  images: [{ src: '/images/products/body-essential-nutrition-card.jpg', alt: 'Product', isPrimary: true }],
                   variants: [{ id: 'body-essential-nutrition-60', name: '60 Capsules', price: 149900, inventory: 100 }],
                 },
               },
@@ -84,8 +117,23 @@ test.describe('Ayur Veda Global - Cart & Checkout User Journeys', () => {
   })
 
   test('Checkout multi-step form flow and Cash on Delivery order placement', async ({ page }) => {
-    // Pre-populate cart with 1 item
+    // Pre-populate cart and authenticated user
     await page.addInitScript(() => {
+      window.localStorage.setItem(
+        'ayur-user-storage',
+        JSON.stringify({
+          state: {
+            user: {
+              id: 'checkout-user-1',
+              name: 'Rohan Sharma',
+              phone: '9876543210',
+              email: 'rohan.sharma@example.com',
+            },
+            token: 'test-token',
+          },
+          version: 0,
+        })
+      )
       window.localStorage.setItem(
         'ayur-veda-cart',
         JSON.stringify({
@@ -102,7 +150,7 @@ test.describe('Ayur Veda Global - Cart & Checkout User Journeys', () => {
                   slug: 'staymax-delay-spray',
                   name: 'STAYMAX+ Delay Spray (30 ml)',
                   price: 99900,
-                  images: [{ src: '/images/products/staymax-delay-spray.png', alt: 'Staymax', isPrimary: true }],
+                  images: [{ src: '/images/products/staymax-delay-spray-card.jpg', alt: 'Staymax', isPrimary: true }],
                   variants: [{ id: 'staymax-30ml', name: '30 ml Bottle', price: 99900, inventory: 100 }],
                 },
               },

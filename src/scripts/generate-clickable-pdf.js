@@ -67,7 +67,7 @@ async function generateClickablePDF() {
 
   // Embed logo
   try {
-    const logoBytes = fs.readFileSync(path.join(process.cwd(), 'public/images/logo.png'));
+    const logoBytes = fs.readFileSync(path.join(process.cwd(), 'public/images/brand-logo.png'));
     const logoImg = await pdfDoc.embedPng(logoBytes);
     page1.drawImage(logoImg, {
       x: 35,

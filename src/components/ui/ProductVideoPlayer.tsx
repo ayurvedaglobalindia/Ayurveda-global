@@ -17,8 +17,8 @@ interface ProductVideoPlayerProps {
 }
 
 export function ProductVideoPlayer({
-  videoSrc = '/videos/ayur-veda-product-showcase.mp4',
-  posterSrc = '/images/products/body-essential-nutrition.jpg',
+  videoSrc = '/videos/ayurvedic-wellness.mp4',
+  posterSrc = '/images/products/body-essential-nutrition-card.jpg',
   title = 'Watch BODY Essential Nutrition & StayMax In Action',
   subtitle = 'Official Authentic Product Visual Showcase — Experience the Pure Formulations',
   className = '',

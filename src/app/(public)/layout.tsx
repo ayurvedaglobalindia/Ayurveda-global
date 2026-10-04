@@ -11,7 +11,7 @@ import { AGMascotGuide } from '@/components/mascot/AGMascotGuide'
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-col min-h-screen bg-ayur-void text-ayur-cream selection:bg-ayur-gold selection:text-ayur-void relative">
+    <div className="flex flex-col min-h-screen bg-ayur-void text-ayur-cream selection:bg-ayur-gold selection:text-ayur-void relative overflow-x-hidden w-full max-w-full">
       {/* Sticky Header */}
       <div className="sticky top-0 z-50 w-full">
         <AnnouncementBar />
