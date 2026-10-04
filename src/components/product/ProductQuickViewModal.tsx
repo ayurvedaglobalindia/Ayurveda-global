@@ -119,17 +119,17 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
       <div className="grid md:grid-cols-12 gap-6 lg:gap-8 items-start">
         {/* Left Column: Image Stage */}
         <div className="md:col-span-6 space-y-3">
-          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-[#f9f8f4] to-[#ede7dc] border border-ayur-sand/50 shadow-inner flex items-center justify-center">
+          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-[#13281C] via-[#0E1E14] to-[#0A160F] border border-[#C2A265]/30 shadow-xl flex items-center justify-center">
             <Image
               src={currentImage.src}
               alt={currentImage.alt || product.name}
               fill
-              className="object-contain p-4"
+              className="object-cover"
               sizes="(max-width: 768px) 100vw, 400px"
               priority
             />
             {product.ageRestricted && (
-              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-md text-[10px] font-bold text-ayur-copper bg-white/95 border border-ayur-copper/30 shadow-sm">
+              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-md text-[10px] font-bold text-[#E5A855] bg-[#0B150F]/90 border border-[#C2A265]/40 shadow-sm">
                 18+ Adult
               </span>
             )}
@@ -142,13 +142,13 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
                 <button
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
-                  className={`relative w-14 h-16 rounded-xl overflow-hidden border-2 transition-all bg-white shadow-sm ${
+                  className={`relative w-14 h-16 rounded-xl overflow-hidden border-2 transition-all bg-[#0B150F] shadow-sm ${
                     selectedImageIndex === idx
-                      ? 'border-ayur-gold ring-2 ring-ayur-gold/25'
-                      : 'border-ayur-sand/60 opacity-70 hover:opacity-100'
+                      ? 'border-[#C2A265] ring-2 ring-[#C2A265]/25'
+                      : 'border-[#C2A265]/20 opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <Image src={img.src} alt="" fill className="object-contain p-1" sizes="56px" />
+                  <Image src={img.src} alt="" fill className="object-cover" sizes="56px" />
                 </button>
               ))}
             </div>

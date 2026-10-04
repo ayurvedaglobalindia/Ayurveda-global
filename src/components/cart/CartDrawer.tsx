@@ -270,7 +270,7 @@ function CartDrawerItem({
   onUpdateQuantity: (productId: string, variantId: string | undefined, quantity: number) => void
   onRemove: (productId: string, variantId?: string) => void
 }) {
-  const resolvedImage = getProductImage(item.product, item.productId)
+  const resolvedImage = getProductImage(item.product, item.productId, 'thumb')
   const [imgSrc, setImgSrc] = useState(resolvedImage.src)
   const variantName = item.product.variants?.find(v => v.id === item.variantId)?.name
 
@@ -289,9 +289,9 @@ function CartDrawerItem({
           src={imgSrc}
           alt={resolvedImage.alt}
           fill
-          className="object-contain p-1"
+          className="object-cover"
           sizes="56px"
-          onError={() => setImgSrc('/images/products/body-essential-nutrition.png')}
+          onError={() => setImgSrc('/images/products/body-essential-nutrition-thumb.jpg')}
         />
       </Link>
       <div className="flex-1 min-w-0">

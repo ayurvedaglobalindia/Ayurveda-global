@@ -80,6 +80,31 @@ async function runAllTests() {
     if (!slugs.includes('personal-care')) throw new Error('Missing personal-care category')
   })
 
+  test('getProductImage resolves tailored crops for card, thumb, detail, and hero', () => {
+    const products = getAllProducts()
+    for (const p of products) {
+      const card = getProductImage(p, p.id, 'card')
+      if (!card.src || !card.src.includes('-card.jpg')) {
+        throw new Error(`Card image invalid for ${p.id}: ${card.src}`)
+      }
+
+      const thumb = getProductImage(p, p.id, 'thumb')
+      if (!thumb.src || !thumb.src.includes('-thumb.jpg')) {
+        throw new Error(`Thumb image invalid for ${p.id}: ${thumb.src}`)
+      }
+
+      const detail = getProductImage(p, p.id, 'detail')
+      if (!detail.src || !detail.src.includes('-detail.jpg')) {
+        throw new Error(`Detail image invalid for ${p.id}: ${detail.src}`)
+      }
+
+      const hero = getProductImage(p, p.id, 'hero')
+      if (!hero.src || (!hero.src.endsWith('.png') && !hero.src.endsWith('.jpg'))) {
+        throw new Error(`Hero image invalid for ${p.id}: ${hero.src}`)
+      }
+    }
+  })
+
   // 2. Utility & Formatter Tests
   console.log('\n💰 2. Utility & Formatter Tests:')
   test('formatINR converts paise to Indian Rupee symbol', () => {

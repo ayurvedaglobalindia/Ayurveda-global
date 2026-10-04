@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { PriceDisplay } from '@/components/ui/PriceDisplay'
 import { QuantitySelector } from '@/components/ui/QuantitySelector'
 import { ProductCard } from '@/components/product/ProductCard'
+import { getProductImage } from '@/lib/products/registry'
 import { formatINR } from '@/lib/utils/formatters'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useCartStore } from '@/store/cartStore'
@@ -88,13 +89,13 @@ function WishlistItemCard({
   onMoveToCart: (item: WishlistItem) => void
   onRemove: (productId: string, variantId?: string) => void
 }) {
-  const primaryImage = item.product.images.find(img => img.isPrimary) || item.product.images[0]
+  const primaryImage = getProductImage(item.product, item.productId, 'card')
   const currentPrice = item.product.variants.find(v => v.id === item.variantId)?.price || item.product.price
   const compareAtPrice = item.product.variants.find(v => v.id === item.variantId)?.compareAtPrice || item.product.compareAtPrice
 
   return (
     <article className="card-luxury rounded-2xl overflow-hidden group relative">
-      <div className="relative aspect-square overflow-hidden bg-[#061A10]">
+      <div className="relative aspect-[4/5] overflow-hidden bg-[#061A10]">
         <Link href={`/product/${item.product.slug}`}>
           <Image
             src={primaryImage.src}

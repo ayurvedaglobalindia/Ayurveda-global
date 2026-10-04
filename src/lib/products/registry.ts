@@ -41,8 +41,10 @@ Each vegetarian capsule delivers high-grade standardized extracts of Ashwagandha
     shortDescription: 'Premium Ayurvedic revitalization formula with 60 vegetarian capsules to boost physical stamina, inner strength, and sustained vitality.',
     category: 'supplements',
     images: [
-      { src: '/images/products/body-essential-nutrition.png', alt: 'BODY Essential Nutrition 60 Capsules - Front Studio Shot', isPrimary: true },
-      { src: '/images/products/vitality-power-combo.jpg', alt: 'BODY Essential Nutrition with StayMax+ Combo Set', isPrimary: false },
+      { src: '/images/products/body-essential-nutrition-card.jpg', alt: 'BODY Essential Nutrition 60 Capsules - Front Studio Shot', isPrimary: true },
+      { src: '/images/products/body-essential-nutrition.png', alt: 'BODY Essential Nutrition 60 Capsules - Editorial Presentation', isPrimary: false },
+      { src: '/images/products/body-essential-nutrition-detail.jpg', alt: 'BODY Essential Nutrition - Pure Botanical Extracts & Capsules', isPrimary: false },
+      { src: '/images/products/body-essential-nutrition-thumb.jpg', alt: 'BODY Essential Nutrition - Square Thumbnail', isPrimary: false },
     ],
     price: 149900,
     compareAtPrice: 199900,
@@ -106,8 +108,10 @@ Unlike harsh chemical alternatives, STAYMAX+ absorbs cleanly into the skin withi
     shortDescription: 'Clinically tested fast-acting herbal delay spray formulated to prolong endurance, enhance control, and deliver confident intimate moments without numbness.',
     category: 'personal-care',
     images: [
-      { src: '/images/products/staymax-delay-spray.png', alt: 'STAYMAX+ Delay Spray 30ml - Studio Product Photography', isPrimary: true },
-      { src: '/images/products/vitality-power-combo.jpg', alt: 'STAYMAX+ Delay Spray in Vitality Power Combo', isPrimary: false },
+      { src: '/images/products/staymax-delay-spray-card.jpg', alt: 'STAYMAX+ Delay Spray 30ml - Studio Product Photography', isPrimary: true },
+      { src: '/images/products/staymax-delay-spray.png', alt: 'STAYMAX+ Delay Spray 30ml - Editorial Presentation', isPrimary: false },
+      { src: '/images/products/staymax-delay-spray-detail.jpg', alt: 'STAYMAX+ Delay Spray - Botanical Skin Conditioning Detail', isPrimary: false },
+      { src: '/images/products/staymax-delay-spray-thumb.jpg', alt: 'STAYMAX+ Delay Spray - Square Thumbnail', isPrimary: false },
     ],
     price: 89900,
     compareAtPrice: 129900,
@@ -175,9 +179,10 @@ Experience complete inside-out vitality: build sustained daily energy while mast
     shortDescription: 'The ultimate dual-action kit: 1x BODY Essential Nutrition (60 Capsules) + 1x STAYMAX+ Delay Spray (30 ml). Save 29% with free discreet delivery.',
     category: 'wellness',
     images: [
-      { src: '/images/products/vitality-power-combo.jpg', alt: 'Vitality & Performance Power Combo Pack with Red Gift Ribbon', isPrimary: true },
-      { src: '/images/products/body-essential-nutrition.png', alt: 'BODY Essential Nutrition 60 Capsules Included in Combo', isPrimary: false },
-      { src: '/images/products/staymax-delay-spray.png', alt: 'STAYMAX+ Delay Spray 30ml Included in Combo', isPrimary: false },
+      { src: '/images/products/vitality-power-combo-card.jpg', alt: 'Vitality & Performance Power Combo - Studio Showcase', isPrimary: true },
+      { src: '/images/products/vitality-power-combo.jpg', alt: 'Vitality & Performance Power Combo Pack with Red Gift Ribbon', isPrimary: false },
+      { src: '/images/products/vitality-power-combo-detail.jpg', alt: 'Vitality Power Combo - Ayurvedic Rasayana Botanical Base Detail', isPrimary: false },
+      { src: '/images/products/vitality-power-combo-thumb.jpg', alt: 'Vitality Power Combo - Square Thumbnail', isPrimary: false },
     ],
     price: 199900,
     compareAtPrice: 279800,
@@ -273,99 +278,44 @@ export function getRelatedProducts(currentProductId: string, limit = 4): Product
     .slice(0, limit)
 }
 
+export type ProductImageVariant = 'card' | 'thumb' | 'hero' | 'detail' | 'default'
+
 /**
  * Bulletproof product image resolver.
  * Handles Product objects, CartItems, DB entities (images_json), legacy string image URLs,
- * and falls back to authenticated high-resolution static assets.
+ * and returns tailored crops ('card' 4:5, 'thumb' 1:1, 'hero' full shoot, 'detail' botanical).
  */
 export function getProductImage(
   productOrItem?: any,
-  fallbackId?: string
+  fallbackId?: string,
+  variant: ProductImageVariant = 'card'
 ): { src: string; alt: string; isPrimary: boolean } {
-  const fallbackAssets: Record<string, { src: string; alt: string }> = {
+  const cropMap: Record<string, Record<ProductImageVariant, string>> = {
     'body-essential-nutrition': {
-      src: '/images/products/body-essential-nutrition.png',
-      alt: 'BODY Essential Nutrition (60 Capsules)',
+      card: '/images/products/body-essential-nutrition-card.jpg',
+      thumb: '/images/products/body-essential-nutrition-thumb.jpg',
+      hero: '/images/products/body-essential-nutrition.png',
+      detail: '/images/products/body-essential-nutrition-detail.jpg',
+      default: '/images/products/body-essential-nutrition-card.jpg',
     },
     'staymax-delay-spray': {
-      src: '/images/products/staymax-delay-spray.png',
-      alt: 'STAYMAX+ Delay Spray (30 ml)',
+      card: '/images/products/staymax-delay-spray-card.jpg',
+      thumb: '/images/products/staymax-delay-spray-thumb.jpg',
+      hero: '/images/products/staymax-delay-spray.png',
+      detail: '/images/products/staymax-delay-spray-detail.jpg',
+      default: '/images/products/staymax-delay-spray-card.jpg',
     },
     'vitality-power-combo': {
-      src: '/images/products/vitality-power-combo.jpg',
-      alt: 'Vitality & Performance Power Combo',
+      card: '/images/products/vitality-power-combo-card.jpg',
+      thumb: '/images/products/vitality-power-combo-thumb.jpg',
+      hero: '/images/products/vitality-power-combo.jpg',
+      detail: '/images/products/vitality-power-combo-detail.jpg',
+      default: '/images/products/vitality-power-combo-card.jpg',
     },
   }
 
-  const defaultAsset = fallbackAssets['body-essential-nutrition']
-
-  if (!productOrItem && !fallbackId) {
-    return { ...defaultAsset, isPrimary: true }
-  }
-
-  // Handle nested cart/order items
+  // Identify product key
   const product = productOrItem?.product || productOrItem
-
-  // 1. Check if product.images is an array of objects or strings
-  if (Array.isArray(product?.images) && product.images.length > 0) {
-    const primary = product.images.find((img: any) => img && (img.isPrimary || img.primary)) || product.images[0]
-    if (primary) {
-      if (typeof primary === 'string' && primary.trim().length > 0) {
-        return {
-          src: primary,
-          alt: product.name || 'Ayurvedic Wellness Product',
-          isPrimary: true,
-        }
-      }
-      if (typeof primary === 'object' && primary.src) {
-        return {
-          src: primary.src,
-          alt: primary.alt || product.name || 'Ayurvedic Wellness Product',
-          isPrimary: true,
-        }
-      }
-    }
-  }
-
-  // 2. Check if product.image is a direct string
-  if (typeof product?.image === 'string' && product.image.trim().length > 0) {
-    return {
-      src: product.image,
-      alt: product.name || 'Ayurvedic Wellness Product',
-      isPrimary: true,
-    }
-  }
-
-  // 3. Check if product.productImage is a direct string
-  if (typeof product?.productImage === 'string' && product.productImage.trim().length > 0) {
-    return {
-      src: product.productImage,
-      alt: product.productName || product.name || 'Ayurvedic Wellness Product',
-      isPrimary: true,
-    }
-  }
-
-  // 4. Check if images_json string exists (from SQLite)
-  if (typeof product?.images_json === 'string' && product.images_json.trim().length > 0) {
-    try {
-      const parsed = JSON.parse(product.images_json)
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        const first = parsed[0]
-        const src = typeof first === 'string' ? first : first?.src
-        if (src) {
-          return {
-            src,
-            alt: product.name || 'Ayurvedic Wellness Product',
-            isPrimary: true,
-          }
-        }
-      }
-    } catch {
-      // Continue to id-based fallback
-    }
-  }
-
-  // 5. Fallback by identifier (id, slug, productId, name)
   const idToMatch = String(
     fallbackId ||
     product?.id ||
@@ -376,13 +326,43 @@ export function getProductImage(
     ''
   ).toLowerCase()
 
+  let matchedKey = 'body-essential-nutrition'
   if (idToMatch.includes('staymax') || idToMatch.includes('spray') || idToMatch.includes('personal-care')) {
-    return { ...fallbackAssets['staymax-delay-spray'], isPrimary: true }
+    matchedKey = 'staymax-delay-spray'
+  } else if (idToMatch.includes('combo') || idToMatch.includes('vitality') || idToMatch.includes('wellness')) {
+    matchedKey = 'vitality-power-combo'
   }
 
-  if (idToMatch.includes('combo') || idToMatch.includes('vitality') || idToMatch.includes('wellness')) {
-    return { ...fallbackAssets['vitality-power-combo'], isPrimary: true }
+  const productName = product?.name || (
+    matchedKey === 'staymax-delay-spray'
+      ? 'STAYMAX+ Delay Spray (30 ml)'
+      : matchedKey === 'vitality-power-combo'
+      ? 'Vitality & Performance Power Combo'
+      : 'BODY Essential Nutrition (60 Capsules)'
+  )
+
+  // 1. If product.images array exists and requested variant is matched in it
+  if (Array.isArray(product?.images) && product.images.length > 0) {
+    if (variant === 'thumb') {
+      const thumb = product.images.find((img: any) => typeof img?.src === 'string' && img.src.includes('-thumb'))
+      if (thumb) return { src: thumb.src, alt: thumb.alt || productName, isPrimary: true }
+    } else if (variant === 'card') {
+      const card = product.images.find((img: any) => typeof img?.src === 'string' && img.src.includes('-card'))
+      if (card) return { src: card.src, alt: card.alt || productName, isPrimary: true }
+    } else if (variant === 'detail') {
+      const detail = product.images.find((img: any) => typeof img?.src === 'string' && img.src.includes('-detail'))
+      if (detail) return { src: detail.src, alt: detail.alt || productName, isPrimary: true }
+    } else if (variant === 'hero') {
+      const hero = product.images.find((img: any) => typeof img?.src === 'string' && (img.src.endsWith('.png') || img.src.endsWith('.jpg')) && !img.src.includes('-thumb') && !img.src.includes('-card') && !img.src.includes('-detail'))
+      if (hero) return { src: hero.src, alt: hero.alt || productName, isPrimary: true }
+    }
   }
 
-  return { ...defaultAsset, isPrimary: true }
+  // 2. Return tailored crop from cropMap
+  const variantSrc = cropMap[matchedKey]?.[variant] || cropMap[matchedKey]?.card || cropMap['body-essential-nutrition'].card
+  return {
+    src: variantSrc,
+    alt: productName,
+    isPrimary: true,
+  }
 }

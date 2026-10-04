@@ -129,40 +129,39 @@ export function EditorialHero() {
 
           {/* Right Column (Apothecary Arched Showcase & Product Pedestal) */}
           <div className="lg:col-span-5 flex justify-center relative">
-            <div className="relative w-full max-w-[220px] sm:max-w-[250px] aspect-[4/5] flex items-center justify-center">
+            <div className="relative w-full max-w-[260px] sm:max-w-[290px] aspect-[4/5] flex flex-col justify-between items-center p-3.5 sm:p-4 rounded-t-[80px] rounded-b-2xl bg-gradient-to-b from-[#13281C] via-[#0E1E14] to-[#0A160F] border border-[#C2A265]/30 shadow-2xl overflow-hidden group">
               
-              {/* Classical Arch Frame Background */}
-              <div className="absolute inset-0 rounded-t-[80px] rounded-b-xl bg-gradient-to-b from-[#13281C] via-[#0E1E14] to-[#0A160F] border border-[#C2A265]/25 shadow-xl p-3.5 sm:p-4 flex flex-col justify-between">
-                
-                {/* Arch Top Header */}
-                <div className="text-center pt-0.5">
-                  <span className="inline-block px-2 py-0.5 rounded-full bg-[#162D1F] border border-[#C2A265]/30 text-[8px] sm:text-[9px] tracking-[0.2em] uppercase text-[#D4B678] font-semibold">
-                    Master Rasayana Series
-                  </span>
-                </div>
-
-                {/* Pedestal Base Hallmark Strip */}
-                <div className="border-t border-[#C2A265]/20 pt-2 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-1 text-[#D4B678] font-medium text-[9px] sm:text-[10px]">
-                    <Leaf className="w-3 h-3 text-[#C2A265] flex-shrink-0" />
-                    <span>100% Herbal Actives</span>
-                  </div>
-                  <span className="text-[8px] sm:text-[9px] text-[#A6A094] uppercase tracking-wider font-mono">AVG-2026-R</span>
-                </div>
+              {/* Arch Top Header */}
+              <div className="text-center pt-1 z-10">
+                <span className="inline-block px-3 py-0.5 rounded-full bg-[#162D1F] border border-[#C2A265]/40 text-[8.5px] sm:text-[9.5px] tracking-[0.2em] uppercase text-[#D4B678] font-bold">
+                  Master Rasayana Series
+                </span>
               </div>
 
-              {/* Product Photography on Architectural Pedestal */}
-              <div className="relative z-10 w-36 sm:w-44 h-44 sm:h-52">
+              {/* Product Photography Showcase with Direct Link */}
+              <Link
+                href="/product/vitality-power-combo"
+                className="relative z-10 w-full h-[72%] block my-auto"
+                aria-label="View Vitality & Performance Power Combo"
+              >
                 <Image
-                  src="/images/products/vitality-power-combo.jpg"
+                  src="/images/products/vitality-power-combo-card.jpg"
                   alt="Ayur Veda Global Vitality Power Combo - Ayurvedic Rasayana Capsules & Topical Elixir"
                   fill
                   priority
-                  className="object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.85)] hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 180px, 220px"
+                  className="object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.9)] group-hover:scale-105 transition-transform duration-500 rounded-xl"
+                  sizes="(max-width: 768px) 240px, 280px"
                 />
-              </div>
+              </Link>
 
+              {/* Pedestal Base Hallmark Strip */}
+              <div className="w-full border-t border-[#C2A265]/20 pt-2 flex items-center justify-between text-xs z-10">
+                <div className="flex items-center gap-1.5 text-[#D4B678] font-medium text-[9.5px] sm:text-[10.5px]">
+                  <Leaf className="w-3 h-3 text-[#C2A265] flex-shrink-0" />
+                  <span>100% Classical Actives</span>
+                </div>
+                <span className="text-[8.5px] sm:text-[9.5px] text-[#A6A094] uppercase tracking-wider font-mono">AVG-2026-R</span>
+              </div>
             </div>
           </div>
 

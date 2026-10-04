@@ -34,7 +34,7 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
     setIsMounted(true)
   }, [])
 
-  const primaryImage = getProductImage(product, product.id)
+  const primaryImage = getProductImage(product, product.id, variant === 'compact' ? 'thumb' : 'card')
   const hasDiscount = product.compareAtPrice && product.compareAtPrice > product.price
   const discountPercentage = hasDiscount
     ? Math.round(((product.compareAtPrice! - product.price) / product.compareAtPrice!) * 100)
@@ -184,7 +184,7 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
             src={primaryImage.src}
             alt={primaryImage.alt}
             fill
-            className="object-contain p-1 group-hover:scale-105 transition-transform duration-500"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
             sizes="80px"
           />
         </div>
@@ -224,7 +224,7 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
             alt={primaryImage.alt}
             fill
             priority={product.id === 'vitality-power-combo'}
-            className="object-contain p-4 transition-transform duration-700 ease-out group-hover:scale-108"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
 
@@ -317,15 +317,10 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
             <Link href={`/product/${product.slug}`}>{product.name}</Link>
           </h3>
 
-          {/* Pill Subtitle */}
-          <p className="text-[11px] sm:text-xs text-ayur-sand font-medium mt-1 tracking-wide flex items-center gap-1">
-            <Sparkles className="w-2.5 h-2.5 text-ayur-gold flex-shrink-0" />
+          {/* Pill Subtitle - Clean single-line formula highlight */}
+          <p className="text-[11px] sm:text-xs text-ayur-sand font-medium mt-1 tracking-wide flex items-center gap-1.5">
+            <Sparkles className="w-3 h-3 text-ayur-gold flex-shrink-0" />
             <span className="truncate">{feature.pill}</span>
-          </p>
-
-          {/* Description */}
-          <p className="text-[11px] sm:text-xs text-ayur-stone line-clamp-2 mt-1 leading-snug">
-            {product.shortDescription}
           </p>
         </div>
 

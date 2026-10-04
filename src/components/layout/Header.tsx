@@ -328,11 +328,11 @@ export function Header() {
                         {liveMatchingProducts.length > 0 ? (
                           <div className="space-y-1.5 max-h-64 overflow-y-auto">
                             {liveMatchingProducts.map(product => {
-                              const img = getProductImage(product, product.id)
+                              const img = getProductImage(product, product.id, 'thumb')
                               return (
                                 <Link
                                   key={product.id}
-                                  href={`/product/${product.id}`}
+                                  href={`/product/${product.slug || product.id}`}
                                   onClick={() => {
                                     setIsSearchExpanded(false)
                                     setSearchQuery('')
@@ -344,7 +344,7 @@ export function Header() {
                                       src={img.src}
                                       alt={product.name}
                                       fill
-                                      className="object-contain p-1"
+                                      className="object-cover"
                                       sizes="40px"
                                     />
                                   </div>
@@ -590,11 +590,11 @@ export function Header() {
                   {liveMatchingProducts.length > 0 ? (
                     <div className="space-y-2 max-h-60 overflow-y-auto">
                       {liveMatchingProducts.map(product => {
-                        const img = getProductImage(product, product.id)
+                        const img = getProductImage(product, product.id, 'thumb')
                         return (
                           <Link
                             key={product.id}
-                            href={`/product/${product.id}`}
+                            href={`/product/${product.slug || product.id}`}
                             onClick={() => {
                               setMobileSearchOpen(false)
                               closeSearch()
@@ -607,7 +607,7 @@ export function Header() {
                                 src={img.src}
                                 alt={product.name}
                                 fill
-                                className="object-contain p-1"
+                                className="object-cover"
                                 sizes="44px"
                               />
                             </div>

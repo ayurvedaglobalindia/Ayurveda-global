@@ -194,7 +194,7 @@ export function CheckoutForm() {
       status: 'confirmed',
       paymentMethod: effectivePayment,
       items: items.map(item => {
-        const img = getProductImage(item.product, item.productId)
+        const img = getProductImage(item.product, item.productId, 'thumb')
         const variantName = item.product?.variants?.find(v => v.id === item.variantId)?.name
         return {
           productId: item.productId,
@@ -709,7 +709,7 @@ export function CheckoutForm() {
               {/* Items Compact Strip */}
               <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
                 {items.map(item => {
-                  const resolvedImg = getProductImage(item.product, item.productId)
+                  const resolvedImg = getProductImage(item.product, item.productId, 'thumb')
                   const variantName = item.product?.variants?.find(v => v.id === item.variantId)?.name
                   return (
                     <div
@@ -721,7 +721,7 @@ export function CheckoutForm() {
                           src={resolvedImg.src}
                           alt={item.product.name}
                           fill
-                          className="object-contain p-1"
+                          className="object-cover"
                           sizes="44px"
                         />
                       </div>

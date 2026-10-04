@@ -46,7 +46,12 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
           src={currentImage.src}
           alt={currentImage.alt || alt}
           fill
-          className="object-contain p-4 sm:p-6 transition-transform duration-500 group-hover:scale-105"
+          className={classNames(
+            'transition-transform duration-500 group-hover:scale-105',
+            currentImage.src.includes('-card') || currentImage.src.includes('-detail')
+              ? 'object-cover'
+              : 'object-contain p-2'
+          )}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 450px"
           priority={selectedIndex === 0}
         />
@@ -108,7 +113,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
                 src={image.src}
                 alt={image.alt || alt}
                 fill
-                className="object-contain p-1"
+                className="object-cover"
                 sizes="64px"
               />
             </motion.button>
