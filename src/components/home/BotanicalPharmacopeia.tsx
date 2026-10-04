@@ -99,6 +99,19 @@ const botanicals: Botanical[] = [
     productSlug: 'body-essential-nutrition',
   },
   {
+    name: 'Bhringraj & Amalaki (Keshya Rasayana)',
+    botanical: 'Eclipta alba & Emblica officinalis',
+    sanskrit: 'भृंगराज व आमलकी • Keshya & Rasayana',
+    compounds: 'Wedelolactone Bioactives • Pure Vitamin C & Tannins',
+    target: 'Follicular Regrowth & Scalp Micro-Circulation',
+    description:
+      'Celebrated in Brihat Trayi as the supreme Ayurvedic therapy for hair roots. Wedelolactone and bio-flavonoids penetrate hair follicles, inhibit premature shedding, promote melanin synthesis against greying, and awaken dormant dermal papilla cells.',
+    badge: 'Hair Regrowth',
+    image: '/images/products/hair-regrow-kit-card.jpg',
+    productName: 'HAIR RE-GROW Complete Growth Kit',
+    productSlug: 'hair-regrow-kit',
+  },
+  {
     name: 'Soothing Aloe Vera & Tocopherol',
     botanical: 'Aloe barbadensis & Vit E',
     sanskrit: 'कुमारी • Twachya & Ropana',
@@ -118,7 +131,7 @@ export function BotanicalPharmacopeia() {
   const current = botanicals[selectedHerb]
 
   return (
-    <section className="bg-[#0E1E14] py-8 sm:py-12 lg:py-16 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#0E1E14] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}

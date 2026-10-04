@@ -7,23 +7,23 @@ export const categories: Category[] = [
     slug: 'supplements',
     description: 'Daily stamina, physical strength & holistic Ayurvedic revitalization',
     image: '/images/categories/supplements.svg',
-    productCount: 3,
+    productCount: 4,
   },
   {
     id: 'personal-care',
-    name: 'Men\'s Personal Care',
+    name: 'Personal Care & Vitality',
     slug: 'personal-care',
-    description: 'Topical endurance, long-lasting performance & intimate wellness',
+    description: 'Topical endurance, scalp rejuvenation & intimate wellness',
     image: '/images/categories/personal-care.svg',
-    productCount: 2,
+    productCount: 3,
   },
   {
     id: 'wellness',
-    name: 'Power Combos',
+    name: 'Power Combos & Regrowth Kits',
     slug: 'wellness',
-    description: 'Inside-out synergistic vitality kits for maximum efficacy and savings',
+    description: 'Inside-out synergistic vitality & hair revitalization kits for maximum efficacy',
     image: '/images/categories/wellness.svg',
-    productCount: 1,
+    productCount: 2,
   },
 ]
 
@@ -41,8 +41,9 @@ Each vegetarian capsule delivers high-grade standardized extracts of Ashwagandha
     shortDescription: 'Premium Ayurvedic revitalization formula with 60 vegetarian capsules to boost physical stamina, inner strength, and sustained vitality.',
     category: 'supplements',
     images: [
-      { src: '/images/products/body-essential-nutrition-card.jpg', alt: 'BODY Essential Nutrition 60 Capsules - Front Studio Shot', isPrimary: true },
-      { src: '/images/products/body-essential-nutrition.png', alt: 'BODY Essential Nutrition 60 Capsules - Editorial Presentation', isPrimary: false },
+      { src: '/images/products/body-essential-nutrition-card.jpg', alt: 'BODY Essential Nutrition 60 Capsules - Authentic Studio Bottle Shot', isPrimary: true },
+      { src: '/images/products/body-nutrition/01-primary.jpg', alt: 'BODY Essential Nutrition - Herbal Roots & Ayurvedic Capsules on Rustic Wood', isPrimary: false },
+      { src: '/images/products/body-nutrition/02-gift.jpg', alt: 'BODY Essential Nutrition - Premium Gift Edition with Apothecary Mortar & Pestle', isPrimary: false },
       { src: '/images/products/body-essential-nutrition-detail.jpg', alt: 'BODY Essential Nutrition - Pure Botanical Extracts & Capsules', isPrimary: false },
       { src: '/images/products/body-essential-nutrition-thumb.jpg', alt: 'BODY Essential Nutrition - Square Thumbnail', isPrimary: false },
     ],
@@ -418,6 +419,207 @@ Non-sticky, rapidly absorbed, and free from mineral oils, liquid paraffin, or ar
     createdAt: '2024-03-15T10:00:00Z',
     updatedAt: '2026-09-25T14:00:00Z',
   },
+  {
+    id: 'hair-regrow-kit',
+    slug: 'hair-regrow-kit',
+    name: 'HAIR RE-GROW Complete Care Kit (Capsules + Scalp Oil)',
+    tagline: 'प्रकृति की शक्ति | Clinically Tested Ayurvedic Hair Fall & Regrowth Treatment',
+    description: `Ayur Veda Global's HAIR RE-GROW Complete Care Kit is a comprehensive dual-action Ayurvedic therapy designed to address hair thinning, excessive shedding, and scalp dryness from both inside and outside.
+
+Built on classical Keshya Rasayana principles, the kit pairs 60 pure botanical dietary capsules with 100 mL of nutrient-dense scalp oil. The capsules work internally to detoxify the blood (Rakta Shodhana), pacify aggravated Pitta dosha, and deliver bioavailable micronutrients directly to dormant hair follicles. Simultaneously, the herbal scalp oil moisturizes dry scalp, unclogs hair roots, and boosts local microcirculation.
+
+Enriched with time-tested Ayurvedic treasures including Organic Amla, Bhringraj (The King of Hair), Mulethi (Licorice), Brahmi, Hibiscus flower (Gudhal), and Rosemary leaf extracts. 100% pure Ayurvedic formulation, zero synthetic chemicals, and suitable for both men and women.`,
+    shortDescription: 'Dual-action Ayurvedic hair revitalization course with 60 botanical capsules and 100ml scalp oil for clinically proven hair fall reduction and follicular regrowth.',
+    category: 'wellness',
+    images: [
+      { src: '/images/products/hair-regrow-kit-card.jpg', alt: 'HAIR RE-GROW Complete Care Kit with Organic Herbs', isPrimary: true },
+      { src: '/images/products/hair-regrow/01-lifestyle-kit.jpg', alt: 'HAIR RE-GROW Capsule & Oil with Rosemary & Argan Nuts', isPrimary: false },
+      { src: '/images/products/hair-regrow/02-studio-pack.jpg', alt: 'HAIR RE-GROW Complete Combo Packshot', isPrimary: false },
+      { src: '/images/products/hair-regrow/03-clinical-infographic.jpg', alt: 'HAIR RE-GROW Clinical Benefits & Natural Ingredients Infographic', isPrimary: false },
+      { src: '/images/products/hair-regrow/04-3d-mascot.jpg', alt: 'Ayurveda Global Official Hair Re-Grow Master Poster', isPrimary: false },
+      { src: '/images/products/hair-regrow-kit-detail.jpg', alt: 'HAIR RE-GROW Formula Close-up Detail', isPrimary: false },
+      { src: '/images/products/hair-regrow-kit-thumb.jpg', alt: 'HAIR RE-GROW Kit Square Thumbnail', isPrimary: false },
+    ],
+    price: 189900,
+    compareAtPrice: 249900,
+    variants: [
+      {
+        id: 'hair-regrow-kit-standard',
+        name: '1 Month Full Regrowth Course (Capsules + 100ml Oil)',
+        price: 189900,
+        compareAtPrice: 249900,
+        inventory: 100,
+        sku: 'AVG-HRG-KIT1',
+      },
+      {
+        id: 'hair-regrow-kit-3month',
+        name: '3 Months Intensive Root Restoration Course (Save ₹2,600)',
+        price: 489900,
+        compareAtPrice: 749700,
+        inventory: 40,
+        sku: 'AVG-HRG-KIT3',
+      },
+    ],
+    inventory: {
+      quantity: 100,
+      trackQuantity: true,
+    },
+    tags: ['hair-care', 'hair-growth', 'anti-hairfall', 'ayurvedic', 'bhringraj', 'amla', 'wellness-combo', 'men-women'],
+    ingredients: [
+      'Amla Extract (Emblica officinalis) - Rich in natural Vitamin C & antioxidants',
+      'Bhringraj (Eclipta alba) - Classical herb for follicular activation',
+      'Brahmi (Bacopa monnieri) - Scalp cooling & stress relief',
+      'Mulethi / Licorice (Glycyrrhiza glabra) - Root nourishment & anti-microbial support',
+      'Hibiscus Flower (Hibiscus rosa-sinensis) - Natural conditioning & keratin enhancement',
+      'Rosemary Leaf Essential Oil - Clinical circulation catalyst',
+      'Cold-Pressed Virgin Coconut & Sesame Oil Base',
+    ],
+    usage: 'Capsules: Take 1 capsule twice daily after meals with lukewarm water. Scalp Oil: Apply 5-10 ml gently onto scalp 3 times a week, massaging with fingertips for 5 minutes. Leave on overnight or for at least 1 hour before gentle Ayurvedic washing.',
+    warnings: [
+      'Oil is for external scalp use only.',
+      'Capsules: If pregnant or nursing, consult a qualified Ayurvedic physician before use.',
+      'Store in a cool, dry place away from direct sunlight.',
+    ],
+    ageRestricted: false,
+    seo: {
+      title: 'HAIR RE-GROW Complete Care Kit | Ayurvedic Hair Fall & Regrowth | Ayur Veda Global',
+      description: 'Order authentic Ayurvedic HAIR RE-GROW Kit with capsules and herbal scalp oil. Enriched with Amla, Bhringraj & Rosemary for dense, stronger hair.',
+      keywords: ['hair regrow kit', 'ayurvedic hair fall treatment', 'hair growth oil and capsules', 'bhringraj hair oil', 'ayur veda global'],
+    },
+    createdAt: '2024-03-20T10:00:00Z',
+    updatedAt: '2026-10-04T12:00:00Z',
+  },
+  {
+    id: 'hair-regrow-capsules',
+    slug: 'hair-regrow-capsules',
+    name: 'HAIR RE-GROW Pure Botanical Capsules (60 Capsules)',
+    tagline: 'Helps Restore Dry Hair Hydration | Supports Damaged Hair Repair',
+    description: `HAIR RE-GROW Capsules provide targeted internal nutrition for weak, thinning, and brittle hair. Formulated with high-potency Ayurvedic Rasayana herbs including Amla, Bhringraj, Ashwagandha, and Giloy, this daily dietary supplement delivers crucial bioavailable micro-minerals and phytonutrients that rebuild keratin integrity from the inside out.
+
+Designed to combat stress-induced hair shedding, nutritional deficiencies, and premature thinning, regular use helps restore hair density, fortify roots, and maintain vibrant, shiny strands.`,
+    shortDescription: 'Internal Ayurvedic dietary supplement with 60 vegetarian capsules to hydrate dry hair roots, repair damaged hair, and reduce hair loss.',
+    category: 'supplements',
+    images: [
+      { src: '/images/products/hair-regrow-capsules-card.jpg', alt: 'HAIR RE-GROW 60 Capsules Bottle Shot', isPrimary: true },
+      { src: '/images/products/hair-regrow/capsules-packshot.jpg', alt: 'HAIR RE-GROW Capsules Clean Studio Packshot', isPrimary: false },
+      { src: '/images/products/hair-regrow/capsules-closeup.jpg', alt: 'HAIR RE-GROW Capsules High Detail Bottle', isPrimary: false },
+      { src: '/images/products/hair-regrow/03-clinical-infographic.jpg', alt: 'HAIR RE-GROW Clinical Infographic', isPrimary: false },
+      { src: '/images/products/hair-regrow-capsules-detail.jpg', alt: 'HAIR RE-GROW Capsules Botanical Formulation Detail', isPrimary: false },
+      { src: '/images/products/hair-regrow-capsules-thumb.jpg', alt: 'HAIR RE-GROW Capsules Square Thumbnail', isPrimary: false },
+    ],
+    price: 109900,
+    compareAtPrice: 149900,
+    variants: [
+      {
+        id: 'hair-regrow-capsules-60',
+        name: '60 Capsules (1 Month Pack)',
+        price: 109900,
+        compareAtPrice: 149900,
+        inventory: 120,
+        sku: 'AVG-HRC-60',
+      },
+      {
+        id: 'hair-regrow-capsules-120',
+        name: '120 Capsules (2 Months Value Pack)',
+        price: 199900,
+        compareAtPrice: 299800,
+        inventory: 60,
+        sku: 'AVG-HRC-120',
+      },
+    ],
+    inventory: {
+      quantity: 120,
+      trackQuantity: true,
+    },
+    tags: ['hair-capsules', 'hair-fall-control', 'ayurvedic-supplements', 'amla-capsules', 'bhringraj'],
+    ingredients: [
+      'Amalaki (Emblica officinalis) - 200mg',
+      'Bhringraj (Eclipta alba) - 150mg',
+      'Ashwagandha (Withania somnifera) - 100mg',
+      'Guduchi / Giloy (Tinospora cordifolia) - 50mg',
+      'Shankhpushpi (Convolvulus pluricaulis) - 50mg',
+      'Vegetarian Capsule Shell',
+    ],
+    usage: 'Take 1 capsule twice daily with warm water after meals, or as directed by your physician.',
+    warnings: [
+      'Store in a cool, dry place away from sunlight.',
+      'Keep out of reach of children.',
+    ],
+    ageRestricted: false,
+    seo: {
+      title: 'HAIR RE-GROW Capsules (60 Veg Capsules) | Ayur Veda Global',
+      description: 'Buy Ayurvedic HAIR RE-GROW capsules for strong hair roots, reduced fall, and keratin hydration. 100% natural vegetarian capsules.',
+      keywords: ['hair regrowth capsules', 'ayurvedic hair vitamins', 'hair fall control tablets', 'ayur veda global'],
+    },
+    createdAt: '2024-03-20T10:00:00Z',
+    updatedAt: '2026-10-04T12:00:00Z',
+  },
+  {
+    id: 'hair-regrow-oil',
+    slug: 'hair-regrow-oil',
+    name: 'HAIR RE-GROW Nourishing Ayurvedic Scalp Oil (100 ml)',
+    tagline: 'Moisturizes Dry Hair & Scalp | Helps Strengthen & Protect',
+    description: `HAIR RE-GROW Scalp Oil is a classical Ayurvedic formulation boiled in small batches using traditional Kshir Pak Vidhi. Infused with fresh Bhringraj, Amla, Rosemary essential oil, and Hibiscus into pure cold-pressed Sesame and Coconut oils, it penetrates deeply into the epidermal scalp layer to dislodge product build-up, nourish hair bulbs, and strengthen hair from the root.
+
+Regular scalp massage stimulates circulation, cools the crown, and leaves hair silky, manageable, and visibly thicker without synthetic silicones or mineral oil.`,
+    shortDescription: 'Deep-nourishing Ayurvedic scalp oil with Amla, Bhringraj, and Rosemary for dry scalp hydration, follicle stimulation, and root fortification.',
+    category: 'personal-care',
+    images: [
+      { src: '/images/products/hair-regrow-oil-card.jpg', alt: 'HAIR RE-GROW 100ml Scalp Oil Bottle', isPrimary: true },
+      { src: '/images/products/hair-regrow/oil-packshot.jpg', alt: 'HAIR RE-GROW Scalp Oil Clean Studio Packshot', isPrimary: false },
+      { src: '/images/products/hair-regrow/oil-closeup.jpg', alt: 'HAIR RE-GROW Scalp Oil Detail Bottle', isPrimary: false },
+      { src: '/images/products/hair-regrow/03-clinical-infographic.jpg', alt: 'HAIR RE-GROW Oil Clinical Benefits Infographic', isPrimary: false },
+      { src: '/images/products/hair-regrow-oil-detail.jpg', alt: 'HAIR RE-GROW Scalp Oil Botanical Formula Detail', isPrimary: false },
+      { src: '/images/products/hair-regrow-oil-thumb.jpg', alt: 'HAIR RE-GROW Scalp Oil Square Thumbnail', isPrimary: false },
+    ],
+    price: 89900,
+    compareAtPrice: 119900,
+    variants: [
+      {
+        id: 'hair-regrow-oil-100ml',
+        name: 'Single Bottle (100 ml)',
+        price: 89900,
+        compareAtPrice: 119900,
+        inventory: 150,
+        sku: 'AVG-HRO-100',
+      },
+      {
+        id: 'hair-regrow-oil-200ml',
+        name: 'Twin Pack (2 x 100 ml - Save ₹800)',
+        price: 159900,
+        compareAtPrice: 239800,
+        inventory: 70,
+        sku: 'AVG-HRO-200',
+      },
+    ],
+    inventory: {
+      quantity: 150,
+      trackQuantity: true,
+    },
+    tags: ['hair-oil', 'scalp-care', 'anti-dandruff', 'ayurvedic-oil', 'bhringraj-oil', 'rosemary-oil'],
+    ingredients: [
+      'Til Taila (Sesamum indicum oil) - 50%',
+      'Narikela Taila (Cocos nucifera oil) - 30%',
+      'Bhringraj (Eclipta alba) leaf extract - 10%',
+      'Amalaki (Emblica officinalis) fruit extract - 5%',
+      'Japapushpa (Hibiscus rosa-sinensis) flower extract - 3%',
+      'Rosemary (Rosmarinus officinalis) leaf essential oil - 2%',
+    ],
+    usage: 'Part your hair and gently massage 5 to 10 ml of oil into your scalp using your fingertips. Leave for at least 1 hour or overnight before rinsing with a mild cleanser.',
+    warnings: [
+      'For external scalp and hair application only.',
+      'Avoid contact with eyes. If contact occurs, rinse immediately with clear water.',
+      'Store in a cool and dry location.',
+    ],
+    ageRestricted: false,
+    seo: {
+      title: 'HAIR RE-GROW Ayurvedic Scalp Oil (100 ml) | Ayur Veda Global',
+      description: 'Shop pure Ayurvedic HAIR RE-GROW hair oil with Bhringraj, Amla and Rosemary. Nourishes scalp, stops shedding, and stimulates hair follicles.',
+      keywords: ['ayurvedic hair oil', 'bhringraj scalp oil', 'hair regrowth oil', 'ayur veda global'],
+    },
+    createdAt: '2024-03-20T10:00:00Z',
+    updatedAt: '2026-10-04T12:00:00Z',
+  },
 ]
 
 export function getProductById(id: string): Product | undefined {
@@ -513,6 +715,27 @@ export function getProductImage(
       detail: '/images/products/ashwagandha-root-extract-detail.jpg',
       default: '/images/products/ashwagandha-root-extract-card.jpg',
     },
+    'hair-regrow-kit': {
+      card: '/images/products/hair-regrow-kit-card.jpg',
+      thumb: '/images/products/hair-regrow-kit-thumb.jpg',
+      hero: '/images/products/hair-regrow-kit-card.jpg',
+      detail: '/images/products/hair-regrow-kit-detail.jpg',
+      default: '/images/products/hair-regrow-kit-card.jpg',
+    },
+    'hair-regrow-capsules': {
+      card: '/images/products/hair-regrow-capsules-card.jpg',
+      thumb: '/images/products/hair-regrow-capsules-thumb.jpg',
+      hero: '/images/products/hair-regrow-capsules-card.jpg',
+      detail: '/images/products/hair-regrow-capsules-detail.jpg',
+      default: '/images/products/hair-regrow-capsules-card.jpg',
+    },
+    'hair-regrow-oil': {
+      card: '/images/products/hair-regrow-oil-card.jpg',
+      thumb: '/images/products/hair-regrow-oil-thumb.jpg',
+      hero: '/images/products/hair-regrow-oil-card.jpg',
+      detail: '/images/products/hair-regrow-oil-detail.jpg',
+      default: '/images/products/hair-regrow-oil-card.jpg',
+    },
     'vajikara-gold-vitality-oil': {
       card: '/images/products/vajikara-gold-vitality-oil-card.jpg',
       thumb: '/images/products/vajikara-gold-vitality-oil-thumb.jpg',
@@ -535,7 +758,15 @@ export function getProductImage(
   ).toLowerCase()
 
   let matchedKey = 'body-essential-nutrition'
-  if (idToMatch.includes('shilajit') && !idToMatch.includes('combo')) {
+  if (idToMatch.includes('hair') || idToMatch.includes('regrow')) {
+    if (idToMatch.includes('capsule')) {
+      matchedKey = 'hair-regrow-capsules'
+    } else if (idToMatch.includes('oil')) {
+      matchedKey = 'hair-regrow-oil'
+    } else {
+      matchedKey = 'hair-regrow-kit'
+    }
+  } else if (idToMatch.includes('shilajit') && !idToMatch.includes('combo')) {
     matchedKey = 'himalayan-shilajit-resin'
   } else if (idToMatch.includes('ashwagandha') && !idToMatch.includes('body')) {
     matchedKey = 'ksm66-ashwagandha-root-extract'
@@ -558,6 +789,12 @@ export function getProductImage(
       ? 'KSM-66 Organic Ashwagandha (60 Capsules)'
       : matchedKey === 'vajikara-gold-vitality-oil'
       ? 'Vajikara Gold Muscular & Intimate Vitality Oil (50 ml)'
+      : matchedKey === 'hair-regrow-kit'
+      ? 'HAIR RE-GROW Complete Growth Kit (Oil + Capsules)'
+      : matchedKey === 'hair-regrow-capsules'
+      ? 'HAIR RE-GROW Pure Ayurvedic Botanical Capsules'
+      : matchedKey === 'hair-regrow-oil'
+      ? 'HAIR RE-GROW Ayurvedic Scalp Oil (100 ml)'
       : 'BODY Essential Nutrition (60 Capsules)'
   )
 

@@ -73,6 +73,16 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
   }
 
   const handleWhatsAppOrder = () => {
+    if (!isAuthenticated) {
+      onClose()
+      openModal('auth-gate', {
+        product,
+        quantity,
+        mode: 'buy-now',
+      })
+      return
+    }
+
     const primaryAddr = user?.addresses?.[0]
     const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
     const message = buildProductEnquiryMessage({

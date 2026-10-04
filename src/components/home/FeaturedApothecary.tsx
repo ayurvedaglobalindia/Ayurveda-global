@@ -22,7 +22,7 @@ import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappSt
 import type { Product } from '@/types'
 
 export function FeaturedApothecary() {
-  const [activeCategory, setActiveCategory] = useState<'all' | 'supplements' | 'personal-care' | 'combos'>('all')
+  const [activeCategory, setActiveCategory] = useState<'all' | 'supplements' | 'personal-care' | 'combos' | 'hair-regrow'>('all')
   const [selectedVariants, setSelectedVariants] = useState<Record<string, string>>({
     'body-essential-nutrition': 'body-essential-nutrition-60',
     'staymax-delay-spray': 'staymax-delay-spray-30ml',
@@ -30,6 +30,9 @@ export function FeaturedApothecary() {
     'himalayan-shilajit-resin': 'himalayan-shilajit-resin-20g',
     'ksm66-ashwagandha-root-extract': 'ksm66-ashwagandha-60',
     'vajikara-gold-vitality-oil': 'vajikara-gold-vitality-oil-50ml',
+    'hair-regrow-kit': 'hair-regrow-kit-standard',
+    'hair-regrow-capsules': 'hair-regrow-capsules-60',
+    'hair-regrow-oil': 'hair-regrow-oil-100ml',
   })
   const [addedNotice, setAddedNotice] = useState<string | null>(null)
 
@@ -40,9 +43,10 @@ export function FeaturedApothecary() {
 
   const filteredProducts = allProducts.filter((p) => {
     if (activeCategory === 'all') return true
-    if (activeCategory === 'supplements') return p.category === 'supplements'
-    if (activeCategory === 'personal-care') return p.category === 'personal-care'
-    if (activeCategory === 'combos') return p.category === 'wellness'
+    if (activeCategory === 'hair-regrow') return p.id.includes('hair') || p.tags?.some((t) => t.includes('hair'))
+    if (activeCategory === 'supplements') return p.category === 'supplements' && !p.id.includes('hair')
+    if (activeCategory === 'personal-care') return p.category === 'personal-care' && !p.id.includes('hair')
+    if (activeCategory === 'combos') return p.category === 'wellness' && !p.id.includes('hair')
     return true
   })
 
@@ -71,6 +75,16 @@ export function FeaturedApothecary() {
 
   const handleWhatsAppOrder = (product: Product) => {
     const variantId = selectedVariants[product.id] || product.variants?.[0]?.id
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        product,
+        variantId,
+        mode: 'buy-now',
+        quantity: 1,
+      })
+      return
+    }
+
     const variant = product.variants?.find((v) => v.id === variantId) || product.variants?.[0]
     const variantName = variant?.name || product.name
     const primaryAddr = user?.addresses?.[0]
@@ -112,9 +126,10 @@ export function FeaturedApothecary() {
           <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mt-5">
             {[
               { id: 'all', label: 'All Formulations', count: allProducts.length },
-              { id: 'supplements', label: 'Daily Stamina & Energy', count: allProducts.filter(p => p.category === 'supplements').length },
-              { id: 'personal-care', label: 'Intimate Control & Delay', count: allProducts.filter(p => p.category === 'personal-care').length },
-              { id: 'combos', label: 'Master Synergy Kits', count: allProducts.filter(p => p.category === 'wellness').length },
+              { id: 'supplements', label: 'Daily Stamina & Energy', count: allProducts.filter(p => p.category === 'supplements' && !p.id.includes('hair')).length },
+              { id: 'personal-care', label: 'Intimate Control & Delay', count: allProducts.filter(p => p.category === 'personal-care' && !p.id.includes('hair')).length },
+              { id: 'combos', label: 'Master Synergy Kits', count: allProducts.filter(p => p.category === 'wellness' && !p.id.includes('hair')).length },
+              { id: 'hair-regrow', label: 'Hair Re-Grow Line', count: allProducts.filter(p => p.id.includes('hair')).length },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -160,12 +175,32 @@ export function FeaturedApothecary() {
               : 0
             const cardImage = getProductImage(product, product.id, 'card')
 
-            const bioactivesSnippet =
-              product.id === 'body-essential-nutrition'
-                ? 'Pure Himalayan Shilajit • Ashwagandha 5% • 60 Vegetarian Capsules'
+            const badgeLabel =
+              product.id === 'vitality-power-combo'
+                ? 'Master Synergy'
+                : product.id === 'body-essential-nutrition'
+                ? 'Flagship Rasayana'
+                : product.id === 'hair-regrow-kit'
+                ? 'Dual Therapy Kit'
+                : product.id === 'hair-regrow-oil'
+                ? 'Ayurvedic Scalp Oil'
+                : product.id === 'hair-regrow-capsules'
+                ? 'Hair Nutrients'
+                : product.id === 'himalayan-shilajit-resin'
+                ? 'Gold Grade Shilajit'
+                : product.id === 'ksm66-ashwagandha-root-extract'
+                ? 'KSM-66 Adaptogen'
+                : product.id === 'vajikara-gold-vitality-oil'
+                ? 'Intimate Vitality Oil'
                 : product.id === 'staymax-delay-spray'
-                ? 'Calibrated Topical Delay Spray • Non-Numbing Intimate Control • 30ml'
-                : 'Inside-Out Synergy Kit • Cellular Stamina + Instant Endurance'
+                ? 'Topical Delay Elixir'
+                : 'Pure Classical'
+
+            const bioactivesSnippet =
+              product.shortDescription ||
+              (product.ingredients && product.ingredients.length > 0
+                ? product.ingredients.slice(0, 3).map((i) => i.split('(')[0].trim()).join(' • ')
+                : product.tagline)
 
             return (
               <div
@@ -177,11 +212,7 @@ export function FeaturedApothecary() {
                   {/* Subtle Badge */}
                   <div className="absolute top-3 left-3 z-10">
                     <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-wider font-bold bg-[#0B150F]/90 backdrop-blur-md border border-[#C2A265]/40 text-[#FAF7EE] shadow-md">
-                      {product.id === 'vitality-power-combo'
-                        ? 'Master Synergy'
-                        : product.id === 'body-essential-nutrition'
-                        ? 'Flagship Rasayana'
-                        : 'Topical Elixir'}
+                      {badgeLabel}
                     </span>
                   </div>
 

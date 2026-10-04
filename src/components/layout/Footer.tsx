@@ -7,7 +7,6 @@ import { motion } from 'framer-motion'
 import {
   Instagram,
   Facebook,
-  Twitter,
   Youtube,
   Truck,
   Shield,
@@ -221,10 +220,9 @@ export function Footer() {
             {/* Social Icons */}
             <div className="flex items-center gap-2.5 pt-2 border-t border-[#C2A265]/15">
               {[
-                { icon: Instagram, href: 'https://instagram.com/ayurvedaglobal', label: 'Instagram' },
-                { icon: Facebook, href: 'https://facebook.com/ayurvedaglobal', label: 'Facebook' },
-                { icon: Twitter, href: 'https://twitter.com/ayurvedaglobal', label: 'Twitter' },
-                { icon: Youtube, href: 'https://youtube.com/ayurvedaglobal', label: 'YouTube' },
+                { icon: Instagram, href: 'https://www.instagram.com/ayurveda.global?stkn=MTFvZHQ2NnltZHlwcA==', label: 'Instagram' },
+                { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61594780446401', label: 'Facebook' },
+                { icon: Youtube, href: 'https://youtube.com/@ayurvedaglobal?si=IDt-zzne1fhgLEJR', label: 'YouTube' },
               ].map(social => (
                 <a
                   key={social.label}

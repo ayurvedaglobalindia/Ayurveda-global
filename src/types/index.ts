@@ -171,6 +171,7 @@ export interface User {
   orders: any[]
   wishlist: string[]
   createdAt: string
+  isPhoneVerified?: boolean
 }
 
 export interface SEOData {

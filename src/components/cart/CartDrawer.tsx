@@ -19,8 +19,8 @@ import { useUIStore } from '@/store/uiStore'
 import { buildWhatsAppUrl, buildOrderWhatsAppMessage } from '@/store/whatsappStore'
 
 export function CartDrawer() {
-  const { isCartDrawerOpen, closeCartDrawer } = useUIStore()
-  const { user } = useUserStore()
+  const { isCartDrawerOpen, closeCartDrawer, openModal } = useUIStore()
+  const { user, isAuthenticated } = useUserStore()
   const { items, couponCode, discount, shipping, tax, getSubtotal, getTotal, updateQuantity, removeItem, removeCoupon, getItemCount } = useCartStore()
   const { applyCoupon: applyCouponStore } = useCartStore()
 
@@ -56,6 +56,12 @@ export function CartDrawer() {
   }
 
   const handleWhatsAppOrder = () => {
+    if (!isAuthenticated) {
+      closeCartDrawer()
+      openModal('auth-gate')
+      return
+    }
+
     const orderId = `ORD-WA-${Date.now().toString().slice(-6)}`
     const primaryAddr = user?.addresses?.[0]
     const message = buildOrderWhatsAppMessage({

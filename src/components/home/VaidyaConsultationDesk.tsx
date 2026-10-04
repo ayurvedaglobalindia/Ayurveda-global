@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { MessageCircle, PhoneCall, ShieldCheck, Clock, Award, CheckCircle2, User, Phone, MapPin } from 'lucide-react'
 import { useUserStore } from '@/store/userStore'
 import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from '@/store/whatsappStore'
+import { normalizeIndianPhone } from '@/lib/auth/otpService'
 
 export function VaidyaConsultationDesk() {
   const { user } = useUserStore()
@@ -12,6 +13,7 @@ export function VaidyaConsultationDesk() {
   const [patientName, setPatientName] = useState('')
   const [patientPhone, setPatientPhone] = useState('')
   const [patientCity, setPatientCity] = useState('')
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   useEffect(() => {
     if (user) {
@@ -33,9 +35,28 @@ export function VaidyaConsultationDesk() {
   ]
 
   const handleStartConsultation = () => {
+    const newErrors: Record<string, string> = {}
+    const finalName = patientName.trim() || user?.name || ''
+    const finalPhone = patientPhone.trim() || user?.phone || ''
+
+    if (!finalName) {
+      newErrors.name = 'Please enter your full name'
+    }
+
+    const phoneVal = normalizeIndianPhone(finalPhone)
+    if (!phoneVal.isValid) {
+      newErrors.phone = phoneVal.error || 'Please enter a valid 10-digit mobile number'
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
+    setErrors({})
     const msg = buildVaidyaConsultationMessage({
-      patientName: patientName.trim() || user?.name || '',
-      patientPhone: patientPhone.trim() || user?.phone || '',
+      patientName: finalName,
+      patientPhone: phoneVal.phone,
       patientCity: patientCity.trim() || (user?.addresses?.[0]?.city ? `${user.addresses[0].city}, ${user.addresses[0].state || ''}` : ''),
       concern: selectedConcern,
       enquiry: `Pranam Vaidya Ji. I would like confidential Ayurvedic guidance regarding: "${selectedConcern}". Please advise me on the recommended herbal dosage, timing, and dietary lifestyle guidelines.`,
@@ -156,25 +177,42 @@ export function VaidyaConsultationDesk() {
                   Step 2: Patient Details
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <div className="relative">
-                    <User className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#C2A265]/60 pointer-events-none" />
-                    <input
-                      type="text"
-                      value={patientName}
-                      onChange={(e) => setPatientName(e.target.value)}
-                      placeholder="Your Full Name"
-                      className="w-full pl-8 pr-2.5 py-1.5 rounded-lg bg-[#12241A] border border-[#C2A265]/25 text-xs text-[#FAF7EE] placeholder-[#7A7468] focus:border-[#C2A265] focus:outline-none"
-                    />
+                  <div>
+                    <div className="relative">
+                      <User className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#C2A265]/60 pointer-events-none" />
+                      <input
+                        type="text"
+                        value={patientName}
+                        onChange={(e) => {
+                          setPatientName(e.target.value)
+                          if (errors.name) setErrors(prev => ({ ...prev, name: '' }))
+                        }}
+                        placeholder="Your Full Name *"
+                        className={`w-full pl-8 pr-2.5 py-1.5 rounded-lg bg-[#12241A] border text-xs text-[#FAF7EE] placeholder-[#7A7468] focus:outline-none transition-all ${
+                          errors.name ? 'border-red-500 focus:border-red-500' : 'border-[#C2A265]/25 focus:border-[#C2A265]'
+                        }`}
+                      />
+                    </div>
+                    {errors.name && <p className="text-[10px] text-red-400 mt-1">{errors.name}</p>}
                   </div>
-                  <div className="relative">
-                    <Phone className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#C2A265]/60 pointer-events-none" />
-                    <input
-                      type="tel"
-                      value={patientPhone}
-                      onChange={(e) => setPatientPhone(e.target.value)}
-                      placeholder="Mobile / WhatsApp No."
-                      className="w-full pl-8 pr-2.5 py-1.5 rounded-lg bg-[#12241A] border border-[#C2A265]/25 text-xs text-[#FAF7EE] placeholder-[#7A7468] focus:border-[#C2A265] focus:outline-none"
-                    />
+                  <div>
+                    <div className="relative">
+                      <Phone className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#C2A265]/60 pointer-events-none" />
+                      <input
+                        type="tel"
+                        maxLength={10}
+                        value={patientPhone}
+                        onChange={(e) => {
+                          setPatientPhone(e.target.value.replace(/\D/g, ''))
+                          if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }))
+                        }}
+                        placeholder="10-Digit Mobile / WhatsApp *"
+                        className={`w-full pl-8 pr-2.5 py-1.5 rounded-lg bg-[#12241A] border text-xs text-[#FAF7EE] placeholder-[#7A7468] focus:outline-none transition-all ${
+                          errors.phone ? 'border-red-500 focus:border-red-500' : 'border-[#C2A265]/25 focus:border-[#C2A265]'
+                        }`}
+                      />
+                    </div>
+                    {errors.phone && <p className="text-[10px] text-red-400 mt-1">{errors.phone}</p>}
                   </div>
                 </div>
                 <div className="relative">

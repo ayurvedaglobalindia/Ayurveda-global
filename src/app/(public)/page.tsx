@@ -4,6 +4,7 @@ import { EditorialHero } from '@/components/home/EditorialHero'
 import { ApothecaryTrustTicker } from '@/components/home/ApothecaryTrustTicker'
 import { FeaturedApothecary } from '@/components/home/FeaturedApothecary'
 import { ApothecaryPillars } from '@/components/home/ApothecaryPillars'
+import { HairRegrowthShowcase } from '@/components/home/HairRegrowthShowcase'
 import { BotanicalPharmacopeia } from '@/components/home/BotanicalPharmacopeia'
 import { TheThirtyDayRitual } from '@/components/home/TheThirtyDayRitual'
 import { VaidyaConsultationDesk } from '@/components/home/VaidyaConsultationDesk'
@@ -47,7 +48,10 @@ export default function HomePage() {
       {/* 4. Four Vedic Pillars of Classical Quality */}
       <ApothecaryPillars />
 
-      {/* 5. The Sacred Pharmacopeia: Interactive Botanical Explorer */}
+      {/* 5. Clinical Hair Revitalization & Creative Innovation Showcase */}
+      <HairRegrowthShowcase />
+
+      {/* 6. The Sacred Pharmacopeia: Interactive Botanical Explorer */}
       <BotanicalPharmacopeia />
 
       {/* 6. The 30-Day Physiological Rejuvenation Ritual */}

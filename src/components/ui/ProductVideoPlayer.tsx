@@ -5,6 +5,7 @@ import { Play, Pause, Volume2, VolumeX, Maximize, Sparkles, ShoppingBag } from '
 import { Button } from './Button'
 import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
 import { useUserStore } from '@/store/userStore'
+import { useUIStore } from '@/store/uiStore'
 
 interface ProductVideoPlayerProps {
   videoSrc?: string
@@ -29,7 +30,8 @@ export function ProductVideoPlayer({
   const [isPlaying, setIsPlaying] = useState(true)
   const [isMuted, setIsMuted] = useState(true)
   const { trackLead } = useWhatsAppStore()
-  const { user } = useUserStore()
+  const { user, isAuthenticated } = useUserStore()
+  const { openModal } = useUIStore()
 
   const togglePlay = () => {
     if (!videoRef.current) return
@@ -56,6 +58,13 @@ export function ProductVideoPlayer({
   }
 
   const handleWhatsAppOrder = () => {
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        mode: 'buy-now',
+      })
+      return
+    }
+
     const primaryAddr = user?.addresses?.[0]
     const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
     const message = buildProductEnquiryMessage({

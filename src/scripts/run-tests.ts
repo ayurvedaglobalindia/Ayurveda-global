@@ -15,13 +15,14 @@ import {
 } from '../lib/utils/formatters'
 import { validateCoupon } from '../lib/coupons'
 import { db } from '../lib/db'
+import { normalizeIndianPhone, sendOTP, verifyOTP } from '../lib/auth/otpService'
 
 let passed = 0
 let failed = 0
 
-function test(name: string, fn: () => void | Promise<void>) {
+async function test(name: string, fn: () => void | Promise<void>) {
   try {
-    fn()
+    await fn()
     console.log(`  \x1b[32m✓\x1b[0m ${name}`)
     passed++
   } catch (err: any) {
@@ -199,8 +200,51 @@ async function runAllTests() {
     if (validateEmail('invalid-email-address')) throw new Error('Malformed email accepted')
   })
 
-  // 6. Database Storage & Retrieval Tests
-  console.log('\n💾 6. Database Storage & Retrieval Tests:')
+  // 6. Mobile OTP Verification Engine Tests
+  console.log('\n📱 6. Mobile OTP Verification Engine Tests:')
+  await test('normalizeIndianPhone cleans +91, spaces, and sanitizes valid numbers', () => {
+    const res = normalizeIndianPhone('+91 98765-43210')
+    if (!res.isValid || res.phone !== '9876543210') {
+      throw new Error(`Expected 9876543210, got ${JSON.stringify(res)}`)
+    }
+  })
+
+  await test('normalizeIndianPhone rejects invalid mobile numbers', () => {
+    const invalid1 = normalizeIndianPhone('1234567890')
+    const invalid2 = normalizeIndianPhone('987654321')
+    if (invalid1.isValid || invalid2.isValid) {
+      throw new Error('Invalid phone numbers were accepted')
+    }
+  })
+
+  await test('sendOTP generates 6-digit cryptographic verification code and enforces cooldown', async () => {
+    const phone = '9876543210'
+    const otpRes = await sendOTP(phone, 'Test Customer')
+    if (!otpRes.success) throw new Error(`OTP dispatch failed: ${otpRes.message}`)
+    if (!otpRes.simulatedOtp || otpRes.simulatedOtp.length !== 6) {
+      throw new Error(`Expected 6-digit OTP, got ${otpRes.simulatedOtp}`)
+    }
+
+    // Cooldown test: immediately attempting to send again should be blocked
+    const cooldownRes = await sendOTP(phone, 'Test Customer')
+    if (cooldownRes.success) throw new Error('Resend cooldown failed to block immediate re-send')
+  })
+
+  await test('verifyOTP accepts correct 6-digit code and rejects wrong code', async () => {
+    const phone = '9876543211'
+    const otpRes = await sendOTP(phone, 'Test Customer')
+    if (!otpRes.success) throw new Error(`sendOTP failed: ${otpRes.message}`)
+    const correctCode = otpRes.simulatedOtp!
+
+    const wrongRes = await verifyOTP(phone, '000000')
+    if (wrongRes.success) throw new Error('Wrong OTP was accepted')
+
+    const validRes = await verifyOTP(phone, correctCode)
+    if (!validRes.success) throw new Error(`Correct OTP rejected: ${validRes.message}`)
+  })
+
+  // 7. Database Storage & Retrieval Tests
+  console.log('\n💾 7. Database Storage & Retrieval Tests:')
   test('Can insert and retrieve an order from database', () => {
     const testOrderId = `TEST-ORD-${Date.now()}`
     const testOrderNumber = testOrderId
@@ -251,6 +295,9 @@ async function runAllTests() {
     '/product/body-essential-nutrition',
     '/product/staymax-delay-spray',
     '/product/vitality-power-combo',
+    '/product/hair-regrow-kit',
+    '/product/hair-regrow-capsules',
+    '/product/hair-regrow-oil',
     '/categories',
     '/about',
     '/contact',

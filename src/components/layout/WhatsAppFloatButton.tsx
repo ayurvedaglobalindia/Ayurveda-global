@@ -6,12 +6,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { classNames } from '@/lib/utils/formatters'
 import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
 import { useUserStore } from '@/store/userStore'
+import { useUIStore } from '@/store/uiStore'
 
 export function WhatsAppFloatButton() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [showTooltip, setShowTooltip] = useState(true)
   const { trackLead } = useWhatsAppStore()
   const { user } = useUserStore()
+  const { openModal } = useUIStore()
 
   useEffect(() => {
     const timer = setTimeout(() => setShowTooltip(false), 5000)
@@ -19,6 +21,12 @@ export function WhatsAppFloatButton() {
   }, [])
 
   const handleWhatsAppClick = (source: 'float' | 'product' | 'checkout' | 'contact') => {
+    if (source === 'checkout' && !user?.phone) {
+      openModal('auth-gate')
+      setIsExpanded(false)
+      return
+    }
+
     const primaryAddr = user?.addresses?.[0]
     const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
     const message = buildProductEnquiryMessage({

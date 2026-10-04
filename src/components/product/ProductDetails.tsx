@@ -149,6 +149,16 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
   }
 
   const handleWhatsAppClick = () => {
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        product,
+        variantId: selectedVariantId,
+        quantity,
+        mode: 'buy-now',
+      })
+      return
+    }
+
     const primaryAddr = user?.addresses?.[0]
     const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
     const currentPrice = currentVariant ? currentVariant.price : product.price

@@ -75,9 +75,9 @@ export function generateOrganizationStructuredData() {
       },
     ],
     sameAs: [
-      'https://www.instagram.com/ayurvedaglobal',
-      'https://www.facebook.com/ayurvedaglobal',
-      'https://twitter.com/ayurvedaglobal',
+      'https://www.instagram.com/ayurveda.global',
+      'https://www.facebook.com/profile.php?id=61594780446401',
+      'https://youtube.com/@ayurvedaglobal',
     ],
     contactPoint: {
       '@type': 'ContactPoint',

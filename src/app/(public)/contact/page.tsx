@@ -11,7 +11,9 @@ import { formatINR } from '@/lib/utils/formatters'
 import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
 import { useWhatsAppStore } from '@/store/whatsappStore'
 import { useUIStore } from '@/store/uiStore'
-
+import { useUserStore } from '@/store/userStore'
+import { useEffect } from 'react'
+import { normalizeIndianPhone } from '@/lib/auth/otpService'
 
 const contactInfo = [
   {
@@ -63,6 +65,7 @@ const enquiryTypes = [
 ]
 
 export default function ContactPage() {
+  const { user } = useUserStore()
   const [formData, setFormData] = useState({
     enquiryType: 'general',
     firstName: '',
@@ -78,6 +81,19 @@ export default function ContactPage() {
   const { trackLead } = useWhatsAppStore()
   const { showToast } = useUIStore()
 
+  useEffect(() => {
+    if (user) {
+      const parts = (user.name || '').split(' ')
+      setFormData(prev => ({
+        ...prev,
+        firstName: prev.firstName || parts[0] || '',
+        lastName: prev.lastName || parts.slice(1).join(' ') || '',
+        phone: prev.phone || user.phone || '',
+        email: prev.email || user.email || '',
+      }))
+    }
+  }, [user])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrors({})
@@ -87,8 +103,13 @@ export default function ContactPage() {
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required'
     if (!formData.email.trim()) newErrors.email = 'Email is required'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email format'
-    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required'
-    else if (!/^[6-9]\d{9}$/.test(formData.phone.replace(/\D/g, ''))) newErrors.phone = 'Invalid Indian phone number'
+    
+    const phoneVal = normalizeIndianPhone(formData.phone)
+    if (!formData.phone.trim()) {
+      newErrors.phone = '10-digit mobile number is required'
+    } else if (!phoneVal.isValid) {
+      newErrors.phone = phoneVal.error || 'Invalid 10-digit Indian phone number'
+    }
     if (!formData.message.trim()) newErrors.message = 'Message is required'
 
     if (Object.keys(newErrors).length > 0) {
@@ -102,8 +123,8 @@ export default function ContactPage() {
 
     trackLead({
       source: 'contact',
-      customerName: `${formData.firstName} ${formData.lastName}`,
-      customerPhone: formData.phone,
+      customerName: `${formData.firstName} ${formData.lastName}`.trim(),
+      customerPhone: phoneVal.phone || formData.phone,
       customerEmail: formData.email,
       quantity: 1,
       pageUrl: typeof window !== 'undefined' ? window.location.href : '',
@@ -119,9 +140,22 @@ export default function ContactPage() {
 
   const handleWhatsAppClick = (type: string) => {
     const fullName = `${formData.firstName} ${formData.lastName}`.trim()
+    const cleanPhone = formData.phone.replace(/\D/g, '')
+
+    if (!formData.firstName.trim() || cleanPhone.length !== 10) {
+      showToast({
+        type: 'warning',
+        title: 'Customer Details Required',
+        message: 'Please provide your Full Name and 10-digit Mobile Number below to connect with WhatsApp support.',
+      })
+      const formEl = document.querySelector('form')
+      if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+
     const message = buildProductEnquiryMessage({
       customerName: fullName,
-      customerPhone: formData.phone.trim(),
+      customerPhone: cleanPhone,
       customerEmail: formData.email.trim(),
       productName: type,
       quantity: 1,
@@ -130,8 +164,8 @@ export default function ContactPage() {
     })
     trackLead({
       source: 'contact',
-      customerName: `${formData.firstName} ${formData.lastName}`,
-      customerPhone: formData.phone,
+      customerName: fullName,
+      customerPhone: cleanPhone,
       customerEmail: formData.email,
       productName: type,
       quantity: 1,

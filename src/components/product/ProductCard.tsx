@@ -123,6 +123,16 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
   const handleWhatsAppClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+
+    if (!isAuthenticated) {
+      openModal('auth-gate', {
+        product,
+        mode: 'buy-now',
+        quantity: 1,
+      })
+      return
+    }
+
     const primaryAddr = user?.addresses?.[0]
     const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
     const message = buildProductEnquiryMessage({
