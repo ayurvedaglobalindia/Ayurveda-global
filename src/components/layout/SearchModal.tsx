@@ -23,14 +23,14 @@ import { formatINR } from '@/lib/utils/formatters'
 import type { Product } from '@/types'
 
 const POPULAR_SEARCHES = [
-  'Himalayan Shilajit Resin',
   'Vitality Power Combo',
   'BODY Essential Nutrition',
   'STAYMAX+ Delay Spray',
-  'KSM-66 Ashwagandha',
-  'Vajikara Gold Oil',
+  'HAIR RE-GROW Kit',
+  'Scalp Revitalizing Oil',
+  'Hair Growth Capsules',
   'Safed Musli',
-  'Fulvic Acid',
+  'Bhringraj Oil',
 ]
 
 const QUICK_CATEGORIES = [
@@ -177,7 +177,7 @@ export function SearchModal() {
                   type="search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search formulations, herbs (e.g. Shilajit, Ashwagandha)..."
+                  placeholder="Search formulations, herbs (e.g. Ashwagandha, Bhringraj, Delay Spray)..."
                   className="w-full bg-transparent text-sm sm:text-base text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none caret-[#C2A265]"
                   autoComplete="off"
                   spellCheck="false"
@@ -295,7 +295,7 @@ export function SearchModal() {
                         No formulations matching &ldquo;{query}&rdquo;
                       </h4>
                       <p className="text-xs text-[#A8A295] max-w-sm mx-auto">
-                        We could not find an exact match. Try searching for &ldquo;Ashwagandha&rdquo;, &ldquo;Shilajit&rdquo;, &ldquo;Delay Spray&rdquo;, or &ldquo;Power Combo&rdquo;.
+                        We could not find an exact match. Try searching for &ldquo;Ashwagandha&rdquo;, &ldquo;Hair Regrowth&rdquo;, &ldquo;Delay Spray&rdquo;, or &ldquo;Power Combo&rdquo;.
                       </p>
                       <button
                         type="button"

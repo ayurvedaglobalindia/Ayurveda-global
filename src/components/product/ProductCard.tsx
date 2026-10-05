@@ -195,27 +195,6 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
         icon: '💧',
       }
     }
-    if (product.id === 'himalayan-shilajit-resin') {
-      return {
-        badge: 'Gold Grade',
-        pill: '16,000+ Ft Pure Himalayan Resin (20g)',
-        icon: '🏔️',
-      }
-    }
-    if (product.id === 'ksm66-ashwagandha-root-extract') {
-      return {
-        badge: 'Pure Extract',
-        pill: 'KSM-66 5% Withanolides Adaptogen',
-        icon: '🌿',
-      }
-    }
-    if (product.id === 'vajikara-gold-vitality-oil') {
-      return {
-        badge: '7-Day Taila',
-        pill: 'Vajikara Medicated Muscular Oil (50ml)',
-        icon: '✨',
-      }
-    }
     if (product.id === 'staymax-delay-spray') {
       return {
         badge: 'Fast Action',

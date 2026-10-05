@@ -29,9 +29,9 @@ const botanicals: Botanical[] = [
     description:
       'Ethically gathered from high-altitude Himalayan rock faces above 16,000 feet, our Shilajit undergoes 21 cycles of Shodhana purification with Triphala decoctions. Acts as a potent cellular catalyst, driving minerals directly into mitochondrial membranes for sustained physical stamina without caffeine jitters.',
     badge: 'Cellular ATP',
-    image: '/images/products/himalayan-shilajit-resin-card.jpg',
-    productName: 'Pure Himalayan Shilajit Resin (Gold Grade)',
-    productSlug: 'himalayan-shilajit-resin',
+    image: '/images/products/vitality-power-combo-card.jpg',
+    productName: 'Vitality & Performance Power Combo',
+    productSlug: 'vitality-power-combo',
   },
   {
     name: 'Organically Grown Ashwagandha',
@@ -42,9 +42,9 @@ const botanicals: Botanical[] = [
     description:
       'Regarded as the King of Ayurvedic Adaptogens. Formulated using premium root extract to optimize free testosterone ratios, down-regulate cortisol-induced stress, and restore neuromuscular vigor after intense physical and mental exertion.',
     badge: 'Cortisol Control',
-    image: '/images/products/ashwagandha-root-extract-card.jpg',
-    productName: 'KSM-66 Organic Ashwagandha (60 Caps)',
-    productSlug: 'ksm66-ashwagandha-root-extract',
+    image: '/images/products/body-essential-nutrition-card.jpg',
+    productName: 'BODY Essential Nutrition (60 Caps)',
+    productSlug: 'body-essential-nutrition',
   },
   {
     name: 'Wildcrafted Safed Musli',
@@ -73,17 +73,17 @@ const botanicals: Botanical[] = [
     productSlug: 'vitality-power-combo',
   },
   {
-    name: 'Malkangani & Akarkara (Jyotishmati)',
-    botanical: 'Celastrus paniculatus & Anacyclus pyrethrum',
-    sanskrit: 'ज्योतिष्मती व अकरकरा • Teekshna & Vrishya',
-    compounds: 'Bioactive Sesquiterpenes • Alkylamides',
-    target: 'Micro-Vascular Circulation & Tissue Firmness',
+    name: 'Pure Rosemary & Bhringraj Taila',
+    botanical: 'Rosmarinus officinalis & Eclipta alba',
+    sanskrit: 'केश संजीवनी तैल • Keshya & Romajanana',
+    compounds: 'Rosmarinic Acid • Camphor • Wedelolactone',
+    target: 'Scalp Dermal Micro-Circulation & Root Nourishment',
     description:
-      'Classical thermogenic botanicals brewed into medicated sesame taila over 7 days. Stimulates local nitric oxide perfusion, enhances dermal elasticity, and restores firmness and tone to fatigued muscular tissues.',
-    badge: 'Tissue Firmness',
-    image: '/images/products/vajikara-gold-vitality-oil-card.jpg',
-    productName: 'Vajikara Gold Vitality Oil (50 ml)',
-    productSlug: 'vajikara-gold-vitality-oil',
+      'Classical therapeutic oil formulation combining Rosemary essential oil with pure Bhringraj and Sesame extract. Calms scalp inflammation, unclogs hair roots, stimulates follicle micro-circulation, and arrests excessive hair fall.',
+    badge: 'Follicle Vigor',
+    image: '/images/products/hair-regrow-oil-card.jpg',
+    productName: 'HAIR RE-GROW Ayurvedic Scalp Oil (100 ml)',
+    productSlug: 'hair-regrow-oil',
   },
   {
     name: 'Kaunch Beej (Velvet Bean)',

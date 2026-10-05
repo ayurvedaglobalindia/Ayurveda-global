@@ -54,8 +54,8 @@ export function Header() {
       description: 'Daily stamina, physical strength & holistic revitalization',
       items: [
         { label: 'BODY Essential Nutrition (60 Caps)', href: '/product/body-essential-nutrition', badge: 'Bestseller' },
-        { label: 'Pure Himalayan Shilajit Resin (20g)', href: '/product/himalayan-shilajit-resin', badge: 'Gold Grade' },
-        { label: 'KSM-66 Organic Ashwagandha (600mg)', href: '/product/ksm66-ashwagandha-root-extract', badge: 'Pure Extract' },
+        { label: 'HAIR RE-GROW Pure Botanical Capsules', href: '/product/hair-regrow-capsules', badge: 'Hair Care' },
+        { label: 'BODY Nutrition (120 Caps Pack)', href: '/product/body-essential-nutrition', badge: 'Save ₹399' },
         { label: 'All Supplements', href: '/shop?category=supplements', badge: '' },
       ],
       cta: { label: 'View All Supplements', href: '/shop?category=supplements' },
@@ -65,8 +65,8 @@ export function Header() {
       description: 'Topical endurance, long-lasting performance & intimate wellness',
       items: [
         { label: 'STAYMAX+ Delay Spray (30ml)', href: '/product/staymax-delay-spray', badge: 'Fast Action' },
-        { label: 'Vajikara Gold Vitality Oil (50ml)', href: '/product/vajikara-gold-vitality-oil', badge: '7-Day Taila' },
-        { label: 'STAYMAX+ Twin Pack (2×30ml)', href: '/product/staymax-delay-spray?variant=60', badge: 'Save 38%' },
+        { label: 'HAIR RE-GROW Scalp Revitalizing Oil (100ml)', href: '/product/hair-regrow-oil', badge: 'Scalp Care' },
+        { label: 'STAYMAX+ Twin Pack (2×30ml)', href: '/product/staymax-delay-spray', badge: 'Save 38%' },
         { label: 'All Personal Care', href: '/shop?category=personal-care', badge: '' },
       ],
       cta: { label: 'View All Personal Care', href: '/shop?category=personal-care' },
@@ -76,7 +76,8 @@ export function Header() {
       description: 'Inside-out synergistic vitality kits for maximum efficacy',
       items: [
         { label: 'Vitality & Performance Power Combo', href: '/product/vitality-power-combo', badge: '29% OFF • Best Value' },
-        { label: 'Deluxe 2-Month Combo', href: '/product/vitality-power-combo?variant=deluxe', badge: 'Save ₹1,897' },
+        { label: 'HAIR RE-GROW Complete Care Kit', href: '/product/hair-regrow-kit', badge: 'Oil + Capsules' },
+        { label: 'Deluxe 2-Month Combo', href: '/product/vitality-power-combo', badge: 'Save ₹1,897' },
         { label: 'All Combos', href: '/shop?category=wellness', badge: '' },
       ],
       cta: { label: 'View All Combos', href: '/shop?category=wellness' },
