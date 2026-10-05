@@ -1,34 +1,34 @@
 import Link from 'next/link'
-import { Sparkles, ArrowLeft, ShoppingBag } from 'lucide-react'
+import { ArrowLeft, ShoppingBag } from 'lucide-react'
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-ayur-obsidian text-ayur-cream flex items-center justify-center px-4 py-16">
-      <div className="max-w-md w-full text-center space-y-6">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-ayur-emerald-card border border-ayur-gold/30 shadow-luxury">
-          <Sparkles className="w-10 h-10 text-ayur-gold" />
+    <div className="min-h-screen bg-[#FAF7F2] text-[#1C1D1F] flex items-center justify-center px-4 py-16">
+      <div className="max-w-md w-full text-center space-y-5">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#FFFFFF] border border-[#999999]/30 shadow-xs">
+          <ShoppingBag className="w-8 h-8 text-[#9E8047]" />
         </div>
 
         <div className="space-y-2">
-          <p className="text-xs uppercase tracking-widest text-ayur-gold font-bold">404 Error</p>
-          <h1 className="text-3xl sm:text-4xl font-serif text-ayur-cream">Sacred Path Not Found</h1>
-          <p className="text-sm text-ayur-sand/80">
-            The page or wellness formulation you are searching for has moved or does not exist.
+          <p className="text-xs uppercase tracking-widest text-[#4E5F52] font-semibold">404 Error</p>
+          <h1 className="text-2xl sm:text-3xl font-heading font-normal text-[#1C1D1F]">Page Not Found</h1>
+          <p className="text-xs sm:text-sm text-[#737373] leading-relaxed">
+            The formulation or page you are looking for has moved or does not exist.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <Link
             href="/"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs uppercase tracking-wider font-bold bg-ayur-gold text-ayur-void hover:bg-ayur-gold-bright transition shadow-lg"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs font-medium bg-[#1C1D1F] text-[#FAF7F2] hover:bg-[#333333] transition-colors shadow-xs"
           >
-            <ArrowLeft className="w-4 h-4" /> Return Home
+            <ArrowLeft className="w-3.5 h-3.5" /> Return Home
           </Link>
           <Link
             href="/shop"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs uppercase tracking-wider font-semibold border border-ayur-gold/30 text-ayur-gold hover:bg-ayur-gold/10 transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs font-medium border border-[#999999]/40 text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors"
           >
-            <ShoppingBag className="w-4 h-4" /> Explore Shop
+            <ShoppingBag className="w-3.5 h-3.5" /> Explore Formulations
           </Link>
         </div>
       </div>

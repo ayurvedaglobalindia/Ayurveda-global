@@ -11,13 +11,13 @@ interface BadgeProps {
 
 export function Badge({ children, variant = 'gold', className, customClass }: BadgeProps) {
   const variantStyles: Record<string, string> = {
-    gold: 'bg-ayur-gold/15 text-ayur-gold-light border border-ayur-gold/30',
-    emerald: 'bg-ayur-sage/15 text-ayur-sage-light border border-ayur-sage/30',
-    age: 'bg-ayur-crimson/15 text-ayur-crimson-light border border-ayur-crimson/30',
-    sale: 'bg-ayur-gold/15 text-ayur-gold-light border border-ayur-gold/30',
-    new: 'bg-ayur-emerald-glow/20 text-ayur-sage-light border border-ayur-emerald-glow/40',
-    'low-stock': 'bg-ayur-copper/15 text-ayur-copper border border-ayur-copper/30',
-    'out-of-stock': 'bg-ayur-stone/20 text-ayur-stone border border-ayur-stone/30',
+    gold: 'bg-[#FAF7F2] text-[#9E8047] border border-[#9E8047]/30',
+    emerald: 'bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30',
+    age: 'bg-rose-50 text-rose-700 border border-rose-200',
+    sale: 'bg-[#FAF7F2] text-[#9E8047] border border-[#9E8047]/30',
+    new: 'bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30',
+    'low-stock': 'bg-amber-50 text-amber-700 border border-amber-200',
+    'out-of-stock': 'bg-gray-100 text-gray-600 border border-gray-200',
   }
 
   return (

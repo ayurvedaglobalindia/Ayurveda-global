@@ -47,9 +47,9 @@ export function Logo({ variant = 'default', className, showText = true, animate 
       </div>
       {showText && (
         <span className={classNames(
-          'font-heading font-medium text-ayur-cream tracking-tight',
+          'font-heading font-medium text-[#1C1D1F] tracking-tight',
           text,
-          variant === 'header' && 'hidden sm:block text-ayur-cream'
+          variant === 'header' && 'hidden sm:block text-[#1C1D1F]'
         )}>
           Ayur Veda Global
         </span>

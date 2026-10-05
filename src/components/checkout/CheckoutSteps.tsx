@@ -28,6 +28,7 @@ import {
 import { useCartStore } from '@/store/cartStore'
 import { useUIStore } from '@/store/uiStore'
 import { useWhatsAppStore } from '@/store/whatsappStore'
+import { trackEvent } from '@/lib/analytics'
 import { useUserStore } from '@/store/userStore'
 import { buildWhatsAppUrl, buildOrderWhatsAppMessage } from '@/store/whatsappStore'
 import { formatINR, calculateShipping, validatePhone, validatePincode, validateEmail } from '@/lib/utils/formatters'
@@ -141,6 +142,14 @@ export function CheckoutForm() {
       }
     }
   }, [user])
+
+  useEffect(() => {
+    trackEvent('checkout_start', {
+      subtotal: getSubtotal(),
+      total: getTotal(),
+      itemsCount: items.length,
+    })
+  }, [])
 
   // Resend Countdown Timer
   useEffect(() => {
@@ -364,6 +373,14 @@ export function CheckoutForm() {
         localStorage.setItem('ayur_orders', JSON.stringify(stored.slice(0, 50)))
       }
     } catch {}
+
+    // Track order conversion in privacy-conscious analytics
+    trackEvent('order_conversion', {
+      orderId,
+      total,
+      itemsCount: items.length,
+      paymentMethod: effectivePayment,
+    })
 
     // Track analytics lead
     trackLead({

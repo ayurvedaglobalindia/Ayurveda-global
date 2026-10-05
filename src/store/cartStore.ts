@@ -34,7 +34,9 @@ export const useCartStore = create<CartStore>()(
     (set, get) => ({
       ...initialState,
 
-      addItem: (product, variantId, quantity = 1) => {
+      addItem: (product: Product, variantId?: string, quantity: number = 1) => {
+        if (!product || !product.id) return
+
         const canonical = getProductById(product.id) || getProductBySlug(product.slug || product.id)
         const baseProduct = canonical ? { ...canonical, ...product } : product
         const resolvedImg = getProductImage(baseProduct, product.id)
@@ -50,50 +52,55 @@ export const useCartStore = create<CartStore>()(
         const variant = variantId
           ? enrichedProduct.variants?.find(v => v.id === variantId)
           : enrichedProduct.variants?.[0]
-        const price = variant?.price || enrichedProduct.price
-        const variantIdToUse = variant?.id || enrichedProduct.variants?.[0]?.id || 'default'
+        const price = variant?.price ?? enrichedProduct.price
+        const variantIdToUse = variantId || variant?.id || 'default'
 
         set(state => {
-          const existingIndex = state.items.findIndex(
-            item => item.productId === enrichedProduct.id && item.variantId === variantIdToUse
+          const currentItems = Array.isArray(state.items) ? state.items : []
+          const existingIndex = currentItems.findIndex(
+            item => item.productId === enrichedProduct.id && (item.variantId === variantIdToUse || (!item.variantId && variantIdToUse === 'default'))
           )
 
           if (existingIndex >= 0) {
-            const newItems = [...state.items]
-            newItems[existingIndex].quantity += quantity
-            newItems[existingIndex].product = enrichedProduct
+            const newItems = [...currentItems]
+            newItems[existingIndex] = {
+              ...newItems[existingIndex],
+              quantity: newItems[existingIndex].quantity + quantity,
+              price,
+              product: enrichedProduct,
+            }
             return { items: newItems }
           }
 
           const newItem: CartItem = {
-            id: `${enrichedProduct.id}-${variantIdToUse}-${Date.now()}`,
+            id: `${enrichedProduct.id}-${variantIdToUse}`,
             productId: enrichedProduct.id,
             variantId: variantIdToUse,
-            quantity,
+            quantity: Math.max(1, quantity),
             price,
             product: enrichedProduct,
           }
-          return { items: [...state.items, newItem] }
+          return { items: [...currentItems, newItem] }
         })
       },
 
-      removeItem: (productId, variantId) => {
+      removeItem: (productId: string, variantId?: string) => {
         set(state => ({
-          items: state.items.filter(
-            item => !(item.productId === productId && item.variantId === variantId)
+          items: (state.items || []).filter(
+            item => !(item.productId === productId && (variantId === undefined || item.variantId === variantId || (!item.variantId && variantId === 'default')))
           ),
         }))
       },
 
-      updateQuantity: (productId, variantId, quantity) => {
+      updateQuantity: (productId: string, variantId: string | undefined, quantity: number) => {
         if (quantity <= 0) {
           get().removeItem(productId, variantId)
           return
         }
 
         set(state => ({
-          items: state.items.map(item =>
-            item.productId === productId && item.variantId === variantId
+          items: (state.items || []).map(item =>
+            item.productId === productId && (variantId === undefined || item.variantId === variantId || (!item.variantId && variantId === 'default'))
               ? { ...item, quantity }
               : item
           ),
@@ -104,7 +111,7 @@ export const useCartStore = create<CartStore>()(
         set(initialState)
       },
 
-      applyCoupon: (code, discount) => {
+      applyCoupon: (code: string, discount: number) => {
         set({ couponCode: code, discount })
       },
 
@@ -112,41 +119,50 @@ export const useCartStore = create<CartStore>()(
         set({ couponCode: undefined, discount: 0 })
       },
 
-      setShipping: (shipping) => {
+      setShipping: (shipping: number) => {
         set({ shipping })
       },
 
-      setTax: (tax) => {
+      setTax: (tax: number) => {
         set({ tax })
       },
 
       getSubtotal: () => {
-        return get().items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+        const items = get().items || []
+        return items.reduce((sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 1), 0)
       },
 
       getTotal: () => {
-        const { items, discount, shipping, tax } = get()
-        const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+        const { items = [], discount = 0, shipping = 0, tax = 0 } = get()
+        const subtotal = items.reduce((sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 1), 0)
         if (items.length === 0) return 0
         const effectiveShipping = shipping > 0 ? shipping : calculateShipping(subtotal).cost
         return Math.max(0, subtotal - discount + effectiveShipping + tax)
       },
 
       getItemCount: () => {
-        return get().items.reduce((sum, item) => sum + item.quantity, 0)
+        const items = get().items || []
+        return items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0)
       },
 
-      isInCart: (productId, variantId) => {
-        return get().items.some(
-          item => item.productId === productId && item.variantId === variantId
+      isInCart: (productId: string, variantId?: string) => {
+        const items = get().items || []
+        return items.some(
+          item => item.productId === productId && (variantId === undefined || item.variantId === variantId || (!item.variantId && variantId === 'default'))
         )
       },
 
-      getItemQuantity: (productId, variantId) => {
-        const item = get().items.find(
-          i => i.productId === productId && i.variantId === variantId
-        )
-        return item?.quantity || 0
+      getItemQuantity: (productId: string, variantId?: string) => {
+        const items = get().items || []
+        if (variantId !== undefined) {
+          const item = items.find(
+            i => i.productId === productId && (i.variantId === variantId || (!i.variantId && variantId === 'default'))
+          )
+          return item?.quantity || 0
+        }
+        return items
+          .filter(i => i.productId === productId)
+          .reduce((sum, i) => sum + i.quantity, 0)
       },
 
       reserveStock: async () => {
@@ -166,16 +182,18 @@ export const useCartStore = create<CartStore>()(
       }),
       onRehydrateStorage: () => (state) => {
         if (state && Array.isArray(state.items)) {
-          state.items = state.items.map(item => {
+          state.items = state.items.filter(item => item && item.productId).map(item => {
             const canonical = getProductById(item.productId) || getProductBySlug(item.productId)
-            const fallbackImg = getProductImage(item.product, item.productId)
-            const baseProduct = canonical ? { ...canonical, ...item.product } : item.product
+            const fallbackImg = getProductImage(item.product || canonical, item.productId)
+            const baseProduct = canonical ? { ...canonical, ...(item.product || {}) } : item.product
             const images = (baseProduct?.images && Array.isArray(baseProduct.images) && baseProduct.images.length > 0)
               ? baseProduct.images
               : [fallbackImg]
 
             return {
               ...item,
+              price: Number(item.price) || baseProduct?.price || 0,
+              quantity: Math.max(1, Number(item.quantity) || 1),
               product: {
                 ...baseProduct,
                 images,

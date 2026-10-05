@@ -15,15 +15,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = 'inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed rounded-full'
 
     const variantStyles = {
-      primary: 'bg-ayur-forest text-ayur-cream hover:bg-ayur-leaf focus-visible:ring-ayur-forest',
-      secondary: 'bg-ayur-gold text-[#08090C] font-semibold hover:bg-ayur-gold-light focus-visible:ring-ayur-gold',
-      outline: 'border border-[#C2A265]/40 text-[#FAF7EE] hover:bg-[#C2A265]/10 hover:border-ayur-gold focus-visible:ring-ayur-gold',
-      ghost: 'text-[#FAF7EE] hover:bg-white/5 focus-visible:ring-ayur-gold',
-      whatsapp: 'bg-emerald-600 text-white hover:bg-emerald-500 focus-visible:ring-emerald-500',
-      gold: 'bg-gradient-to-r from-ayur-gold to-ayur-copper text-[#08090C] font-semibold hover:from-ayur-gold-light hover:to-ayur-gold focus-visible:ring-ayur-gold shadow-lg shadow-ayur-gold/30',
-      emerald: 'bg-emerald-500 text-[#08090C] font-semibold hover:bg-emerald-400 focus-visible:ring-emerald-400 shadow-md shadow-emerald-500/20',
-      'emerald-outline': 'border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10 focus-visible:ring-emerald-500',
-      'gold-outline': 'border border-ayur-gold/40 text-ayur-gold hover:bg-ayur-gold/10 focus-visible:ring-ayur-gold',
+      primary: 'bg-[#1C1D1F] text-[#FAF7F2] hover:bg-[#333333] focus-visible:ring-[#1C1D1F] shadow-xs',
+      secondary: 'bg-[#FAF7F2] text-[#1C1D1F] border border-[#999999]/40 hover:bg-[#EAE4DC] focus-visible:ring-[#1C1D1F]',
+      outline: 'border border-[#999999]/40 text-[#1C1D1F] hover:bg-[#FAF7F2] focus-visible:ring-[#1C1D1F]',
+      ghost: 'text-[#1C1D1F] hover:bg-[#FAF7F2] focus-visible:ring-[#1C1D1F]',
+      whatsapp: 'bg-[#25D366] text-white hover:bg-[#20BD5A] focus-visible:ring-[#25D366]',
+      gold: 'bg-[#1C1D1F] text-[#FAF7F2] hover:bg-[#2D2E30] focus-visible:ring-[#1C1D1F] shadow-sm',
+      emerald: 'bg-[#4E5F52] text-[#FAF7F2] font-semibold hover:bg-[#435246] focus-visible:ring-[#4E5F52] shadow-sm',
+      'emerald-outline': 'border border-[#4E5F52]/40 text-[#4E5F52] hover:bg-[#EFF4F0] focus-visible:ring-[#4E5F52]',
+      'gold-outline': 'border border-[#9E8047]/50 text-[#9E8047] hover:bg-[#FAF7F2] focus-visible:ring-[#9E8047]',
     }
 
     const sizeStyles = {

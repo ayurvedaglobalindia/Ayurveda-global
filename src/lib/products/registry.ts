@@ -7,7 +7,7 @@ export const categories: Category[] = [
     slug: 'supplements',
     description: 'Daily stamina, physical strength & holistic Ayurvedic revitalization',
     image: '/images/categories/supplements.svg',
-    productCount: 4,
+    productCount: 2,
   },
   {
     id: 'personal-care',
@@ -15,7 +15,7 @@ export const categories: Category[] = [
     slug: 'personal-care',
     description: 'Topical endurance, scalp rejuvenation & intimate wellness',
     image: '/images/categories/personal-care.svg',
-    productCount: 3,
+    productCount: 2,
   },
   {
     id: 'wellness',
@@ -452,7 +452,10 @@ export function getAllProducts(): Product[] {
 }
 
 export function getCategories(): Category[] {
-  return categories
+  return categories.map(cat => ({
+    ...cat,
+    productCount: products.filter(p => p.category === cat.slug).length,
+  }))
 }
 
 export function getCategoryBySlug(slug: string): Category | undefined {

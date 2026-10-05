@@ -1,12 +1,14 @@
 'use client'
 
-import { useParams, notFound } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Package, Truck, CheckCircle2, Clock, XCircle, ArrowLeft, MapPin, CreditCard, ShieldCheck } from 'lucide-react'
+import { Package, Truck, CheckCircle2, Clock, XCircle, ArrowLeft, MapPin, Search } from 'lucide-react'
 import { formatDate, formatINR as formatPrice } from '@/lib/utils/formatters'
+import { useUserStore } from '@/store/userStore'
 
-const mockOrderDetails = {
+const mockOrderDetails: Record<string, any> = {
   'ORD-20241215-ABC1': {
     id: 'ORD-20241215-ABC1',
     orderNumber: 'ORD-20241215-ABC1',
@@ -37,7 +39,7 @@ const mockOrderDetails = {
       phone: '+91 98765 43210',
     },
     timeline: [
-      { status: 'confirmed', date: '2024-12-15T10:30:00Z', note: 'Order confirmed via WhatsApp' },
+      { status: 'confirmed', date: '2024-12-15T10:30:00Z', note: 'Order confirmed via WhatsApp Concierge' },
       { status: 'processing', date: '2024-12-15T14:00:00Z', note: 'Formulation batch inspected and sealed' },
       { status: 'shipped', date: '2024-12-16T09:00:00Z', note: 'Dispatched in plain unmarked parcel - BlueDart Tracking: BD123456789' },
       { status: 'delivered', date: '2024-12-18T15:30:00Z', note: 'Delivered securely to patron' },
@@ -114,24 +116,138 @@ const mockOrderDetails = {
   },
 }
 
-const statusConfig = {
-  confirmed: { label: 'Confirmed', icon: CheckCircle2, color: 'text-[#4E5F52]', bg: 'bg-[#F5F1EB]' },
+const statusConfig: Record<string, { label: string; icon: any; color: string; bg: string }> = {
+  confirmed: { label: 'Confirmed', icon: CheckCircle2, color: 'text-[#4E5F52]', bg: 'bg-[#EFF4F0]' },
   processing: { label: 'Processing', icon: Clock, color: 'text-[#9E8047]', bg: 'bg-[#FAF7F2]' },
   shipped: { label: 'Dispatched', icon: Truck, color: 'text-[#1C1D1F]', bg: 'bg-[#FAF7F2]' },
-  delivered: { label: 'Delivered', icon: CheckCircle2, color: 'text-[#4E5F52]', bg: 'bg-[#F5F1EB]' },
+  delivered: { label: 'Delivered', icon: CheckCircle2, color: 'text-[#4E5F52]', bg: 'bg-[#EFF4F0]' },
   cancelled: { label: 'Cancelled', icon: XCircle, color: 'text-rose-700', bg: 'bg-rose-50' },
 }
 
 export default function OrderDetailPage() {
   const params = useParams()
-  const orderId = params.id as string
-  const order = mockOrderDetails[orderId as keyof typeof mockOrderDetails]
+  const orderId = (params?.id as string) || ''
+  const [order, setOrder] = useState<any>(null)
+  const [isLoaded, setIsLoaded] = useState(false)
 
-  if (!order) {
-    notFound()
+  useEffect(() => {
+    if (!orderId) {
+      setIsLoaded(true)
+      return
+    }
+
+    // 1. Direct mock lookup
+    if (mockOrderDetails[orderId]) {
+      setOrder(mockOrderDetails[orderId])
+      setIsLoaded(true)
+      return
+    }
+
+    // 2. Client stored order lookup (userStore + localStorage)
+    let allOrders: any[] = [...(useUserStore.getState().recentOrders || [])]
+    try {
+      if (typeof window !== 'undefined') {
+        const local = JSON.parse(localStorage.getItem('ayur_orders') || '[]')
+        allOrders = [...allOrders, ...local]
+      }
+    } catch {}
+
+    const found = allOrders.find(
+      (o: any) =>
+        o.id === orderId ||
+        o.orderNumber === orderId ||
+        o.id?.toUpperCase() === orderId.toUpperCase() ||
+        o.orderNumber?.toUpperCase() === orderId.toUpperCase()
+    )
+
+    if (found) {
+      const orderDate = found.createdAt || new Date().toISOString()
+      const formatted = {
+        id: found.id || orderId,
+        orderNumber: found.orderNumber || found.id || orderId,
+        createdAt: orderDate,
+        status: found.status || 'confirmed',
+        paymentMethod: found.paymentMethod || 'cod',
+        subtotal: found.subtotal || found.total,
+        shipping: found.shipping || 0,
+        discount: found.discount || 0,
+        total: found.total,
+        items: (found.items || []).map((it: any, idx: number) => ({
+          id: it.id || it.productId || String(idx),
+          name: it.name || it.productName || 'Ayurvedic Formulation',
+          quantity: it.quantity || 1,
+          price: it.price || 0,
+          image: it.image || '/images/products/body-essential-nutrition-thumb.jpg',
+        })),
+        shippingAddress: found.shippingAddress || {
+          firstName: 'Customer',
+          lastName: 'Patron',
+          addressLine1: 'Address provided during order',
+          city: 'India',
+          state: '',
+          pincode: '',
+          phone: found.customerPhone || '',
+        },
+        timeline: found.timeline || [
+          {
+            status: 'confirmed',
+            date: orderDate,
+            note: `Order confirmed via ${found.paymentMethod === 'cod' ? 'Cash on Delivery (Doorstep COD)' : 'WhatsApp Concierge'}`,
+          },
+          {
+            status: 'processing',
+            date: new Date(Date.parse(orderDate) + 15 * 60 * 1000).toISOString(),
+            note: 'Standardized batch inspection & discreet sealing underway',
+          },
+        ],
+      }
+      setOrder(formatted)
+    }
+
+    setIsLoaded(true)
+  }, [orderId])
+
+  if (!isLoaded) {
+    return (
+      <div className="bg-[#FAF7F2] min-h-screen container py-16 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#1C1D1F] border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
   }
 
-  const config = statusConfig[order.status]
+  if (!order) {
+    return (
+      <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
+        <div className="container py-12 sm:py-16 max-w-lg mx-auto text-center">
+          <div className="bg-[#FFFFFF] border border-[#999999]/30 rounded-2xl p-8 shadow-xs space-y-4">
+            <div className="w-14 h-14 mx-auto rounded-full bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-[#9E8047]">
+              <Search className="w-6 h-6" />
+            </div>
+            <h1 className="font-heading text-xl font-normal text-[#1C1D1F]">Order Reference Not Found</h1>
+            <p className="text-xs text-[#737373] leading-relaxed">
+              We could not find active records for reference <strong className="font-mono text-[#1C1D1F]">{orderId}</strong> in your current browser session.
+            </p>
+            <div className="pt-2 flex flex-col sm:flex-row gap-2.5 justify-center">
+              <Link
+                href="/track-order"
+                className="py-2.5 px-5 rounded-full bg-[#1C1D1F] text-[#FAF7F2] text-xs font-medium hover:bg-[#333333] transition-colors"
+              >
+                Track by Phone Number
+              </Link>
+              <Link
+                href="/orders"
+                className="py-2.5 px-5 rounded-full bg-[#FAF7F2] border border-[#999999]/40 text-[#1C1D1F] text-xs font-medium hover:bg-[#EAE4DC] transition-colors"
+              >
+                View Order History
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const config = statusConfig[order.status] || statusConfig.processing
   const StatusIcon = config.icon
 
   return (
@@ -164,12 +280,12 @@ export default function OrderDetailPage() {
             <div className="bg-[#FFFFFF] border border-[#999999]/30 rounded-xl p-5 shadow-xs">
               <h2 className="font-heading text-base font-medium text-[#1C1D1F] mb-4">Tracking History</h2>
               <div className="relative pl-6 border-l border-[#999999]/30 space-y-6">
-                {order.timeline.map((event, index) => {
-                  const evConfig = statusConfig[event.status as keyof typeof statusConfig]
+                {(order.timeline || []).map((event: any, index: number) => {
+                  const evConfig = statusConfig[event.status] || statusConfig.processing
                   const EvIcon = evConfig?.icon || Clock
 
                   return (
-                    <div key={event.date} className="relative">
+                    <div key={`${event.date}-${index}`} className="relative">
                       <div className="absolute -left-[31px] top-0.5 w-5 h-5 rounded-full bg-[#FFFFFF] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52]">
                         <EvIcon className="w-3 h-3" />
                       </div>
@@ -190,9 +306,9 @@ export default function OrderDetailPage() {
             <div className="bg-[#FFFFFF] border border-[#999999]/30 rounded-xl p-5 shadow-xs">
               <h2 className="font-heading text-base font-medium text-[#1C1D1F] mb-3">Formulations in Parcel</h2>
               <div className="space-y-3">
-                {order.items.map((item) => (
-                  <div key={item.id} className="flex gap-3 p-3 bg-[#FAF7F2] border border-[#999999]/30 rounded-lg items-center">
-                    <div className="w-12 h-12 rounded-lg bg-[#FFFFFF] border border-[#999999]/30 flex-shrink-0 overflow-hidden">
+                {order.items.map((item: any, idx: number) => (
+                  <div key={item.id || idx} className="flex gap-3 p-3 bg-[#FAF7F2] border border-[#999999]/30 rounded-lg items-center">
+                    <div className="w-12 h-12 rounded-lg bg-[#FFFFFF] border border-[#999999]/30 flex-shrink-0 overflow-hidden relative">
                       <Image
                         src={item.image}
                         alt={item.name}

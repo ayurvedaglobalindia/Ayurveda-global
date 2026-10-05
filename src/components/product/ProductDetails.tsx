@@ -22,6 +22,7 @@ import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
 import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
 import { formatINR } from '@/lib/utils/formatters'
+import { trackEvent } from '@/lib/analytics'
 
 interface ProductDetailsProps {
   product: Product
@@ -35,7 +36,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
   const { addItem, isInCart, getItemQuantity } = useCartStore()
   const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
   const { user, isAuthenticated } = useUserStore()
-  const { openModal, openCartDrawer, showToast } = useUIStore()
+  const { openModal, openCartDrawer, showToast, isAgeVerified } = useUIStore()
   const { trackLead } = useWhatsAppStore()
 
   const [quantity, setQuantity] = useState(1)
@@ -66,34 +67,28 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Track product view analytics
+  useEffect(() => {
+    if (product?.id) {
+      trackEvent('product_view', { productId: product.id, productName: product.name })
+    }
+  }, [product?.id, product?.name])
+
   const currentVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
   const inCart = isInCart(product.id, selectedVariantId)
   const inWishlist = isInWishlist(product.id, selectedVariantId)
   const maxQuantity = currentVariant?.inventory || product.inventory.quantity
 
   const handleAddToCart = () => {
-    if (!isAuthenticated) {
-      openModal('auth-gate', {
-        product,
-        variantId: selectedVariantId,
-        quantity,
-        mode: 'add-to-cart',
+    if (product.ageRestricted && !isAgeVerified(product.id)) {
+      openModal('age-gate', {
+        productId: product.id,
+        productName: product.name,
+        onVerify: () => {
+          performAddToCart()
+        },
       })
       return
-    }
-
-    if (product.ageRestricted) {
-      const hasVerified = sessionStorage.getItem(`age_verified_${product.id}`)
-      if (!hasVerified) {
-        openModal('age-verification', {
-          product,
-          onConfirm: () => {
-            sessionStorage.setItem(`age_verified_${product.id}`, 'true')
-            performAddToCart()
-          },
-        })
-        return
-      }
     }
 
     performAddToCart()
@@ -101,6 +96,13 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
 
   const performAddToCart = () => {
     addItem(product, selectedVariantId, quantity)
+    trackEvent('add_to_cart', {
+      productId: product.id,
+      productName: product.name,
+      variantId: selectedVariantId,
+      quantity,
+      price: currentVariant?.price || product.price,
+    })
     showToast({
       type: 'success',
       title: 'Added to Cart',
@@ -110,12 +112,14 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
   }
 
   const handleBuyNow = () => {
-    if (!isAuthenticated) {
-      openModal('auth-gate', {
-        product,
-        variantId: selectedVariantId,
-        quantity,
-        mode: 'buy-now',
+    if (product.ageRestricted && !isAgeVerified(product.id)) {
+      openModal('age-gate', {
+        productId: product.id,
+        productName: product.name,
+        onVerify: () => {
+          addItem(product, selectedVariantId, quantity)
+          router.push('/checkout')
+        },
       })
       return
     }
@@ -515,6 +519,120 @@ function getInitialReviews(productId: string): ReviewItem[] {
         comment: 'Much better than western synthetic sprays. No burning or stinging sensation, very easy to use and consistent results.',
         verified: true,
         helpfulCount: 15,
+      },
+    ]
+  }
+
+  if (productId.includes('hair') || productId.includes('regrow')) {
+    if (productId.includes('oil')) {
+      return [
+        {
+          id: 'rev-hro-1',
+          name: 'Pooja R.',
+          location: 'Chandigarh',
+          rating: 5,
+          date: 'Recent Order',
+          title: 'Non-sticky and deeply soothing for scalp',
+          comment: 'Traditional Kshir Pak oil preparation with real Bhringraj and Rosemary. It cools down scalp heat, reduces itching, and my hair shedding during washing reduced significantly within 3 weeks.',
+          verified: true,
+          helpfulCount: 36,
+        },
+        {
+          id: 'rev-hro-2',
+          name: 'Arjun K.',
+          location: 'Bengaluru',
+          rating: 5,
+          date: 'Recent Order',
+          title: 'Visible new baby hair growth',
+          comment: 'I use it 3 times a week with gentle 5-minute massage. Hair roots feel stronger, less breakage when combing, and no artificial chemical fragrance.',
+          verified: true,
+          helpfulCount: 28,
+        },
+        {
+          id: 'rev-hro-3',
+          name: 'Deepak M.',
+          location: 'Mumbai',
+          rating: 5,
+          date: 'Recent Order',
+          title: 'Pure Ayurvedic oil quality',
+          comment: 'Zero mineral oil or synthetic additives. Washes off cleanly with mild cleanser and leaves scalp revitalized.',
+          verified: true,
+          helpfulCount: 19,
+        },
+      ]
+    }
+
+    if (productId.includes('capsule')) {
+      return [
+        {
+          id: 'rev-hrc-1',
+          name: 'Meera S.',
+          location: 'Delhi',
+          rating: 5,
+          date: 'Recent Order',
+          title: 'Internal nourishment that actually works',
+          comment: 'Standardized Amla, Bhringraj and Ashwagandha in pure vegetarian capsules. My hair texture improved and brittle strands feel thicker after one month course.',
+          verified: true,
+          helpfulCount: 34,
+        },
+        {
+          id: 'rev-hrc-2',
+          name: 'Rohan B.',
+          location: 'Pune',
+          rating: 5,
+          date: 'Recent Order',
+          title: 'Reduced stress-related shedding',
+          comment: 'Work stress was causing intense hair fall. These capsules pacified my Pitta heat and within 4 weeks shedding stopped almost completely.',
+          verified: true,
+          helpfulCount: 27,
+        },
+        {
+          id: 'rev-hrc-3',
+          name: 'Sunita P.',
+          location: 'Indore',
+          rating: 5,
+          date: 'Recent Order',
+          title: 'Authentic botanical formulation',
+          comment: 'Easy to take twice daily after meals. Gentle on stomach with zero acidity or side effects. Highly recommended.',
+          verified: true,
+          helpfulCount: 21,
+        },
+      ]
+    }
+
+    return [
+      {
+        id: 'rev-hrk-1',
+        name: 'Siddharth M.',
+        location: 'Jaipur',
+        rating: 5,
+        date: 'Recent Order',
+        title: 'Complete inside-out hair therapy',
+        comment: 'The combination of dietary capsules and the Bhringraj scalp oil is unbeatable. Crown thinning stabilized within 30 days and hair feels noticeably denser.',
+        verified: true,
+        helpfulCount: 41,
+      },
+      {
+        id: 'rev-hrk-2',
+        name: 'Ananya G.',
+        location: 'Kolkata',
+        rating: 5,
+        date: 'Recent Order',
+        title: 'Proven clinical results with pure herbs',
+        comment: 'Ordered the 3-month course. Both products arrived in discrete unmarked packaging. Best Ayurvedic hair fall regimen I have used.',
+        verified: true,
+        helpfulCount: 32,
+      },
+      {
+        id: 'rev-hrk-3',
+        name: 'Manish T.',
+        location: 'Hyderabad',
+        rating: 5,
+        date: 'Recent Order',
+        title: 'Root strength and healthy shine restored',
+        comment: 'Capsules provide internal nutrition while the oil conditions the scalp. Worth every rupee for genuine Ayurvedic quality.',
+        verified: true,
+        helpfulCount: 23,
       },
     ]
   }

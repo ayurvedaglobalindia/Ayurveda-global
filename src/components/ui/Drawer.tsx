@@ -104,15 +104,15 @@ export function Drawer({
             onClick={e => e.stopPropagation()}
           >
             {(title || position !== 'bottom') && (
-              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-ayur-beige bg-ayur-cream/80 backdrop-blur-sm flex-shrink-0">
+              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-[#999999]/30 bg-[#FAF7F2] flex-shrink-0">
                 {title && (
-                  <h2 id="drawer-title" className="text-lg font-medium text-ayur-black font-heading truncate">
+                  <h2 id="drawer-title" className="text-base sm:text-lg font-medium text-[#1C1D1F] font-heading truncate">
                     {title}
                   </h2>
                 )}
                 <button
                   onClick={onClose}
-                  className="p-1.5 rounded-full text-ayur-stone hover:text-ayur-black hover:bg-ayur-sand/30 transition-colors focus-visible-ring ml-auto"
+                  className="p-1.5 rounded-full text-[#737373] hover:text-[#1C1D1F] hover:bg-[#EAE4DC] transition-colors focus-visible-ring ml-auto"
                   aria-label="Close drawer"
                 >
                   <X className="w-5 h-5" />

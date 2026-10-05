@@ -90,26 +90,26 @@ export function ProductVideoPlayer({
   }
 
   return (
-    <div className={`relative rounded-3xl overflow-hidden bg-[#07170E] border-2 border-ayur-gold/30 shadow-2xl ${className}`}>
+    <div className={`relative rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#999999]/30 shadow-xs ${className}`}>
       {/* Header Bar */}
       {!hideHeader && (
-        <div className="p-4 sm:p-6 bg-gradient-to-r from-[#0b2416] to-[#08180e] border-b border-ayur-gold/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="p-3.5 sm:p-4 bg-[#FFFFFF] border-b border-[#999999]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-ayur-gold/20 text-ayur-gold text-xs font-bold uppercase tracking-wider mb-1">
-              <Sparkles className="w-3 h-3 text-ayur-gold" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EFF4F0] text-[#4E5F52] text-[10.5px] font-semibold uppercase tracking-wider mb-1">
+              <Sparkles className="w-3 h-3 text-[#4E5F52]" />
               Official Video Showcase
             </div>
-            <h3 className="font-heading text-lg sm:text-xl font-medium text-ayur-cream">{title}</h3>
-            <p className="text-xs text-ayur-sand/80">{subtitle}</p>
+            <h3 className="font-heading text-base sm:text-lg font-normal text-[#1C1D1F]">{title}</h3>
+            <p className="text-xs text-[#737373]">{subtitle}</p>
           </div>
 
           {showCta && (
             <div className="flex items-center gap-2">
               <Button
-                variant="gold"
+                variant="primary"
                 size="sm"
                 onClick={handleWhatsAppOrder}
-                className="text-xs font-bold shadow-md whitespace-nowrap"
+                className="text-xs font-medium whitespace-nowrap"
               >
                 Order on WhatsApp
               </Button>
@@ -140,27 +140,27 @@ export function ProductVideoPlayer({
             <div className="flex items-center gap-3">
               <button
                 onClick={togglePlay}
-                className="w-10 h-10 rounded-full bg-white/20 hover:bg-ayur-gold hover:text-black text-white backdrop-blur-md flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md flex items-center justify-center transition-colors"
                 aria-label={isPlaying ? 'Pause' : 'Play'}
               >
-                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
               </button>
 
               <button
                 onClick={toggleMute}
-                className="w-10 h-10 rounded-full bg-white/20 hover:bg-ayur-gold hover:text-black text-white backdrop-blur-md flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md flex items-center justify-center transition-colors"
                 aria-label={isMuted ? 'Unmute' : 'Mute'}
               >
-                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </button>
             </div>
 
             <button
               onClick={toggleFullscreen}
-              className="w-10 h-10 rounded-full bg-white/20 hover:bg-ayur-gold hover:text-black text-white backdrop-blur-md flex items-center justify-center transition-colors"
+              className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md flex items-center justify-center transition-colors"
               aria-label="Fullscreen"
             >
-              <Maximize className="w-5 h-5" />
+              <Maximize className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -169,21 +169,21 @@ export function ProductVideoPlayer({
         {!isPlaying && (
           <button
             onClick={togglePlay}
-            className="absolute inset-0 m-auto w-16 h-16 rounded-full bg-ayur-gold/90 text-black flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
+            className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-[#1C1D1F]/80 text-[#FAF7F2] flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
             aria-label="Play video"
           >
-            <Play className="w-8 h-8 ml-1" />
+            <Play className="w-6 h-6 ml-0.5" />
           </button>
         )}
       </div>
 
       {/* Footer Info */}
-      <div className="p-4 bg-[#06140c] text-xs text-ayur-sand/80 flex flex-wrap items-center justify-between gap-2 border-t border-ayur-forest/40">
-        <span className="flex items-center gap-1.5 text-ayur-cream font-medium">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          100% Genuine Herbal Authentic Packaging & Sealing
+      <div className="p-3.5 bg-[#FFFFFF] text-xs text-[#555555] flex flex-wrap items-center justify-between gap-2 border-t border-[#999999]/30">
+        <span className="flex items-center gap-1.5 text-[#1C1D1F] font-medium">
+          <span className="w-2 h-2 rounded-full bg-[#4E5F52]" />
+          100% Genuine Herbal Authentic Packaging &amp; Sealing
         </span>
-        <span className="text-ayur-gold font-semibold">
+        <span className="text-[#4E5F52] font-medium text-[11px]">
           Tap video to Play / Pause • Available with Cash on Delivery (COD)
         </span>
       </div>

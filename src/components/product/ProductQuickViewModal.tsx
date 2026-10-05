@@ -31,7 +31,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
   const { addItem } = useCartStore()
   const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
   const { user, isAuthenticated } = useUserStore()
-  const { openModal, openCartDrawer, showToast } = useUIStore()
+  const { openModal, openCartDrawer, showToast, isAgeVerified } = useUIStore()
   const { trackLead } = useWhatsAppStore()
 
   if (!product) return null
@@ -40,15 +40,24 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
   const currentImage = product.images[selectedImageIndex] || product.images[0]
 
   const handleAddToCart = () => {
-    if (!isAuthenticated) {
+    if (product.ageRestricted && !isAgeVerified(product.id)) {
       onClose()
-      openModal('auth-gate', {
-        product,
-        quantity,
-        mode: 'add-to-cart',
+      openModal('age-gate', {
+        productId: product.id,
+        productName: product.name,
+        onVerify: () => {
+          addItem(product, undefined, quantity)
+          openCartDrawer()
+          showToast({
+            type: 'success',
+            title: 'Added to Cart',
+            message: `${quantity}x ${product.name} added to cart`,
+          })
+        },
       })
       return
     }
+
     addItem(product, undefined, quantity)
     showToast({
       type: 'success',
@@ -60,15 +69,19 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
   }
 
   const handleBuyNow = () => {
-    if (!isAuthenticated) {
+    if (product.ageRestricted && !isAgeVerified(product.id)) {
       onClose()
-      openModal('auth-gate', {
-        product,
-        quantity,
-        mode: 'buy-now',
+      openModal('age-gate', {
+        productId: product.id,
+        productName: product.name,
+        onVerify: () => {
+          addItem(product, undefined, quantity)
+          router.push('/checkout')
+        },
       })
       return
     }
+
     addItem(product, undefined, quantity)
     onClose()
     router.push('/checkout')

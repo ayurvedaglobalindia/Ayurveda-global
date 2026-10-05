@@ -22,29 +22,29 @@ export function QuantitySelector({ value, onChange, min = 1, max = 99, size = 'm
   }
 
   const sizeStyles = {
-    sm: 'h-8 text-sm px-3',
-    md: 'h-10 text-base px-4',
-    lg: 'h-12 text-lg px-5',
+    sm: 'h-7 text-xs px-2 w-10',
+    md: 'h-8 text-sm px-2 w-12',
+    lg: 'h-10 text-base px-3 w-14',
   }
 
   const buttonSize = {
-    sm: 'w-8 h-8',
-    md: 'w-10 h-10',
-    lg: 'w-12 h-12',
+    sm: 'w-7 h-7',
+    md: 'w-8 h-8',
+    lg: 'w-10 h-10',
   }
 
   return (
-    <div className={classNames('inline-flex items-center bg-ayur-charcoal border border-ayur-forest-dark/50 rounded-xl overflow-hidden hover:border-ayur-gold/50 transition-colors', className)}>
+    <div className={classNames('inline-flex items-center bg-[#FFFFFF] border border-[#999999]/30 rounded-lg overflow-hidden hover:border-[#1C1D1F]/40 transition-colors', className)}>
       <button
         onClick={handleDecrease}
         disabled={value <= min}
         className={classNames(
-          'flex items-center justify-center text-ayur-gold hover:bg-ayur-gold/10 hover:text-ayur-gold-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent',
+          'flex items-center justify-center text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent',
           buttonSize[size]
         )}
         aria-label="Decrease quantity"
       >
-        <Minus className={classNames('w-4 h-4', size === 'sm' && 'w-3 h-3')} />
+        <Minus className={classNames('w-3.5 h-3.5', size === 'sm' && 'w-3 h-3')} />
       </button>
       <input
         type="number"
@@ -58,7 +58,7 @@ export function QuantitySelector({ value, onChange, min = 1, max = 99, size = 'm
           onChange(newValue)
         }}
         className={classNames(
-          'w-16 text-center bg-transparent border-0 focus:outline-none focus:ring-0 appearance-none text-ayur-ivory',
+          'text-center bg-transparent border-0 focus:outline-none focus:ring-0 appearance-none text-[#1C1D1F] font-mono font-medium',
           sizeStyles[size]
         )}
         min={min}
@@ -69,12 +69,12 @@ export function QuantitySelector({ value, onChange, min = 1, max = 99, size = 'm
         onClick={handleIncrease}
         disabled={value >= max}
         className={classNames(
-          'flex items-center justify-center text-ayur-gold hover:bg-ayur-gold/10 hover:text-ayur-gold-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent',
+          'flex items-center justify-center text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent',
           buttonSize[size]
         )}
         aria-label="Increase quantity"
       >
-        <Plus className={classNames('w-4 h-4', size === 'sm' && 'w-3 h-3')} />
+        <Plus className={classNames('w-3.5 h-3.5', size === 'sm' && 'w-3 h-3')} />
       </button>
     </div>
   )

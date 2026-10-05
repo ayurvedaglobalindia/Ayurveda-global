@@ -23,17 +23,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label htmlFor={inputId} className="label">
             {label}
-            {props.required && <span className="text-ayur-gold ml-1" aria-hidden="true">*</span>}
+            {props.required && <span className="text-[#9E8047] ml-1" aria-hidden="true">*</span>}
           </label>
         )}
         <div className="relative">
           {effectiveLeftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-ayur-gold pointer-events-none">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#737373] pointer-events-none">
               {effectiveLeftIcon}
             </div>
           )}
           {effectiveRightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-ayur-gold flex items-center z-10">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[#737373] flex items-center z-10">
               {effectiveRightIcon}
             </div>
           )}
@@ -41,10 +41,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={classNames(
-              'input',
+              'input bg-[#FFFFFF] text-[#1C1D1F] border border-[#999999]/30 rounded-xl',
               effectiveLeftIcon ? 'pl-10' : undefined,
               effectiveRightIcon ? 'pr-10' : undefined,
-              error && 'input-error',
+              error && 'border-rose-400 focus:ring-rose-400',
               className
             )}
             aria-invalid={error ? 'true' : 'false'}
@@ -53,12 +53,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           />
         </div>
         {error && (
-          <p id={`${inputId}-error`} className="mt-1.5 text-sm text-ayur-crimson-light" role="alert">
+          <p id={`${inputId}-error`} className="mt-1 text-xs text-rose-600" role="alert">
             {error}
           </p>
         )}
         {hint && !error && (
-          <p id={`${inputId}-hint`} className="mt-1.5 text-sm text-ayur-stone">
+          <p id={`${inputId}-hint`} className="mt-1 text-xs text-[#737373]">
             {hint}
           </p>
         )}

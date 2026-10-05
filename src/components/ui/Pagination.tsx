@@ -37,15 +37,15 @@ export function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="p-2 rounded-lg text-ayur-forest hover:bg-ayur-beige disabled:opacity-50 disabled:cursor-not-allowed transition-colors focus-visible-ring"
+        className="p-2 rounded-lg text-[#1C1D1F] hover:bg-[#FAF7F2] disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus-visible-ring"
         aria-label="Previous page"
       >
-        <ChevronLeft className="w-5 h-5" />
+        <ChevronLeft className="w-4 h-4" />
       </button>
       <div className="flex items-center gap-1">
         {pages.map((page, index) =>
           page === '...' ? (
-            <span key={`ellipsis-${index}`} className="px-3 text-ayur-stone">
+            <span key={`ellipsis-${index}`} className="px-2 text-xs text-[#737373]">
               ...
             </span>
           ) : (
@@ -53,10 +53,10 @@ export function Pagination({
               key={page}
               onClick={() => onPageChange(page as number)}
               className={classNames(
-                'w-10 h-10 rounded-lg font-medium transition-all focus-visible-ring',
+                'w-8 h-8 rounded-lg text-xs font-medium transition-all focus-visible-ring',
                 page === currentPage
-                  ? 'bg-ayur-forest text-ayur-cream'
-                  : 'text-ayur-forest hover:bg-ayur-beige'
+                  ? 'bg-[#1C1D1F] text-[#FAF7F2] font-semibold shadow-xs'
+                  : 'text-[#1C1D1F] hover:bg-[#FAF7F2] border border-transparent hover:border-[#999999]/30'
               )}
               aria-label={`Page ${page}`}
               aria-current={page === currentPage ? 'page' : undefined}
@@ -69,10 +69,10 @@ export function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="p-2 rounded-lg text-ayur-forest hover:bg-ayur-beige disabled:opacity-50 disabled:cursor-not-allowed transition-colors focus-visible-ring"
+        className="p-2 rounded-lg text-[#1C1D1F] hover:bg-[#FAF7F2] disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus-visible-ring"
         aria-label="Next page"
       >
-        <ChevronRight className="w-5 h-5" />
+        <ChevronRight className="w-4 h-4" />
       </button>
     </nav>
   )

@@ -50,6 +50,8 @@ export const metadata: Metadata = {
     },
   }
 
+import { AnalyticsTracker } from '@/components/analytics/AnalyticsTracker'
+
 export const viewport: Viewport = {
   themeColor: '#FAF7F2',
   width: 'device-width',
@@ -71,6 +73,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-[#FAF7F2] text-[#1C1D1F] font-body selection:bg-[#EAE4DC] selection:text-[#1C1D1F] overflow-x-hidden w-full max-w-full">
         <Providers>
+          <AnalyticsTracker />
           {children}
           <Toaster />
           <WhatsAppFloatButton />

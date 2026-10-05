@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { Home, Search, User, ShoppingBag, HeartPulse } from 'lucide-react'
@@ -12,9 +12,14 @@ import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from '@/store/whatsa
 export function MobileBottomNav() {
   const pathname = usePathname()
   const router = useRouter()
+  const [isMounted, setIsMounted] = useState(false)
   const { getItemCount: getCartCount } = useCartStore()
   const { user, isAuthenticated } = useUserStore()
   const { openCartDrawer, openSearch, openModal, isSearchOpen } = useUIStore()
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const cartCount = getCartCount()
 
@@ -96,7 +101,7 @@ export function MobileBottomNav() {
         >
           <div className="relative">
             <ShoppingBag className="w-5 h-5" />
-            {cartCount > 0 && (
+            {isMounted && cartCount > 0 && (
               <span className="absolute -top-1.5 -right-2 bg-[#4E5F52] text-[#FFFFFF] text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
                 {cartCount > 99 ? '99+' : cartCount}
               </span>

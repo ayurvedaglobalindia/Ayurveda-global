@@ -59,9 +59,13 @@ export const useWhatsAppStore = create<WhatsAppStore>()(
   )
 )
 
-export function buildWhatsAppUrl(message: string): string {
+export function buildWhatsAppUrl(message: string, overridePhone?: string): string {
   const encodedMessage = encodeURIComponent(message)
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`
+  const cleanOverride = overridePhone ? overridePhone.replace(/\D/g, '') : ''
+  const targetPhone = cleanOverride.length >= 10
+    ? (cleanOverride.length === 10 ? `91${cleanOverride}` : cleanOverride)
+    : WHATSAPP_NUMBER
+  return `https://wa.me/${targetPhone}?text=${encodedMessage}`
 }
 
 function formatPaiseToINR(amount: number | undefined): string {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Shield, Leaf, AlertTriangle } from 'lucide-react'
+import { Shield, Leaf } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
 import { useUIStore } from '@/store/uiStore'
@@ -51,57 +51,53 @@ export function AgeVerificationGate({ productId, productName, isOpen, onClose, o
       showCloseButton={false}
       closeOnOverlayClick={false}
     >
-      <div className="text-center space-y-5">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-ayur-forest-deep/80 border-2 border-ayur-gold/50 flex items-center justify-center text-ayur-gold-light shadow-lg shadow-ayur-gold/10">
-          <Shield className="w-8 h-8 sm:w-10 sm:h-10 text-ayur-gold-light" />
+      <div className="text-center space-y-4 pt-1">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52] shadow-xs">
+          <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-[#4E5F52]" />
         </div>
 
         <div>
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-ayur-crimson/20 text-ayur-crimson-light border border-ayur-crimson/40 mb-2">
+          <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-wider bg-rose-50 text-rose-700 border border-rose-200 mb-2">
             18+ Age Restricted
           </span>
-          <h3 className="font-heading text-xl sm:text-2xl font-normal text-ayur-ivory">
+          <h3 className="font-heading text-lg sm:text-xl font-normal text-[#1C1D1F]">
             {productName}
           </h3>
-          <p className="mt-2 text-sm text-ayur-stone max-w-sm mx-auto leading-relaxed">
+          <p className="mt-1 text-xs text-[#737373] max-w-sm mx-auto leading-relaxed">
             This formulation contains active Ayurvedic botanicals intended strictly for mature adults 18 years and older.
           </p>
         </div>
 
-        <div className="card-luxury rounded-2xl p-4 text-left">
-          <p className="text-xs font-bold text-ayur-gold-light uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <Leaf className="w-3.5 h-3.5 text-ayur-sage-light" />
-            Vedic Compliance & Usage Protocol
+        <div className="bg-[#FFFFFF] border border-[#999999]/30 rounded-xl p-4 text-left shadow-xs">
+          <p className="text-xs font-semibold text-[#1C1D1F] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <Leaf className="w-3.5 h-3.5 text-[#4E5F52]" />
+            Ayurvedic Compliance &amp; Protocol
           </p>
-          <ul className="space-y-1.5 text-xs text-ayur-stone">
-            <li className="flex items-center gap-2"><span className="text-ayur-gold">✓</span> 100% Ayurvedic herbal & topical ingredients</li>
-            <li className="flex items-center gap-2"><span className="text-ayur-gold">✓</span> Strictly prohibited for individuals under 18 years</li>
-            <li className="flex items-center gap-2"><span className="text-ayur-gold">✓</span> Discreet, tamper-evident outer packaging guaranteed</li>
+          <ul className="space-y-1.5 text-xs text-[#555555]">
+            <li className="flex items-center gap-2"><span className="text-[#4E5F52] font-bold">✓</span> 100% Ayurvedic herbal &amp; topical ingredients</li>
+            <li className="flex items-center gap-2"><span className="text-[#4E5F52] font-bold">✓</span> Strictly intended for individuals 18 years and older</li>
+            <li className="flex items-center gap-2"><span className="text-[#4E5F52] font-bold">✓</span> Discreet, tamper-evident unmarked packaging guaranteed</li>
           </ul>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 pt-1">
+        <div className="grid grid-cols-2 gap-3 pt-2">
           <Button
-            variant="emerald-outline"
+            variant="outline"
             onClick={handleDeny}
-            className="w-full text-xs sm:text-sm font-medium border-ayur-gold/40 text-ayur-ivory hover:bg-ayur-gold/10"
-            size="lg"
+            className="w-full text-xs font-medium rounded-full py-2.5"
+            size="md"
           >
             I am under 18
           </Button>
           <Button
-            variant="gold"
+            variant="primary"
             onClick={handleVerify}
-            className="w-full text-xs sm:text-sm font-semibold shadow-xl shadow-ayur-gold/20 gold-shimmer"
-            size="lg"
+            className="w-full text-xs font-semibold rounded-full py-2.5 shadow-xs"
+            size="md"
           >
             I am 18 or older
           </Button>
         </div>
-
-        <p className="text-[11px] text-ayur-stone/70">
-          By confirming age, you verify statutory compliance under applicable wellness regulations.
-        </p>
       </div>
     </Modal>
   )

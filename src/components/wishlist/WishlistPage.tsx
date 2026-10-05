@@ -20,15 +20,6 @@ export function WishlistPage() {
   const itemCount = getItemCount()
 
   const handleMoveToCart = (item: WishlistItem) => {
-    if (!isAuthenticated) {
-      openModal('auth-gate', {
-        product: item.product,
-        variantId: item.variantId,
-        quantity: 1,
-        mode: 'add-to-cart',
-      })
-      return
-    }
     addItem(item.product, item.variantId, 1)
     removeItem(item.productId, item.variantId)
     showToast({ type: 'success', title: 'Moved to Cart', message: `${item.product.name} added to your cart.` })

@@ -40,22 +40,22 @@ export function Accordion({ items, allowMultiple = false, className }: Accordion
             key={index}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05 }}
-            className="card-luxury rounded-xl overflow-hidden"
+            transition={{ delay: index * 0.04 }}
+            className="bg-[#FFFFFF] border border-[#999999]/30 rounded-xl overflow-hidden shadow-xs"
           >
             <button
               onClick={() => toggleItem(index)}
               className={classNames(
-                'w-full px-5 py-4 flex items-center justify-between text-left transition-colors focus-visible-ring',
-                isOpen ? 'bg-ayur-forest-dark/50' : 'hover:bg-ayur-forest-dark/30'
+                'w-full px-4 sm:px-5 py-3.5 sm:py-4 flex items-center justify-between text-left transition-colors focus-visible-ring',
+                isOpen ? 'bg-[#FAF7F2]' : 'hover:bg-[#FAF7F2]/60'
               )}
               aria-expanded={isOpen}
               aria-controls={`accordion-content-${index}`}
             >
-              <span className="font-medium text-ayur-ivory pr-4">{item.title}</span>
+              <span className="font-heading sm:font-sans font-medium text-xs sm:text-sm text-[#1C1D1F] pr-4">{item.title}</span>
               <ChevronDown
                 className={classNames(
-                  'w-5 h-5 text-ayur-gold flex-shrink-0 transition-transform duration-200',
+                  'w-4 h-4 text-[#4E5F52] flex-shrink-0 transition-transform duration-200',
                   isOpen && 'rotate-180'
                 )}
                 aria-hidden="true"
@@ -69,9 +69,9 @@ export function Accordion({ items, allowMultiple = false, className }: Accordion
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="overflow-hidden"
+                  className="overflow-hidden border-t border-[#999999]/15"
                 >
-                  <div className="px-5 pb-5 text-ayur-stone">
+                  <div className="px-4 sm:px-5 py-3 sm:py-4 text-xs sm:text-sm text-[#555555] leading-relaxed">
                     {item.content}
                   </div>
                 </motion.div>

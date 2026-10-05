@@ -13,6 +13,7 @@ import { useWishlistStore } from '@/store/wishlistStore'
 import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
 import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
+import { trackEvent } from '@/lib/analytics'
 import { motion } from 'framer-motion'
 
 interface ProductCardProps {
@@ -27,7 +28,7 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
   const { addItem, isInCart, getItemQuantity } = useCartStore()
   const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
   const { user, isAuthenticated } = useUserStore()
-  const { openModal, openCartDrawer, showToast } = useUIStore()
+  const { openModal, openCartDrawer, showToast, isAgeVerified } = useUIStore()
   const { trackLead } = useWhatsAppStore()
 
   useEffect(() => {
@@ -48,49 +49,42 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
     e.preventDefault()
     e.stopPropagation()
 
-    if (!isAuthenticated) {
-      openModal('auth-gate', {
-        product,
-        mode: 'add-to-cart',
-        quantity: 1,
-      })
-      return
-    }
-
-    if (product.ageRestricted) {
+    if (product.ageRestricted && !isAgeVerified(product.id)) {
       openModal('age-gate', {
         productId: product.id,
         productName: product.name,
         onVerify: () => {
           addItem(product)
           openCartDrawer()
+          showToast({
+            type: 'success',
+            title: 'Added to Cart',
+            message: `${product.name} has been added to your cart.`,
+          })
         },
       })
-    } else {
-      addItem(product)
-      openCartDrawer()
-      showToast({
-        type: 'success',
-        title: 'Added to cart',
-        message: `${product.name} has been added to your cart.`,
-      })
+      return
     }
+
+    addItem(product)
+    trackEvent('add_to_cart', {
+      productId: product.id,
+      productName: product.name,
+      price: product.price,
+    })
+    openCartDrawer()
+    showToast({
+      type: 'success',
+      title: 'Added to Cart',
+      message: `${product.name} has been added to your cart.`,
+    })
   }
 
   const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
 
-    if (!isAuthenticated) {
-      openModal('auth-gate', {
-        product,
-        mode: 'buy-now',
-        quantity: 1,
-      })
-      return
-    }
-
-    if (product.ageRestricted) {
+    if (product.ageRestricted && !isAgeVerified(product.id)) {
       openModal('age-gate', {
         productId: product.id,
         productName: product.name,
@@ -99,10 +93,11 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
           router.push('/checkout')
         },
       })
-    } else {
-      addItem(product)
-      router.push('/checkout')
+      return
     }
+
+    addItem(product)
+    router.push('/checkout')
   }
 
   const handleWishlistToggle = (e: React.MouseEvent) => {

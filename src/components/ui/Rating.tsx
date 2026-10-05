@@ -62,9 +62,9 @@ export function Rating({
             <Star
               className={classNames(
                 sizeClasses[size],
-                fill === 'full' && 'text-ayur-gold',
-                fill === 'half' && 'text-ayur-gold/50',
-                fill === 'empty' && 'text-ayur-sand'
+                fill === 'full' && 'text-[#9E8047]',
+                fill === 'half' && 'text-[#9E8047]/50',
+                fill === 'empty' && 'text-[#D5CEC4]'
               )}
               fill={fill === 'full' ? 'currentColor' : fill === 'half' ? 'currentColor' : 'none'}
               strokeWidth={2}
@@ -82,7 +82,7 @@ export function Rating({
         )
       })}
       {showValue && (
-        <span className="ml-2 text-sm font-medium text-ayur-forest">
+        <span className="ml-2 text-xs sm:text-sm font-medium text-[#1C1D1F]">
           {rating.toFixed(1)}
           {reviewsCount && ` (${reviewsCount})`}
         </span>
