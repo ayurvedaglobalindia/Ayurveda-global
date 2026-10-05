@@ -39,30 +39,30 @@ export function ApothecaryFAQ() {
   }
 
   return (
-    <section className="bg-[#08090C] py-8 sm:py-12 lg:py-16 border-b border-[#999999]/20 text-[#FAF7EE] relative overflow-hidden">
+    <section className="bg-[#08090C] py-12 sm:py-16 lg:py-20 border-b border-[#999999]/20 text-[#FAF7EE] relative overflow-hidden">
       {/* Background radial atmosphere */}
-      <div className="absolute top-1/3 right-1/4 translate-x-1/2 w-96 h-96 bg-[#6EE7B7]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 translate-x-1/2 w-[450px] h-[450px] bg-[#6EE7B7]/5 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#11141E] border border-[#6EE7B7]/30 text-[#6EE7B7] text-[10px] font-semibold tracking-[0.24em] uppercase mb-2.5 backdrop-blur-md shadow-sm">
-            <HelpCircle className="w-3 h-3 text-[#6EE7B7]" />
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#11141E] border border-[#6EE7B7]/30 text-[#6EE7B7] text-[10px] font-semibold tracking-[0.24em] uppercase mb-3 backdrop-blur-md shadow-sm">
+            <HelpCircle className="w-3.5 h-3.5 text-[#6EE7B7]" />
             <span>№ 08 • Formulation &amp; Delivery Inquiries</span>
           </div>
 
-          <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-[#FAF7EE] tracking-tight">
             Frequently Asked Questions
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#999999] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm text-[#999999] mt-3 max-w-xl mx-auto leading-relaxed font-sans font-normal">
             Transparent guidance regarding our ingredients, delivery discretion, payment methods, and usage regimens.
           </p>
         </div>
 
         {/* Accordion List */}
-        <div className="max-w-3xl mx-auto space-y-3">
+        <div className="max-w-3xl mx-auto space-y-3.5">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx
             return (
@@ -70,8 +70,8 @@ export function ApothecaryFAQ() {
                 key={idx}
                 className={`rounded-2xl overflow-hidden transition-all duration-300 ${
                   isOpen
-                    ? 'bg-[#151926] border border-[#6EE7B7]/40 shadow-lg'
-                    : 'bg-[#11141E] border border-[#999999]/20 hover:border-[#999999]/40'
+                    ? 'bg-gradient-to-b from-[#151926] to-[#10131E] border border-[#6EE7B7]/50 shadow-xl'
+                    : 'bg-[#0E1118] border border-[#999999]/20 hover:border-[#D8C28A]/40'
                 }`}
               >
                 <button
@@ -94,7 +94,7 @@ export function ApothecaryFAQ() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-[13px] text-[#999999] leading-relaxed border-t border-[#999999]/20 pt-3.5 font-sans animate-fade-in">
+                  <div className="px-4 pb-5 sm:px-5 sm:pb-6 text-xs sm:text-[13.5px] text-[#999999] leading-relaxed border-t border-[#999999]/20 pt-4 font-sans animate-fade-in">
                     {faq.answer}
                   </div>
                 )}
@@ -104,16 +104,19 @@ export function ApothecaryFAQ() {
         </div>
 
         {/* Bottom Contact Help */}
-        <div className="mt-8 sm:mt-10 text-center text-xs text-[#999999]">
-          <span>Still have an unanswered question? </span>
-          <a
-            href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20a%20question%20regarding%20your%20products."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#D8C28A] hover:text-[#E6D5AC] hover:underline font-semibold"
-          >
-            Chat directly with our Ayurvedic Care Concierge on WhatsApp →
-          </a>
+        <div className="mt-10 sm:mt-14 text-center text-xs text-[#999999]">
+          <div className="inline-block p-3.5 sm:px-6 rounded-full bg-[#11141E]/80 border border-[#999999]/25 backdrop-blur-md shadow-sm">
+            <span>Still have an unanswered question? </span>
+            <a
+              href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20a%20question%20regarding%20your%20products."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#D8C28A] hover:text-[#E6D5AC] hover:underline font-semibold ml-1 inline-flex items-center gap-1"
+            >
+              <span>Chat directly with our Ayurvedic Concierge on WhatsApp</span>
+              <span>→</span>
+            </a>
+          </div>
         </div>
 
       </div>

@@ -66,25 +66,25 @@ export function VaidyaConsultationDesk() {
   }
 
   return (
-    <section className="bg-[#08090C] py-8 sm:py-12 lg:py-16 border-b border-[#999999]/20 text-[#FAF7EE] relative overflow-hidden">
+    <section className="bg-[#08090C] py-12 sm:py-16 lg:py-20 border-b border-[#999999]/20 text-[#FAF7EE] relative overflow-hidden">
       <div className="container relative z-10">
-        <div className="max-w-5xl mx-auto rounded-3xl bg-[#11141E] border border-[#999999]/20 p-5 sm:p-7 lg:p-9 shadow-2xl relative overflow-hidden">
+        <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-b from-[#131722] via-[#0E1118] to-[#0A0C11] border border-[#999999]/25 p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
           
           {/* Subtle Background Lighting */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#6EE7B7]/5 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#D8C28A]/5 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#6EE7B7]/5 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#D8C28A]/5 rounded-full blur-[120px] pointer-events-none" />
 
-          <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
             {/* Left Column: Doctor Profile & Narrative */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#151926] border border-[#999999]/25 text-[#D8C28A] text-[10px] font-semibold tracking-[0.22em] uppercase">
-                  <Award className="w-3 h-3 text-[#D8C28A]" />
+            <div className="lg:col-span-7 space-y-5">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#151926] border border-[#999999]/25 text-[#D8C28A] text-[10px] font-semibold tracking-[0.24em] uppercase">
+                  <Award className="w-3.5 h-3.5 text-[#D8C28A]" />
                   <span>№ 06 • Certified BAMS / MD Vaidyas</span>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#151926] border border-[#6EE7B7]/30 text-[10px] text-[#6EE7B7] font-medium">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#151926] border border-[#6EE7B7]/30 text-[10px] text-[#6EE7B7] font-medium">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#6EE7B7] opacity-75" />
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[#6EE7B7]" />
@@ -93,7 +93,7 @@ export function VaidyaConsultationDesk() {
                 </div>
               </div>
 
-              <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-[#FAF7EE] tracking-tight leading-snug">
+              <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-[#FAF7EE] tracking-tight leading-snug">
                 Confidential Ayurvedic Consultation,{' '}
                 <span className="italic font-serif text-[#D8C28A]">
                   Tailored to Your Constitution.
@@ -105,7 +105,7 @@ export function VaidyaConsultationDesk() {
               </p>
 
               {/* Consultation Features */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs text-[#FAF7EE]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2 text-xs text-[#FAF7EE]">
                 <div className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#6EE7B7] flex-shrink-0" />
                   <span>100% Confidential &amp; Private</span>
@@ -126,46 +126,46 @@ export function VaidyaConsultationDesk() {
 
               {/* Verified Physician Badge */}
               <div className="pt-4 border-t border-[#999999]/20 flex items-center gap-4">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#D8C28A]/60 shadow-md flex-shrink-0 bg-[#151926]">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#D8C28A]/60 shadow-md flex-shrink-0 bg-[#151926]">
                   <Image
                     src="/images/team/mageesh.jpg"
                     alt="Ayurvedic Vaidya Panel Lead"
                     fill
                     className="object-cover object-top"
-                    sizes="48px"
+                    sizes="56px"
                   />
-                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-[#6EE7B7] rounded-full border-2 border-[#08090C]" />
+                  <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#6EE7B7] rounded-full border-2 border-[#08090C]" />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-[#FAF7EE] flex items-center gap-1.5">
+                  <p className="text-sm font-semibold text-[#FAF7EE] flex items-center gap-1.5">
                     <span>Dr. Vaidya Panel (BAMS, MD Ayu)</span>
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#6EE7B7]" />
+                    <ShieldCheck className="w-4 h-4 text-[#6EE7B7]" />
                   </p>
-                  <p className="text-[11px] text-[#999999]">Over 25+ Years of Classical Rasayana &amp; Clinical Practice</p>
+                  <p className="text-xs text-[#999999] mt-0.5">Over 25+ Years of Classical Rasayana &amp; Clinical Practice</p>
                 </div>
               </div>
             </div>
 
             {/* Right Column: Interactive Consultation Card */}
-            <div className="lg:col-span-5 p-5 sm:p-6 rounded-2xl bg-[#08090C] border border-[#999999]/25 shadow-xl space-y-4">
+            <div className="lg:col-span-5 p-6 sm:p-7 rounded-3xl bg-[#090C12]/95 border border-[#999999]/25 shadow-2xl space-y-4">
               <div>
-                <span className="text-[9.5px] uppercase tracking-wider font-semibold text-[#6EE7B7] block mb-1">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#6EE7B7] block mb-1">
                   Step 1: Select Your Primary Concern
                 </span>
-                <div className="space-y-1.5 mt-2">
+                <div className="space-y-2 mt-2.5">
                   {concerns.map((c) => (
                     <button
                       key={c}
                       onClick={() => setSelectedConcern(c)}
-                      className={`w-full text-left p-2.5 rounded-xl text-xs transition-all border flex items-center justify-between ${
+                      className={`w-full text-left p-3 rounded-xl text-xs transition-all border flex items-center justify-between ${
                         selectedConcern === c
-                          ? 'bg-[#151926] border-[#6EE7B7]/60 text-[#FAF7EE] font-medium shadow-sm'
+                          ? 'bg-[#151926] border-[#6EE7B7]/60 text-[#FAF7EE] font-medium shadow-md'
                           : 'bg-[#11141E] border-[#999999]/20 text-[#999999] hover:text-[#FAF7EE] hover:border-[#999999]/40'
                       }`}
                     >
-                      <span className="text-[11px] sm:text-xs">{c}</span>
+                      <span className="text-xs leading-snug">{c}</span>
                       {selectedConcern === c && (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#6EE7B7] flex-shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-[#6EE7B7] flex-shrink-0" />
                       )}
                     </button>
                   ))}
@@ -173,14 +173,14 @@ export function VaidyaConsultationDesk() {
               </div>
 
               {/* Step 2: Patient Context (Prefilled / Editable) */}
-              <div className="space-y-2.5 pt-2 border-t border-[#999999]/20">
-                <span className="text-[9.5px] uppercase tracking-wider font-semibold text-[#6EE7B7] block">
+              <div className="space-y-3 pt-3 border-t border-[#999999]/20">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#6EE7B7] block">
                   Step 2: Patient Details
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
                     <div className="relative">
-                      <User className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#999999] pointer-events-none" />
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#999999] pointer-events-none" />
                       <input
                         type="text"
                         value={patientName}
@@ -189,7 +189,7 @@ export function VaidyaConsultationDesk() {
                           if (errors.name) setErrors(prev => ({ ...prev, name: '' }))
                         }}
                         placeholder="Your Full Name *"
-                        className={`w-full pl-8 pr-2.5 py-2 rounded-lg bg-[#11141E] border text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:outline-none transition-all ${
+                        className={`w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#11141E] border text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:outline-none transition-all ${
                           errors.name ? 'border-red-500 focus:border-red-500' : 'border-[#999999]/25 focus:border-[#6EE7B7]'
                         }`}
                       />
@@ -198,7 +198,7 @@ export function VaidyaConsultationDesk() {
                   </div>
                   <div>
                     <div className="relative">
-                      <Phone className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#999999] pointer-events-none" />
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#999999] pointer-events-none" />
                       <input
                         type="tel"
                         maxLength={10}
@@ -208,7 +208,7 @@ export function VaidyaConsultationDesk() {
                           if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }))
                         }}
                         placeholder="10-Digit Mobile / WhatsApp *"
-                        className={`w-full pl-8 pr-2.5 py-2 rounded-lg bg-[#11141E] border text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:outline-none transition-all ${
+                        className={`w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#11141E] border text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:outline-none transition-all ${
                           errors.phone ? 'border-red-500 focus:border-red-500' : 'border-[#999999]/25 focus:border-[#6EE7B7]'
                         }`}
                       />
@@ -217,13 +217,13 @@ export function VaidyaConsultationDesk() {
                   </div>
                 </div>
                 <div className="relative">
-                  <MapPin className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#999999] pointer-events-none" />
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#999999] pointer-events-none" />
                   <input
                     type="text"
                     value={patientCity}
                     onChange={(e) => setPatientCity(e.target.value)}
                     placeholder="City / State (e.g. Pune, Maharashtra)"
-                    className="w-full pl-8 pr-2.5 py-2 rounded-lg bg-[#11141E] border border-[#999999]/25 text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:border-[#6EE7B7] focus:outline-none"
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#11141E] border border-[#999999]/25 text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:border-[#6EE7B7] focus:outline-none"
                   />
                 </div>
               </div>
@@ -231,14 +231,14 @@ export function VaidyaConsultationDesk() {
               <div className="pt-2">
                 <button
                   onClick={handleStartConsultation}
-                  className="w-full py-3 px-4 rounded-xl bg-[#D8C28A] hover:bg-[#E6D5AC] text-[#08090C] font-bold text-xs tracking-wide transition-all shadow-md shadow-[#D8C28A]/20 flex items-center justify-center gap-2"
+                  className="w-full py-3.5 px-4 rounded-full bg-gradient-to-r from-[#E6D5AC] to-[#D8C28A] hover:from-[#F0E2C2] hover:to-[#E6D5AC] text-[#08090C] font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#D8C28A]/20 flex items-center justify-center gap-2"
                 >
                   <MessageCircle className="w-4 h-4 text-[#08090C]" />
                   <span>Start WhatsApp Doctor Consult</span>
                 </button>
 
-                <p className="text-[10px] text-center text-[#999999] mt-2">
-                  Available Mon–Sat: 9:00 AM – 8:00 PM IST • Free Service
+                <p className="text-[10.5px] text-center text-[#999999] mt-2.5">
+                  Available Mon–Sat: 9:00 AM – 8:00 PM IST • Free Confidential Service
                 </p>
               </div>
             </div>
