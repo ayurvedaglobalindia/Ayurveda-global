@@ -19,7 +19,7 @@ export function FeaturedProducts() {
   })
 
   return (
-    <section id="products" className="bg-[#EFEFEF] py-7 sm:py-9 lg:py-11 border-b border-[#999999]/30">
+    <section id="products" className="bg-[#FAF7F2] py-7 sm:py-9 lg:py-11 border-b border-[#999999]/30">
       <div className="container">
         
         {/* Section Header */}

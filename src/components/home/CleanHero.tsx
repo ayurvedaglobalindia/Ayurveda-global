@@ -26,7 +26,7 @@ export function CleanHero() {
   }
 
   return (
-    <section className="bg-gradient-to-b from-[#FAF7F2] via-[#F8F6F2] to-[#EFEFEF] text-[#1C1D1F] pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-10 lg:pb-12 border-b border-[#999999]/30">
+    <section className="bg-[#FAF7F2] text-[#1C1D1F] pt-6 pb-8 sm:pt-8 sm:pb-10 lg:pt-10 lg:pb-12 border-b border-[#999999]/30">
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           

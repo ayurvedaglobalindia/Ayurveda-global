@@ -24,7 +24,7 @@ export function VaidyaConsultationDesk() {
   }
 
   return (
-    <section className="bg-[#EFEFEF] py-8 sm:py-10 border-b border-[#999999]/30" aria-label="Ayurvedic Consultation">
+    <section className="bg-[#FAF7F2] py-8 sm:py-10 border-b border-[#999999]/30" aria-label="Ayurvedic Consultation">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 14 }}

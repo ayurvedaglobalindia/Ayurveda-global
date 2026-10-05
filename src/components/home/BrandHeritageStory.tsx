@@ -25,7 +25,7 @@ const principles = [
 
 export function BrandHeritageStory() {
   return (
-    <section className="bg-[#EFEFEF] py-8 sm:py-10 lg:py-12 border-b border-[#999999]/30" aria-label="Heritage & Philosophy">
+    <section className="bg-[#FAF7F2] py-8 sm:py-10 lg:py-12 border-b border-[#999999]/30" aria-label="Heritage & Philosophy">
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           

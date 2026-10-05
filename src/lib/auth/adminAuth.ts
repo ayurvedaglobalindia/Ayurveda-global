@@ -11,9 +11,13 @@ const FAILED_ATTEMPTS_KEY = 'ayur_admin_failed_attempts'
 const LOCKOUT_KEY = 'ayur_admin_lockout_until'
 const SESSION_DURATION_MS = 2 * 60 * 60 * 1000 // 2 hours
 
-// Default SHA-256 hash for initial setup ("ayur2025" or custom environment hash)
-// To change: Set NEXT_PUBLIC_ADMIN_PIN_HASH in Cloudflare / .env
-const DEFAULT_HASH = '179be7bb42e5668e0d99fa140b9557ec601d0c3ebc9c647b019b22e11894b988' // sha256 of "ayur2025"
+// Authorized SHA-256 hashes for admin terminal access
+// Supported default passkeys: "AyurVeda@Admin2025" and "ayur2025"
+// To customize: Set NEXT_PUBLIC_ADMIN_PIN_HASH in environment variables
+const AUTHORIZED_HASHES = new Set([
+  'adb2bfa9d66224b9465dc2e78196f5b71bbe53aec9afcce76c96489b8d3445d4', // sha256 of "AyurVeda@Admin2025"
+  'b383aa421ebd9038adb130a407cc2ef2882cbbc4a9af0d4f8861755a0077ff7a', // sha256 of "ayur2025"
+])
 
 async function sha256(message: string): Promise<string> {
   if (typeof window === 'undefined' || !window.crypto || !window.crypto.subtle) {
@@ -44,9 +48,11 @@ export async function loginAdmin(secret: string): Promise<{ success: boolean; me
   }
 
   const computedHash = await sha256(secret)
-  const targetHash = process.env.NEXT_PUBLIC_ADMIN_PIN_HASH || DEFAULT_HASH
+  const envTargetHash = process.env.NEXT_PUBLIC_ADMIN_PIN_HASH?.trim()
 
-  if (computedHash === targetHash) {
+  const isMatch = envTargetHash ? computedHash === envTargetHash : AUTHORIZED_HASHES.has(computedHash)
+
+  if (isMatch) {
     // Reset failed attempts
     localStorage.removeItem(FAILED_ATTEMPTS_KEY)
     localStorage.removeItem(LOCKOUT_KEY)

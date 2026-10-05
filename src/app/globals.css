@@ -10,12 +10,12 @@
   --font-dm-sans: 'DM Sans', system-ui, sans-serif;
   --font-cormorant: 'Cormorant Garamond', Georgia, serif;
 
-  --color-void: #EFEFEF;
+  --color-void: #FAF7F2;
   --color-obsidian: #EAEAE8;
   --color-charcoal: #E2E2E0;
   --color-forest: #EBEBE9;
   --color-forest-deep: #FAF7F2;
-  --color-forest-dark: #EFEFEF;
+  --color-forest-dark: #FAF7F2;
   --color-forest-light: #FBF9F5;
   --color-emerald-dark: #E4E7E5;
   --color-emerald-deep: #ECEFE8;
@@ -96,7 +96,7 @@ html {
 
 body {
   font-family: var(--font-dm-sans);
-  background-color: #EFEFEF;
+  background-color: #FAF7F2;
   color: #1C1D1F;
   font-size: 14px;
   line-height: 1.5;
