@@ -6,7 +6,6 @@ import { ProductQuickViewModal } from '@/components/product/ProductQuickViewModa
 import { AgeVerificationGate } from '@/components/layout/AgeVerificationGate'
 import { CartDrawer } from '@/components/cart/CartDrawer'
 import { MobileMenuDrawer } from '@/components/layout/MobileMenuDrawer'
-import { AuthModal } from '@/components/auth/AuthModal'
 import { SearchModal } from '@/components/layout/SearchModal'
 import type { Product } from '@/types'
 
@@ -17,7 +16,6 @@ export function GlobalModals() {
   const ageGateModal = modals['age-gate']
   const cartModal = modals['cart']
   const mobileMenuModal = modals['mobile-menu']
-  const authModal = modals['auth-gate'] || modals['auth'] || modals['login']
 
   useEffect(() => {
     if (cartModal?.isOpen) {
@@ -30,19 +28,6 @@ export function GlobalModals() {
     <>
       {/* Slide-out Cart Drawer */}
       <CartDrawer />
-
-      {/* Global Authentication Gate Modal (Login / Sign Up) */}
-      {authModal?.isOpen && (
-        <AuthModal
-          isOpen={true}
-          onClose={() => {
-            closeModal('auth-gate')
-            closeModal('auth')
-            closeModal('login')
-          }}
-          pendingItem={(authModal.data as any)?.pendingItem || (authModal.data as any) || null}
-        />
-      )}
 
       {/* Global Quick View Modal */}
       {quickViewModal?.isOpen && (

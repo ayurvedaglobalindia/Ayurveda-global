@@ -8,28 +8,23 @@ import {
   Search,
   ShoppingBag,
   Heart,
-  User,
-  ChevronDown,
+  Truck,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCartStore } from '@/store/cartStore'
 import { useWishlistStore } from '@/store/wishlistStore'
-import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
 
 export function Header() {
   const [isMounted, setIsMounted] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isAccountOpen, setIsAccountOpen] = useState(false)
 
   const { getItemCount } = useCartStore()
   const { getItemCount: getWishlistCount } = useWishlistStore()
-  const { isAuthenticated } = useUserStore()
   const {
     openModal,
     openCartDrawer,
     openSearch,
-    showToast,
   } = useUIStore()
 
   useEffect(() => {
@@ -177,72 +172,14 @@ export function Header() {
               )}
             </button>
 
-            {/* User Account */}
-            {isMounted && isAuthenticated ? (
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setIsAccountOpen(!isAccountOpen)}
-                  className="flex items-center gap-1 p-2 rounded-lg text-[#1C1D1F] hover:text-[#9E8047] transition-colors"
-                  aria-label="Account menu"
-                >
-                  <User className="w-4.5 h-4.5" />
-                  <ChevronDown
-                    className="w-3 h-3 transition-transform"
-                    style={{ transform: isAccountOpen ? 'rotate(180deg)' : 'rotate(0)' }}
-                  />
-                </button>
-                {isAccountOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    className="absolute right-0 top-full mt-2 w-48 bg-[#FFFFFF] rounded-xl shadow-lg border border-[#999999]/30 py-1.5 z-50 text-xs"
-                  >
-                    <Link
-                      href="/account"
-                      className="block px-4 py-2 text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors"
-                      onClick={() => setIsAccountOpen(false)}
-                    >
-                      Account Details
-                    </Link>
-                    <Link
-                      href="/orders"
-                      className="block px-4 py-2 text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors"
-                      onClick={() => setIsAccountOpen(false)}
-                    >
-                      Orders &amp; Shipments
-                    </Link>
-                    <Link
-                      href="/wishlist"
-                      className="block px-4 py-2 text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors"
-                      onClick={() => setIsAccountOpen(false)}
-                    >
-                      Saved Formulations
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        useUserStore.getState().logout()
-                        setIsAccountOpen(false)
-                        showToast({ type: 'info', title: 'Signed Out' })
-                      }}
-                      className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition-colors border-t border-[#999999]/25"
-                    >
-                      Sign Out
-                    </button>
-                  </motion.div>
-                )}
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={() => openModal('auth-gate')}
-                className="hidden sm:inline-flex items-center justify-center px-4 py-1.5 rounded-full text-xs font-medium text-[#1C1D1F] border border-[#1C1D1F] hover:bg-[#1C1D1F] hover:text-[#FAF7F2] transition-colors"
-              >
-                Sign In
-              </button>
-            )}
+            {/* Track Order Direct Link (Frictionless, No Signup/Signin Required) */}
+            <Link
+              href="/track-order"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#1C1D1F] border border-[#999999]/30 hover:border-[#1C1D1F] hover:bg-[#F4EFEA] transition-colors"
+            >
+              <Truck className="w-3.5 h-3.5 text-[#4E5F52]" />
+              <span>Track Order</span>
+            </Link>
 
             {/* Mobile Menu Button */}
             <button

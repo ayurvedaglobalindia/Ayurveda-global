@@ -283,8 +283,6 @@ export function CheckoutForm() {
       newErrors.phone = '10-digit WhatsApp number is required'
     } else if (!validatePhone(formData.phone)) {
       newErrors.phone = 'Enter a valid 10-digit Indian mobile number'
-    } else if (!isPhoneVerified) {
-      newErrors.phone = 'Please verify your mobile number with OTP before completing your order'
     }
     if (formData.email.trim() && !validateEmail(formData.email)) {
       newErrors.email = 'Enter a valid email address'
@@ -683,11 +681,11 @@ export function CheckoutForm() {
                     <p className="text-[10px] text-red-500 mt-1">{errors.phone}</p>
                   ) : !isPhoneVerified ? (
                     <p className="text-[9.5px] text-[#737373] mt-1 flex items-center gap-1">
-                      <KeyRound className="w-3 h-3 text-[#9E8047]" />
-                      <span>OTP verification required before placing order</span>
+                      <MessageCircle className="w-3 h-3 text-[#4E5F52]" />
+                      <span>Order confirmation &amp; live parcel tracking will be sent to this WhatsApp number</span>
                     </p>
                   ) : (
-                    <p className="text-[9.5px] text-[#4E5F52] mt-1">✓ Order updates &amp; tracking will be sent to this verified number</p>
+                    <p className="text-[9.5px] text-[#4E5F52] mt-1">✓ Order updates &amp; live parcel tracking enabled for this verified number</p>
                   )}
                 </div>
 
@@ -1074,68 +1072,71 @@ export function CheckoutForm() {
 
               {/* Primary Direct WhatsApp Action Button */}
               <div className="pt-2 space-y-2">
-                {!isPhoneVerified ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!otpSent && formData.phone.length === 10) {
-                        handleSendCheckoutOtp()
-                      }
-                      const el = document.getElementById('field-phone')
-                      if (el) {
-                        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                        el.focus()
-                      }
-                    }}
-                    className="w-full py-3.5 px-4 rounded-xl bg-[#9E8047] hover:bg-[#856A35] text-white font-medium text-xs sm:text-sm tracking-wide shadow-sm flex items-center justify-center gap-2 group transition-all duration-200 active:scale-[0.99]"
-                  >
-                    <Lock className="w-4 h-4 flex-shrink-0" />
-                    <span>Verify Mobile via OTP to Place Order</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                  </button>
-                ) : (
+                {formData.paymentMethod === 'cod' ? (
                   <>
                     <button
-                      onClick={() => handlePlaceOrder('whatsapp')}
+                      type="button"
+                      onClick={() => handlePlaceOrder('cod')}
                       disabled={isSubmitting}
-                      className="w-full py-3 px-4 rounded-xl bg-[#4E5F52] hover:bg-[#3D4B40] text-white font-medium text-xs sm:text-sm tracking-wide shadow-sm flex items-center justify-center gap-2 group transition-all duration-200 active:scale-[0.99] disabled:opacity-60"
+                      className="w-full py-3.5 px-4 rounded-xl bg-[#4E5F52] hover:bg-[#3D4D40] text-white font-medium text-xs sm:text-sm tracking-wide shadow-sm flex items-center justify-center gap-2 group transition-all duration-200 active:scale-[0.99] disabled:opacity-60"
                     >
-                      <MessageCircle className="w-4 h-4 fill-current flex-shrink-0" />
-                      <span>Complete Order via WhatsApp</span>
+                      <Truck className="w-4 h-4 flex-shrink-0" />
+                      <span>Confirm Cash on Delivery — {formatINR(total)}</span>
                       <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                     </button>
 
-                    {formData.paymentMethod === 'cod' && (
-                      <button
-                        onClick={() => handlePlaceOrder('cod')}
-                        disabled={isSubmitting}
-                        className="w-full py-2.5 px-4 rounded-xl bg-[#FAF7F2] hover:bg-[#F0ECE4] border border-[#999999]/30 text-[#1C1D1F] font-medium text-xs tracking-wide transition-all"
-                      >
-                        Confirm Doorstep COD ({formatINR(total)})
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => handlePlaceOrder('whatsapp')}
+                      disabled={isSubmitting}
+                      className="w-full py-2.5 px-4 rounded-xl bg-[#FAF7F2] hover:bg-[#F4EFEA] border border-[#999999]/30 text-[#1C1D1F] font-medium text-xs tracking-wide flex items-center justify-center gap-2 transition-all"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-[#4E5F52]" />
+                      <span>Or Confirm Instantly via WhatsApp Desk</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => handlePlaceOrder('whatsapp')}
+                      disabled={isSubmitting}
+                      className="w-full py-3.5 px-4 rounded-xl bg-[#4E5F52] hover:bg-[#3D4D40] text-white font-medium text-xs sm:text-sm tracking-wide shadow-sm flex items-center justify-center gap-2 group transition-all duration-200 active:scale-[0.99] disabled:opacity-60"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-current flex-shrink-0" />
+                      <span>Confirm Order via WhatsApp Concierge</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handlePlaceOrder('cod')}
+                      disabled={isSubmitting}
+                      className="w-full py-2.5 px-4 rounded-xl bg-[#FAF7F2] hover:bg-[#F4EFEA] border border-[#999999]/30 text-[#1C1D1F] font-medium text-xs tracking-wide flex items-center justify-center gap-2 transition-all"
+                    >
+                      <Truck className="w-3.5 h-3.5 text-[#4E5F52]" />
+                      <span>Pay via Cash on Delivery (COD)</span>
+                    </button>
                   </>
                 )}
 
-                <p className="text-[10px] text-center text-[#999999] leading-tight">
-                  {!isPhoneVerified
-                    ? '10-digit mobile verification required to prevent bogus orders and ensure doorstep dispatch.'
-                    : 'Tapping will capture your details and open WhatsApp with instant dispatch concierge.'}
+                <p className="text-[10px] text-center text-[#737373] leading-tight pt-0.5">
+                  Tapping will record your order &amp; connect directly to our Ayurvedic concierge on WhatsApp for instant confirmation.
                 </p>
               </div>
 
-              {/* Trust Badges Strip */}
-              <div className="pt-3 border-t border-[#C2A265]/15 space-y-1.5 text-[10.5px] text-[#A8A295]">
-                <div className="flex items-center gap-2 text-[#D4B678]">
-                  <Lock className="w-3.5 h-3.5 text-[#C2A265] flex-shrink-0" />
+              {/* Trust Badges Strip (Nature Sage Green + Soft Grey) */}
+              <div className="pt-3 border-t border-[#999999]/30 space-y-2 text-[10.5px] text-[#737373]">
+                <div className="flex items-center gap-2 text-[#555555]">
+                  <Lock className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
                   <span>100% Plain Unmarked Box • Complete Privacy</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#D4B678]">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#C2A265] flex-shrink-0" />
+                <div className="flex items-center gap-2 text-[#555555]">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
                   <span>AYUSH Standard Certified Classical Rasayana</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#D4B678]">
-                  <Truck className="w-3.5 h-3.5 text-[#C2A265] flex-shrink-0" />
+                <div className="flex items-center gap-2 text-[#555555]">
+                  <Truck className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
                   <span>Doorstep Delivery Across 25,000+ Pin Codes</span>
                 </div>
               </div>

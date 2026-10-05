@@ -124,12 +124,12 @@ const faqs = [
     category: 'Account & General',
     items: [
       {
-        question: 'Do I need an account to place an order?',
-        answer: 'No, you can place orders as a guest. However, creating an account allows you to track orders, view history, save addresses, and manage your wishlist.',
+        question: 'Do I need an account or password to place an order?',
+        answer: 'No registration, password, or sign-up is required. You can complete your order directly in seconds via WhatsApp Concierge or Doorstep Cash on Delivery (COD) with complete privacy.',
       },
       {
-        question: 'How do I reset my password?',
-        answer: 'Click "Forgot Password" on the login page. Enter your registered email and you\'ll receive a password reset link.',
+        question: 'How do I track my parcel without signing in?',
+        answer: 'Simply enter your Order Reference Number or 10-digit mobile number on our Live Tracking page. You can also message our WhatsApp Dispatch Desk anytime for live courier updates.',
       },
       {
         question: 'Is my personal information secure?',

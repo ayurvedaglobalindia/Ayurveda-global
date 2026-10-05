@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { Home, Search, User, ShoppingBag, HeartPulse } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+import { Home, Search, Truck, ShoppingBag, HeartPulse } from 'lucide-react'
 import { useCartStore } from '@/store/cartStore'
 import { useUserStore } from '@/store/userStore'
 import { useUIStore } from '@/store/uiStore'
@@ -11,11 +11,10 @@ import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from '@/store/whatsa
 
 export function MobileBottomNav() {
   const pathname = usePathname()
-  const router = useRouter()
   const [isMounted, setIsMounted] = useState(false)
   const { getItemCount: getCartCount } = useCartStore()
-  const { user, isAuthenticated } = useUserStore()
-  const { openCartDrawer, openSearch, openModal, isSearchOpen } = useUIStore()
+  const { user } = useUserStore()
+  const { openCartDrawer, openSearch, isSearchOpen } = useUIStore()
 
   useEffect(() => {
     setIsMounted(true)
@@ -35,14 +34,6 @@ export function MobileBottomNav() {
       source: 'bottom-nav',
     })
     window.open(buildWhatsAppUrl(msg), '_blank')
-  }
-
-  const handleProfileClick = () => {
-    if (isAuthenticated) {
-      router.push('/account')
-    } else {
-      openModal('auth-gate')
-    }
   }
 
   return (
@@ -110,20 +101,17 @@ export function MobileBottomNav() {
           <span>Cart</span>
         </button>
 
-        {/* 5. Dynamic Profile / Sign In */}
-        <button
-          type="button"
-          onClick={handleProfileClick}
+        {/* 5. Track Order */}
+        <Link
+          href="/track-order"
           className={`flex flex-col items-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
-            pathname?.startsWith('/account') ? 'text-[#1C1D1F] font-semibold' : 'text-[#737373] hover:text-[#1C1D1F]'
+            pathname === '/track-order' ? 'text-[#1C1D1F] font-semibold' : 'text-[#737373] hover:text-[#1C1D1F]'
           }`}
-          aria-label={isAuthenticated ? 'View Account' : 'Sign In'}
+          aria-label="Track Order Status"
         >
-          <User className="w-5 h-5" />
-          <span className="truncate max-w-[52px]">
-            {isAuthenticated ? (user?.name?.split(' ')[0] || 'Account') : 'Sign In'}
-          </span>
-        </button>
+          <Truck className="w-5 h-5" />
+          <span>Track</span>
+        </Link>
       </div>
     </nav>
   )

@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { WhatsAppLeadEvent } from '@/types'
 import { useUserStore } from './userStore'
+import { trackEvent } from '@/lib/analytics'
 
 interface WhatsAppStore {
   leads: WhatsAppLeadEvent[]
@@ -34,6 +35,15 @@ export const useWhatsAppStore = create<WhatsAppStore>()(
         set(state => ({
           leads: [event, ...state.leads].slice(0, 500),
         }))
+
+        // Bridge to central analytics engine
+        try {
+          trackEvent('whatsapp_click', {
+            source: eventData.source,
+            productName: eventData.productName,
+            orderTotal: eventData.orderTotal,
+          })
+        } catch {}
 
         if (typeof window !== 'undefined') {
           fetch('/api/whatsapp/lead', {

@@ -21,11 +21,6 @@ export function WhatsAppFloatButton() {
   }, [])
 
   const handleWhatsAppClick = (source: 'float' | 'product' | 'checkout' | 'contact') => {
-    if (source === 'checkout' && !user?.phone) {
-      openModal('auth-gate')
-      setIsExpanded(false)
-      return
-    }
 
     const primaryAddr = user?.addresses?.[0]
     const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''

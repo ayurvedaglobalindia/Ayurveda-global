@@ -58,12 +58,6 @@ export function ProductVideoPlayer({
   }
 
   const handleWhatsAppOrder = () => {
-    if (!isAuthenticated) {
-      openModal('auth-gate', {
-        mode: 'buy-now',
-      })
-      return
-    }
 
     const primaryAddr = user?.addresses?.[0]
     const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
