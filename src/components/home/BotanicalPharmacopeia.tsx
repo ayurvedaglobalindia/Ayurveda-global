@@ -131,13 +131,13 @@ export function BotanicalPharmacopeia() {
   const current = botanicals[selectedHerb]
 
   return (
-    <section className="bg-[#08090C] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#08090C] py-8 sm:py-10 lg:py-12 border-b border-[#999999]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#121622] border border-emerald-500/30 text-emerald-400 text-[10px] font-semibold tracking-[0.22em] uppercase mb-2">
-            <Leaf className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#11141E] border border-[#6EE7B7]/30 text-[#6EE7B7] text-[10px] font-semibold tracking-[0.22em] uppercase mb-2">
+            <Leaf className="w-3.5 h-3.5 text-[#6EE7B7]" />
             <span>Botanical Pharmacology</span>
           </div>
 
@@ -145,7 +145,7 @@ export function BotanicalPharmacopeia() {
             The Sacred Pharmacopeia
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#CBD5E1] mt-2 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm text-[#999999] mt-2 max-w-lg mx-auto leading-relaxed font-sans">
             Every milligram is backed by centuries of Charaka Samhita wisdom and validated through pharmaceutical-grade HPLC chromatography.
           </p>
         </div>
@@ -159,12 +159,12 @@ export function BotanicalPharmacopeia() {
               onClick={() => setSelectedHerb(idx)}
               className={`px-3 py-2 rounded-xl text-xs whitespace-nowrap transition-all flex items-center gap-2 border flex-shrink-0 ${
                 selectedHerb === idx
-                  ? 'bg-[#1E2534] border-emerald-400 text-emerald-300 shadow-md font-semibold'
-                  : 'bg-[#121622] border-slate-800 text-[#94A3B8] hover:text-[#FAF7EE]'
+                  ? 'bg-[#161D2B] border-[#6EE7B7]/60 text-[#6EE7B7] shadow-md font-semibold'
+                  : 'bg-[#10141E] border-[#999999]/25 text-[#999999] hover:text-[#FAF7EE]'
               }`}
             >
               <span>{herb.name}</span>
-              <span className="text-[9px] uppercase px-1.5 py-0.5 rounded bg-[#C2A265]/20 text-[#D4B678] font-bold">
+              <span className="text-[9px] uppercase px-1.5 py-0.5 rounded bg-[#D8C28A]/15 text-[#E6D5AC] font-bold">
                 {herb.badge}
               </span>
             </button>
@@ -185,21 +185,21 @@ export function BotanicalPharmacopeia() {
                   onClick={() => setSelectedHerb(idx)}
                   className={`w-full text-left p-3.5 rounded-xl transition-all border flex items-center justify-between group ${
                     isSelected
-                      ? 'bg-[#161D2B] border-emerald-500/70 text-[#FAF7EE] shadow-lg shadow-black/40 ring-1 ring-emerald-500/30'
-                      : 'bg-[#10141E]/90 border-slate-800 text-[#94A3B8] hover:text-[#FAF7EE] hover:bg-[#141A26] hover:border-slate-700'
+                      ? 'bg-gradient-to-r from-[#161D2B] to-[#121622] border-[#6EE7B7]/50 text-[#FAF7EE] shadow-lg shadow-black/40 ring-1 ring-[#6EE7B7]/30'
+                      : 'bg-[#10141E]/90 border-[#999999]/20 text-[#999999] hover:text-[#FAF7EE] hover:bg-[#141926] hover:border-[#999999]/35'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-2 h-2 rounded-full transition-all ${
-                      isSelected ? 'bg-emerald-400 scale-125 shadow-[0_0_8px_#34D399]' : 'bg-slate-600'
+                      isSelected ? 'bg-[#6EE7B7] scale-125 shadow-[0_0_8px_#6EE7B7]' : 'bg-[#999999]/40'
                     }`} />
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-heading text-xs sm:text-sm font-medium text-[#FAF7EE] group-hover:text-[#D4B678] transition-colors">
+                        <span className="font-heading text-xs sm:text-sm font-medium text-[#FAF7EE] group-hover:text-[#E6D5AC] transition-colors">
                           {herb.name}
                         </span>
                       </div>
-                      <span className="text-[10px] text-[#94A3B8] italic font-serif block mt-0.5">
+                      <span className="text-[10px] text-[#999999] italic font-serif block mt-0.5">
                         {herb.botanical}
                       </span>
                     </div>
@@ -207,8 +207,8 @@ export function BotanicalPharmacopeia() {
 
                   <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border transition-colors ${
                     isSelected
-                      ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300'
-                      : 'bg-[#0A0D14] border-slate-800 text-[#8A8478]'
+                      ? 'bg-[#6EE7B7]/15 border-[#6EE7B7]/40 text-[#6EE7B7]'
+                      : 'bg-[#0A0D14] border-[#999999]/20 text-[#999999]'
                   }`}>
                     {herb.badge}
                   </span>
@@ -226,31 +226,31 @@ export function BotanicalPharmacopeia() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.25 }}
-                className="p-5 sm:p-7 rounded-2xl bg-[#121622] border border-slate-700/60 shadow-2xl relative overflow-hidden"
+                className="p-5 sm:p-7 rounded-2xl bg-[#11141E] border border-[#999999]/25 shadow-2xl relative overflow-hidden"
               >
                 {/* Botanical Header Badge */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-slate-800">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[#999999]/15">
                   <div>
-                    <span className="text-[10px] tracking-[0.2em] uppercase font-semibold text-emerald-400 block">
+                    <span className="text-[10px] tracking-[0.2em] uppercase font-semibold text-[#6EE7B7] block">
                       Classical Sanskrit Classification
                     </span>
                     <h3 className="font-heading text-lg sm:text-2xl font-normal text-[#FAF7EE] mt-1">
                       {current.name}
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#D4B678] font-serif mt-0.5">
+                    <p className="text-xs sm:text-sm text-[#E6D5AC] font-serif mt-0.5">
                       {current.sanskrit}
                     </p>
                   </div>
 
-                  <div className="px-3 py-1.5 rounded-full bg-[#1A2232] border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+                  <div className="px-3 py-1.5 rounded-full bg-[#131924] border border-[#6EE7B7]/30 text-[#6EE7B7] text-xs font-semibold">
                     {current.badge}
                   </div>
                 </div>
 
                 {/* Botanical Visual Showcase & Bioactive Specs */}
-                <div className="grid sm:grid-cols-12 gap-4 py-5 border-b border-slate-800">
+                <div className="grid sm:grid-cols-12 gap-4 py-5 border-b border-[#999999]/15">
                   {/* Botanical Extraction Photography */}
-                  <div className="sm:col-span-5 relative h-40 sm:h-auto min-h-[140px] rounded-xl overflow-hidden border border-slate-700/60 group">
+                  <div className="sm:col-span-5 relative h-40 sm:h-auto min-h-[140px] rounded-xl overflow-hidden border border-[#999999]/25 group">
                     <Image
                       src={current.image}
                       alt={current.name}
@@ -260,7 +260,7 @@ export function BotanicalPharmacopeia() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#08090C]/90 via-transparent to-transparent" />
                     <div className="absolute bottom-2 left-2 right-2">
-                      <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-300 bg-[#08090C]/85 px-2 py-0.5 rounded border border-emerald-500/30 inline-block backdrop-blur-sm">
+                      <span className="text-[10px] uppercase tracking-wider font-bold text-[#6EE7B7] bg-[#08090C]/85 px-2 py-0.5 rounded border border-[#6EE7B7]/30 inline-block backdrop-blur-sm">
                         Standardized Extract
                       </span>
                     </div>
@@ -268,8 +268,8 @@ export function BotanicalPharmacopeia() {
 
                   {/* Bioactive Details */}
                   <div className="sm:col-span-7 flex flex-col justify-between gap-3">
-                    <div className="p-3 rounded-xl bg-[#0D1017] border border-slate-800">
-                      <span className="text-[10px] uppercase tracking-wider text-[#94A3B8] block mb-1">
+                    <div className="p-3 rounded-xl bg-[#0B0D14] border border-[#999999]/20">
+                      <span className="text-[10px] uppercase tracking-wider text-[#999999] block mb-1">
                         Standardized Bioactive Markers:
                       </span>
                       <p className="text-xs font-medium text-[#FAF7EE]">
@@ -277,8 +277,8 @@ export function BotanicalPharmacopeia() {
                       </p>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-[#0D1017] border border-slate-800">
-                      <span className="text-[10px] uppercase tracking-wider text-[#94A3B8] block mb-1">
+                    <div className="p-3 rounded-xl bg-[#0B0D14] border border-[#999999]/20">
+                      <span className="text-[10px] uppercase tracking-wider text-[#999999] block mb-1">
                         Physiological Mechanism:
                       </span>
                       <p className="text-xs font-medium text-[#FAF7EE]">
@@ -288,26 +288,26 @@ export function BotanicalPharmacopeia() {
                   </div>
                 </div>
 
-                {/* Long Editorial Narrative */}
+                {/* Long Editorial Narrative in #999999 */}
                 <div className="pt-4">
-                  <p className="text-xs sm:text-sm text-[#C5BFB3] leading-relaxed font-sans">
+                  <p className="text-xs sm:text-sm text-[#999999] leading-relaxed font-sans">
                     {current.description}
                   </p>
                 </div>
 
                 {/* Scientific Assurance Footnote with Product Link */}
-                <div className="mt-6 pt-4 border-t border-[#C2A265]/15 flex flex-wrap items-center justify-between gap-3 text-[11px] text-[#A8A295]">
-                  <div className="flex items-center gap-1.5 text-[#D4B678]">
-                    <ShieldCheck className="w-4 h-4 text-[#C2A265]" />
+                <div className="mt-6 pt-4 border-t border-[#999999]/15 flex flex-wrap items-center justify-between gap-3 text-[11px] text-[#999999]">
+                  <div className="flex items-center gap-1.5 text-[#E6D5AC]">
+                    <ShieldCheck className="w-4 h-4 text-[#6EE7B7]" />
                     <span>Heavy Metal &amp; Solvent Screened (NABL Standards)</span>
                   </div>
 
                   <Link
                     href={`/product/${current.productSlug}`}
-                    className="text-[#FAF7EE] hover:text-[#D4B678] font-medium flex items-center gap-1 transition-colors group"
+                    className="text-[#FAF7EE] hover:text-[#6EE7B7] font-medium flex items-center gap-1 transition-colors group"
                   >
                     <span>Used in {current.productName}</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 text-[#C2A265]" />
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 text-[#6EE7B7]" />
                   </Link>
                 </div>
 

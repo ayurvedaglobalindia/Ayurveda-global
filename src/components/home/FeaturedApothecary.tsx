@@ -101,26 +101,30 @@ export function FeaturedApothecary() {
   }
 
   return (
-    <section id="apothecary" className="bg-[#08090C] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 relative">
+    <section id="apothecary" className="bg-[#08090C] py-8 sm:py-12 lg:py-16 border-b border-[#999999]/20 relative overflow-hidden">
+      {/* Subtle dual atmospheric ambient glow */}
+      <div className="absolute top-0 left-1/4 -translate-x-1/2 w-96 h-96 bg-[#D8C28A]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 translate-x-1/2 w-96 h-96 bg-[#6EE7B7]/5 rounded-full blur-3xl pointer-events-none" />
+
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#121622] border border-emerald-500/30 text-emerald-400 text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
-            <Sparkles className="w-3 h-3 text-emerald-400" />
-            <span>Master Apothecary Catalog</span>
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#11141E]/90 border border-[#6EE7B7]/30 text-[#6EE7B7] text-[10px] font-semibold tracking-[0.24em] uppercase mb-2.5 backdrop-blur-md shadow-sm">
+            <Sparkles className="w-3 h-3 text-[#6EE7B7]" />
+            <span>Master Pharmacopeia Catalog • № 02</span>
           </div>
 
-          <h2 className="font-heading text-lg sm:text-xl lg:text-2xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-[#FAF7EE] tracking-tight">
             Targeted Ayurvedic Formulations
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#CBD5E1] mt-2 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm text-[#999999] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
             Classical rasayanas refined with pharmaceutical HPLC precision. Standardized bioactives, 100% vegetarian capsules, zero synthetic chemicals.
           </p>
 
           {/* Filter Pills */}
-          <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mt-5">
+          <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mt-6">
             {[
               { id: 'all', label: 'All Formulations', count: allProducts.length },
               { id: 'supplements', label: 'Daily Stamina & Energy', count: allProducts.filter(p => p.category === 'supplements' && !p.id.includes('hair')).length },
@@ -133,8 +137,8 @@ export function FeaturedApothecary() {
                 onClick={() => setActiveCategory(tab.id as any)}
                 className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs transition-all duration-200 flex items-center gap-1.5 ${
                   activeCategory === tab.id
-                    ? 'bg-[#C2A265] text-[#08090C] font-semibold shadow-md'
-                    : 'bg-[#121622] text-[#94A3B8] hover:text-[#FAF7EE] hover:bg-[#1A202E] border border-slate-800'
+                    ? 'bg-[#D8C28A] text-[#08090C] font-semibold shadow-md shadow-[#D8C28A]/20'
+                    : 'bg-[#11141E] text-[#999999] hover:text-[#FAF7EE] hover:bg-[#151926] border border-[#999999]/20'
                 }`}
               >
                 <span>{tab.label}</span>
@@ -142,7 +146,7 @@ export function FeaturedApothecary() {
                   className={`text-[9.5px] px-1.5 py-0.5 rounded-full font-semibold ${
                     activeCategory === tab.id
                       ? 'bg-[#08090C]/20 text-[#08090C]'
-                      : 'bg-[#1E2534] text-emerald-300'
+                      : 'bg-[#151926] text-[#6EE7B7]'
                   }`}
                 >
                   {tab.count}
@@ -196,20 +200,20 @@ export function FeaturedApothecary() {
             return (
               <div
                 key={product.id}
-                className="rounded-2xl bg-[#121622] border border-slate-800 flex flex-col justify-between overflow-hidden group hover:border-emerald-500/40 hover:-translate-y-1.5 transition-all duration-300 ease-out shadow-lg hover:shadow-[0_16px_36px_rgba(0,0,0,0.7),0_0_24px_rgba(16,185,129,0.12)] max-w-sm md:max-w-none mx-auto w-full"
+                className="rounded-2xl bg-[#11141E] border border-[#999999]/20 flex flex-col justify-between overflow-hidden group hover:border-[#6EE7B7]/40 hover:-translate-y-1.5 transition-all duration-300 ease-out shadow-xl hover:shadow-[0_16px_36px_rgba(0,0,0,0.8),0_0_24px_rgba(110,231,183,0.1)] max-w-sm md:max-w-none mx-auto w-full"
               >
                 {/* Product Image Stage (Tailored 4:5 Aspect Ratio) */}
-                <div className="relative aspect-[4/5] w-full bg-[#0C0E14] overflow-hidden border-b border-slate-800">
-                  {/* Subtle Badge */}
+                <div className="relative aspect-[4/5] w-full bg-[#0C0E14] overflow-hidden border-b border-[#999999]/20">
+                  {/* Subtle Hallmark Badge */}
                   <div className="absolute top-3 left-3 z-10">
-                    <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-wider font-bold bg-[#08090C]/90 backdrop-blur-md border border-slate-700/60 text-[#FAF7EE] shadow-md">
+                    <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-wider font-bold bg-[#08090C]/90 backdrop-blur-md border border-[#999999]/30 text-[#FAF7EE] shadow-md">
                       {badgeLabel}
                     </span>
                   </div>
 
                   {discountPercent > 0 && (
                     <div className="absolute top-3 right-3 z-10">
-                      <span className="px-2.5 py-1 rounded-full text-[9px] font-bold bg-[#C2A265] text-[#08090C] shadow-md">
+                      <span className="px-2.5 py-1 rounded-full text-[9px] font-bold bg-[#D8C28A] text-[#08090C] shadow-md">
                         {discountPercent}% OFF
                       </span>
                     </div>
@@ -224,47 +228,47 @@ export function FeaturedApothecary() {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
                       priority={product.id === 'vitality-power-combo'}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#121622]/90 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#11141E]/95 via-transparent to-transparent pointer-events-none" />
                   </Link>
                 </div>
 
                 {/* Card Body - Streamlined & High-Converting */}
-                <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between">
+                <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between">
                   <div>
                     {/* Rating & AYUSH Standard */}
-                    <div className="flex items-center justify-between text-xs text-[#A8A295] mb-1">
+                    <div className="flex items-center justify-between text-xs text-[#999999] mb-1.5">
                       <div className="flex items-center gap-1.5">
-                        <div className="flex text-[#C2A265]">
+                        <div className="flex text-[#D8C28A]">
                           {[...Array(5)].map((_, i) => (
                             <Star key={i} className="w-3 h-3 fill-current" />
                           ))}
                         </div>
                         <span className="font-semibold text-[#FAF7EE] text-[11px]">4.9★</span>
-                        <span className="text-[10px] text-[#94A3B8]">(1.2k+)</span>
+                        <span className="text-[10px] text-[#999999]">(1.2k+ reviews)</span>
                       </div>
-                      <span className="text-[9.5px] font-semibold text-emerald-400 bg-[#16202E] px-2 py-0.5 rounded border border-emerald-500/30">
-                        AYUSH Certified
+                      <span className="text-[9.5px] font-semibold text-[#6EE7B7] bg-[#151926] px-2 py-0.5 rounded border border-[#6EE7B7]/30">
+                        AYUSH Standard
                       </span>
                     </div>
 
                     {/* Product Title */}
                     <Link href={`/product/${product.slug}`}>
-                      <h3 className="font-heading text-base sm:text-lg font-medium text-[#FAF7EE] group-hover:text-[#D4B678] transition-colors leading-snug line-clamp-1 mt-1">
+                      <h3 className="font-heading text-base sm:text-lg font-medium text-[#FAF7EE] group-hover:text-[#D8C28A] transition-colors leading-snug line-clamp-1 mt-1">
                         {product.name}
                       </h3>
                     </Link>
 
                     {/* 1-Line Concentrated Bioactives Subtitle */}
-                    <p className="text-[11px] text-[#CBD5E1] mt-1 line-clamp-1 font-medium flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-[#C2A265] flex-shrink-0" />
+                    <p className="text-[11px] text-[#999999] mt-1.5 line-clamp-1 font-medium flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-[#6EE7B7] flex-shrink-0" />
                       <span>{bioactivesSnippet}</span>
                     </p>
 
                     {/* Compact Course Pack Pills (if multiple variants) */}
                     {product.variants && product.variants.length > 1 && (
-                      <div className="flex items-center gap-1.5 mt-2.5">
-                        <span className="text-[9.5px] uppercase tracking-wider text-[#94A3B8] font-semibold">
-                          Pack:
+                      <div className="flex items-center gap-1.5 mt-3">
+                        <span className="text-[9.5px] uppercase tracking-wider text-[#999999] font-semibold">
+                          Course:
                         </span>
                         <div className="flex gap-1.5 flex-1">
                           {product.variants.map((v) => (
@@ -273,8 +277,8 @@ export function FeaturedApothecary() {
                               onClick={() => handleVariantChange(product.id, v.id)}
                               className={`px-2 py-1 rounded-md text-[10.5px] transition-all font-medium truncate flex-1 text-center ${
                                 currentVariantId === v.id
-                                  ? 'bg-[#1E2534] border border-emerald-400 text-emerald-300 shadow-sm'
-                                  : 'bg-[#0D1017] border border-slate-800 text-[#94A3B8] hover:text-[#FAF7EE]'
+                                  ? 'bg-[#151926] border border-[#6EE7B7]/50 text-[#6EE7B7] shadow-sm'
+                                  : 'bg-[#0D1017] border border-[#999999]/20 text-[#999999] hover:text-[#FAF7EE]'
                               }`}
                             >
                               {v.name}
@@ -286,26 +290,26 @@ export function FeaturedApothecary() {
                   </div>
 
                   {/* Price & Action Area */}
-                  <div className="mt-3 pt-2.5 border-t border-slate-800">
-                    <div className="flex items-baseline justify-between mb-2.5">
+                  <div className="mt-4 pt-3 border-t border-[#999999]/20">
+                    <div className="flex items-baseline justify-between mb-3">
                       <div>
                         <div className="flex items-baseline gap-2">
                           <span className="font-heading text-lg sm:text-xl font-bold text-[#FAF7EE]">
                             {formatPrice(activePrice)}
                           </span>
                           {activeComparePrice && (
-                            <span className="text-[11px] text-[#94A3B8] line-through">
+                            <span className="text-[11px] text-[#999999] line-through">
                               {formatPrice(activeComparePrice)}
                             </span>
                           )}
                         </div>
-                        <p className="text-[9.5px] text-[#94A3B8] mt-0.5">
+                        <p className="text-[9.5px] text-[#999999] mt-0.5">
                           Free Express Delivery • COD Available
                         </p>
                       </div>
 
                       {discountPercent > 0 && (
-                        <span className="text-[9.5px] text-emerald-400 font-semibold bg-[#16202E] px-2 py-0.5 rounded border border-emerald-500/30">
+                        <span className="text-[9.5px] text-[#6EE7B7] font-semibold bg-[#151926] px-2 py-0.5 rounded border border-[#6EE7B7]/30">
                           Save {formatPrice(activeComparePrice! - activePrice)}
                         </span>
                       )}
@@ -315,7 +319,7 @@ export function FeaturedApothecary() {
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         onClick={() => handleAddToCart(product)}
-                        className="py-2.5 px-2 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#08090C] font-bold text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-1.5"
+                        className="py-2.5 px-2 rounded-xl bg-[#D8C28A] hover:bg-[#E6D5AC] text-[#08090C] font-bold text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-[#D8C28A]/20 flex items-center justify-center gap-1.5"
                       >
                         {addedNotice === product.id ? (
                           <>
@@ -332,18 +336,18 @@ export function FeaturedApothecary() {
 
                       <button
                         onClick={() => handleWhatsAppOrder(product)}
-                        className="py-2.5 px-2 rounded-xl bg-[#18202C] hover:bg-[#1E2636] border border-slate-700 hover:border-emerald-500/40 text-[#FAF7EE] font-medium text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5"
+                        className="py-2.5 px-2 rounded-xl bg-[#151926] hover:bg-[#1E2536] border border-[#999999]/25 hover:border-[#6EE7B7]/40 text-[#FAF7EE] font-medium text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5"
                       >
-                        <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                        <MessageCircle className="w-3.5 h-3.5 text-[#6EE7B7]" />
                         <span>Quick COD</span>
                       </button>
                     </div>
 
                     {/* Direct PDP Dossier Link */}
-                    <div className="mt-2.5 text-center">
+                    <div className="mt-3 text-center">
                       <Link
                         href={`/product/${product.slug}`}
-                        className="inline-flex items-center gap-1 text-[10.5px] text-[#A8A295] hover:text-[#D4B678] transition-colors font-medium"
+                        className="inline-flex items-center gap-1 text-[10.5px] text-[#999999] hover:text-[#D8C28A] transition-colors font-medium"
                       >
                         <span>View Formulation Dossier</span>
                         <ArrowRight className="w-3 h-3" />

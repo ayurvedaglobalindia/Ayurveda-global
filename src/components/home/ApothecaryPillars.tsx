@@ -37,26 +37,31 @@ const pillars = [
 
 export function ApothecaryPillars() {
   return (
-    <section className="bg-[#08090C] border-b border-[#C2A265]/20 py-5 sm:py-7 text-[#F5EFE6] relative overflow-hidden">
+    <section className="bg-[#08090C] border-b border-[#999999]/20 py-8 sm:py-10 text-[#FAF7EE] relative overflow-hidden">
+      {/* Subtle background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-48 bg-[#6EE7B7]/5 rounded-full blur-3xl pointer-events-none" />
+
       <div className="container relative z-10">
         
         {/* Compact Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-4 sm:mb-5 pb-2.5 border-b border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 sm:mb-8 pb-3 border-b border-[#999999]/20">
           <div>
-            <span className="text-[9px] uppercase tracking-[0.22em] font-semibold text-emerald-400 block">
-              Classical Quality Standards
-            </span>
-            <h2 className="font-heading text-base sm:text-lg font-medium text-[#FAF7EE] tracking-tight mt-0.5">
+            <div className="inline-flex items-center gap-1.5 text-[9.5px] uppercase tracking-[0.24em] font-semibold text-[#6EE7B7] mb-1">
+              <span>№ 03</span>
+              <span className="text-[#999999]">•</span>
+              <span>Classical Quality Standards</span>
+            </div>
+            <h2 className="font-heading text-lg sm:text-xl lg:text-2xl font-normal text-[#FAF7EE] tracking-tight">
               The Four Vedic Pillars of Potency
             </h2>
           </div>
-          <p className="text-[11px] text-[#94A3B8] max-w-md leading-relaxed font-sans">
+          <p className="text-xs text-[#999999] max-w-md leading-relaxed font-sans">
             Every formulation is prepared under strict Charaka Samhita directives and validated by NABL-accredited laboratory assays.
           </p>
         </div>
 
         {/* Compact 4-Block Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {pillars.map((pillar, idx) => (
             <motion.div
               key={idx}
@@ -64,32 +69,32 @@ export function ApothecaryPillars() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.35, delay: idx * 0.08 }}
-              className="p-3 sm:p-3.5 rounded-xl bg-[#121622]/90 border border-slate-800 hover:border-emerald-500/40 hover:bg-[#161B28] transition-all duration-300 shadow-sm flex flex-col justify-between group hover:-translate-y-1"
+              className="p-4 sm:p-5 rounded-2xl bg-[#11141E] border border-[#999999]/20 hover:border-[#6EE7B7]/40 hover:bg-[#151926] transition-all duration-300 shadow-md flex flex-col justify-between group hover:-translate-y-1"
             >
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#18202C] border border-slate-700 group-hover:border-emerald-500/40 flex items-center justify-center text-emerald-400 transition-colors">
+                <div className="flex items-center justify-between mb-3.5">
+                  <div className="w-9 h-9 rounded-xl bg-[#151926] border border-[#999999]/25 group-hover:border-[#6EE7B7]/50 flex items-center justify-center text-[#6EE7B7] transition-colors shadow-sm">
                     <pillar.icon className="w-4 h-4" />
                   </div>
-                  <span className="font-serif text-xs font-semibold tracking-widest text-[#C2A265]/70 group-hover:text-[#D4B678] transition-colors">
-                    {pillar.num}
+                  <span className="font-mono text-xs font-semibold tracking-wider text-[#D8C28A] group-hover:text-[#E6D5AC] transition-colors">
+                    № {pillar.num}
                   </span>
                 </div>
 
-                <h3 className="font-heading text-sm sm:text-base font-medium text-[#FAF7EE] tracking-tight group-hover:text-[#D4B678] transition-colors">
+                <h3 className="font-heading text-base font-medium text-[#FAF7EE] tracking-tight group-hover:text-[#D8C28A] transition-colors">
                   {pillar.title}
                 </h3>
-                <p className="text-[10px] uppercase tracking-wider text-emerald-400 font-semibold mt-0.5">
+                <p className="text-[10px] uppercase tracking-wider text-[#6EE7B7] font-semibold mt-1">
                   {pillar.subtitle}
                 </p>
-                <p className="text-[11px] sm:text-xs text-[#94A3B8] leading-relaxed mt-2 font-sans">
+                <p className="text-xs text-[#999999] leading-relaxed mt-2.5 font-sans">
                   {pillar.desc}
                 </p>
               </div>
 
-              <div className="mt-4 pt-2.5 border-t border-slate-800 flex items-center gap-1.5 text-[10px] sm:text-[11px] text-emerald-300">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="font-medium">Vedic Standard Verified</span>
+              <div className="mt-5 pt-3 border-t border-[#999999]/20 flex items-center gap-1.5 text-[11px] text-[#6EE7B7]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#6EE7B7]" />
+                <span className="font-medium tracking-wide">Vedic Standard Verified</span>
               </div>
             </motion.div>
           ))}

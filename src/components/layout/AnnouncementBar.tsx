@@ -71,7 +71,7 @@ export function AnnouncementBar() {
   const current = announcements[currentIndex]
 
   return (
-    <div className="bg-[#08090C] text-[#FAF7EE] py-2 px-3 text-xs sm:text-sm border-b border-[#C2A265]/20 shadow-sm relative z-30">
+    <div className="bg-[#08090C] text-[#FAF7EE] py-2 px-3 text-xs sm:text-sm border-b border-[#999999]/20 shadow-sm relative z-30">
       <div className="container flex items-center justify-between gap-2">
         <div className="flex-1 flex items-center justify-center sm:justify-start min-w-0">
           <AnimatePresence mode="wait">
@@ -83,15 +83,15 @@ export function AnnouncementBar() {
               transition={{ duration: 0.25 }}
               className="flex items-center gap-2 truncate"
             >
-              <current.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 text-[#C2A265]" />
+              <current.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 text-[#E6D5AC]" />
 
-              <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider bg-[#151922] text-[#D4B678] px-2 py-0.5 rounded border border-slate-700/60">
+              <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider bg-[#131722] text-[#E6D5AC] px-2 py-0.5 rounded border border-[#999999]/30">
                 {current.badge}
               </span>
 
               <Link
                 href={current.href}
-                className="truncate hover:text-[#D4B678] transition-colors font-medium text-xs sm:text-sm text-[#FAF7EE]"
+                className="truncate hover:text-[#6EE7B7] transition-colors font-medium text-xs sm:text-sm text-[#FAF7EE]"
               >
                 {current.text}
               </Link>
@@ -99,10 +99,10 @@ export function AnnouncementBar() {
               {current.badge === 'AYUR10' && (
                 <button
                   onClick={copyCoupon}
-                  className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold text-black bg-[#C2A265] hover:bg-[#D4B678] px-2 py-0.5 rounded shadow transition-colors ml-1"
+                  className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold text-[#08090C] bg-[#D8C28A] hover:bg-[#E6D5AC] px-2 py-0.5 rounded shadow transition-colors ml-1"
                   title="Copy Coupon"
                 >
-                  {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                  {copied ? <Check className="w-3 h-3 text-[#08090C]" /> : <Copy className="w-3 h-3" />}
                   <span>{copied ? 'Copied!' : 'Copy Code'}</span>
                 </button>
               )}
@@ -112,7 +112,7 @@ export function AnnouncementBar() {
 
         <button
           onClick={() => setIsVisible(false)}
-          className="p-1 rounded text-gray-400 hover:text-white transition-colors flex-shrink-0 ml-2"
+          className="p-1 rounded text-[#999999] hover:text-[#FAF7EE] transition-colors flex-shrink-0 ml-2"
           aria-label="Dismiss announcements"
         >
           <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />

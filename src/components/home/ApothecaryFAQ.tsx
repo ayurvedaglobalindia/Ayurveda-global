@@ -39,57 +39,62 @@ export function ApothecaryFAQ() {
   }
 
   return (
-    <section className="bg-[#08090C] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#08090C] py-8 sm:py-12 lg:py-16 border-b border-[#999999]/20 text-[#FAF7EE] relative overflow-hidden">
+      {/* Background radial atmosphere */}
+      <div className="absolute top-1/3 right-1/4 translate-x-1/2 w-96 h-96 bg-[#6EE7B7]/5 rounded-full blur-3xl pointer-events-none" />
+
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#121622] border border-emerald-500/30 text-emerald-400 text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
-            <HelpCircle className="w-3 h-3 text-emerald-400" />
-            <span>Common Inquiries</span>
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#11141E] border border-[#6EE7B7]/30 text-[#6EE7B7] text-[10px] font-semibold tracking-[0.24em] uppercase mb-2.5 backdrop-blur-md shadow-sm">
+            <HelpCircle className="w-3 h-3 text-[#6EE7B7]" />
+            <span>№ 08 • Formulation &amp; Delivery Inquiries</span>
           </div>
 
-          <h2 className="font-heading text-lg sm:text-xl lg:text-2xl font-normal text-[#FAF7EE] tracking-tight">
+          <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-[#FAF7EE] tracking-tight">
             Frequently Asked Questions
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#CBD5E1] mt-1.5 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-xs sm:text-sm text-[#999999] mt-2.5 max-w-lg mx-auto leading-relaxed font-sans">
             Transparent guidance regarding our ingredients, delivery discretion, payment methods, and usage regimens.
           </p>
         </div>
 
         {/* Accordion List */}
-        <div className="max-w-3xl mx-auto space-y-2.5">
+        <div className="max-w-3xl mx-auto space-y-3">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx
             return (
               <div
                 key={idx}
-                className={`rounded-xl overflow-hidden transition-all duration-300 ${
+                className={`rounded-2xl overflow-hidden transition-all duration-300 ${
                   isOpen
-                    ? 'bg-[#161B28] border border-emerald-500/40 shadow-md'
-                    : 'bg-[#10141E] border border-slate-800 hover:border-slate-700'
+                    ? 'bg-[#151926] border border-[#6EE7B7]/40 shadow-lg'
+                    : 'bg-[#11141E] border border-[#999999]/20 hover:border-[#999999]/40'
                 }`}
               >
                 <button
                   onClick={() => toggleFAQ(idx)}
-                  className="w-full text-left p-3.5 sm:p-4 flex items-center justify-between gap-4 group"
+                  className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 group"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-heading text-xs sm:text-[13.5px] font-medium text-[#FAF7EE] group-hover:text-[#D4B678] transition-colors leading-snug">
+                  <span className="font-heading text-sm sm:text-base font-medium text-[#FAF7EE] group-hover:text-[#D8C28A] transition-colors leading-snug">
                     {faq.question}
                   </span>
                   <div
-                    className={`w-6 h-6 rounded-full bg-[#18202C] border border-slate-700 flex items-center justify-center text-emerald-400 flex-shrink-0 transition-transform duration-300 ${
-                      isOpen ? 'rotate-180 bg-[#C2A265] text-[#08090C]' : ''
+                    className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 ${
+                      isOpen
+                        ? 'rotate-180 bg-[#D8C28A] text-[#08090C]'
+                        : 'bg-[#151926] border border-[#999999]/25 text-[#6EE7B7]'
                     }`}
                   >
-                    <ChevronDown className="w-3.5 h-3.5" />
+                    <ChevronDown className="w-4 h-4" />
                   </div>
                 </button>
 
                 {isOpen && (
-                  <div className="px-3.5 pb-3.5 sm:px-4 sm:pb-4 text-xs text-[#94A3B8] leading-relaxed border-t border-slate-800/80 pt-3 font-sans animate-fade-in">
+                  <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-[13px] text-[#999999] leading-relaxed border-t border-[#999999]/20 pt-3.5 font-sans animate-fade-in">
                     {faq.answer}
                   </div>
                 )}
@@ -99,13 +104,13 @@ export function ApothecaryFAQ() {
         </div>
 
         {/* Bottom Contact Help */}
-        <div className="mt-8 sm:mt-10 text-center text-xs text-[#A8A295]">
+        <div className="mt-8 sm:mt-10 text-center text-xs text-[#999999]">
           <span>Still have an unanswered question? </span>
           <a
             href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20a%20question%20regarding%20your%20products."
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#C2A265] hover:underline font-semibold"
+            className="text-[#D8C28A] hover:text-[#E6D5AC] hover:underline font-semibold"
           >
             Chat directly with our Ayurvedic Care Concierge on WhatsApp →
           </a>

@@ -10,49 +10,59 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Modern Luxury Ayurvedic Color Palette — Obsidian Black, Refined Gray & Radiant Light Green
+        // Modern Luxury Ayurvedic Color Palette — Soft Velvet Obsidian, #999999 Slate-Gray, Soft Champagne Gold & Herbal Nature Green
         ayur: {
-          black: '#07080A',
+          black: '#08090C',
           // Sleek Obsidian & Soft Dark UI Surfaces
-          void: '#060709',
-          obsidian: '#0A0C10',
-          charcoal: '#11141A',
-          forest: '#161A22',
-          'forest-deep': '#0E1116',
-          'forest-dark': '#0B0D12',
-          'forest-light': '#1E232E',
-          'emerald-dark': '#0D1016',
-          'emerald-deep': '#131720',
-          'emerald-card': '#171B24',
+          void: '#050608',
+          obsidian: '#090B0F',
+          charcoal: '#0F121A',
+          forest: '#141822',
+          'forest-deep': '#0C0E14',
+          'forest-dark': '#090B10',
+          'forest-light': '#1A1F2C',
+          'emerald-dark': '#0C0F16',
+          'emerald-deep': '#111520',
+          'emerald-card': '#151924',
 
-          // Vibrant Light Green, Mint & Sage Accents
-          'emerald-glow': '#10B981',
-          sage: '#34D399',
-          'sage-light': '#6EE7B7',
-          'mint-soft': '#E6F7ED',
+          // Explicit #999999 Soft Gray Palette (User Requested)
+          gray: '#999999',
+          'gray-soft': '#999999',
+          'gray-light': '#BDBDBD',
+          'gray-deep': '#707070',
+          'gray-muted': '#888888',
+
+          // Soft Herbal Nature Green (Authentic Ayurvedic Herbs, Calming & Organic)
+          herbal: '#6EE7B7',
+          'herbal-soft': '#86EFAC',
+          'herbal-glow': '#34D399',
+          'herbal-light': '#A7F3D0',
+          'herbal-dew': '#D1FAE5',
+          sage: '#86EFAC',
+          'sage-light': '#BBF7D0',
+          'mint-soft': '#E6FDF4',
           'soft-green': '#A7F3D0',
-          moss: '#10B981',
+          moss: '#4ADE80',
+          leaf: '#6EE7B7',
+          herb: '#34D399',
 
-          // Ivory & Cream Neutrals
+          // Ivory & Cream Soft Neutrals
           ivory: '#FAF7EF',
           cream: '#FFFDF5',
           beige: '#F5EFE1',
           sand: '#E8DCC8',
-          stone: '#94A3B8',
+          stone: '#999999',
           'stone-light': '#CBD5E1',
 
-          // Luxury Gold Accents
-          gold: '#C9A84C',
-          'gold-light': '#E8D4A0',
-          'gold-bright': '#FFDF73',
-          'gold-deep': '#B8963E',
-          'gold-amber': '#D9A336',
-          'gold-champagne': '#F0E6D0',
-          copper: '#B87333',
-
-          // Botanical & Herbal Light Green Accents
-          leaf: '#10B981',
-          herb: '#059669',
+          // Soft Champagne / Imperial Gold (Light & Soft Warm Luxury)
+          gold: '#D8C28A',
+          'gold-light': '#EFE2C2',
+          'gold-soft': '#E6D5AC',
+          'gold-bright': '#F8E9C4',
+          'gold-deep': '#C0A566',
+          'gold-amber': '#D4AF37',
+          'gold-champagne': '#F7EED8',
+          copper: '#C9935A',
           earth: '#8D6E63',
 
           // Semantic
