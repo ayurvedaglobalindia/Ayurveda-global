@@ -432,23 +432,23 @@ export function CheckoutForm() {
       <div className="max-w-5xl mx-auto">
         
         {/* Compact Page Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 sm:mb-5 border-b border-[#C2A265]/20">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 sm:mb-5 border-b border-[#E2DDD5]">
           <div>
-            <span className="text-[9.5px] uppercase tracking-[0.2em] font-semibold text-[#C2A265] block">
+            <span className="text-[9.5px] uppercase tracking-[0.2em] font-semibold text-[#9E8047] block">
               Direct Apothecary Dispatch
             </span>
-            <h1 className="font-heading text-lg sm:text-xl font-medium text-[#FAF7EE] tracking-tight mt-0.5">
+            <h1 className="font-heading text-lg sm:text-xl font-medium text-[#1C1D1F] tracking-tight mt-0.5">
               Confidential Checkout
             </h1>
           </div>
-          <div className="flex items-center gap-3 text-[10.5px] text-[#A8A295]">
-            <span className="flex items-center gap-1 text-[#D4B678]">
-              <Lock className="w-3.5 h-3.5 text-[#C2A265]" />
+          <div className="flex items-center gap-3 text-[10.5px] text-[#737373]">
+            <span className="flex items-center gap-1 text-[#555555]">
+              <Lock className="w-3.5 h-3.5 text-[#4E5F52]" />
               100% Discreet Packaging
             </span>
             <span>•</span>
-            <span className="flex items-center gap-1 text-[#D4B678]">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#C2A265]" />
+            <span className="flex items-center gap-1 text-[#555555]">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#4E5F52]" />
               AYUSH Standard
             </span>
           </div>
@@ -461,26 +461,26 @@ export function CheckoutForm() {
           <div className="lg:col-span-7 space-y-4">
             
             {/* Card 1: Contact & Delivery Address */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#121622] border border-slate-800 shadow-lg space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm space-y-4">
+              <div className="flex items-center justify-between border-b border-[#E2DDD5] pb-2.5">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#18202C] border border-slate-700 flex items-center justify-center text-emerald-400">
+                  <div className="w-7 h-7 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52]">
                     <MapPin className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <h2 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#C2A265]">
+                    <h2 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#1C1D1F]">
                       1. Contact &amp; Delivery Address
                     </h2>
                   </div>
                 </div>
-                <span className="text-[10px] text-[#8A8478] font-mono">Pan-India Courier</span>
+                <span className="text-[10px] text-[#737373] font-mono">Pan-India Courier</span>
               </div>
 
               {/* Name Row */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
-                    First Name <span className="text-[#C2A265]">*</span>
+                  <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
+                    First Name <span className="text-[#9E8047]">*</span>
                   </label>
                   <input
                     id="field-firstName"
@@ -491,20 +491,20 @@ export function CheckoutForm() {
                       if (errors.firstName) setErrors({ ...errors, firstName: '' })
                     }}
                     placeholder="e.g. Vikram"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.firstName
                         ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                        : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
+                        : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                     }`}
                   />
                   {errors.firstName && (
-                    <p className="text-[10px] text-red-400 mt-1">{errors.firstName}</p>
+                    <p className="text-[10px] text-red-500 mt-1">{errors.firstName}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
-                    Last Name <span className="text-[#C2A265]">*</span>
+                  <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
+                    Last Name <span className="text-[#9E8047]">*</span>
                   </label>
                   <input
                     id="field-lastName"
@@ -515,14 +515,14 @@ export function CheckoutForm() {
                       if (errors.lastName) setErrors({ ...errors, lastName: '' })
                     }}
                     placeholder="e.g. Sharma"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.lastName
                         ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                        : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
+                        : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                     }`}
                   />
                   {errors.lastName && (
-                    <p className="text-[10px] text-red-400 mt-1">{errors.lastName}</p>
+                    <p className="text-[10px] text-red-500 mt-1">{errors.lastName}</p>
                   )}
                 </div>
               </div>
@@ -531,18 +531,18 @@ export function CheckoutForm() {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <label className="block text-[11px] font-medium text-[#C5BFB3]">
-                      Mobile Number (+91) <span className="text-[#C2A265]">*</span>
+                    <label className="block text-[11px] font-medium text-[#1C1D1F]">
+                      Mobile Number (+91) <span className="text-[#9E8047]">*</span>
                     </label>
                     {isPhoneVerified && (
-                      <span className="text-[10px] font-bold text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+                      <span className="text-[10px] font-bold text-[#4E5F52] flex items-center gap-1 bg-[#EFF4F0] px-2 py-0.5 rounded border border-[#4E5F52]/30">
                         <CheckCircle2 className="w-3 h-3" />
                         <span>OTP Verified</span>
                       </span>
                     )}
                   </div>
                   <div className="relative flex items-center">
-                    <span className="absolute left-3 text-xs font-semibold text-[#D4B678] pointer-events-none">
+                    <span className="absolute left-3 text-xs font-semibold text-[#737373] pointer-events-none">
                       +91
                     </span>
                     <input
@@ -553,12 +553,12 @@ export function CheckoutForm() {
                       value={formData.phone}
                       onChange={e => handlePhoneInputChange(e.target.value)}
                       placeholder="98765 43210"
-                      className={`w-full pl-11 pr-20 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                      className={`w-full pl-11 pr-20 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                         isPhoneVerified
-                          ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
+                          ? 'border-[#4E5F52]/50 bg-[#EFF4F0] text-[#4E5F52] font-semibold'
                           : errors.phone
                           ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                          : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
+                          : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                       }`}
                     />
                     {isPhoneVerified ? (
@@ -568,7 +568,7 @@ export function CheckoutForm() {
                           setIsPhoneVerified(false)
                           setOtpSent(false)
                         }}
-                        className="absolute right-2 px-2 py-1 text-[10px] text-[#C2A265] hover:text-white transition-colors"
+                        className="absolute right-2 px-2 py-1 text-[10px] text-[#9E8047] hover:text-[#1C1D1F] transition-colors"
                       >
                         Change
                       </button>
@@ -578,7 +578,7 @@ export function CheckoutForm() {
                           type="button"
                           onClick={handleSendCheckoutOtp}
                           disabled={otpLoading}
-                          className="absolute right-1.5 px-2.5 py-1 rounded-lg bg-[#C2A265] hover:bg-[#D4B678] text-[#08090C] text-[10px] font-bold transition-all shadow-sm"
+                          className="absolute right-1.5 px-2.5 py-1 rounded-lg bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] text-[10px] font-medium transition-all shadow-sm"
                         >
                           {otpLoading ? '...' : 'Send OTP'}
                         </button>
@@ -588,10 +588,10 @@ export function CheckoutForm() {
 
                   {/* Inline OTP Verification Box when OTP is sent */}
                   {!isPhoneVerified && otpSent && (
-                    <div className="mt-2.5 p-3 rounded-xl bg-[#0A0D14] border border-slate-700 space-y-2.5 shadow-md">
-                      <div className="flex items-center justify-between text-xs text-[#FAF7EE]">
+                    <div className="mt-2.5 p-3 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5] space-y-2.5 shadow-sm">
+                      <div className="flex items-center justify-between text-xs text-[#1C1D1F]">
                         <span className="flex items-center gap-1.5 font-semibold text-[11px]">
-                          <KeyRound className="w-3.5 h-3.5 text-emerald-400" />
+                          <KeyRound className="w-3.5 h-3.5 text-[#4E5F52]" />
                           <span>Enter 6-Digit OTP</span>
                         </span>
                         <button
@@ -599,7 +599,7 @@ export function CheckoutForm() {
                           onClick={handleSendCheckoutOtp}
                           disabled={resendCooldown > 0 || otpLoading}
                           className={`text-[10px] font-medium ${
-                            resendCooldown > 0 ? 'text-gray-500' : 'text-emerald-400 hover:underline'
+                            resendCooldown > 0 ? 'text-gray-400' : 'text-[#4E5F52] hover:underline'
                           }`}
                         >
                           {resendCooldown > 0 ? `Resend (${resendCooldown}s)` : 'Resend OTP'}
@@ -607,10 +607,10 @@ export function CheckoutForm() {
                       </div>
 
                       {testOtpCode && (
-                        <div className="p-1.5 rounded-lg bg-amber-950/40 border border-amber-500/30 text-center">
-                          <span className="text-[10px] text-amber-300">
+                        <div className="p-1.5 rounded-lg bg-[#F7F3EB] border border-[#9E8047]/30 text-center">
+                          <span className="text-[10px] text-[#9E8047]">
                             Verification Code:{' '}
-                            <strong className="font-mono text-white text-xs tracking-wider">{testOtpCode}</strong>
+                            <strong className="font-mono text-[#1C1D1F] text-xs tracking-wider">{testOtpCode}</strong>
                           </span>
                         </div>
                       )}
@@ -626,32 +626,32 @@ export function CheckoutForm() {
                             if (otpError) setOtpError(null)
                           }}
                           placeholder="••••••"
-                          className="flex-1 px-3 py-1.5 rounded-lg bg-[#0D1017] border border-slate-700 text-center font-mono text-sm tracking-[0.3em] text-[#FAF7EE] focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                          className="flex-1 px-3 py-1.5 rounded-lg bg-[#FFFFFF] border border-[#E2DDD5] text-center font-mono text-sm tracking-[0.3em] text-[#1C1D1F] focus:outline-none focus:border-[#4E5F52]"
                         />
                         <button
                           type="button"
                           onClick={handleVerifyCheckoutOtp}
                           disabled={otpLoading || otpInput.trim().length !== 6}
-                          className="px-3.5 py-1.5 rounded-lg bg-[#C2A265] hover:bg-[#D4B678] text-[#08090C] text-xs font-bold transition-all disabled:opacity-50"
+                          className="px-3.5 py-1.5 rounded-lg bg-[#4E5F52] hover:bg-[#3D4B40] text-white text-xs font-medium transition-all disabled:opacity-50"
                         >
                           {otpLoading ? '...' : 'Verify'}
                         </button>
                       </div>
 
                       {otpError && (
-                        <p className="text-[10px] text-red-400 flex items-center gap-1">
+                        <p className="text-[10px] text-red-500 flex items-center gap-1">
                           <AlertCircle className="w-3 h-3 flex-shrink-0" />
                           <span>{otpError}</span>
                         </p>
                       )}
 
                       {whatsappVerifyUrl && (
-                        <div className="pt-1 text-center border-t border-slate-800">
+                        <div className="pt-1 text-center border-t border-[#E2DDD5]">
                           <a
                             href={whatsappVerifyUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[10px] text-emerald-400 hover:underline inline-flex items-center gap-1"
+                            className="text-[10px] text-[#4E5F52] hover:underline inline-flex items-center gap-1"
                           >
                             <MessageCircle className="w-3.5 h-3.5" />
                             <span>Verify instantly via WhatsApp Desk</span>
@@ -663,20 +663,20 @@ export function CheckoutForm() {
 
                   {/* Status helper text */}
                   {errors.phone ? (
-                    <p className="text-[10px] text-red-400 mt-1">{errors.phone}</p>
+                    <p className="text-[10px] text-red-500 mt-1">{errors.phone}</p>
                   ) : !isPhoneVerified ? (
-                    <p className="text-[9.5px] text-amber-300/90 mt-1 flex items-center gap-1">
-                      <KeyRound className="w-3 h-3 text-amber-400" />
+                    <p className="text-[9.5px] text-[#737373] mt-1 flex items-center gap-1">
+                      <KeyRound className="w-3 h-3 text-[#9E8047]" />
                       <span>OTP verification required before placing order</span>
                     </p>
                   ) : (
-                    <p className="text-[9.5px] text-emerald-400 mt-1">✓ Order updates &amp; tracking will be sent to this verified number</p>
+                    <p className="text-[9.5px] text-[#4E5F52] mt-1">✓ Order updates &amp; tracking will be sent to this verified number</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
-                    Email Address <span className="text-[#8A8478] font-normal">(Optional receipt)</span>
+                  <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
+                    Email Address <span className="text-[#999999] font-normal">(Optional receipt)</span>
                   </label>
                   <input
                     id="field-email"
@@ -687,22 +687,22 @@ export function CheckoutForm() {
                       if (errors.email) setErrors({ ...errors, email: '' })
                     }}
                     placeholder="vikram@example.com"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.email
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
+                        : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                     }`}
                   />
                   {errors.email && (
-                    <p className="text-[10px] text-red-400 mt-1">{errors.email}</p>
+                    <p className="text-[10px] text-red-500 mt-1">{errors.email}</p>
                   )}
                 </div>
               </div>
 
               {/* Complete Address */}
               <div>
-                <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
-                  Flat, House No., Building &amp; Street <span className="text-[#C2A265]">*</span>
+                <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
+                  Flat, House No., Building &amp; Street <span className="text-[#9E8047]">*</span>
                 </label>
                 <input
                   id="field-addressLine1"
@@ -713,36 +713,36 @@ export function CheckoutForm() {
                     if (errors.addressLine1) setErrors({ ...errors, addressLine1: '' })
                   }}
                   placeholder="e.g. Flat 402, Block B, Green Heights, MG Road"
-                  className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                  className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                     errors.addressLine1
                       ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                      : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
+                      : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                   }`}
                 />
                 {errors.addressLine1 && (
-                  <p className="text-[10px] text-red-400 mt-1">{errors.addressLine1}</p>
+                  <p className="text-[10px] text-red-500 mt-1">{errors.addressLine1}</p>
                 )}
               </div>
 
               {/* Landmark / Colony */}
               <div>
-                <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
-                  Area, Colony or Landmark <span className="text-[#8A8478] font-normal">(Optional)</span>
+                <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
+                  Area, Colony or Landmark <span className="text-[#999999] font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   value={formData.addressLine2}
                   onChange={e => setFormData({ ...formData, addressLine2: e.target.value })}
                   placeholder="e.g. Near Metro Station / Behind Axis Bank"
-                  className="w-full px-3 py-2 rounded-xl bg-[#0D1017] border border-slate-700 focus:border-emerald-500 text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-emerald-500/30 transition-all"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5] focus:border-[#4E5F52] text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none focus:ring-1 focus:ring-[#4E5F52]/20 transition-all"
                 />
               </div>
 
               {/* City, State, Pincode Row */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
-                    City <span className="text-[#C2A265]">*</span>
+                  <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
+                    City <span className="text-[#9E8047]">*</span>
                   </label>
                   <input
                     id="field-city"
@@ -753,29 +753,29 @@ export function CheckoutForm() {
                       if (errors.city) setErrors({ ...errors, city: '' })
                     }}
                     placeholder="e.g. New Delhi"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.city
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-slate-700 focus:border-emerald-500'
+                        : 'border-[#E2DDD5] focus:border-[#4E5F52]'
                     }`}
                   />
                   {errors.city && (
-                    <p className="text-[10px] text-red-400 mt-1">{errors.city}</p>
+                    <p className="text-[10px] text-red-500 mt-1">{errors.city}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
-                    State <span className="text-[#C2A265]">*</span>
+                  <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
+                    State <span className="text-[#9E8047]">*</span>
                   </label>
                   <select
                     id="field-state"
                     value={formData.state}
                     onChange={e => setFormData({ ...formData, state: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#0D1017] border border-slate-700 focus:border-emerald-500 text-xs text-[#FAF7EE] focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5] focus:border-[#4E5F52] text-xs text-[#1C1D1F] focus:outline-none"
                   >
                     {INDIAN_STATES.map(s => (
-                      <option key={s} value={s} className="bg-[#08090C] text-[#FAF7EE]">
+                      <option key={s} value={s} className="bg-[#FFFFFF] text-[#1C1D1F]">
                         {s}
                       </option>
                     ))}
@@ -783,8 +783,8 @@ export function CheckoutForm() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
-                    Pincode <span className="text-[#C2A265]">*</span>
+                  <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
+                    Pincode <span className="text-[#9E8047]">*</span>
                   </label>
                   <input
                     id="field-pincode"
@@ -797,27 +797,27 @@ export function CheckoutForm() {
                       if (errors.pincode) setErrors({ ...errors, pincode: '' })
                     }}
                     placeholder="110001"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.pincode
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-slate-700 focus:border-emerald-500'
+                        : 'border-[#E2DDD5] focus:border-[#4E5F52]'
                     }`}
                   />
                   {errors.pincode && (
-                    <p className="text-[10px] text-red-400 mt-1">{errors.pincode}</p>
+                    <p className="text-[10px] text-red-500 mt-1">{errors.pincode}</p>
                   )}
                 </div>
               </div>
             </div>
 
             {/* Card 2: Payment & Order Confirmation Preference */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#121622] border border-slate-800 shadow-lg space-y-3">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm space-y-3">
+              <div className="flex items-center justify-between border-b border-[#E2DDD5] pb-2.5">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#18202C] border border-slate-700 flex items-center justify-center text-emerald-400">
+                  <div className="w-7 h-7 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52]">
                     <CreditCard className="w-3.5 h-3.5" />
                   </div>
-                  <h2 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#C2A265]">
+                  <h2 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#1C1D1F]">
                     2. Payment &amp; Confirmation Method
                   </h2>
                 </div>
@@ -830,8 +830,8 @@ export function CheckoutForm() {
                   onClick={() => setFormData({ ...formData, paymentMethod: 'whatsapp' })}
                   className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                     formData.paymentMethod === 'whatsapp'
-                      ? 'bg-[#18202C] border-emerald-400 shadow-md'
-                      : 'bg-[#0D1017] border-slate-800 hover:border-slate-700'
+                      ? 'bg-[#F5F1EB] border-[#4E5F52] shadow-xs'
+                      : 'bg-[#FAF7F2] border-[#E2DDD5] hover:border-[#D5CEC4]'
                   }`}
                 >
                   <input
@@ -839,19 +839,19 @@ export function CheckoutForm() {
                     name="paymentMethod"
                     checked={formData.paymentMethod === 'whatsapp'}
                     onChange={() => setFormData({ ...formData, paymentMethod: 'whatsapp' })}
-                    className="mt-0.5 accent-emerald-400"
+                    className="mt-0.5 accent-[#4E5F52]"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-heading text-xs sm:text-[13px] font-medium text-[#FAF7EE] flex items-center gap-1.5">
-                        <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="font-heading text-xs sm:text-[13px] font-medium text-[#1C1D1F] flex items-center gap-1.5">
+                        <MessageCircle className="w-3.5 h-3.5 text-[#4E5F52]" />
                         WhatsApp Direct Order &amp; Concierge
                       </span>
-                      <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30 flex-shrink-0">
+                      <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-[#EFF4F0] text-[#4E5F52] font-semibold border border-[#4E5F52]/30 flex-shrink-0">
                         Fastest Dispatch
                       </span>
                     </div>
-                    <p className="text-[11px] text-[#A8A295] leading-relaxed mt-0.5">
+                    <p className="text-[11px] text-[#737373] leading-relaxed mt-0.5">
                       Directly sends order summary &amp; address to our Ayurvedic Concierge on WhatsApp for instant confirmation.
                     </p>
                   </div>
@@ -862,8 +862,8 @@ export function CheckoutForm() {
                   onClick={() => setFormData({ ...formData, paymentMethod: 'cod' })}
                   className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                     formData.paymentMethod === 'cod'
-                      ? 'bg-[#18202C] border-emerald-400 shadow-md'
-                      : 'bg-[#0D1017] border-slate-800 hover:border-slate-700'
+                      ? 'bg-[#F5F1EB] border-[#4E5F52] shadow-xs'
+                      : 'bg-[#FAF7F2] border-[#E2DDD5] hover:border-[#D5CEC4]'
                   }`}
                 >
                   <input
@@ -871,19 +871,19 @@ export function CheckoutForm() {
                     name="paymentMethod"
                     checked={formData.paymentMethod === 'cod'}
                     onChange={() => setFormData({ ...formData, paymentMethod: 'cod' })}
-                    className="mt-0.5 accent-[#C2A265]"
+                    className="mt-0.5 accent-[#4E5F52]"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-heading text-xs sm:text-[13px] font-medium text-[#FAF7EE] flex items-center gap-1.5">
-                        <Truck className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="font-heading text-xs sm:text-[13px] font-medium text-[#1C1D1F] flex items-center gap-1.5">
+                        <Truck className="w-3.5 h-3.5 text-[#4E5F52]" />
                         Cash on Delivery (Doorstep COD)
                       </span>
-                      <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-[#1E2534] text-emerald-300 font-semibold border border-emerald-500/30 flex-shrink-0">
+                      <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-[#EFF4F0] text-[#4E5F52] font-semibold border border-[#4E5F52]/30 flex-shrink-0">
                         Pay on Delivery
                       </span>
                     </div>
-                    <p className="text-[11px] text-[#A8A295] leading-relaxed mt-0.5">
+                    <p className="text-[11px] text-[#737373] leading-relaxed mt-0.5">
                       Inspect package at doorstep &amp; pay via Cash or UPI QR upon delivery across 25,000+ pin codes.
                     </p>
                   </div>
@@ -894,8 +894,8 @@ export function CheckoutForm() {
                   onClick={() => setFormData({ ...formData, paymentMethod: 'upi' })}
                   className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                     formData.paymentMethod === 'upi'
-                      ? 'bg-[#18202C] border-emerald-400 shadow-md'
-                      : 'bg-[#0D1017] border-slate-800 hover:border-slate-700'
+                      ? 'bg-[#F5F1EB] border-[#4E5F52] shadow-xs'
+                      : 'bg-[#FAF7F2] border-[#E2DDD5] hover:border-[#D5CEC4]'
                   }`}
                 >
                   <input
@@ -903,15 +903,15 @@ export function CheckoutForm() {
                     name="paymentMethod"
                     checked={formData.paymentMethod === 'upi'}
                     onChange={() => setFormData({ ...formData, paymentMethod: 'upi' })}
-                    className="mt-0.5 accent-[#C2A265]"
+                    className="mt-0.5 accent-[#4E5F52]"
                   />
                   <div className="flex-1 min-w-0">
-                    <span className="font-heading text-xs sm:text-[13px] font-medium text-[#FAF7EE] flex items-center gap-1.5">
-                      <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="font-heading text-xs sm:text-[13px] font-medium text-[#1C1D1F] flex items-center gap-1.5">
+                      <Smartphone className="w-3.5 h-3.5 text-[#4E5F52]" />
                       Instant UPI (PhonePe / GPay / Paytm)
                     </span>
-                    <p className="text-[11px] text-[#A8A295] leading-relaxed mt-0.5">
-                      Instant verification via official handle (<span className="text-[#FAF7EE] font-mono">ayurvedaglobal@okhdfcbank</span>).
+                    <p className="text-[11px] text-[#737373] leading-relaxed mt-0.5">
+                      Instant verification via official handle (<span className="text-[#1C1D1F] font-mono">ayurvedaglobal@okhdfcbank</span>).
                     </p>
                   </div>
                 </label>
@@ -919,16 +919,16 @@ export function CheckoutForm() {
             </div>
 
             {/* Card 3: Optional Delivery Note */}
-            <div className="p-3.5 sm:p-4 rounded-xl bg-[#121622] border border-slate-800">
-              <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
-                Special Delivery Instructions <span className="text-[#8A8478] font-normal">(Optional)</span>
+            <div className="p-3.5 sm:p-4 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5]">
+              <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
+                Special Delivery Instructions <span className="text-[#999999] font-normal">(Optional)</span>
               </label>
               <textarea
                 rows={2}
                 value={formData.notes}
                 onChange={e => setFormData({ ...formData, notes: e.target.value })}
                 placeholder="e.g. Deliver between 2 PM - 6 PM, leave with security guard, plain brown box."
-                className="w-full px-3 py-2 rounded-lg bg-[#0D1017] border border-slate-700 focus:border-emerald-500 text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none resize-none"
+                className="w-full px-3 py-2 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] focus:border-[#4E5F52] text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none focus:ring-1 focus:ring-[#4E5F52]/20 resize-none"
               />
             </div>
 
@@ -936,14 +936,14 @@ export function CheckoutForm() {
 
           {/* Right Column: Sticky Order Summary & Direct WhatsApp Action (5 Cols) */}
           <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-20">
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#121622] border border-slate-800 shadow-xl space-y-4">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm space-y-4">
               
               {/* Summary Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                <h3 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-emerald-400">
+              <div className="flex items-center justify-between pb-3 border-b border-[#E2DDD5]">
+                <h3 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#1C1D1F]">
                   Order Summary ({itemCount} {itemCount === 1 ? 'item' : 'items'})
                 </h3>
-                <Link href="/cart" className="text-[11px] text-[#D4B678] hover:underline font-medium">
+                <Link href="/cart" className="text-[11px] text-[#4E5F52] hover:underline font-medium">
                   Edit Bag
                 </Link>
               </div>
@@ -956,9 +956,9 @@ export function CheckoutForm() {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center gap-3 p-2 rounded-xl bg-[#0D1017] border border-slate-800"
+                      className="flex items-center gap-3 p-2 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5]"
                     >
-                      <div className="relative w-11 h-11 rounded-lg bg-[#08090C] border border-slate-800 flex-shrink-0 overflow-hidden">
+                      <div className="relative w-11 h-11 rounded-lg bg-[#FFFFFF] border border-[#E2DDD5] flex-shrink-0 overflow-hidden">
                         <Image
                           src={resolvedImg.src}
                           alt={item.product.name}
@@ -968,20 +968,20 @@ export function CheckoutForm() {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-xs text-[#FAF7EE] truncate leading-tight">
+                        <p className="font-medium text-xs text-[#1C1D1F] truncate leading-tight">
                           {item.product.name}
                         </p>
                         {variantName && (
-                          <span className="text-[9.5px] text-[#D4B678] font-medium block truncate">
+                          <span className="text-[9.5px] text-[#737373] font-medium block truncate">
                             {variantName}
                           </span>
                         )}
-                        <p className="text-[10px] text-[#8A8478] mt-0.5">
+                        <p className="text-[10px] text-[#999999] mt-0.5">
                           Qty: {item.quantity} × {formatINR(item.price)}
                         </p>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <span className="text-xs font-semibold text-[#FAF7EE]">
+                        <span className="text-xs font-semibold text-[#1C1D1F]">
                           {formatINR(item.price * item.quantity)}
                         </span>
                       </div>
@@ -991,17 +991,17 @@ export function CheckoutForm() {
               </div>
 
               {/* Compact Coupon Code Input */}
-              <div className="pt-2 border-t border-slate-800">
+              <div className="pt-2 border-t border-[#E2DDD5]">
                 {couponCode ? (
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#18202C] border border-emerald-500/30 text-xs">
-                    <div className="flex items-center gap-1.5 text-emerald-300">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#EFF4F0] border border-[#4E5F52]/30 text-xs">
+                    <div className="flex items-center gap-1.5 text-[#4E5F52]">
                       <Gift className="w-3.5 h-3.5" />
                       <span className="font-mono font-semibold">{couponCode}</span>
-                      <span className="text-[10px] text-[#D4B678]">(-{formatINR(discount)})</span>
+                      <span className="text-[10px] text-[#4E5F52]">(-{formatINR(discount)})</span>
                     </div>
                     <button
                       onClick={removeCoupon}
-                      className="text-[10px] text-red-400 hover:text-red-300 font-medium"
+                      className="text-[10px] text-red-500 hover:text-red-600 font-medium"
                     >
                       Remove
                     </button>
@@ -1014,44 +1014,44 @@ export function CheckoutForm() {
                         value={couponInput}
                         onChange={e => setCouponInput(e.target.value.toUpperCase())}
                         placeholder="Promo code (e.g. AYUR10)"
-                        className="flex-1 px-2.5 py-1.5 rounded-lg bg-[#0D1017] border border-slate-700 text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none uppercase"
+                        className="flex-1 px-2.5 py-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none uppercase"
                       />
                       <button
                         onClick={handleApplyCoupon}
                         disabled={!couponInput.trim() || couponLoading}
-                        className="px-3 py-1.5 rounded-lg bg-[#18202C] hover:bg-[#1E2636] border border-slate-700 hover:border-emerald-500/40 text-[#FAF7EE] text-xs font-semibold disabled:opacity-50 transition-all"
+                        className="px-3 py-1.5 rounded-lg bg-[#1C1D1F] hover:bg-[#333333] border border-[#1C1D1F] text-[#FAF7F2] text-xs font-medium disabled:opacity-50 transition-all"
                       >
                         {couponLoading ? '...' : 'Apply'}
                       </button>
                     </div>
                     {couponError && (
-                      <p className="text-[10.5px] text-red-400">{couponError}</p>
+                      <p className="text-[10.5px] text-red-500">{couponError}</p>
                     )}
                   </div>
                 )}
               </div>
 
               {/* Price Calculations */}
-              <div className="space-y-1.5 text-xs pt-2 border-t border-slate-800">
-                <div className="flex justify-between text-[#A8A295]">
+              <div className="space-y-1.5 text-xs pt-2 border-t border-[#E2DDD5]">
+                <div className="flex justify-between text-[#737373]">
                   <span>Subtotal</span>
-                  <span className="text-[#FAF7EE] font-medium">{formatINR(subtotal)}</span>
+                  <span className="text-[#1C1D1F] font-medium">{formatINR(subtotal)}</span>
                 </div>
                 {discount > 0 && (
-                  <div className="flex justify-between text-[#C2A265]">
+                  <div className="flex justify-between text-[#4E5F52]">
                     <span>Coupon Discount</span>
                     <span className="font-medium">-{formatINR(discount)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-[#A8A295]">
+                <div className="flex justify-between text-[#737373]">
                   <span>Express Shipping</span>
-                  <span className="text-emerald-400 font-medium">
+                  <span className="text-[#4E5F52] font-medium">
                     {shippingCalc.freeShipping ? 'FREE' : formatINR(shippingCalc.cost)}
                   </span>
                 </div>
-                <div className="flex justify-between text-base font-semibold text-[#FAF7EE] pt-2 border-t border-slate-800">
+                <div className="flex justify-between text-base font-semibold text-[#1C1D1F] pt-2 border-t border-[#E2DDD5]">
                   <span>Grand Total</span>
-                  <span className="text-[#D4B678] font-bold">{formatINR(total)}</span>
+                  <span className="text-[#1C1D1F] font-bold">{formatINR(total)}</span>
                 </div>
               </div>
 
@@ -1070,7 +1070,7 @@ export function CheckoutForm() {
                         el.focus()
                       }
                     }}
-                    className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-600 via-amber-500 to-[#C2A265] hover:opacity-95 text-[#08090C] font-bold text-xs sm:text-sm tracking-wide shadow-xl flex items-center justify-center gap-2 group transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99]"
+                    className="w-full py-3.5 px-4 rounded-xl bg-[#9E8047] hover:bg-[#856A35] text-white font-medium text-xs sm:text-sm tracking-wide shadow-sm flex items-center justify-center gap-2 group transition-all duration-200 active:scale-[0.99]"
                   >
                     <Lock className="w-4 h-4 flex-shrink-0" />
                     <span>Verify Mobile via OTP to Place Order</span>
@@ -1081,7 +1081,7 @@ export function CheckoutForm() {
                     <button
                       onClick={() => handlePlaceOrder('whatsapp')}
                       disabled={isSubmitting}
-                      className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-[#C2A265] hover:opacity-95 text-[#08090C] font-bold text-xs sm:text-sm tracking-wide shadow-xl flex items-center justify-center gap-2 group transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99] disabled:opacity-60"
+                      className="w-full py-3 px-4 rounded-xl bg-[#4E5F52] hover:bg-[#3D4B40] text-white font-medium text-xs sm:text-sm tracking-wide shadow-sm flex items-center justify-center gap-2 group transition-all duration-200 active:scale-[0.99] disabled:opacity-60"
                     >
                       <MessageCircle className="w-4 h-4 fill-current flex-shrink-0" />
                       <span>Complete Order via WhatsApp</span>
@@ -1092,7 +1092,7 @@ export function CheckoutForm() {
                       <button
                         onClick={() => handlePlaceOrder('cod')}
                         disabled={isSubmitting}
-                        className="w-full py-2.5 px-4 rounded-xl bg-[#18202C] hover:bg-[#1E2636] border border-slate-700 hover:border-emerald-500/40 text-[#FAF7EE] font-semibold text-xs tracking-wide transition-all"
+                        className="w-full py-2.5 px-4 rounded-xl bg-[#FAF7F2] hover:bg-[#F0ECE4] border border-[#E2DDD5] text-[#1C1D1F] font-medium text-xs tracking-wide transition-all"
                       >
                         Confirm Doorstep COD ({formatINR(total)})
                       </button>
@@ -1100,7 +1100,7 @@ export function CheckoutForm() {
                   </>
                 )}
 
-                <p className="text-[10px] text-center text-[#8A8478] leading-tight">
+                <p className="text-[10px] text-center text-[#999999] leading-tight">
                   {!isPhoneVerified
                     ? '10-digit mobile verification required to prevent bogus orders and ensure doorstep dispatch.'
                     : 'Tapping will capture your details and open WhatsApp with instant dispatch concierge.'}

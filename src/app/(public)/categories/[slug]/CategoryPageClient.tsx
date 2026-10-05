@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
-import { Loader2, Grid, List } from 'lucide-react'
+import Link from 'next/link'
+import { Grid, List } from 'lucide-react'
 import { classNames } from '@/lib/utils/formatters'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { ProductSort } from '@/components/product/ProductSort'
 import { Pagination } from '@/components/ui/Pagination'
 import { getProductsByCategory, getCategoryBySlug } from '@/lib/products/registry'
-import { Logo } from '@/components/ui/Logo'
 import type { Product, Category } from '@/types'
 
 const ITEMS_PER_PAGE = 12
@@ -71,75 +71,93 @@ export default function CategoryPageClient() {
 
   if (!category) {
     return (
-      <div className="container py-16 text-center">
-        <h1 className="font-heading text-3xl font-medium text-ayur-ivory mb-4">Category not found</h1>
-        <p className="text-[#C4BDA8]">The category you&apos;re looking for doesn&apos;t exist.</p>
+      <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F] py-16 text-center">
+        <div className="container">
+          <h1 className="font-heading text-2xl font-normal text-[#1C1D1F] mb-3">Collection Not Found</h1>
+          <p className="text-xs text-[#737373] mb-6">The category requested does not exist in our formulary.</p>
+          <Link
+            href="/categories"
+            className="px-5 py-2.5 rounded-full border border-[#1C1D1F] text-xs font-medium uppercase tracking-wider text-[#1C1D1F] hover:bg-[#1C1D1F] hover:text-[#FAF7F2] transition-colors"
+          >
+            View All Collections
+          </Link>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="container py-4 sm:py-6 lg:py-8">
-      <div className="mb-4 sm:mb-5">
-        <nav className="flex items-center gap-2 text-xs text-[#C4BDA8] mb-2" aria-label="Breadcrumb">
-          <a href="/" className="hover:text-ayur-gold transition-colors">Home</a>
-          <span>/</span>
-          <a href="/categories" className="hover:text-ayur-gold transition-colors">Categories</a>
-          <span>/</span>
-          <span className="text-ayur-ivory font-medium">{category.name}</span>
-        </nav>
-        <h1 className="font-heading text-xl sm:text-2xl font-normal text-ayur-ivory">{category.name}</h1>
-        <p className="text-[#C4BDA8] text-xs sm:text-sm mt-1">{category.description}</p>
-      </div>
-
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-        <div className="flex items-center gap-3">
-          <span className="text-[#C4BDA8] text-sm">
-            {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} in this category
-          </span>
+    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
+      <div className="container py-6 sm:py-8 lg:py-10">
+        <div className="mb-6 pb-4 border-b border-[#E2DDD5]">
+          <nav className="flex items-center gap-2 text-xs text-[#737373] mb-2 font-mono" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-[#1C1D1F] transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/categories" className="hover:text-[#1C1D1F] transition-colors">Collections</Link>
+            <span>/</span>
+            <span className="text-[#1C1D1F]">{category.name}</span>
+          </nav>
+          <h1 className="font-heading text-2xl sm:text-3xl font-normal text-[#1C1D1F]">{category.name}</h1>
+          <p className="text-[#555555] text-xs sm:text-sm mt-1 font-sans">{category.description}</p>
         </div>
-        <div className="flex items-center gap-3 ml-auto">
-          <ProductSort selectedSort={sortBy} onSortChange={setSortBy} />
-          <div className="flex items-center gap-1 bg-[#121622] border border-[#C2A265]/20 rounded-lg p-1">
-            <button
-              onClick={() => setViewMode('grid')}
-              className={classNames('p-2 rounded transition-colors', viewMode === 'grid' ? 'bg-ayur-gold text-[#08090C] shadow-sm' : 'text-[#C4BDA8] hover:text-white')}
-              aria-label="Grid view"
-            >
-              <Grid className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={classNames('p-2 rounded transition-colors', viewMode === 'list' ? 'bg-ayur-gold text-[#08090C] shadow-sm' : 'text-[#C4BDA8] hover:text-white')}
-              aria-label="List view"
-            >
-              <List className="w-5 h-5" />
-            </button>
+
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 p-3 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5]">
+          <div>
+            <span className="text-xs font-sans text-[#737373]">
+              {filteredProducts.length} {filteredProducts.length === 1 ? 'Formulation' : 'Formulations'} in this collection
+            </span>
+          </div>
+          <div className="flex items-center gap-3 ml-auto">
+            <ProductSort selectedSort={sortBy} onSortChange={setSortBy} />
+            <div className="flex items-center gap-1 bg-[#FAF7F2] border border-[#E2DDD5] rounded-lg p-0.5">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={classNames(
+                  'p-1.5 rounded transition-colors',
+                  viewMode === 'grid' ? 'bg-[#1C1D1F] text-[#FAF7F2]' : 'text-[#737373] hover:text-[#1C1D1F]'
+                )}
+                aria-label="Grid view"
+              >
+                <Grid className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={classNames(
+                  'p-1.5 rounded transition-colors',
+                  viewMode === 'list' ? 'bg-[#1C1D1F] text-[#FAF7F2]' : 'text-[#737373] hover:text-[#1C1D1F]'
+                )}
+                aria-label="List view"
+              >
+                <List className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {loading ? (
-        <ProductGrid products={[]} loading={true} />
-      ) : filteredProducts.length === 0 ? (
-        <ProductGrid products={[]} emptyMessage="No products in this category" />
-      ) : (
-        <>
-          <ProductGrid
-            products={paginatedProducts}
-            columns={{ base: 1, sm: 2, md: 3, lg: 3, xl: 4 }}
-            variant={viewMode === 'list' ? 'compact' : 'default'}
-          />
-          {totalPages > 1 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-              className="mt-8"
+        {loading ? (
+          <ProductGrid products={[]} loading={true} />
+        ) : filteredProducts.length === 0 ? (
+          <div className="p-8 text-center bg-[#FFFFFF] rounded-xl border border-[#E2DDD5]">
+            <p className="text-xs text-[#737373]">No formulations available in this collection.</p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            <ProductGrid
+              products={paginatedProducts}
+              columns={{ base: 1, sm: 2, md: 3, lg: 3 }}
+              variant={viewMode === 'list' ? 'compact' : 'default'}
             />
-          )}
-        </>
-      )}
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                className="mt-6"
+              />
+            )}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

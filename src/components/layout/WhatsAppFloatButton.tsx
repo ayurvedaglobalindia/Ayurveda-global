@@ -65,43 +65,43 @@ export function WhatsAppFloatButton() {
             transition={{ duration: 0.2 }}
             className="absolute bottom-16 right-0 w-64"
           >
-            <div className="bg-[#0C0E14]/95 rounded-2xl shadow-2xl border border-[#999999]/25 p-3.5 space-y-2 backdrop-blur-xl">
+            <div className="bg-[#FAF7F2] rounded-2xl shadow-xl border border-[#E2DDD5] p-3.5 space-y-2">
               <button
                 onClick={() => handleWhatsAppClick('float')}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#11141E] hover:bg-[#151926] border border-[#999999]/20 transition-colors text-left group"
+                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#E2DDD5] transition-colors text-left group"
               >
-                <div className="w-9 h-9 rounded-xl bg-[#6EE7B7]/15 border border-[#6EE7B7]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                  <MessageCircle className="w-5 h-5 text-[#6EE7B7]" />
+                <div className="w-9 h-9 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                  <MessageCircle className="w-5 h-5 text-[#4E5F52]" />
                 </div>
                 <div>
-                  <span className="font-semibold text-xs text-[#FAF7EE] block">General Enquiry</span>
-                  <span className="text-[11px] text-[#999999]">Chat with customer support</span>
+                  <span className="font-semibold text-xs text-[#1C1D1F] block">General Enquiry</span>
+                  <span className="text-[11px] text-[#737373]">Chat with customer support</span>
                 </div>
               </button>
 
               <button
                 onClick={() => handleWhatsAppClick('contact')}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#11141E] hover:bg-[#151926] border border-[#999999]/20 transition-colors text-left group"
+                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#E2DDD5] transition-colors text-left group"
               >
-                <div className="w-9 h-9 rounded-xl bg-[#151926] border border-[#D8C28A]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                  <Zap className="w-5 h-5 text-[#D8C28A]" />
+                <div className="w-9 h-9 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                  <Zap className="w-5 h-5 text-[#4E5F52]" />
                 </div>
                 <div>
-                  <span className="font-semibold text-xs text-[#FAF7EE] block">Direct Consultation</span>
-                  <span className="text-[11px] text-[#999999]">Herbal dosage &amp; usage</span>
+                  <span className="font-semibold text-xs text-[#1C1D1F] block">Direct Consultation</span>
+                  <span className="text-[11px] text-[#737373]">Herbal dosage &amp; usage</span>
                 </div>
               </button>
 
               <button
                 onClick={() => handleWhatsAppClick('checkout')}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#11141E] hover:bg-[#151926] border border-[#999999]/20 transition-colors text-left group"
+                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#E2DDD5] transition-colors text-left group"
               >
-                <div className="w-9 h-9 rounded-xl bg-[#D8C28A]/15 border border-[#D8C28A]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                  <ShoppingBag className="w-5 h-5 text-[#D8C28A]" />
+                <div className="w-9 h-9 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                  <ShoppingBag className="w-5 h-5 text-[#4E5F52]" />
                 </div>
                 <div>
-                  <span className="font-semibold text-xs text-[#FAF7EE] block">Quick Order / COD</span>
-                  <span className="text-[11px] text-[#999999]">Instant checkout support</span>
+                  <span className="font-semibold text-xs text-[#1C1D1F] block">Quick Order / COD</span>
+                  <span className="text-[11px] text-[#737373]">Instant checkout support</span>
                 </div>
               </button>
             </div>
@@ -112,7 +112,7 @@ export function WhatsAppFloatButton() {
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className={classNames(
-          'relative w-14 h-14 rounded-full bg-gradient-to-br from-[#34D399] to-[#059669] flex items-center justify-center shadow-lg shadow-[#34D399]/25 transition-all duration-300 hover:scale-105 focus-visible-ring',
+          'relative w-14 h-14 rounded-full bg-[#4E5F52] hover:bg-[#3D4B40] text-white flex items-center justify-center shadow-md transition-all duration-300 hover:scale-105 focus-visible-ring',
           isExpanded && 'rotate-45'
         )}
         aria-label={isExpanded ? 'Close WhatsApp options' : 'Open WhatsApp chat'}
@@ -136,9 +136,9 @@ export function WhatsAppFloatButton() {
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0 }}
-          className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#D8C28A] flex items-center justify-center animate-pulse shadow-sm"
+          className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#9E8047] flex items-center justify-center shadow-xs"
         >
-          <Zap className="w-2.5 h-2.5 text-[#08090C]" />
+          <Zap className="w-2.5 h-2.5 text-white" />
         </motion.span>
       </button>
 
@@ -147,9 +147,9 @@ export function WhatsAppFloatButton() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
-          className="absolute bottom-16 right-0 bg-[#0C0E14] text-[#FAF7EE] px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap shadow-xl border border-[#999999]/30"
+          className="absolute bottom-16 right-0 bg-[#FFFFFF] text-[#1C1D1F] px-3.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap shadow-md border border-[#E2DDD5]"
         >
-          Chat with Mageesh &amp; Team
+          Chat with Ayurvedic Desk
         </motion.div>
       )}
     </div>

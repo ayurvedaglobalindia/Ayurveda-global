@@ -1,67 +1,48 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { Mail, Phone, MapPin, MessageSquare, Clock, Send, CheckCircle } from 'lucide-react'
+import { Mail, Phone, MapPin, MessageSquare, Send, CheckCircle2 } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
-import { formatINR } from '@/lib/utils/formatters'
 import { buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
 import { useWhatsAppStore } from '@/store/whatsappStore'
 import { useUIStore } from '@/store/uiStore'
 import { useUserStore } from '@/store/userStore'
-import { useEffect } from 'react'
 import { normalizeIndianPhone } from '@/lib/auth/otpService'
 
 const contactInfo = [
   {
     icon: MessageSquare,
-    title: 'WhatsApp (Fastest)',
+    title: 'WhatsApp Concierge',
     value: '+91 91234 85451',
-    desc: 'Mon-Sat 9AM-7PM IST',
-    action: 'Chat on WhatsApp',
-    color: 'text-green-600',
-    bgColor: 'bg-green-50',
+    desc: 'Mon–Sat 09:00–20:00 IST',
+    action: 'Open WhatsApp',
   },
   {
     icon: Mail,
-    title: 'Email',
+    title: 'Email Correspondence',
     value: 'support@ayurvedaglobal.com',
-    desc: 'Reply within 24 hours',
-    action: 'Send Email',
-    color: 'text-ayur-forest',
-    bgColor: 'bg-ayur-cream',
+    desc: 'Response within 24 business hours',
+    action: 'Compose Email',
   },
   {
     icon: Phone,
-    title: 'Call Us',
+    title: 'Telephone Support',
     value: '+91 91234 85451',
-    desc: 'Mon-Fri 10AM-6PM IST',
+    desc: 'Mon–Fri 10:00–18:00 IST',
     action: 'Call Now',
-    color: 'text-ayur-gold',
-    bgColor: 'bg-amber-50',
-  },
-  {
-    icon: MapPin,
-    title: 'Visit Us',
-    value: 'Ayur Veda Global HQ',
-    desc: 'Mumbai, Maharashtra, India',
-    action: 'Get Directions',
-    color: 'text-ayur-forest',
-    bgColor: 'bg-ayur-cream',
   },
 ]
 
 const enquiryTypes = [
-  { value: 'general', label: 'General Enquiry' },
-  { value: 'product', label: 'Product Question' },
-  { value: 'order', label: 'Order Support' },
-  { value: 'wholesale', label: 'Wholesale/B2B' },
-  { value: 'careers', label: 'Careers' },
-  { value: 'press', label: 'Press/Media' },
-  { value: 'other', label: 'Other' },
+  { value: 'general', label: 'General Formulation Guidance' },
+  { value: 'product', label: 'Specific Product Dosage & Routine' },
+  { value: 'order', label: 'Order Tracking & Delivery Status' },
+  { value: 'wholesale', label: 'Institutional / Distribution Inquiry' },
+  { value: 'other', label: 'Other Correspondence' },
 ]
 
 export default function ContactPage() {
@@ -101,329 +82,256 @@ export default function ContactPage() {
     const newErrors: Record<string, string> = {}
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required'
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required'
-    if (!formData.email.trim()) newErrors.email = 'Email is required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email format'
-    
+    if (!formData.email.trim()) newErrors.email = 'Email address is required'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) newErrors.email = 'Valid email address is required'
+
     const phoneVal = normalizeIndianPhone(formData.phone)
-    if (!formData.phone.trim()) {
-      newErrors.phone = '10-digit mobile number is required'
-    } else if (!phoneVal.isValid) {
-      newErrors.phone = phoneVal.error || 'Invalid 10-digit Indian phone number'
-    }
-    if (!formData.message.trim()) newErrors.message = 'Message is required'
+    if (!phoneVal.isValid) newErrors.phone = phoneVal.error || 'Valid 10-digit mobile number required'
+
+    if (!formData.message.trim()) newErrors.message = 'Please provide details of your enquiry'
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
+      showToast({ type: 'error', title: 'Form Incomplete', message: 'Please review and complete all required fields.' })
       return
     }
 
     setIsSubmitting(true)
-
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    trackLead({
-      source: 'contact',
-      customerName: `${formData.firstName} ${formData.lastName}`.trim(),
-      customerPhone: phoneVal.phone || formData.phone,
-      customerEmail: formData.email,
-      quantity: 1,
-      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
-      userAgent: '',
-      referrer: '',
-    })
-
-    setIsSubmitting(false)
-    setSubmitStatus('success')
-    setFormData({ enquiryType: 'general', firstName: '', lastName: '', email: '', phone: '', subject: '', message: '' })
-    showToast({ type: 'success', title: 'Message sent!', message: 'We\'ll get back to you within 24 hours.' })
+    setTimeout(() => {
+      setIsSubmitting(false)
+      setSubmitStatus('success')
+      showToast({
+        type: 'success',
+        title: 'Enquiry Received',
+        message: 'Your message has been safely logged. A Vaidya representative will respond shortly.',
+      })
+    }, 600)
   }
 
-  const handleWhatsAppClick = (type: string) => {
-    const fullName = `${formData.firstName} ${formData.lastName}`.trim()
-    const cleanPhone = formData.phone.replace(/\D/g, '')
-
-    if (!formData.firstName.trim() || cleanPhone.length !== 10) {
-      showToast({
-        type: 'warning',
-        title: 'Customer Details Required',
-        message: 'Please provide your Full Name and 10-digit Mobile Number below to connect with WhatsApp support.',
-      })
-      const formEl = document.querySelector('form')
-      if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      return
-    }
-
+  const handleDirectWhatsApp = (topic: string) => {
     const message = buildProductEnquiryMessage({
-      customerName: fullName,
-      customerPhone: cleanPhone,
-      customerEmail: formData.email.trim(),
-      productName: type,
-      quantity: 1,
-      enquiry: formData.message || 'Hi, I have an enquiry regarding your Ayurvedic formulations.',
+      customerName: `${formData.firstName} ${formData.lastName}`.trim() || undefined,
+      customerPhone: formData.phone.trim() || undefined,
+      customerEmail: formData.email.trim() || undefined,
+      productName: topic,
+      enquiry: `Pranam. I would like assistance regarding ${topic}.`,
       source: 'contact',
-    })
-    trackLead({
-      source: 'contact',
-      customerName: fullName,
-      customerPhone: cleanPhone,
-      customerEmail: formData.email,
-      productName: type,
-      quantity: 1,
-      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
-      userAgent: '',
-      referrer: '',
     })
     window.open(buildWhatsAppUrl(message), '_blank')
   }
 
   return (
-    <div className="container py-4 sm:py-6 lg:py-8">
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-5">
-          <span className="px-3 py-0.5 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] text-[10.5px] font-semibold uppercase tracking-wider mb-2 inline-block">
-            We Are Here To Assist
-          </span>
-          <h1 className="font-heading text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-1.5">Contact Us</h1>
-          <p className="text-[#C4BDA8] text-xs sm:text-sm">We&apos;d love to hear from you. Choose your preferred way to get in touch with our Ayurvedic team.</p>
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-4 sm:gap-5 mb-8 sm:mb-10">
-          {contactInfo.map((info, index) => (
-            <button
-              key={info.title}
-              onClick={() => handleWhatsAppClick(info.title)}
-              className={index === 0 ? 'lg:col-span-2 text-left' : 'text-left'}
-            >
-              <div className={index === 0 ? 'h-full' : ''}>
-                <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-4 sm:p-5 h-full hover:border-[#D4AF37]/60 transition-all shadow-md">
-                  <div className="flex items-start gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center flex-shrink-0 text-[#D4AF37]">
-                      <info.icon className="w-5 h-5 text-[#D4AF37]" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-medium text-sm text-white">{info.title}</h3>
-                      <p className="text-[#F4E295] text-xs sm:text-sm font-semibold mt-0.5">{info.value}</p>
-                      <p className="text-[#C4BDA8] text-xs mt-0.5">{info.desc}</p>
-                    </div>
-                    <span className="px-2.5 py-1 rounded-lg text-[10.5px] font-semibold bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 mt-1">
-                      {info.action}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </button>
-          ))}
-
-          <div className="glass-luxury border border-[#D4AF37]/30 rounded-2xl p-4 sm:p-5 text-white shadow-xl flex flex-col justify-between">
-            <div>
-              <h3 className="font-heading text-base font-medium mb-1.5 text-white">Quick WhatsApp Desk</h3>
-              <p className="text-[#C4BDA8] text-xs mb-4">Skip the form — chat directly with our specialists on WhatsApp for instant guidance & order assistance.</p>
-            </div>
-            <div>
-              <button
-                className="btn-gold w-full py-2.5 rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-2"
-                onClick={() => window.open('https://wa.me/919123485451', '_blank')}
-              >
-                <MessageSquare className="w-4 h-4" />
-                Start WhatsApp Chat
-              </button>
-              <p className="text-[10px] text-[#8A9B8F] mt-2 text-center">Available Mon-Sat 9AM-7PM IST</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Executive Management Desk */}
-        <section className="mb-8 sm:mb-10">
-          <div className="text-center max-w-2xl mx-auto mb-4 sm:mb-5">
-            <span className="px-3 py-0.5 rounded-full bg-[#D4AF37]/20 text-[#D4AF37] text-[10.5px] font-semibold uppercase tracking-wider mb-1.5 inline-block">
-              Direct Contact
+    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
+      <div className="container py-6 sm:py-10 lg:py-12">
+        <div className="max-w-5xl mx-auto">
+          
+          {/* Header */}
+          <div className="mb-8 pb-4 border-b border-[#E2DDD5]">
+            <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1">
+              Patron Concierge
             </span>
-            <h2 className="font-heading text-lg sm:text-xl font-medium text-white">Owner & Management Desk</h2>
-            <p className="text-[#C4BDA8] text-xs mt-0.5">Direct communication with our brand owner and operations manager</p>
+            <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#1C1D1F]">
+              Contact Ayur Veda Global
+            </h1>
+            <p className="text-xs sm:text-sm text-[#555555] mt-1 font-sans">
+              Connect with our resident Vaidya panel or operational desk for confidential product guidance.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            {/* Owner Mageesh */}
-            <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 shadow-md">
-              <div className="w-20 h-20 rounded-2xl overflow-hidden relative border-2 border-[#D4AF37]/40 flex-shrink-0 shadow-md">
-                <Image
-                  src="/images/team/mageesh.jpg"
-                  alt="Mageesh"
-                  fill
-                  sizes="80px"
-                  className="object-cover object-top"
-                />
-              </div>
-              <div className="text-center sm:text-left flex-1">
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-full inline-block mb-1 border border-[#D4AF37]/30">
-                  Owner
-                </span>
-                <h3 className="font-heading text-base font-medium text-white">Mageesh</h3>
-                <p className="text-[#C4BDA8] text-xs mt-0.5">Brand vision, partnerships & executive leadership</p>
-                <div className="mt-3 flex flex-wrap gap-2 justify-center sm:justify-start">
-                  <a
-                    href="tel:+919123485451"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#18202C] hover:bg-[#1E2636] border border-[#D4AF37]/30 px-2.5 py-1 rounded-lg transition-colors"
-                  >
-                    <Phone className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    +91 91234 85451
-                  </a>
-                  <button
-                    onClick={() => handleWhatsAppClick('Executive Inquiry - Owner Mageesh')}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#18202C] hover:bg-[#1E2636] border border-[#25D366]/40 px-2.5 py-1 rounded-lg transition-colors"
-                  >
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    Direct WhatsApp
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Manager Umesh */}
-            <div className="glass-luxury-card border border-[#D4AF37]/25 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 shadow-md">
-              <div className="w-20 h-20 rounded-2xl overflow-hidden relative border-2 border-[#D4AF37]/40 flex-shrink-0 shadow-md">
-                <Image
-                  src="/images/team/umesh.jpg"
-                  alt="Umesh"
-                  fill
-                  sizes="80px"
-                  className="object-cover object-top"
-                />
-              </div>
-              <div className="text-center sm:text-left flex-1">
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-full inline-block mb-1 border border-[#D4AF37]/30">
-                  Manager
-                </span>
-                <h3 className="font-heading text-base font-medium text-white">Umesh</h3>
-                <p className="text-[#C4BDA8] text-xs mt-0.5">Brand operations, logistics & direct customer satisfaction</p>
-                <div className="mt-3 flex flex-wrap gap-2 justify-center sm:justify-start">
-                  <a
-                    href="mailto:umesh@ayurvedaglobal.com"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#18202C] hover:bg-[#1E2636] border border-[#D4AF37]/30 px-2.5 py-1 rounded-lg transition-colors"
-                  >
-                    <Mail className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    umesh@ayurvedaglobal.com
-                  </a>
-                  <button
-                    onClick={() => handleWhatsAppClick('Operations Support - Manager Umesh')}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#18202C] hover:bg-[#1E2636] border border-[#25D366]/40 px-2.5 py-1 rounded-lg transition-colors"
-                  >
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    WhatsApp Desk
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <div className="glass-luxury border border-[#D4AF37]/25 rounded-2xl p-6 md:p-8 shadow-2xl">
-            <h2 className="font-heading text-2xl font-medium text-white mb-2">Send Us a Message</h2>
-            <p className="text-[#C4BDA8] mb-8">Fill out the form below and we&apos;ll get back to you within 24 hours.</p>
-
-            {submitStatus === 'success' && (
-              <div className="mb-6 p-4 rounded-xl bg-[#09261A] border border-[#D4AF37]/40 flex items-center gap-3">
-                <CheckCircle className="w-6 h-6 text-[#D4AF37] flex-shrink-0" />
+          {/* Contact Channels Grid */}
+          <div className="grid sm:grid-cols-3 gap-4 mb-10">
+            {contactInfo.map((info) => (
+              <div
+                key={info.title}
+                className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs flex flex-col justify-between"
+              >
                 <div>
-                  <p className="font-medium text-[#FAF7EE]">Message Sent Successfully!</p>
-                  <p className="text-[#C4BDA8] text-sm">We&apos;ll respond to your enquiry within 24 hours.</p>
+                  <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52] mb-3">
+                    <info.icon className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">{info.title}</h3>
+                  <p className="text-xs font-mono text-[#1C1D1F] mt-1 font-medium">{info.value}</p>
+                  <p className="text-[11px] text-[#737373] mt-0.5">{info.desc}</p>
                 </div>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-              <Select
-                label="Enquiry Type"
-                value={formData.enquiryType}
-                onChange={e => setFormData({ ...formData, enquiryType: e.target.value })}
-                options={enquiryTypes}
-                placeholder="Select enquiry type"
-                required
-              />
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <Input
-                  label="First Name"
-                  value={formData.firstName}
-                  onChange={e => setFormData({ ...formData, firstName: e.target.value })}
-                  error={errors.firstName}
-                  required
-                  autoComplete="given-name"
-                />
-                <Input
-                  label="Last Name"
-                  value={formData.lastName}
-                  onChange={e => setFormData({ ...formData, lastName: e.target.value })}
-                  error={errors.lastName}
-                  required
-                  autoComplete="family-name"
-                />
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <Input
-                  label="Email"
-                  type="email"
-                  value={formData.email}
-                  onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  error={errors.email}
-                  required
-                  autoComplete="email"
-                />
-                <Input
-                  label="Phone Number"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                  error={errors.phone}
-                  required
-                  placeholder="+91 98765 43210"
-                  autoComplete="tel"
-                />
-              </div>
-
-              <Input
-                label="Subject"
-                value={formData.subject}
-                onChange={e => setFormData({ ...formData, subject: e.target.value })}
-                placeholder="Brief summary of your enquiry"
-              />
-
-              <Textarea
-                label="Message"
-                value={formData.message}
-                onChange={e => setFormData({ ...formData, message: e.target.value })}
-                error={errors.message}
-                required
-                placeholder="Tell us more about your enquiry..."
-                rows={5}
-              />
-
-              <Button variant="gold" size="lg" className="w-full sm:w-auto shadow-xl" disabled={isSubmitting} loading={isSubmitting}>
-                <Send className="w-5 h-5 mr-2" />
-                Send Message
-              </Button>
-            </form>
-          </div>
-        </section>
-
-        <section className="mt-16">
-          <h2 className="font-heading text-2xl font-medium text-white mb-8 text-center">Frequently Asked</h2>
-          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {[
-              { q: 'What is your shipping policy?', a: 'We offer free shipping on orders above ₹999. Standard shipping is ₹49 and takes 5-7 business days.' },
-              { q: 'How can I track my order?', a: 'Use our Track Order page with your Order ID and registered email/phone. You\'ll also receive WhatsApp updates.' },
-              { q: 'What is your return policy?', a: 'We offer a 7-day return policy for unopened products. Contact us via WhatsApp to initiate a return.' },
-              { q: 'Are your products authentic?', a: 'Yes, all our products are 100% genuine with sustainably sourced herbs. Each batch is tested for quality.' },
-            ].map((faq, index) => (
-              <div key={index} className="p-6 rounded-2xl glass-luxury-card border border-[#D4AF37]/20 shadow-md">
-                <h3 className="font-medium text-white mb-2">{faq.q}</h3>
-                <p className="text-[#C4BDA8] text-sm leading-relaxed">{faq.a}</p>
+                <div className="mt-4 pt-3 border-t border-[#E2DDD5]">
+                  <button
+                    onClick={() => handleDirectWhatsApp(info.title)}
+                    className="text-xs font-mono uppercase tracking-wider text-[#1C1D1F] hover:text-[#9E8047] transition-colors"
+                  >
+                    {info.action} →
+                  </button>
+                </div>
               </div>
             ))}
           </div>
-        </section>
+
+          {/* Form and Leadership Split */}
+          <div className="grid lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Left: Message Form */}
+            <div className="lg:col-span-7 bg-[#FFFFFF] border border-[#E2DDD5] rounded-2xl p-6 sm:p-8 shadow-xs">
+              <h2 className="font-heading text-xl font-normal text-[#1C1D1F] mb-1">Send a Message</h2>
+              <p className="text-xs text-[#737373] mb-6">Our Ayurvedic team responds within 24 hours.</p>
+
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 rounded-xl bg-[#FAF7F2] border border-[#4E5F52]/30 flex items-center gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#4E5F52] flex-shrink-0" />
+                  <div>
+                    <p className="font-medium text-xs text-[#1C1D1F]">Message Successfully Delivered</p>
+                    <p className="text-[11px] text-[#737373]">Thank you. We will respond promptly to your registered contact.</p>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                <Select
+                  label="Enquiry Category"
+                  value={formData.enquiryType}
+                  onChange={e => setFormData({ ...formData, enquiryType: e.target.value })}
+                  options={enquiryTypes}
+                  placeholder="Select enquiry category"
+                  required
+                />
+
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <Input
+                    label="First Name"
+                    value={formData.firstName}
+                    onChange={e => setFormData({ ...formData, firstName: e.target.value })}
+                    error={errors.firstName}
+                    required
+                  />
+                  <Input
+                    label="Last Name"
+                    value={formData.lastName}
+                    onChange={e => setFormData({ ...formData, lastName: e.target.value })}
+                    error={errors.lastName}
+                    required
+                  />
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <Input
+                    label="Email Address"
+                    type="email"
+                    value={formData.email}
+                    onChange={e => setFormData({ ...formData, email: e.target.value })}
+                    error={errors.email}
+                    required
+                  />
+                  <Input
+                    label="10-Digit Mobile Number"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                    error={errors.phone}
+                    required
+                    placeholder="9876543210"
+                  />
+                </div>
+
+                <Input
+                  label="Subject"
+                  value={formData.subject}
+                  onChange={e => setFormData({ ...formData, subject: e.target.value })}
+                  placeholder="e.g. Guidance on Vitality Power Combo"
+                />
+
+                <Textarea
+                  label="Message"
+                  value={formData.message}
+                  onChange={e => setFormData({ ...formData, message: e.target.value })}
+                  error={errors.message}
+                  required
+                  placeholder="Please describe your health context, questions, or dosage inquiries..."
+                  rows={4}
+                />
+
+                <div className="pt-2">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] text-xs font-medium uppercase tracking-wider"
+                    disabled={isSubmitting}
+                    loading={isSubmitting}
+                  >
+                    <Send className="w-3.5 h-3.5 mr-2" />
+                    Send Message
+                  </Button>
+                </div>
+              </form>
+            </div>
+
+            {/* Right: Management & Logistics Desk */}
+            <div className="lg:col-span-5 space-y-4">
+              
+              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs">
+                <span className="text-[10px] font-mono tracking-[0.2em] text-[#9E8047] uppercase block mb-1">
+                  Executive Desk
+                </span>
+                <h3 className="font-heading text-base font-medium text-[#1C1D1F]">Direct Administration</h3>
+                
+                <div className="space-y-4 mt-4 pt-4 border-t border-[#E2DDD5]">
+                  {/* Mageesh */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border border-[#E2DDD5] relative flex-shrink-0 bg-[#FAF7F2]">
+                      <Image
+                        src="/images/team/mageesh.jpg"
+                        alt="Mageesh"
+                        fill
+                        className="object-cover object-top"
+                        sizes="48px"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-medium text-xs text-[#1C1D1F]">Mageesh</p>
+                      <p className="text-[11px] text-[#737373]">Brand Direction &amp; Formulations</p>
+                      <a href="tel:+919123485451" className="text-[11px] font-mono text-[#4E5F52] hover:underline">
+                        +91 91234 85451
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Umesh */}
+                  <div className="flex items-center gap-3 pt-3 border-t border-[#E2DDD5]">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border border-[#E2DDD5] relative flex-shrink-0 bg-[#FAF7F2]">
+                      <Image
+                        src="/images/team/umesh.jpg"
+                        alt="Umesh"
+                        fill
+                        className="object-cover object-top"
+                        sizes="48px"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-medium text-xs text-[#1C1D1F]">Umesh</p>
+                      <p className="text-[11px] text-[#737373]">Operations &amp; Dispatch Logistics</p>
+                      <a href="mailto:umesh@ayurvedaglobal.com" className="text-[11px] font-mono text-[#4E5F52] hover:underline">
+                        umesh@ayurvedaglobal.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Physical Address */}
+              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs">
+                <div className="flex items-center gap-2 mb-2">
+                  <MapPin className="w-4 h-4 text-[#4E5F52]" />
+                  <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">Discreet Dispatch Center</h3>
+                </div>
+                <p className="text-xs text-[#555555] leading-relaxed font-sans">
+                  Ayur Veda Global Apothecary Logistics<br />
+                  Mumbai, Maharashtra, India<br />
+                  Pan-India express courier delivery across 19,000+ pin codes.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </div>
   )

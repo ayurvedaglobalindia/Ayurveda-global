@@ -18,7 +18,7 @@ export function FeaturedProducts() {
   })
 
   return (
-    <section id="products" className="bg-[#FAF7F2] py-12 sm:py-16 lg:py-20 border-b border-[#E2DDD5]">
+    <section id="products" className="bg-[#FAF7F2] py-10 sm:py-14 lg:py-16 border-b border-[#E2DDD5]">
       <div className="container">
         
         {/* Section Header */}

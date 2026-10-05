@@ -1,11 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { Filter, X, ChevronDown, ChevronUp, SlidersHorizontal } from 'lucide-react'
+import { Filter, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { classNames } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
-import { Select } from '@/components/ui/Select'
 import { Input } from '@/components/ui/Input'
 import { Accordion } from '@/components/ui/Accordion'
 import type { Category } from '@/types'
@@ -53,17 +52,18 @@ export function ProductFilters({
     onPriceRangeChange([priceMin, priceMax])
   }
 
-  const formatPrice = (paise: number) => `₹${(paise / 100).toLocaleString()}`
-
   const filterContent = (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="font-heading text-lg font-medium text-ayur-ivory">Filters</h2>
+    <div className="space-y-5">
+      <div className="flex items-center justify-between pb-3 border-b border-[#E2DDD5]">
+        <h2 className="font-heading text-base font-medium text-[#1C1D1F]">Refine Catalog</h2>
         {hasActiveFilters && (
-          <Button variant="ghost" size="sm" onClick={onClearFilters}>
-            <X className="w-4 h-4 mr-1" />
-            Clear All
-          </Button>
+          <button
+            onClick={onClearFilters}
+            className="text-xs text-[#737373] hover:text-[#1C1D1F] flex items-center gap-1 font-mono uppercase tracking-wider"
+          >
+            <X className="w-3.5 h-3.5" />
+            Clear
+          </button>
         )}
       </div>
 
@@ -71,28 +71,28 @@ export function ProductFilters({
         {
           title: 'Categories',
           content: (
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 cursor-pointer">
+            <div className="space-y-2 text-xs">
+              <label className="flex items-center gap-2 cursor-pointer py-1">
                 <input
                   type="radio"
                   name="category"
                   checked={!selectedCategory}
                   onChange={() => onCategoryChange(undefined)}
-                  className="w-4 h-4 text-emerald-400 border-slate-700 bg-[#121622] focus:ring-emerald-400"
+                  className="w-4 h-4 text-[#4E5F52] border-[#E2DDD5] focus:ring-[#4E5F52]"
                 />
-                <span className="text-ayur-ivory">All Categories</span>
+                <span className="text-[#1C1D1F] font-medium">All Formulations</span>
               </label>
               {categories.map(category => (
-                <label key={category.id} className="flex items-center gap-2 cursor-pointer">
+                <label key={category.id} className="flex items-center gap-2 cursor-pointer py-1">
                   <input
                     type="radio"
                     name="category"
                     checked={selectedCategory === category.slug}
                     onChange={() => onCategoryChange(category.slug)}
-                    className="w-4 h-4 text-emerald-400 border-slate-700 bg-[#121622] focus:ring-emerald-400"
+                    className="w-4 h-4 text-[#4E5F52] border-[#E2DDD5] focus:ring-[#4E5F52]"
                   />
-                  <span className="text-ayur-ivory">{category.name}</span>
-                  <span className="text-[#C4BDA8] text-sm">({category.productCount})</span>
+                  <span className="text-[#333333]">{category.name}</span>
+                  <span className="text-[#737373] text-[11px] font-mono">({category.productCount})</span>
                 </label>
               ))}
             </div>
@@ -102,26 +102,26 @@ export function ProductFilters({
         {
           title: 'Price Range',
           content: (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-2">
                 <Input
                   type="number"
-                  label="Min"
+                  label="Min (₹)"
                   value={priceMin}
                   onChange={e => setPriceMin(Math.max(0, parseInt(e.target.value) || 0))}
                   placeholder="0"
                 />
                 <Input
                   type="number"
-                  label="Max"
+                  label="Max (₹)"
                   value={priceMax}
                   onChange={e => setPriceMax(Math.max(priceMin, parseInt(e.target.value) || priceMin))}
                   placeholder="5000"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm text-[#C4BDA8]">
-                  ₹{priceMin.toLocaleString()} - ₹{priceMax.toLocaleString()}
+              <div className="space-y-1">
+                <label className="text-[11px] font-mono text-[#737373] block">
+                  ₹{priceMin.toLocaleString()} – ₹{priceMax.toLocaleString()}
                 </label>
                 <input
                   type="range"
@@ -129,7 +129,7 @@ export function ProductFilters({
                   max="500000"
                   value={priceMin}
                   onChange={e => setPriceMin(Math.min(priceMax, parseInt(e.target.value)))}
-                  className="w-full h-2 bg-[#1E2534] rounded-lg appearance-none cursor-pointer accent-emerald-400"
+                  className="w-full h-1.5 bg-[#E2DDD5] rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
                 />
                 <input
                   type="range"
@@ -137,18 +137,20 @@ export function ProductFilters({
                   max="500000"
                   value={priceMax}
                   onChange={e => setPriceMax(Math.max(priceMin, parseInt(e.target.value)))}
-                  className="w-full h-2 bg-[#1E2534] rounded-lg appearance-none cursor-pointer accent-emerald-400"
+                  className="w-full h-1.5 bg-[#E2DDD5] rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
                 />
               </div>
-              <Button size="sm" variant="gold" onClick={handlePriceApply} className="w-full">Apply</Button>
+              <Button size="sm" variant="primary" onClick={handlePriceApply} className="w-full text-xs py-2 bg-[#1C1D1F] text-[#FAF7F2]">
+                Apply Filter
+              </Button>
             </div>
           ),
           defaultOpen: true,
         },
         {
-          title: 'Tags',
+          title: 'Therapeutic Indication',
           content: (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {availableTags.map(tag => (
                 <label key={tag} className="cursor-pointer">
                   <input
@@ -163,10 +165,10 @@ export function ProductFilters({
                     className="sr-only peer"
                   />
                   <span className={classNames(
-                    'px-3 py-1.5 rounded-full text-sm border transition-colors',
+                    'px-2.5 py-1 rounded-full text-[11px] font-sans border transition-colors inline-block',
                     selectedTags.includes(tag)
-                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 font-medium'
-                      : 'bg-[#121622] text-[#CBD5E1] border-slate-800 hover:border-slate-700'
+                      ? 'bg-[#1C1D1F] text-[#FAF7F2] border-[#1C1D1F] font-medium'
+                      : 'bg-[#FAF7F2] text-[#555555] border-[#E2DDD5] hover:border-[#1C1D1F]'
                   )}>
                     {tag.replace(/-/g, ' ')}
                   </span>
@@ -179,14 +181,14 @@ export function ProductFilters({
         {
           title: 'Availability',
           content: (
-            <label className="flex items-center gap-3 cursor-pointer">
+            <label className="flex items-center gap-2.5 cursor-pointer py-1">
               <input
                 type="checkbox"
                 checked={inStockOnly}
                 onChange={e => onInStockChange(e.target.checked)}
-                className="w-4 h-4 text-emerald-400 border-slate-700 bg-[#121622] focus:ring-emerald-400 rounded"
+                className="w-4 h-4 text-[#4E5F52] border-[#E2DDD5] focus:ring-[#4E5F52] rounded"
               />
-              <span className="text-ayur-ivory">In stock only</span>
+              <span className="text-xs text-[#1C1D1F]">In stock ready to dispatch</span>
             </label>
           ),
         },
@@ -199,13 +201,13 @@ export function ProductFilters({
       <>
         <Button
           variant="outline"
-          className="w-full sm:w-auto gap-2"
+          className="w-full sm:w-auto gap-2 border-[#E2DDD5] text-[#1C1D1F] hover:bg-[#FFFFFF] text-xs py-2"
           onClick={() => setIsOpen(true)}
         >
-          <Filter className="w-4 h-4" />
-          Filters
+          <Filter className="w-3.5 h-3.5 text-[#4E5F52]" />
+          <span>Filters</span>
           {hasActiveFilters && (
-            <span className="w-5 h-5 rounded-full bg-ayur-gold text-[#08090C] text-xs font-bold flex items-center justify-center">
+            <span className="w-4 h-4 rounded-full bg-[#1C1D1F] text-[#FAF7F2] text-[10px] font-medium flex items-center justify-center">
               {availableTags.filter(t => selectedTags.includes(t)).length +
                 (selectedCategory ? 1 : 0) +
                 (inStockOnly ? 1 : 0) +
@@ -220,7 +222,7 @@ export function ProductFilters({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs lg:hidden"
               onClick={() => setIsOpen(false)}
             >
               <motion.div
@@ -228,16 +230,16 @@ export function ProductFilters({
                 animate={{ x: 0 }}
                 exit={{ x: -300 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-[#0C0E14] border-r border-slate-800 shadow-2xl z-50 overflow-y-auto"
+                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-[#FAF7F2] border-r border-[#E2DDD5] shadow-xl z-50 overflow-y-auto"
                 onClick={e => e.stopPropagation()}
               >
-                <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-[#121622]">
-                  <h2 className="font-heading text-lg font-medium text-ayur-ivory">Filters</h2>
+                <div className="p-4 border-b border-[#E2DDD5] flex items-center justify-between bg-[#FFFFFF]">
+                  <h2 className="font-heading text-base font-medium text-[#1C1D1F]">Filters</h2>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="p-2 rounded-lg text-ayur-stone hover:text-ayur-ivory hover:bg-white/5 transition-colors"
+                    className="p-1.5 rounded-lg text-[#737373] hover:text-[#1C1D1F] transition-colors"
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-4 h-4" />
                   </button>
                 </div>
                 <div className="p-4">{filterContent}</div>
@@ -250,7 +252,7 @@ export function ProductFilters({
   }
 
   return (
-    <div className="bg-[#0E1118] rounded-2xl border border-slate-800 p-6 sticky top-24 shadow-lg">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#E2DDD5] p-5 shadow-xs">
       {filterContent}
     </div>
   )

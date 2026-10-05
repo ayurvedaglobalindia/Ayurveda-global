@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { CheckCircle, Package, MessageSquare, ArrowRight, ShieldCheck, Compass, MapPin } from 'lucide-react'
+import { CheckCircle2, Package, MessageSquare, ArrowRight, ShieldCheck, MapPin } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/Button'
 import { useUIStore } from '@/store/uiStore'
@@ -15,8 +15,8 @@ import { DeliveryTracker4Day } from '@/components/checkout/DeliveryTracker4Day'
 export default function CheckoutSuccessPage() {
   return (
     <Suspense fallback={
-      <div className="container py-24 text-center">
-        <div className="w-10 h-10 border-2 border-ayur-gold border-t-transparent rounded-full animate-spin mx-auto" />
+      <div className="bg-[#FAF7F2] min-h-screen container py-24 text-center">
+        <div className="w-8 h-8 border-2 border-[#1C1D1F] border-t-transparent rounded-full animate-spin mx-auto" />
       </div>
     }>
       <CheckoutSuccessContent />
@@ -78,158 +78,106 @@ function CheckoutSuccessContent() {
   }
 
   return (
-    <div className="container py-8 sm:py-12 lg:py-14">
-      <div className="max-w-2xl mx-auto text-center">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: 'spring', damping: 15, stiffness: 200 }}
-          className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full bg-[#121622] border-2 border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.25)] flex items-center justify-center relative"
-        >
-          <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-[#F4E295]" />
-          <div className="absolute inset-0 rounded-full border border-[#D4AF37]/40 animate-ping opacity-25" />
-        </motion.div>
+    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F] py-8 sm:py-12 lg:py-16">
+      <div className="container max-w-2xl mx-auto text-center">
+        
+        <div className="w-14 h-14 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] text-[#4E5F52] flex items-center justify-center mx-auto mb-4 shadow-xs">
+          <CheckCircle2 className="w-8 h-8" />
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#F4E295] text-xs font-medium uppercase tracking-widest mb-4"
-        >
-          <ShieldCheck className="w-3.5 h-3.5" />
-          Order Authenticated & Recorded
-        </motion.div>
+        <span className="text-[11px] font-mono tracking-[0.2em] text-[#4E5F52] uppercase block mb-1">
+          Order Recorded &amp; Scheduled
+        </span>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="font-heading text-xl sm:text-2xl md:text-3xl font-medium text-[#FAF7EE] mb-2 tracking-tight"
-        >
+        <h1 className="font-heading text-2xl sm:text-3xl font-normal text-[#1C1D1F] mb-2 tracking-tight">
           Namaste, Your Order is Confirmed
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="text-[#C5BFB3] text-xs sm:text-sm mb-6 leading-relaxed max-w-lg mx-auto"
-        >
-          Thank you for choosing Ayur Veda Global. Your confidential order reference is{' '}
-          <span className="font-mono font-bold text-[#D4B678] bg-[#18202C] px-2.5 py-0.5 rounded-md border border-[#C2A265]/35 inline-block ml-1">
+        <p className="text-[#555555] text-xs sm:text-sm mb-6 leading-relaxed max-w-lg mx-auto font-sans">
+          Thank you for choosing Ayur Veda Global. Your order reference is{' '}
+          <span className="font-mono font-medium text-[#1C1D1F] bg-[#FFFFFF] px-2.5 py-0.5 rounded border border-[#E2DDD5] inline-block ml-1">
             {orderNumber || 'ORD-PROCESSING'}
           </span>
-        </motion.p>
+        </p>
 
-        {/* 4-Day Animated Delivery Tracking Feature */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="mb-6"
-        >
+        {/* 4-Day Delivery Tracker */}
+        <div className="mb-6">
           <DeliveryTracker4Day
             orderNumber={orderNumber}
             createdAt={order?.createdAt}
             currentDay={1}
             shippingCity={order?.shippingAddress?.city || 'Your City'}
           />
-        </motion.div>
+        </div>
 
         {order && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="mb-6 p-4 rounded-2xl bg-[#121622] border border-[#C2A265]/25 text-left space-y-2.5"
-          >
-            <div className="flex items-center justify-between pb-2 border-b border-[#C2A265]/15">
-              <span className="text-[11px] uppercase tracking-wider text-[#C2A265] font-semibold">Order Summary</span>
-              <span className="text-xs font-bold text-[#FAF7EE]">{formatINR(order.total)}</span>
+          <div className="mb-6 p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] text-left space-y-3 shadow-xs">
+            <div className="flex items-center justify-between pb-2.5 border-b border-[#E2DDD5]">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#737373]">Order Summary</span>
+              <span className="text-sm font-medium text-[#1C1D1F]">{formatINR(order.total)}</span>
             </div>
-            <div className="space-y-1.5 text-xs text-[#A8A295]">
+            <div className="space-y-1.5 text-xs text-[#555555]">
               {(order.items || []).map((item: any, idx: number) => (
                 <div key={idx} className="flex justify-between">
                   <span>{item.name} × {item.quantity}</span>
-                  <span className="text-[#FAF7EE]">{formatINR(item.total || item.price * item.quantity)}</span>
+                  <span className="text-[#1C1D1F] font-medium">{formatINR(item.total || item.price * item.quantity)}</span>
                 </div>
               ))}
             </div>
             {order.shippingAddress && (
-              <div className="pt-2 border-t border-[#C2A265]/15 flex items-center gap-1.5 text-[11px] text-[#D4B678]">
-                <MapPin className="w-3.5 h-3.5 text-[#C2A265] flex-shrink-0" />
+              <div className="pt-2.5 border-t border-[#E2DDD5] flex items-center gap-1.5 text-xs text-[#737373]">
+                <MapPin className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
                 <span>
                   Delivering to: {order.shippingAddress.addressLine1}, {order.shippingAddress.city} - {order.shippingAddress.pincode}
                 </span>
               </div>
             )}
-          </motion.div>
+          </div>
         )}
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="grid md:grid-cols-3 gap-4 mb-10 text-left"
-        >
-          <div className="p-5 rounded-2xl glass-luxury-card border border-[#D4AF37]/25 flex flex-col justify-between">
-            <Package className="w-8 h-8 text-[#D4AF37] mb-3" />
-            <div>
-              <h3 className="font-serif text-base font-medium text-white mb-1">Apothecary Prepared</h3>
-              <p className="text-[#8A9B8F] text-xs leading-relaxed">Formulation being inspected & securely packaged</p>
-            </div>
+        <div className="grid md:grid-cols-3 gap-3.5 mb-8 text-left">
+          <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs">
+            <Package className="w-5 h-5 text-[#4E5F52] mb-2" />
+            <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">Discreet Parcel</h3>
+            <p className="text-[#737373] text-[11px] mt-1 leading-relaxed font-sans">Tamper-evident, plain brown box with zero outer labels</p>
           </div>
-          <div className="p-5 rounded-2xl glass-luxury-card border border-[#D4AF37]/25 flex flex-col justify-between">
-            <MessageSquare className="w-8 h-8 text-emerald-400 mb-3" />
-            <div>
-              <h3 className="font-serif text-base font-medium text-white mb-1">WhatsApp Concierge</h3>
-              <p className="text-[#8A9B8F] text-xs leading-relaxed">Coordinate dispatch, tracking, and live updates</p>
-            </div>
+          <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs">
+            <MessageSquare className="w-5 h-5 text-[#4E5F52] mb-2" />
+            <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">WhatsApp Tracking</h3>
+            <p className="text-[#737373] text-[11px] mt-1 leading-relaxed font-sans">Receive real-time courier dispatch status and updates</p>
           </div>
-          <div className="p-5 rounded-2xl glass-luxury-card border border-[#D4AF37]/25 flex flex-col justify-between">
-            <Compass className="w-8 h-8 text-[#F4E295] mb-3" />
-            <div>
-              <h3 className="font-serif text-base font-medium text-white mb-1">Discreet Express</h3>
-              <p className="text-[#8A9B8F] text-xs leading-relaxed">Tamper-evident, 100% confidential courier transit</p>
-            </div>
+          <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs">
+            <ShieldCheck className="w-5 h-5 text-[#4E5F52] mb-2" />
+            <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">Verified Purity</h3>
+            <p className="text-[#737373] text-[11px] mt-1 leading-relaxed font-sans">100% genuine Himalayan botanicals, AYUSH compliant</p>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button
-            variant="whatsapp"
+            variant="primary"
             size="lg"
             onClick={handleWhatsAppShare}
-            className="flex-1 justify-center py-3.5 shadow-lg shadow-[#25D366]/10"
+            className="flex-1 justify-center py-3 bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] text-xs font-medium uppercase tracking-wider"
           >
-            <MessageSquare className="w-5 h-5 mr-2" />
-            Open WhatsApp Concierge
+            <MessageSquare className="w-4 h-4 mr-2" />
+            Confirm via WhatsApp Concierge
           </Button>
           <Link href="/shop" className="flex-1">
-            <Button variant="outline" size="lg" className="w-full justify-center py-3.5 border-[#D4AF37]/40 text-[#FAF7EE] hover:bg-[#D4AF37]/10">
-              Continue Shopping
-              <ArrowRight className="w-4 h-4 ml-2" />
+            <Button variant="outline" size="lg" className="w-full justify-center py-3 border-[#1C1D1F] text-[#1C1D1F] text-xs font-medium uppercase tracking-wider">
+              Browse Formulations
+              <ArrowRight className="w-3.5 h-3.5 ml-2" />
             </Button>
           </Link>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="mt-10 p-4 rounded-xl bg-[#121622]/80 border border-[#D4AF37]/20 max-w-lg mx-auto text-xs text-[#8A9B8F] leading-relaxed"
-        >
-          Need to monitor your package in real-time? Track anytime using your phone or order ID at{' '}
-          <Link href="/track-order" className="text-[#F4E295] underline underline-offset-4 hover:text-white transition-colors">
+        <div className="mt-8 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] max-w-lg mx-auto text-xs text-[#737373] leading-relaxed">
+          Need to monitor your parcel in real-time? Track anytime using your phone or order ID at{' '}
+          <Link href="/track-order" className="text-[#1C1D1F] underline underline-offset-2 hover:text-[#9E8047] transition-colors">
             Order Tracking Portal
           </Link>
           .
-        </motion.div>
+        </div>
       </div>
     </div>
   )

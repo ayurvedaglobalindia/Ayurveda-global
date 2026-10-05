@@ -39,7 +39,7 @@ export function ApothecaryFAQ() {
   }
 
   return (
-    <section className="bg-[#FAF7F2] py-14 sm:py-20 lg:py-24 border-b border-[#E2DDD5]">
+    <section className="bg-[#FAF7F2] py-12 sm:py-16 border-b border-[#E2DDD5]">
       <div className="container">
         
         {/* Section Header */}

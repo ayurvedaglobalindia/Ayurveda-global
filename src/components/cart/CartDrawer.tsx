@@ -129,7 +129,7 @@ export function CartDrawer() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-ayur-void/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[60] bg-black/35 backdrop-blur-xs"
             onClick={closeCartDrawer}
             aria-hidden="true"
           />
@@ -138,21 +138,21 @@ export function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="fixed right-0 top-0 bottom-0 z-[65] w-full max-w-full sm:max-w-md bg-ayur-charcoal border-l border-ayur-gold/30 shadow-luxury flex flex-col text-ayur-cream"
+            className="fixed right-0 top-0 bottom-0 z-[65] w-full max-w-full sm:max-w-md bg-[#FAF7F2] border-l border-[#E2DDD5] shadow-2xl flex flex-col text-[#1C1D1F]"
             role="dialog"
             aria-modal="true"
             aria-label="Shopping cart"
           >
-            <div className="flex items-center justify-between p-3.5 sm:p-4 border-b border-ayur-forest-dark/50">
-              <h2 className="font-heading text-base font-semibold text-ayur-ivory flex items-center gap-2">
+            <div className="flex items-center justify-between p-3.5 sm:p-4 border-b border-[#E2DDD5]">
+              <h2 className="font-heading text-base font-semibold text-[#1C1D1F] flex items-center gap-2">
                 <span>Shopping Cart</span>
-                <span className="text-[11px] font-sans px-2 py-0.5 rounded-full bg-[#1E2534] text-emerald-400 border border-emerald-500/30 font-semibold">
+                <span className="text-[11px] font-sans px-2 py-0.5 rounded-full bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30 font-semibold">
                   {itemCount}
                 </span>
               </h2>
               <button
                 onClick={closeCartDrawer}
-                className="p-1.5 rounded-lg text-ayur-stone hover:text-ayur-ivory hover:bg-ayur-forest-dark/50 transition-colors"
+                className="p-1.5 rounded-lg text-[#737373] hover:text-[#1C1D1F] hover:bg-[#EFEAE2] transition-colors"
                 aria-label="Close cart"
               >
                 <X className="w-4 h-4" />
@@ -162,13 +162,13 @@ export function CartDrawer() {
             <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3.5">
               {items.length === 0 ? (
                 <div className="text-center py-10">
-                  <div className="w-14 h-14 mx-auto mb-3.5 rounded-full bg-ayur-gold/15 border border-ayur-gold/30 flex items-center justify-center text-ayur-gold">
+                  <div className="w-14 h-14 mx-auto mb-3.5 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] flex items-center justify-center text-[#9E8047]">
                     <Gift className="w-6 h-6" />
                   </div>
-                  <h3 className="font-medium text-sm text-ayur-ivory mb-1.5">Your cart is empty</h3>
-                  <p className="text-xs text-ayur-stone mb-5">Add some formulations to get started</p>
+                  <h3 className="font-medium text-sm text-[#1C1D1F] mb-1.5">Your cart is empty</h3>
+                  <p className="text-xs text-[#737373] mb-5">Add some formulations to get started</p>
                   <Link href="/shop" onClick={closeCartDrawer}>
-                    <Button variant="gold" size="sm" className="w-full text-xs font-semibold py-2.5">Explore Formulations</Button>
+                    <Button variant="gold" size="sm" className="w-full text-xs font-medium py-2.5">Explore Formulations</Button>
                   </Link>
                 </div>
               ) : (
@@ -204,10 +204,10 @@ export function CartDrawer() {
             </div>
 
             {items.length > 0 && (
-              <div className="p-3.5 sm:p-4 border-t border-ayur-forest-dark/50 bg-ayur-charcoal space-y-2">
+              <div className="p-3.5 sm:p-4 border-t border-[#E2DDD5] bg-[#FFFFFF] space-y-2">
                 <div className="flex gap-2">
                   <Link href="/checkout" onClick={closeCartDrawer} className="flex-1">
-                    <Button variant="gold" size="md" className="w-full text-xs font-bold py-2.5 shadow-lg gold-shimmer">
+                    <Button variant="gold" size="md" className="w-full text-xs font-semibold py-2.5 shadow-sm">
                       Proceed to Checkout ({formatINR(total)})
                     </Button>
                   </Link>
@@ -215,7 +215,7 @@ export function CartDrawer() {
                     variant="whatsapp"
                     size="md"
                     onClick={handleWhatsAppOrder}
-                    className="px-3 py-2.5 shadow-md shadow-emerald-500/10 flex-shrink-0"
+                    className="px-3 py-2.5 shadow-sm flex-shrink-0"
                     title="Order directly via WhatsApp"
                     aria-label="Order directly via WhatsApp"
                   >
@@ -224,27 +224,27 @@ export function CartDrawer() {
                     </svg>
                   </Button>
                 </div>
-                <div className="flex items-center justify-center gap-3 text-[10.5px] text-ayur-stone pt-0.5">
-                  <span className="flex items-center gap-1"><Lock className="w-3 h-3 text-[#C2A265]" /> 100% Confidential</span>
-                  <span className="text-[#C2A265]/40">•</span>
-                  <span className="flex items-center gap-1"><Shield className="w-3 h-3 text-[#C2A265]" /> AYUSH Certified</span>
+                <div className="flex items-center justify-center gap-3 text-[10.5px] text-[#737373] pt-0.5">
+                  <span className="flex items-center gap-1"><Lock className="w-3 h-3 text-[#4E5F52]" /> 100% Confidential</span>
+                  <span className="text-[#999999]">•</span>
+                  <span className="flex items-center gap-1"><Shield className="w-3 h-3 text-[#4E5F52]" /> AYUSH Certified</span>
                 </div>
                 <div className="grid grid-cols-4 gap-1.5 text-center pt-1">
-                  <div className="p-1.5 rounded-lg bg-ayur-forest-dark/50">
-                    <Truck className="w-3.5 h-3.5 text-ayur-gold mx-auto mb-0.5" />
-                    <span className="text-[9.5px] text-ayur-stone block">Free Express</span>
+                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5]">
+                    <Truck className="w-3.5 h-3.5 text-[#4E5F52] mx-auto mb-0.5" />
+                    <span className="text-[9.5px] text-[#737373] block">Free Express</span>
                   </div>
-                  <div className="p-1.5 rounded-lg bg-ayur-forest-dark/50">
-                    <Lock className="w-3.5 h-3.5 text-ayur-gold mx-auto mb-0.5" />
-                    <span className="text-[9.5px] text-ayur-stone block">Discreet Box</span>
+                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5]">
+                    <Lock className="w-3.5 h-3.5 text-[#4E5F52] mx-auto mb-0.5" />
+                    <span className="text-[9.5px] text-[#737373] block">Discreet Box</span>
                   </div>
-                  <div className="p-1.5 rounded-lg bg-ayur-forest-dark/50">
-                    <Shield className="w-3.5 h-3.5 text-ayur-gold mx-auto mb-0.5" />
-                    <span className="text-[9.5px] text-ayur-stone block">Doorstep COD</span>
+                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5]">
+                    <Shield className="w-3.5 h-3.5 text-[#4E5F52] mx-auto mb-0.5" />
+                    <span className="text-[9.5px] text-[#737373] block">Doorstep COD</span>
                   </div>
-                  <div className="p-1.5 rounded-lg bg-ayur-forest-dark/50">
-                    <RotateCcw className="w-3.5 h-3.5 text-ayur-gold mx-auto mb-0.5" />
-                    <span className="text-[9.5px] text-ayur-stone block">Easy Return</span>
+                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5]">
+                    <RotateCcw className="w-3.5 h-3.5 text-[#4E5F52] mx-auto mb-0.5" />
+                    <span className="text-[9.5px] text-[#737373] block">Easy Return</span>
                   </div>
                 </div>
               </div>
@@ -285,11 +285,11 @@ function CartDrawerItem({
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="flex items-start gap-2.5 p-2.5 bg-ayur-forest-dark/80 border border-ayur-gold/20 rounded-xl hover:border-ayur-gold/40 transition-colors"
+      className="flex items-start gap-2.5 p-2.5 bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl hover:border-[#D5CEC4] transition-colors"
     >
       <Link
         href={`/product/${item.productId}`}
-        className="flex-shrink-0 w-13 h-13 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-ayur-void border border-ayur-gold/20 relative"
+        className="flex-shrink-0 w-13 h-13 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-[#FAF7F2] border border-[#E2DDD5] relative"
       >
         <Image
           src={imgSrc}
@@ -302,16 +302,16 @@ function CartDrawerItem({
       </Link>
       <div className="flex-1 min-w-0">
         <Link href={`/product/${item.productId}`}>
-          <h4 className="font-medium text-ayur-ivory text-xs sm:text-[12.5px] leading-snug line-clamp-2 hover:text-ayur-gold-light transition-colors">
+          <h4 className="font-medium text-[#1C1D1F] text-xs sm:text-[12.5px] leading-snug line-clamp-2 hover:text-[#4E5F52] transition-colors">
             {item.product.name}
           </h4>
         </Link>
         {variantName && (
-          <p className="text-[10px] text-ayur-gold-light/90 font-medium mt-0.5 truncate">
+          <p className="text-[10px] text-[#737373] font-medium mt-0.5 truncate">
             {variantName}
           </p>
         )}
-        <PriceDisplay price={item.price} size="sm" className="mt-0.5 text-xs" />
+        <PriceDisplay price={item.price} size="sm" className="mt-0.5 text-xs text-[#1C1D1F]" />
         <QuantitySelector
           value={item.quantity}
           onChange={qty => onUpdateQuantity(item.productId, item.variantId, qty)}
@@ -323,7 +323,7 @@ function CartDrawerItem({
       </div>
       <button
         onClick={() => onRemove(item.productId, item.variantId)}
-        className="p-1.5 rounded-lg text-ayur-stone hover:text-ayur-crimson-light hover:bg-ayur-crimson/10 transition-colors flex-shrink-0"
+        className="p-1.5 rounded-lg text-[#999999] hover:text-red-500 hover:bg-red-50 transition-colors flex-shrink-0"
         aria-label="Remove item"
       >
         <Trash2 className="w-3.5 h-3.5" />
@@ -355,14 +355,14 @@ export function CouponInput({
       animate={{ opacity: 1, y: 0 }}
       className="card-luxury p-3 sm:p-3.5"
     >
-      <h3 className="font-heading text-xs font-semibold uppercase tracking-wider text-[#C2A265] mb-2.5 flex items-center gap-1.5">
-        <Gift className="w-3.5 h-3.5 text-ayur-gold" />
+      <h3 className="font-heading text-xs font-semibold uppercase tracking-wider text-[#1C1D1F] mb-2.5 flex items-center gap-1.5">
+        <Gift className="w-3.5 h-3.5 text-[#9E8047]" />
         Apply Coupon
       </h3>
       {couponCode ? (
         <div className="flex items-center justify-between text-xs">
-          <span className="font-medium text-emerald-400 font-mono tracking-wider">{couponCode}</span>
-          <button onClick={onRemove} className="text-xs text-ayur-stone hover:text-ayur-crimson-light transition-colors">Remove</button>
+          <span className="font-medium text-[#4E5F52] font-mono tracking-wider">{couponCode}</span>
+          <button onClick={onRemove} className="text-xs text-[#737373] hover:text-red-500 transition-colors">Remove</button>
         </div>
       ) : (
         <div className="space-y-1.5">
@@ -372,7 +372,7 @@ export function CouponInput({
               value={code}
               onChange={e => setCode(e.target.value.toUpperCase())}
               placeholder="Enter coupon code"
-              className="flex-1 bg-ayur-charcoal border border-ayur-forest-dark focus:border-ayur-gold rounded-lg px-3 py-1.5 text-xs text-ayur-ivory placeholder-ayur-stone focus:outline-none"
+              className="flex-1 bg-[#FAF7F2] border border-[#E2DDD5] focus:border-[#4E5F52] rounded-lg px-3 py-1.5 text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none"
               aria-label="Coupon code"
             />
             <Button variant="gold" size="sm" onClick={() => onApply(code)} disabled={!code.trim() || loading} className="text-xs px-3 py-1.5">
@@ -380,7 +380,7 @@ export function CouponInput({
             </Button>
           </div>
           {error && (
-            <p className="text-[11px] text-rose-400 font-medium">{error}</p>
+            <p className="text-[11px] text-red-500 font-medium">{error}</p>
           )}
         </div>
       )}
@@ -409,35 +409,35 @@ function CartSummary({
       animate={{ opacity: 1, y: 0 }}
       className="card-luxury p-3 sm:p-3.5 space-y-2.5"
     >
-      <h3 className="font-heading text-xs font-semibold uppercase tracking-wider text-[#C2A265]">Order Summary</h3>
+      <h3 className="font-heading text-xs font-semibold uppercase tracking-wider text-[#1C1D1F]">Order Summary</h3>
       <div className="space-y-1.5 text-xs">
-        <div className="flex justify-between text-ayur-stone">
+        <div className="flex justify-between text-[#737373]">
           <span>Subtotal</span>
-          <span className="text-ayur-ivory font-medium">{formatINR(subtotal)}</span>
+          <span className="text-[#1C1D1F] font-medium">{formatINR(subtotal)}</span>
         </div>
         {discount > 0 && (
-          <div className="flex justify-between text-ayur-gold-light">
+          <div className="flex justify-between text-[#4E5F52]">
             <span>Discount</span>
             <span className="font-medium">-{formatINR(discount)}</span>
           </div>
         )}
-        <div className="flex justify-between text-ayur-stone">
+        <div className="flex justify-between text-[#737373]">
           <span>Shipping</span>
-          <span className="text-ayur-gold-light font-medium">{shipping === 0 ? 'FREE' : formatINR(shipping)}</span>
+          <span className="text-[#4E5F52] font-medium">{shipping === 0 ? 'FREE' : formatINR(shipping)}</span>
         </div>
         {tax > 0 && (
-          <div className="flex justify-between text-ayur-stone">
+          <div className="flex justify-between text-[#737373]">
             <span>Tax</span>
-            <span className="text-ayur-ivory font-medium">{formatINR(tax)}</span>
+            <span className="text-[#1C1D1F] font-medium">{formatINR(tax)}</span>
           </div>
         )}
-        <div className="flex justify-between border-t border-ayur-forest-dark/50 pt-2">
-          <span className="font-medium text-ayur-ivory">Total</span>
-          <span className="font-semibold text-ayur-gold-light text-sm sm:text-base">{formatINR(total)}</span>
+        <div className="flex justify-between border-t border-[#E2DDD5] pt-2">
+          <span className="font-medium text-[#1C1D1F]">Total</span>
+          <span className="font-semibold text-[#1C1D1F] text-sm sm:text-base">{formatINR(total)}</span>
         </div>
       </div>
       {freeShippingThreshold > 0 && (
-        <p className="text-[10.5px] text-ayur-gold-light text-center bg-ayur-gold/10 border border-ayur-gold/20 rounded-lg p-1.5">
+        <p className="text-[10.5px] text-[#4E5F52] text-center bg-[#EFF4F0] border border-[#4E5F52]/30 rounded-lg p-1.5">
           Add {formatINR(freeShippingThreshold)} more for free express shipping
         </p>
       )}

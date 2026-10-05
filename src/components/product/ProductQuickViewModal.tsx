@@ -129,7 +129,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
       <div className="grid md:grid-cols-12 gap-6 lg:gap-8 items-start">
         {/* Left Column: Image Stage */}
         <div className="md:col-span-6 space-y-3">
-          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-[#181D2A] via-[#10131B] to-[#0A0C11] border border-slate-700/60 shadow-xl flex items-center justify-center">
+          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#E2DDD5] shadow-sm flex items-center justify-center">
             <Image
               src={currentImage.src}
               alt={currentImage.alt || product.name}
@@ -139,7 +139,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
               priority
             />
             {product.ageRestricted && (
-              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-md text-[10px] font-bold text-[#E5A855] bg-[#08090C]/90 border border-slate-700 shadow-sm">
+              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-md text-[10px] font-medium text-[#9E8047] bg-[#FFFFFF]/90 border border-[#E2DDD5] shadow-xs">
                 18+ Adult
               </span>
             )}
@@ -152,10 +152,10 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
                 <button
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
-                  className={`relative w-14 h-16 rounded-xl overflow-hidden border-2 transition-all bg-[#0C0E14] shadow-sm ${
+                  className={`relative w-14 h-16 rounded-xl overflow-hidden border-2 transition-all bg-[#FAF7F2] shadow-xs ${
                     selectedImageIndex === idx
-                      ? 'border-emerald-400 ring-2 ring-emerald-500/25'
-                      : 'border-slate-800 opacity-70 hover:opacity-100 hover:border-slate-700'
+                      ? 'border-[#4E5F52] ring-2 ring-[#4E5F52]/20'
+                      : 'border-[#E2DDD5] opacity-70 hover:opacity-100 hover:border-[#D5CEC4]'
                   }`}
                 >
                   <Image src={img.src} alt="" fill className="object-cover" sizes="56px" />
@@ -169,41 +169,41 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
         <div className="md:col-span-6 space-y-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-semibold text-emerald-400 bg-[#18202C] border border-emerald-500/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="text-[11px] font-semibold text-[#4E5F52] bg-[#EFF4F0] border border-[#4E5F52]/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                 {product.category === 'supplements' ? 'Herbal Supplement' : product.category === 'wellness' ? 'Power Combo' : 'Personal Care'}
               </span>
-              <Rating rating={4.9} size="sm" showValue reviewsCount={1200} />
+              <Rating rating={4.9} size="sm" showValue />
             </div>
-            <h3 className="font-heading text-xl sm:text-2xl font-medium text-ayur-ivory">
+            <h3 className="font-heading text-xl sm:text-2xl font-medium text-[#1C1D1F]">
               {product.name}
             </h3>
-            <p className="text-xs sm:text-sm text-[#C4BDA8]">
+            <p className="text-xs sm:text-sm text-[#737373]">
               {product.tagline}
             </p>
           </div>
 
           {/* Price Box */}
-          <div className="p-3.5 rounded-2xl bg-[#0C0E14] border border-slate-800 flex items-center justify-between">
+          <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-between">
             <PriceDisplay
               price={product.price}
               compareAtPrice={product.compareAtPrice}
               size="lg"
             />
             {product.compareAtPrice && product.compareAtPrice > product.price && (
-              <span className="text-xs font-bold bg-ayur-gold text-[#08090C] px-2.5 py-1 rounded-lg shadow-sm">
+              <span className="text-xs font-semibold bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30 px-2.5 py-1 rounded-lg">
                 SAVE {Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)}%
               </span>
             )}
           </div>
 
-          <p className="text-xs sm:text-sm text-[#C4BDA8] leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#555555] leading-relaxed">
             {product.shortDescription}
           </p>
 
           {/* Quantity and Actions */}
           <div className="space-y-3 pt-2">
             <div className="flex items-center gap-3">
-              <span className="text-xs font-medium text-ayur-ivory">Quantity:</span>
+              <span className="text-xs font-medium text-[#1C1D1F]">Quantity:</span>
               <QuantitySelector
                 value={quantity}
                 onChange={setQuantity}
@@ -218,7 +218,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
                 variant="outline"
                 size="md"
                 onClick={handleAddToCart}
-                className="w-full text-xs font-bold border-[#C2A265]/40 text-[#FAF7EE] hover:bg-[#C2A265]/10 hover:border-ayur-gold rounded-xl"
+                className="w-full text-xs font-medium border-[#E2DDD5] text-[#1C1D1F] hover:bg-[#FAF7F2] rounded-xl"
               >
                 Add to Cart
               </Button>
@@ -226,7 +226,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
                 variant="gold"
                 size="md"
                 onClick={handleBuyNow}
-                className="w-full text-xs font-bold rounded-xl shadow-md"
+                className="w-full text-xs font-medium rounded-xl shadow-xs"
               >
                 Buy Now
               </Button>
@@ -236,18 +236,18 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
               variant="whatsapp"
               size="md"
               onClick={handleWhatsAppOrder}
-              className="w-full text-xs font-bold rounded-xl shadow-sm"
+              className="w-full text-xs font-medium rounded-xl shadow-xs"
             >
               Order via WhatsApp (COD)
             </Button>
           </div>
 
           {/* Full Details Link */}
-          <div className="pt-2 border-t border-[#C2A265]/20 flex items-center justify-between">
+          <div className="pt-2 border-t border-[#E2DDD5] flex items-center justify-between">
             <Link
               href={`/product/${product.slug}`}
               onClick={onClose}
-              className="text-xs font-bold text-ayur-gold hover:text-ayur-gold-light flex items-center gap-1 transition-colors"
+              className="text-xs font-semibold text-[#1C1D1F] hover:text-[#4E5F52] flex items-center gap-1 transition-colors"
             >
               <span>View Complete Product Dossier</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -256,7 +256,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
             <button
               onClick={handleWishlistToggle}
               className={`p-2 rounded-xl border transition-colors ${
-                inWishlist ? 'border-red-500/40 bg-red-950/30 text-red-400' : 'border-[#C2A265]/20 text-[#C4BDA8] hover:text-red-400 hover:border-red-400/40'
+                inWishlist ? 'border-red-400 bg-red-50 text-red-600' : 'border-[#E2DDD5] text-[#737373] hover:text-red-500 hover:border-red-300'
               }`}
               aria-label="Add to wishlist"
             >

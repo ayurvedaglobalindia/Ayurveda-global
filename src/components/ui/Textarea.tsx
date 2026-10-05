@@ -16,18 +16,18 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={textareaId} className="block text-sm font-medium text-[#FAF7EE] mb-1.5">
+          <label htmlFor={textareaId} className="block text-sm font-medium text-[#1C1D1F] mb-1.5">
             {label}
-            {props.required && <span className="text-[#D4AF37] ml-1" aria-hidden="true">*</span>}
+            {props.required && <span className="text-[#9E8047] ml-1" aria-hidden="true">*</span>}
           </label>
         )}
         <textarea
           ref={ref}
           id={textareaId}
           className={classNames(
-            'w-full px-4 py-3 bg-[#0D1017] border rounded-xl text-[#FAF7EE] placeholder-[#8A8478] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent resize-y min-h-[100px]',
+            'w-full px-4 py-3 bg-[#FFFFFF] border rounded-xl text-[#1C1D1F] placeholder-[#999999] transition-all duration-200 focus:outline-none focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20 resize-y min-h-[100px]',
             error && 'border-red-500 focus:ring-red-500',
-            !error && 'border-[#D4AF37]/30 hover:border-[#D4AF37]/60',
+            !error && 'border-[#E2DDD5] hover:border-[#D5CEC4]',
             className
           )}
           aria-invalid={error ? 'true' : 'false'}
@@ -35,12 +35,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         {error && (
-          <p id={`${textareaId}-error`} className="mt-1.5 text-sm text-red-400" role="alert">
+          <p id={`${textareaId}-error`} className="mt-1.5 text-sm text-red-500" role="alert">
             {error}
           </p>
         )}
         {hint && !error && (
-          <p id={`${textareaId}-hint`} className="mt-1.5 text-sm text-[#A7B3A9]">
+          <p id={`${textareaId}-hint`} className="mt-1.5 text-sm text-[#737373]">
             {hint}
           </p>
         )}

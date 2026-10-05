@@ -1,98 +1,126 @@
 'use client'
 
-import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { useParams, notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useParams } from 'next/navigation'
-import { Package, Truck, CheckCircle, Clock, XCircle, MapPin, Phone, Mail, ArrowLeft, ChevronDown, ChevronUp, Download, MessageSquare } from 'lucide-react'
-import { formatDate, formatDateTime, formatINR, classNames } from '@/lib/utils/formatters'
-import { Button } from '@/components/ui/Button'
-import { Badge } from '@/components/ui/Badge'
-import { Accordion } from '@/components/ui/Accordion'
+import { Package, Truck, CheckCircle2, Clock, XCircle, ArrowLeft, MapPin, CreditCard, ShieldCheck } from 'lucide-react'
+import { formatDate, formatINR as formatPrice } from '@/lib/utils/formatters'
 
 const mockOrderDetails = {
   'ORD-20241215-ABC1': {
     id: 'ORD-20241215-ABC1',
     orderNumber: 'ORD-20241215-ABC1',
     createdAt: '2024-12-15T10:30:00Z',
-    updatedAt: '2024-12-18T14:20:00Z',
-    total: 149900,
-    subtotal: 149900,
-    shipping: 0,
-    tax: 0,
-    discount: 0,
     status: 'delivered' as const,
     paymentMethod: 'whatsapp' as const,
-    paymentStatus: 'confirmed' as const,
-    customerName: 'John Doe',
-    customerPhone: '+91 98765 43210',
-    customerEmail: 'john@example.com',
+    subtotal: 149900,
+    shipping: 0,
+    discount: 0,
+    total: 149900,
+    items: [
+      {
+        id: '1',
+        name: 'BODY Essential Nutrition',
+        quantity: 1,
+        price: 149900,
+        image: '/images/products/body-essential-nutrition-thumb.jpg',
+      },
+    ],
     shippingAddress: {
-      firstName: 'John',
-      lastName: 'Doe',
-      addressLine1: '123 Main Street',
-      addressLine2: 'Apt 4B',
-      city: 'Mumbai',
-      state: 'Maharashtra',
-      pincode: '400001',
+      firstName: 'Vikram',
+      lastName: 'Sharma',
+      addressLine1: 'Flat 402, Green Glen Layout',
+      addressLine2: 'Outer Ring Road, Bellandur',
+      city: 'Bengaluru',
+      state: 'Karnataka',
+      pincode: '560103',
       phone: '+91 98765 43210',
     },
-    items: [
-      { name: 'BODY Essential Nutrition', variant: '60 Capsules', quantity: 1, price: 149900, total: 149900, image: '/images/products/body-essential-nutrition-thumb.jpg' },
-    ],
     timeline: [
       { status: 'confirmed', date: '2024-12-15T10:30:00Z', note: 'Order confirmed via WhatsApp' },
-      { status: 'processing', date: '2024-12-16T09:00:00Z', note: 'Order being prepared' },
-      { status: 'shipped', date: '2024-12-17T14:00:00Z', note: 'Shipped via BlueDart - Tracking: BD123456789' },
-      { status: 'delivered', date: '2024-12-18T11:30:00Z', note: 'Delivered to customer' },
+      { status: 'processing', date: '2024-12-15T14:00:00Z', note: 'Formulation batch inspected and sealed' },
+      { status: 'shipped', date: '2024-12-16T09:00:00Z', note: 'Dispatched in plain unmarked parcel - BlueDart Tracking: BD123456789' },
+      { status: 'delivered', date: '2024-12-18T15:30:00Z', note: 'Delivered securely to patron' },
     ],
   },
   'ORD-20241210-XYZ2': {
     id: 'ORD-20241210-XYZ2',
     orderNumber: 'ORD-20241210-XYZ2',
     createdAt: '2024-12-10T14:20:00Z',
-    updatedAt: '2024-12-12T10:00:00Z',
-    total: 89900,
-    subtotal: 89900,
-    shipping: 4900,
-    tax: 0,
-    discount: 0,
     status: 'shipped' as const,
     paymentMethod: 'cod' as const,
-    paymentStatus: 'pending' as const,
-    customerName: 'Jane Smith',
-    customerPhone: '+91 87654 32109',
-    customerEmail: 'jane@example.com',
-    shippingAddress: {
-      firstName: 'Jane',
-      lastName: 'Smith',
-      addressLine1: '456 Park Avenue',
-      addressLine2: '',
-      city: 'Delhi',
-      state: 'Delhi',
-      pincode: '110001',
-      phone: '+91 87654 32109',
-    },
+    subtotal: 89900,
+    shipping: 4900,
+    discount: 0,
+    total: 94800,
     items: [
-      { name: 'STAYMAX+ Delay Spray', variant: '30 ml', quantity: 1, price: 89900, total: 89900, image: '/images/products/staymax-delay-spray-thumb.jpg' },
+      {
+        id: '2',
+        name: 'STAYMAX+ Delay Spray',
+        quantity: 1,
+        price: 89900,
+        image: '/images/products/staymax-delay-spray-thumb.jpg',
+      },
     ],
+    shippingAddress: {
+      firstName: 'Amit',
+      lastName: 'Patel',
+      addressLine1: 'B-12, Shanti Kunj',
+      addressLine2: 'Navrangpura',
+      city: 'Ahmedabad',
+      state: 'Gujarat',
+      pincode: '380009',
+      phone: '+91 98765 12345',
+    },
     timeline: [
       { status: 'confirmed', date: '2024-12-10T14:20:00Z', note: 'Order confirmed - Cash on Delivery' },
-      { status: 'processing', date: '2024-12-11T10:00:00Z', note: 'Order being prepared' },
-      { status: 'shipped', date: '2024-12-12T10:00:00Z', note: 'Shipped via DTDC - Tracking: DTDC987654321' },
+      { status: 'processing', date: '2024-12-11T10:00:00Z', note: 'Order packaged in discreet brown box' },
+      { status: 'shipped', date: '2024-12-12T10:00:00Z', note: 'Dispatched via Express Courier - Tracking: DTDC987654321' },
+    ],
+  },
+  'ORD-20241205-DEF3': {
+    id: 'ORD-20241205-DEF3',
+    orderNumber: 'ORD-20241205-DEF3',
+    createdAt: '2024-12-05T09:15:00Z',
+    status: 'processing' as const,
+    paymentMethod: 'whatsapp' as const,
+    subtotal: 239800,
+    shipping: 0,
+    discount: 20000,
+    total: 219800,
+    items: [
+      {
+        id: '1',
+        name: 'BODY Essential Nutrition',
+        quantity: 2,
+        price: 149900,
+        image: '/images/products/body-essential-nutrition-thumb.jpg',
+      },
+    ],
+    shippingAddress: {
+      firstName: 'Rahul',
+      lastName: 'Verma',
+      addressLine1: '15/A, Civil Lines',
+      addressLine2: 'Near High Court',
+      city: 'Jaipur',
+      state: 'Rajasthan',
+      pincode: '302006',
+      phone: '+91 98290 12345',
+    },
+    timeline: [
+      { status: 'confirmed', date: '2024-12-05T09:15:00Z', note: 'Order confirmed' },
+      { status: 'processing', date: '2024-12-05T11:00:00Z', note: 'Standardized batch preparation underway' },
     ],
   },
 }
 
 const statusConfig = {
-  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30', lineColor: 'bg-emerald-500' },
-  processing: { label: 'Processing', icon: Clock, color: 'bg-amber-950/80 text-[#D4B678] border border-[#C2A265]/40', lineColor: 'bg-[#C2A265]' },
-  shipped: { label: 'Dispatched', icon: Truck, color: 'bg-[#18202C] text-[#FAF7EE] border border-[#C2A265]/30', lineColor: 'bg-[#C2A265]' },
-  delivered: { label: 'Delivered', icon: CheckCircle, color: 'bg-[#161B26] text-[#D4B678] border border-[#C2A265]/50', lineColor: 'bg-[#D4B678]' },
-  cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-rose-950/80 text-rose-300 border border-rose-500/30', lineColor: 'bg-rose-500' },
+  confirmed: { label: 'Confirmed', icon: CheckCircle2, color: 'text-[#4E5F52]', bg: 'bg-[#F5F1EB]' },
+  processing: { label: 'Processing', icon: Clock, color: 'text-[#9E8047]', bg: 'bg-[#FAF7F2]' },
+  shipped: { label: 'Dispatched', icon: Truck, color: 'text-[#1C1D1F]', bg: 'bg-[#FAF7F2]' },
+  delivered: { label: 'Delivered', icon: CheckCircle2, color: 'text-[#4E5F52]', bg: 'bg-[#F5F1EB]' },
+  cancelled: { label: 'Cancelled', icon: XCircle, color: 'text-rose-700', bg: 'bg-rose-50' },
 }
-
 
 export default function OrderDetailPage() {
   const params = useParams()
@@ -107,177 +135,139 @@ export default function OrderDetailPage() {
   const StatusIcon = config.icon
 
   return (
-    <div className="container py-5 sm:py-7 lg:py-9">
-      <div className="mb-5 sm:mb-6">
-        <Link href="/orders" className="inline-flex items-center gap-1.5 text-xs text-ayur-stone hover:text-ayur-gold transition-colors mb-3">
-          <ArrowLeft className="w-4 h-4" />
-          Back to Orders
-        </Link>
-        <div className="flex items-center justify-between gap-3 flex-wrap">
-          <div>
-            <h1 className="font-heading text-xl sm:text-2xl md:text-3xl font-medium text-ayur-ivory">Order #{order.orderNumber}</h1>
-            <p className="text-xs text-[#C4BDA8] mt-1">Placed on {formatDate(order.createdAt)}</p>
+    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
+      <div className="container py-6 sm:py-8 lg:py-10">
+        
+        <div className="mb-6 pb-4 border-b border-[#E2DDD5]">
+          <Link href="/orders" className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#737373] hover:text-[#1C1D1F] transition-colors mb-2">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Orders</span>
+          </Link>
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div>
+              <h1 className="font-heading text-2xl sm:text-3xl font-normal text-[#1C1D1F]">Order #{order.orderNumber}</h1>
+              <p className="text-xs text-[#737373] mt-1 font-mono">Placed on {formatDate(order.createdAt)}</p>
+            </div>
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono border border-[#E2DDD5] ${config.bg} ${config.color}`}>
+              <StatusIcon className="w-3.5 h-3.5" />
+              <span>{config.label}</span>
+            </span>
           </div>
-          <Badge variant={order.status as any} className="whitespace-nowrap">
-            <StatusIcon className="w-3 h-3 mr-1" />
-            {config.label}
-          </Badge>
         </div>
-      </div>
 
-      <div className="grid lg:grid-cols-3 gap-5 sm:gap-6">
-        <div className="lg:col-span-2 space-y-4">
-          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
-            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-4">Order Timeline</h2>
-            <div className="relative pl-6 border-l-2 border-[#C2A265]/20">
-              {order.timeline.map((event, index) => {
-                const eventConfig = statusConfig[event.status as keyof typeof statusConfig]
-                const EventIcon = eventConfig?.icon || Clock
-                const isLast = index === order.timeline.length - 1
+        <div className="grid lg:grid-cols-3 gap-6">
+          
+          {/* Left Column: Timeline & Items */}
+          <div className="lg:col-span-2 space-y-5">
+            
+            {/* Timeline */}
+            <div className="bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl p-5 shadow-xs">
+              <h2 className="font-heading text-base font-medium text-[#1C1D1F] mb-4">Tracking History</h2>
+              <div className="relative pl-6 border-l border-[#E2DDD5] space-y-6">
+                {order.timeline.map((event, index) => {
+                  const evConfig = statusConfig[event.status as keyof typeof statusConfig]
+                  const EvIcon = evConfig?.icon || Clock
 
-                return (
-                  <div key={event.date} className="relative pb-6 last:pb-0">
-                    <div className="absolute left-[-14px] top-1 w-6 h-6 rounded-full border-2 border-[#C2A265]/40 flex items-center justify-center bg-[#08090C] z-10">
-                      <div className={classNames(
-                        'w-2.5 h-2.5 rounded-full',
-                        event.status === order.status || index < order.timeline.findIndex(e => e.status === order.status)
-                          ? eventConfig.lineColor.replace('bg-', 'bg-')
-                          : 'bg-[#121622]'
-                      )} />
-                    </div>
-                    <div className="ml-4">
-                      <div className="flex items-start gap-3">
-                        <div className={classNames(
-                          'w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0',
-                          event.status === order.status || index < order.timeline.findIndex(e => e.status === order.status)
-                            ? eventConfig.lineColor.replace('bg-', 'bg-')
-                            : 'bg-[#18202C] border border-[#C2A265]/20'
-                        )}>
-                          <EventIcon className={classNames('w-4.5 h-4.5', event.status === order.status || index < order.timeline.findIndex(e => e.status === order.status) ? 'text-white' : 'text-ayur-stone')} />
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-medium text-ayur-ivory text-sm">{eventConfig?.label || event.status}</p>
-                          <p className="text-xs text-[#C4BDA8]">{event.note}</p>
-                          <p className="text-[11px] text-[#C4BDA8]/70 mt-0.5">{formatDateTime(event.date)}</p>
-                        </div>
+                  return (
+                    <div key={event.date} className="relative">
+                      <div className="absolute -left-[31px] top-0.5 w-5 h-5 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52]">
+                        <EvIcon className="w-3 h-3" />
                       </div>
-                      {!isLast && (
-                        <div className="absolute left-4 top-10 bottom-0 w-0.5 bg-[#C2A265]/20" />
-                      )}
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-xs text-[#1C1D1F] capitalize">{event.status}</span>
+                          <span className="text-[10px] font-mono text-[#737373]">{formatDate(event.date)}</span>
+                        </div>
+                        <p className="text-xs text-[#555555] mt-0.5 leading-relaxed font-sans">{event.note}</p>
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
-            </div>
-          </section>
-
-          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
-            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-4">Order Items</h2>
-            <div className="space-y-3">
-              {order.items.map((item, index) => (
-                <div key={index} className="flex gap-3.5 p-3 sm:p-3.5 bg-[#0D1017] border border-[#C2A265]/15 rounded-xl items-center">
-                  <div className="w-14 h-14 rounded-lg bg-[#08090C] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
-                    <Image src={item.image} alt={item.name} width={56} height={56} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-medium text-ayur-ivory text-sm">{item.name}</h3>
-                    {item.variant && <p className="text-xs text-[#C4BDA8]">{item.variant}</p>}
-                    <p className="text-xs text-ayur-gold font-medium">{formatINR(item.total)}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xs text-[#C4BDA8]">Qty: {item.quantity}</p>
-                    <p className="font-medium text-ayur-ivory text-xs sm:text-sm">{formatINR(item.price)} each</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-5 pt-4 border-t border-[#C2A265]/20 space-y-1.5 text-xs sm:text-sm">
-              <div className="flex justify-between text-[#C4BDA8]">
-                <span>Subtotal</span>
-                <span>{formatINR(order.subtotal)}</span>
+                  )
+                })}
               </div>
-              {order.shipping > 0 && (
-                <div className="flex justify-between text-[#C4BDA8]">
+            </div>
+
+            {/* Items */}
+            <div className="bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl p-5 shadow-xs">
+              <h2 className="font-heading text-base font-medium text-[#1C1D1F] mb-3">Formulations in Parcel</h2>
+              <div className="space-y-3">
+                {order.items.map((item) => (
+                  <div key={item.id} className="flex gap-3 p-3 bg-[#FAF7F2] border border-[#E2DDD5] rounded-lg items-center">
+                    <div className="w-12 h-12 rounded-lg bg-[#FFFFFF] border border-[#E2DDD5] flex-shrink-0 overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-heading text-xs sm:text-sm font-medium text-[#1C1D1F] truncate">{item.name}</h3>
+                      <p className="text-[11px] text-[#737373]">Quantity: {item.quantity}</p>
+                    </div>
+                    <span className="font-medium text-xs text-[#1C1D1F]">{formatPrice(item.price * item.quantity)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right Column: Address & Payment Summary */}
+          <div className="space-y-5">
+            
+            {/* Shipping Address */}
+            <div className="bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl p-5 shadow-xs">
+              <div className="flex items-center gap-2 mb-3">
+                <MapPin className="w-4 h-4 text-[#4E5F52]" />
+                <h2 className="font-heading text-sm font-medium text-[#1C1D1F]">Delivery Address</h2>
+              </div>
+              <p className="text-xs text-[#1C1D1F] font-medium">
+                {order.shippingAddress.firstName} {order.shippingAddress.lastName}
+              </p>
+              <p className="text-xs text-[#555555] mt-1 leading-relaxed font-sans">
+                {order.shippingAddress.addressLine1}<br />
+                {order.shippingAddress.addressLine2 && <>{order.shippingAddress.addressLine2}<br /></>}
+                {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}
+              </p>
+              <p className="text-[11px] font-mono text-[#737373] mt-2">
+                Phone: {order.shippingAddress.phone}
+              </p>
+            </div>
+
+            {/* Payment Summary */}
+            <div className="bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl p-5 shadow-xs">
+              <h2 className="font-heading text-sm font-medium text-[#1C1D1F] mb-3">Payment Ledger</h2>
+              <div className="space-y-2 text-xs text-[#555555] pb-3 border-b border-[#E2DDD5]">
+                <div className="flex justify-between">
+                  <span>Subtotal</span>
+                  <span className="text-[#1C1D1F]">{formatPrice(order.subtotal)}</span>
+                </div>
+                <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span>{formatINR(order.shipping)}</span>
+                  <span className="text-[#1C1D1F]">{order.shipping === 0 ? 'Free' : formatPrice(order.shipping)}</span>
                 </div>
-              )}
-              {order.tax > 0 && (
-                <div className="flex justify-between text-[#C4BDA8]">
-                  <span>Tax</span>
-                  <span>{formatINR(order.tax)}</span>
-                </div>
-              )}
-              {order.discount > 0 && (
-                <div className="flex justify-between text-green-400">
-                  <span>Discount</span>
-                  <span>-{formatINR(order.discount)}</span>
-                </div>
-              )}
-              <div className="flex justify-between border-t border-[#C2A265]/20 pt-2.5 text-base font-semibold text-ayur-ivory">
+                {order.discount > 0 && (
+                  <div className="flex justify-between text-[#4E5F52]">
+                    <span>Discount</span>
+                    <span>-{formatPrice(order.discount)}</span>
+                  </div>
+                )}
+              </div>
+              <div className="flex justify-between pt-3 font-medium text-xs sm:text-sm text-[#1C1D1F]">
                 <span>Total</span>
-                <span>{formatINR(order.total)}</span>
+                <span>{formatPrice(order.total)}</span>
+              </div>
+              <div className="mt-3 pt-2.5 border-t border-[#E2DDD5] text-[11px] font-mono text-[#737373]">
+                Payment Mode: {order.paymentMethod === 'cod' ? 'Cash on Delivery (Doorstep COD)' : 'WhatsApp Direct Concierge'}
               </div>
             </div>
-          </section>
+
+          </div>
+
         </div>
 
-        <div className="space-y-4">
-          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
-            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-3">Shipping Address</h2>
-            <address className="text-[#C4BDA8] not-italic space-y-1.5 text-xs sm:text-sm">
-              <p className="font-medium text-ayur-ivory">{order.shippingAddress.firstName} {order.shippingAddress.lastName}</p>
-              <p>{order.shippingAddress.addressLine1}</p>
-              {Boolean((order.shippingAddress as any).addressLine2) && <p>{(order.shippingAddress as any).addressLine2}</p>}
-              <p>{order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.pincode}</p>
-              <div className="flex items-center gap-2 text-xs pt-1">
-                <Phone className="w-3.5 h-3.5 text-ayur-gold" />
-                <a href={`tel:${order.shippingAddress.phone}`} className="hover:text-ayur-gold transition-colors">{order.shippingAddress.phone}</a>
-              </div>
-              {order.customerEmail && (
-                <div className="flex items-center gap-2 text-xs">
-                  <Mail className="w-3.5 h-3.5 text-ayur-gold" />
-                  <a href={`mailto:${order.customerEmail}`} className="hover:text-ayur-gold transition-colors">{order.customerEmail}</a>
-                </div>
-              )}
-            </address>
-          </section>
-
-          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
-            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-3">Payment Details</h2>
-            <dl className="space-y-2 text-xs sm:text-sm">
-              <div className="flex justify-between">
-                <dt className="text-ayur-stone">Payment Method</dt>
-                <dd className="font-medium text-ayur-ivory">
-                  {order.paymentMethod === 'whatsapp' ? 'WhatsApp Order' : 'Cash on Delivery'}
-                </dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-ayur-stone">Payment Status</dt>
-                <dd className={classNames('font-medium', order.paymentStatus === 'confirmed' ? 'text-green-400' : 'text-amber-400')}>
-                  {order.paymentStatus === 'confirmed' ? 'Paid' : 'Pending'}
-                </dd>
-              </div>
-            </dl>
-          </section>
-
-          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
-            <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-2">Need Help?</h2>
-            <p className="text-xs text-[#C4BDA8] mb-3.5">Contact us for any questions about your order.</p>
-            <div className="flex gap-2.5">
-              <Button variant="whatsapp" size="sm" className="flex-1 text-xs" onClick={() => window.open('https://wa.me/919123485451', '_blank')}>
-                <MessageSquare className="w-3.5 h-3.5 mr-1.5" />
-                WhatsApp Support
-              </Button>
-              <Button variant="outline" size="sm" className="flex-1 text-xs" onClick={() => window.location.href = 'mailto:support@ayurvedaglobal.com'}>
-                <Mail className="w-3.5 h-3.5 mr-1.5" />
-                Email Us
-              </Button>
-            </div>
-          </section>
-        </div>
       </div>
     </div>
   )
 }
-

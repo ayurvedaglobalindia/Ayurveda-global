@@ -1,12 +1,10 @@
 'use client'
 
-import { useState, useEffect, useCallback, Suspense } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { Filter, X, Grid, List, Search, Sparkles, ArrowRight } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { X, Grid, List, Search } from 'lucide-react'
 import { classNames } from '@/lib/utils/formatters'
-import { Button } from '@/components/ui/Button'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { ProductFilters } from '@/components/product/ProductFilters'
 import { ProductSort } from '@/components/product/ProductSort'
@@ -15,45 +13,6 @@ import { getAllProducts, getCategories } from '@/lib/products/registry'
 import type { Product, Category } from '@/types'
 
 const ITEMS_PER_PAGE = 12
-
-function matchesProductSearch(p: Product, query: string): boolean {
-  if (!query) return true
-  const q = query.toLowerCase().trim()
-  const cleanQ = q.replace(/[^a-z0-9\s]/g, ' ')
-  const terms = cleanQ.split(/\s+/).filter(t => t.length > 0)
-
-  const allText = [
-    p.name,
-    p.tagline,
-    p.description,
-    p.shortDescription || '',
-    p.category,
-    ...(p.tags || []),
-    ...(p.ingredients || []),
-  ].join(' ').toLowerCase()
-
-  // 1. Direct substring match
-  if (allText.includes(q)) return true
-
-  // 2. Keyword/token-based match
-  if (terms.length > 0) {
-    const isMatch = terms.every(term => {
-      if (term === 'caps' || term === 'capsule' || term === 'capsules') {
-        return allText.includes('capsule') || allText.includes('caps')
-      }
-      if (term === 'spray' || term === 'delay') {
-        return allText.includes('staymax') || allText.includes('spray') || allText.includes('delay')
-      }
-      if (term === 'combo' || term === 'kit') {
-        return allText.includes('combo') || allText.includes('power')
-      }
-      return allText.includes(term)
-    })
-    if (isMatch) return true
-  }
-
-  return false
-}
 
 function ShopContent() {
   const searchParams = useSearchParams()
@@ -98,57 +57,61 @@ function ShopContent() {
   useEffect(() => {
     const q = searchParams.get('q') || searchParams.get('search') || ''
     const cat = searchParams.get('category') || ''
-    const inStock = searchParams.get('in_stock') === 'true'
     const sort = searchParams.get('sort') || 'featured'
+    const inStock = searchParams.get('in_stock') === 'true'
     const tagsParam = searchParams.get('tags')
-    const tags = tagsParam ? tagsParam.split(',') : []
 
     setFilters(prev => ({
       ...prev,
       search: q,
       category: cat,
-      tags,
+      sort,
       inStockOnly: inStock,
-      sort: sort,
+      tags: tagsParam ? tagsParam.split(',').filter(Boolean) : [],
     }))
   }, [searchParams])
 
-  const applyFilters = useCallback((productList: Product[]) => {
-    let result = [...productList]
+  useEffect(() => {
+    let result = [...products]
+
+    if (filters.search) {
+      const q = filters.search.toLowerCase().trim()
+      result = result.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        p.tagline.toLowerCase().includes(q) ||
+        (p.shortDescription || '').toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        (p.tags || []).some(t => t.toLowerCase().includes(q))
+      )
+    }
 
     if (filters.category) {
       result = result.filter(p => p.category === filters.category)
     }
 
-    if (filters.search) {
-      result = result.filter(p => matchesProductSearch(p, filters.search))
-    }
-
     if (filters.priceRange[0] > 0 || filters.priceRange[1] < 500000) {
-      result = result.filter(p => {
-        const price = p.variants[0]?.price || p.price
-        return price >= filters.priceRange[0] && price <= filters.priceRange[1]
-      })
+      result = result.filter(
+        p => p.price >= filters.priceRange[0] && p.price <= filters.priceRange[1]
+      )
     }
 
     if (filters.tags.length > 0) {
-      result = result.filter(p => filters.tags.some(tag => p.tags.includes(tag)))
+      result = result.filter(p =>
+        p.tags && filters.tags.some(tag => p.tags.includes(tag))
+      )
     }
 
     if (filters.inStockOnly) {
-      result = result.filter(p => p.inventory.quantity > 0)
+      result = result.filter(p => !p.inventory.trackQuantity || p.inventory.quantity > 0)
     }
 
     // Sort
     switch (filters.sort) {
       case 'price-asc':
-        result.sort((a, b) => (a.variants[0]?.price || a.price) - (b.variants[0]?.price || b.price))
+        result.sort((a, b) => a.price - b.price)
         break
       case 'price-desc':
-        result.sort((a, b) => (b.variants[0]?.price || b.price) - (a.variants[0]?.price || a.price))
-        break
-      case 'newest':
-        result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        result.sort((a, b) => b.price - a.price)
         break
       case 'name-asc':
         result.sort((a, b) => a.name.localeCompare(b.name))
@@ -157,52 +120,31 @@ function ShopContent() {
         result.sort((a, b) => b.name.localeCompare(a.name))
         break
       default:
-        // featured - keep original order
         break
     }
 
     setFilteredProducts(result)
-    setTotalPages(Math.ceil(result.length / ITEMS_PER_PAGE))
+    setTotalPages(Math.max(1, Math.ceil(result.length / ITEMS_PER_PAGE)))
     setCurrentPage(1)
-  }, [filters])
-
-  useEffect(() => {
-    if (products.length > 0) {
-      applyFilters(products)
-    }
-  }, [applyFilters, products])
+  }, [products, filters])
 
   const updateFilters = (newFilters: Partial<typeof filters>) => {
     const updated = { ...filters, ...newFilters }
     setFilters(updated)
-    const params = new URLSearchParams()
 
-    if (updated.search && updated.search.trim()) {
-      params.set('q', updated.search.trim())
-    }
-    if (updated.category) {
-      params.set('category', updated.category)
-    }
-    if (updated.inStockOnly) {
-      params.set('in_stock', 'true')
-    }
-    if (updated.sort && updated.sort !== 'featured') {
-      params.set('sort', updated.sort)
-    }
-    if (updated.tags && updated.tags.length > 0) {
-      params.set('tags', updated.tags.join(','))
-    }
-    if (updated.priceRange && (updated.priceRange[0] > 0 || updated.priceRange[1] < 500000)) {
-      params.set('min_price', String(updated.priceRange[0]))
-      params.set('max_price', String(updated.priceRange[1]))
-    }
+    const params = new URLSearchParams()
+    if (updated.category) params.set('category', updated.category)
+    if (updated.search) params.set('search', updated.search)
+    if (updated.sort && updated.sort !== 'featured') params.set('sort', updated.sort)
+    if (updated.inStockOnly) params.set('in_stock', 'true')
+    if (updated.tags.length > 0) params.set('tags', updated.tags.join(','))
 
     const qs = params.toString()
     router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
   }
 
   const handleClearFilters = () => {
-    const clearedFilters = {
+    const cleared = {
       category: '',
       search: '',
       priceRange: [0, 500000] as [number, number],
@@ -210,7 +152,7 @@ function ShopContent() {
       inStockOnly: false,
       sort: 'featured',
     }
-    setFilters(clearedFilters)
+    setFilters(cleared)
     router.push(pathname, { scroll: false })
   }
 
@@ -229,31 +171,31 @@ function ShopContent() {
   )
 
   return (
-    <div className="container py-4 sm:py-6 lg:py-8 pb-16">
+    <div className="container py-6 sm:py-8 lg:py-10 pb-16">
       
-      {/* Compact Page Header (Fixed layout stability - No disappearing bug) */}
-      <div className="pb-3.5 mb-5 border-b border-[#C2A265]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* Page Header */}
+      <div className="pb-4 mb-6 border-b border-[#E2DDD5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <span className="text-[9.5px] font-semibold text-[#C2A265] uppercase tracking-[0.2em] block">
-            Authentic Ayurvedic Apothecary
+          <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1">
+            Ayurveda Global Formulary
           </span>
-          <h1 className="font-heading text-lg sm:text-xl md:text-2xl font-medium text-[#FAF7EE] tracking-tight mt-0.5">
-            {filters.search ? `Search Results: "${filters.search}"` : 'Shop All Formulations'}
+          <h1 className="font-heading text-2xl sm:text-3xl font-normal text-[#1C1D1F] tracking-tight">
+            {filters.search ? `Search: "${filters.search}"` : 'All Formulations'}
           </h1>
-          <p className="text-[#A8A295] text-xs sm:text-[13px] mt-0.5">
-            Lab-certified classical Rasayana formulations, standardized bioactives &amp; 100% discreet packaging.
+          <p className="text-xs sm:text-sm text-[#555555] mt-1 font-sans">
+            Standardized botanical extracts, NABL purity tested, 100% discreet delivery.
           </p>
         </div>
 
-        {/* Active Search / Filter Pill */}
+        {/* Active Search Badge */}
         {filters.search && (
-          <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="px-2.5 py-1 rounded-full bg-[#18202C] border border-[#C2A265]/35 text-[#D4B678] text-xs font-medium flex items-center gap-1.5 shadow-sm">
-              <Search className="w-3 h-3 text-[#C2A265]" />
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] text-xs text-[#1C1D1F] font-medium flex items-center gap-1.5 shadow-xs">
+              <Search className="w-3.5 h-3.5 text-[#4E5F52]" />
               <span>&ldquo;{filters.search}&rdquo;</span>
               <button
                 onClick={() => updateFilters({ search: '' })}
-                className="ml-1 p-0.5 hover:text-white rounded-full"
+                className="ml-1 p-0.5 hover:text-[#000000] rounded-full"
                 aria-label="Clear search"
               >
                 <X className="w-3 h-3" />
@@ -263,55 +205,44 @@ function ShopContent() {
         )}
       </div>
 
-      {/* Live Catalog Search Bar & Quick Suggestion Pills */}
-      <div className="mb-5 space-y-2.5">
-        <div className="relative max-w-2xl">
-          <div className="relative flex items-center">
-            <Search className="absolute left-3.5 w-4 h-4 text-[#C2A265] pointer-events-none" />
-            <input
-              type="search"
-              value={filters.search}
-              onChange={(e) => updateFilters({ search: e.target.value })}
-              placeholder="Search by herb, formulation, stamina, spray, combo..."
-              className="w-full pl-10 pr-10 py-2.5 sm:py-3 bg-[#0D1017] border border-[#C2A265]/35 focus:border-[#C2A265] rounded-xl text-xs sm:text-sm text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-all shadow-inner"
-              aria-label="Search all catalog formulations"
-            />
-            {filters.search && (
-              <button
-                type="button"
-                onClick={() => updateFilters({ search: '' })}
-                className="absolute right-3 p-1 text-[#8A8478] hover:text-[#FAF7EE] transition-colors rounded-full"
-                aria-label="Clear search query"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
+      {/* Catalog Search Input & Quick Keyword Chips */}
+      <div className="mb-6 space-y-3">
+        <div className="relative max-w-xl">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#737373] pointer-events-none" />
+          <input
+            type="search"
+            value={filters.search}
+            onChange={(e) => updateFilters({ search: e.target.value })}
+            placeholder="Search Shilajit, Ashwagandha, Spray, Combo..."
+            className="w-full pl-10 pr-10 py-2.5 bg-[#FFFFFF] border border-[#E2DDD5] focus:border-[#1C1D1F] rounded-full text-xs sm:text-sm text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-colors"
+            aria-label="Search all catalog formulations"
+          />
+          {filters.search && (
+            <button
+              type="button"
+              onClick={() => updateFilters({ search: '' })}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 p-0.5 text-[#737373] hover:text-[#1C1D1F]"
+              aria-label="Clear search"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
-        {/* Quick Filter Tags / Suggestion Pills */}
+        {/* Quick Filter Tags */}
         <div className="flex items-center gap-1.5 flex-wrap text-xs">
-          <span className="text-[11px] text-[#A8A295] font-medium mr-1 flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-[#C2A265]" /> Quick Search:
-          </span>
-          {[
-            'Shilajit',
-            'Ashwagandha',
-            'Delay Spray',
-            'Vitality Oil',
-            'Power Combo',
-            'Capsules',
-          ].map((tag) => {
+          <span className="text-[11px] font-mono text-[#737373] mr-1">Quick Select:</span>
+          {['Shilajit', 'Ashwagandha', 'Spray', 'Combo', 'Hair Care'].map((tag) => {
             const isSelected = filters.search.toLowerCase() === tag.toLowerCase()
             return (
               <button
                 key={tag}
                 type="button"
                 onClick={() => updateFilters({ search: isSelected ? '' : tag })}
-                className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all ${
+                className={`px-3 py-1 rounded-full text-xs transition-colors ${
                   isSelected
-                    ? 'bg-[#C2A265] text-[#08090C] font-semibold shadow-sm'
-                    : 'bg-[#18202C] text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#1E2636] border border-[#C2A265]/20'
+                    ? 'bg-[#1C1D1F] text-[#FAF7F2] font-medium'
+                    : 'bg-[#FFFFFF] text-[#555555] hover:text-[#1C1D1F] border border-[#E2DDD5]'
                 }`}
               >
                 {tag}
@@ -321,10 +252,10 @@ function ShopContent() {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-5 lg:gap-6 items-start">
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
         
         {/* Desktop Sidebar Filters */}
-        <aside className="hidden lg:block lg:w-60 flex-shrink-0">
+        <aside className="hidden lg:block lg:w-64 flex-shrink-0">
           <div className="sticky top-20">
             <ProductFilters
               categories={categories}
@@ -350,7 +281,7 @@ function ShopContent() {
         <div className="flex-1 w-full min-w-0">
           
           {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#121622] border border-[#C2A265]/20 mb-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] mb-5">
             <div className="flex items-center gap-2.5">
               {/* Mobile Filter Button */}
               <div className="lg:hidden">
@@ -373,14 +304,14 @@ function ShopContent() {
                 />
               </div>
 
-              <span className="text-[#FAF7EE] text-xs font-medium">
-                {filteredProducts.length} {filteredProducts.length === 1 ? 'Formulation' : 'Formulations'} Available
+              <span className="text-[#1C1D1F] text-xs font-medium font-sans">
+                {filteredProducts.length} {filteredProducts.length === 1 ? 'Formulation' : 'Formulations'}
               </span>
 
               {hasActiveFilters && (
                 <button
                   onClick={handleClearFilters}
-                  className="text-[11px] text-[#C2A265] hover:underline flex items-center gap-1 font-medium ml-1"
+                  className="text-xs text-[#737373] hover:text-[#1C1D1F] flex items-center gap-1 font-mono uppercase tracking-wider ml-2"
                 >
                   <X className="w-3 h-3" />
                   <span>Reset</span>
@@ -391,26 +322,26 @@ function ShopContent() {
             <div className="flex items-center gap-2.5 ml-auto">
               <ProductSort selectedSort={filters.sort} onSortChange={sort => updateFilters({ sort })} />
               
-              <div className="flex items-center gap-1 bg-[#0D1017] border border-[#C2A265]/25 rounded-lg p-0.5">
+              <div className="flex items-center gap-1 bg-[#FAF7F2] border border-[#E2DDD5] rounded-lg p-0.5">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={classNames(
                     'p-1.5 rounded transition-colors',
-                    viewMode === 'grid' ? 'bg-[#C2A265] text-[#08090C]' : 'text-[#8A8478] hover:text-[#FAF7EE]'
+                    viewMode === 'grid' ? 'bg-[#1C1D1F] text-[#FAF7F2]' : 'text-[#737373] hover:text-[#1C1D1F]'
                   )}
                   aria-label="Grid view"
                 >
-                  <Grid className="w-4 h-4" />
+                  <Grid className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
                   className={classNames(
                     'p-1.5 rounded transition-colors',
-                    viewMode === 'list' ? 'bg-[#C2A265] text-[#08090C]' : 'text-[#8A8478] hover:text-[#FAF7EE]'
+                    viewMode === 'list' ? 'bg-[#1C1D1F] text-[#FAF7F2]' : 'text-[#737373] hover:text-[#1C1D1F]'
                   )}
                   aria-label="List view"
                 >
-                  <List className="w-4 h-4" />
+                  <List className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -420,21 +351,21 @@ function ShopContent() {
           {loading ? (
             <ProductGrid products={[]} loading={true} />
           ) : filteredProducts.length === 0 ? (
-            <div className="py-12 px-4 text-center rounded-2xl bg-[#121622] border border-[#C2A265]/20 space-y-3">
-              <div className="w-12 h-12 rounded-full bg-[#18202C] border border-[#C2A265]/30 flex items-center justify-center mx-auto text-[#C2A265]">
-                <Search className="w-5 h-5" />
+            <div className="py-12 px-4 text-center rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] space-y-3">
+              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center mx-auto text-[#737373]">
+                <Search className="w-4 h-4" />
               </div>
-              <h3 className="font-heading text-sm sm:text-base font-medium text-[#FAF7EE]">
+              <h3 className="font-heading text-base font-normal text-[#1C1D1F]">
                 No formulations found {filters.search && `for "${filters.search}"`}
               </h3>
-              <p className="text-xs text-[#A8A295] max-w-sm mx-auto">
+              <p className="text-xs text-[#555555] max-w-sm mx-auto">
                 Try searching for &ldquo;Ashwagandha&rdquo;, &ldquo;Shilajit&rdquo;, &ldquo;Delay Spray&rdquo;, or &ldquo;Power Combo&rdquo;.
               </p>
               <button
                 onClick={handleClearFilters}
-                className="mt-2 px-4 py-2 rounded-xl bg-[#18202C] hover:bg-[#1E2636] border border-[#C2A265]/40 text-[#FAF7EE] text-xs font-semibold transition-all inline-block"
+                className="mt-2 px-5 py-2 rounded-full border border-[#1C1D1F] text-[#1C1D1F] text-xs font-medium uppercase tracking-wider hover:bg-[#1C1D1F] hover:text-[#FAF7F2] transition-colors"
               >
-                Browse All Products
+                Browse All Formulations
               </button>
             </div>
           ) : (
@@ -465,9 +396,9 @@ function ShopContent() {
 
 export default function ShopPage() {
   return (
-    <div className="bg-[#08090C] min-h-screen text-[#F5EFE6]">
+    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
       <Suspense fallback={
-        <div className="min-h-[50vh] flex items-center justify-center text-[#D4B678] text-xs">
+        <div className="min-h-[50vh] flex items-center justify-center text-[#737373] text-xs">
           Loading catalog...
         </div>
       }>

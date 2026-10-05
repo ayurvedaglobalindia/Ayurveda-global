@@ -7,7 +7,7 @@ import type { Product } from '@/types'
 
 interface ProductGridProps {
   products: Product[]
-  columns?: { base: number; sm: number; md: number; lg: number; xl: number }
+  columns?: { base?: number; sm?: number; md?: number; lg?: number; xl?: number }
   variant?: 'default' | 'compact' | 'featured'
   showQuickActions?: boolean
   loading?: boolean
@@ -17,13 +17,14 @@ interface ProductGridProps {
 
 export function ProductGrid({
   products,
-  columns = { base: 1, sm: 2, md: 3, lg: 4, xl: 4 },
+  columns: customColumns,
   variant = 'default',
   showQuickActions = true,
   loading = false,
   emptyMessage = 'No products found',
   emptyAction,
 }: ProductGridProps) {
+  const columns = { base: 1, sm: 2, md: 2, lg: 3, xl: 4, ...customColumns }
   const gridClasses = classNames(
     'grid gap-6',
     `grid-cols-${columns.base}`,
@@ -46,13 +47,13 @@ export function ProductGrid({
   if (products.length === 0) {
     return (
       <div className="col-span-full text-center py-16">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#121622] border border-slate-800 flex items-center justify-center">
-          <svg className="w-8 h-8 text-ayur-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] flex items-center justify-center text-[#9E8047]">
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-ayur-ivory mb-2">{emptyMessage}</h3>
-        <p className="text-[#C4BDA8] mb-6">Try adjusting your filters or search terms</p>
+        <h3 className="text-lg font-medium text-[#1C1D1F] mb-2">{emptyMessage}</h3>
+        <p className="text-[#737373] mb-6">Try adjusting your filters or search terms</p>
         {emptyAction}
       </div>
     )

@@ -279,250 +279,53 @@ input, textarea, select {
   }
 
   .text-soft-gold {
-    color: #E6D5AC;
+    color: #9E8047;
   }
 
   .text-soft-herbal {
-    color: #6EE7B7;
+    color: #4E5F52;
   }
 
   .border-soft-gray {
-    border-color: rgba(153, 153, 153, 0.25);
+    border-color: #E2DDD5;
   }
 
   .text-gradient-gold {
-    @apply bg-gradient-to-r from-[#EFE2C2] via-[#D8C28A] to-[#C0A566] bg-clip-text text-transparent;
+    color: #1C1D1F;
   }
 
   .text-gradient-emerald {
-    @apply bg-gradient-to-r from-[#A7F3D0] via-[#6EE7B7] to-[#34D399] bg-clip-text text-transparent;
+    color: #4E5F52;
   }
 
   .text-gradient-ivory {
-    @apply bg-gradient-to-r from-[#FAF7EF] via-[#FFFDF5] to-[#E8DCC8] bg-clip-text text-transparent;
-  }
-
-  .texture-wood {
-    background-image: url('/images/textures/wood-grain.svg');
-    background-repeat: repeat;
-    opacity: 0.02;
-  }
-
-  .texture-stone {
-    background-image: url('/images/textures/stone-noise.svg');
-    background-repeat: repeat;
-    opacity: 0.02;
-  }
-
-  .texture-botanical {
-    background-image: url('/images/textures/botanical-lines.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.03;
+    color: #1C1D1F;
   }
 
   .glass-luxury {
-    background: rgba(16, 20, 28, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(153, 153, 153, 0.15);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    @apply bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl shadow-xs;
   }
 
   .glass-luxury-card {
-    background: linear-gradient(160deg, rgba(20, 24, 34, 0.92) 0%, rgba(12, 15, 22, 0.96) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(153, 153, 153, 0.18);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .glass-luxury-card:hover {
-    border-color: rgba(110, 231, 183, 0.35);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7), 0 0 25px rgba(110, 231, 183, 0.12);
-    transform: translateY(-3px);
+    @apply bg-[#FFFFFF] border border-[#E2DDD5] rounded-2xl shadow-xs;
   }
 
   .card-atelier {
-    background: linear-gradient(145deg, rgba(21, 26, 38, 0.9) 0%, rgba(13, 16, 24, 0.95) 100%);
-    border: 1px solid rgba(153, 153, 153, 0.22);
-    border-radius: 1.25rem;
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    transition: all 0.4s ease;
-  }
-
-  .card-atelier:hover {
-    border-color: rgba(216, 194, 138, 0.45);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(216, 194, 138, 0.12);
-  }
-
-  .aura-dual-glow {
-    position: relative;
-  }
-
-  .aura-dual-glow::before {
-    content: '';
-    position: absolute;
-    top: -10%;
-    left: 10%;
-    width: 40vw;
-    height: 40vw;
-    max-width: 500px;
-    max-height: 500px;
-    background: radial-gradient(circle, rgba(216, 194, 138, 0.08) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(40px);
-  }
-
-  .aura-dual-glow::after {
-    content: '';
-    position: absolute;
-    bottom: -10%;
-    right: 10%;
-    width: 40vw;
-    height: 40vw;
-    max-width: 500px;
-    max-height: 500px;
-    background: radial-gradient(circle, rgba(110, 231, 183, 0.07) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(40px);
+    @apply bg-[#FFFFFF] border border-[#E2DDD5] rounded-2xl shadow-xs;
   }
 
   .glass-emerald {
-    background: rgba(16, 21, 29, 0.88);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(52, 211, 153, 0.25);
-    box-shadow: 0 10px 32px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  }
-
-  .btn-gold {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #E8D4A0 0%, #C9A84C 50%, #B8963E 100%);
-    color: #060709;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    border: 1px solid rgba(255, 240, 190, 0.25);
-    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .btn-gold::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-    transform: skewX(-20deg);
-    animation: goldSweep 4s infinite ease-in-out;
-  }
-
-  .btn-gold:hover {
-    background: linear-gradient(135deg, #F0E6D0 0%, #D9B85A 50%, #C4A040 100%);
-    box-shadow: 0 8px 30px rgba(201, 168, 76, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-  }
-
-  .btn-gold:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 10px rgba(201, 168, 76, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-
-  .btn-emerald {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-    color: #060709;
-    font-weight: 700;
-    border: 1px solid rgba(52, 211, 153, 0.3);
-    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
-    transition: all 0.3s ease;
-  }
-
-  .btn-emerald:hover {
-    background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
-    border-color: rgba(52, 211, 153, 0.6);
-    color: #000000;
-    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35), 0 0 15px rgba(52, 211, 153, 0.2);
-    transform: translateY(-1px);
-  }
-
-  .btn-gold-outline {
-    background: transparent;
-    border: 1px solid rgba(201, 168, 76, 0.35);
-    color: #E8D4A0;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-
-  .btn-gold-outline:hover {
-    background: rgba(201, 168, 76, 0.12);
-    border-color: #C9A84C;
-    color: #FFFDF5;
-    box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
-    transform: translateY(-1px);
-  }
-
-  .gold-shimmer {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .gold-shimmer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-    transform: skewX(-20deg);
-    animation: goldSweep 3s infinite ease-in-out;
-  }
-
-  .card-3d {
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
-  }
-
-  .gradient-border {
-    position: relative;
-    background: #11141A;
-    border-radius: 1rem;
-  }
-
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 1.0625rem;
-    background: linear-gradient(135deg, #34D399, #64748B, #C9A84C);
-    z-index: -1;
-    opacity: 0.4;
-    transition: opacity 0.3s ease;
-  }
-
-  .gradient-border:hover::before {
-    opacity: 0.8;
+    @apply bg-[#EFF4F0] border border-[#4E5F52]/20 rounded-xl;
   }
 
   .divider-gold {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.5), transparent);
+    background: #E2DDD5;
   }
 
   .divider-emerald {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.5), transparent);
+    background: #E2DDD5;
   }
 }
 

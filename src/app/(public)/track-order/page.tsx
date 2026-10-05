@@ -2,11 +2,10 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Package, Truck, Search, CheckCircle, Clock, XCircle, ArrowRight, Shield, MessageSquare, MapPin } from 'lucide-react'
-import { formatDateTime, formatINR, classNames } from '@/lib/utils/formatters'
+import { Package, Truck, Search, CheckCircle2, Clock, XCircle, MessageSquare } from 'lucide-react'
+import { formatINR } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { Badge } from '@/components/ui/Badge'
 import { useUserStore } from '@/store/userStore'
 import { DeliveryTracker4Day } from '@/components/checkout/DeliveryTracker4Day'
 
@@ -20,7 +19,7 @@ const mockTrackingData = {
       { status: 'confirmed', date: '2024-12-15T10:30:00Z', note: 'Order confirmed via WhatsApp' },
       { status: 'processing', date: '2024-12-16T09:00:00Z', note: 'Order inspected & packed in discreet unmarked packaging' },
       { status: 'shipped', date: '2024-12-17T14:00:00Z', note: 'Dispatched via BlueDart Express - AWB #BD88920194' },
-      { status: 'delivered', date: '2024-12-18T11:30:00Z', note: 'Delivered securely to customer' },
+      { status: 'delivered', date: '2024-12-18T11:30:00Z', note: 'Delivered securely to patron' },
     ],
     trackingNumber: 'BD88920194',
     carrier: 'BlueDart Express',
@@ -32,7 +31,7 @@ const mockTrackingData = {
     total: 94800,
     timeline: [
       { status: 'confirmed', date: '2024-12-10T14:20:00Z', note: 'Order confirmed - Cash on Delivery' },
-      { status: 'processing', date: '2024-12-11T10:00:00Z', note: 'Formulation prepared in sterile facility' },
+      { status: 'processing', date: '2024-12-11T10:00:00Z', note: 'Formulation prepared in certified facility' },
       { status: 'shipped', date: '2024-12-12T10:00:00Z', note: 'Shipped via Express Logistics - AWB #EXP4928172' },
     ],
     trackingNumber: 'EXP4928172',
@@ -41,11 +40,11 @@ const mockTrackingData = {
 }
 
 const statusConfig = {
-  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'text-emerald-400 bg-emerald-500/15 border border-emerald-500/30', lineColor: 'bg-emerald-500' },
-  processing: { label: 'Apothecary Processing', icon: Clock, color: 'text-amber-300 bg-amber-950/80 border border-amber-500/30', lineColor: 'bg-amber-500' },
-  shipped: { label: 'In Discreet Transit', icon: Truck, color: 'text-blue-300 bg-blue-950/80 border border-blue-500/30', lineColor: 'bg-blue-500' },
-  delivered: { label: 'Delivered', icon: CheckCircle, color: 'text-ayur-gold-bright bg-ayur-emerald-card border border-ayur-gold/40', lineColor: 'bg-ayur-gold' },
-  cancelled: { label: 'Cancelled', icon: XCircle, color: 'text-rose-400 bg-rose-950/80 border border-rose-500/30', lineColor: 'bg-rose-500' },
+  confirmed: { label: 'Confirmed', icon: CheckCircle2, color: 'text-[#4E5F52]' },
+  processing: { label: 'In Preparation', icon: Clock, color: 'text-[#9E8047]' },
+  shipped: { label: 'In Discreet Transit', icon: Truck, color: 'text-[#1C1D1F]' },
+  delivered: { label: 'Delivered', icon: CheckCircle2, color: 'text-[#4E5F52]' },
+  cancelled: { label: 'Cancelled', icon: XCircle, color: 'text-rose-600' },
 }
 
 export default function TrackOrderPage() {
@@ -61,7 +60,7 @@ export default function TrackOrderPage() {
     const trimmedContact = contact.trim().toLowerCase()
 
     if (!trimmedId && !trimmedContact) {
-      setError('Please enter either your Order ID (e.g. ORD-...) or registered Phone/Email.')
+      setError('Please enter either your Order ID (e.g. AVG-123456) or registered Mobile Number.')
       return
     }
 
@@ -76,7 +75,6 @@ export default function TrackOrderPage() {
       }
     } catch {}
 
-    // Deduplicate by ID
     const uniqueOrders = allOrders.filter((v, i, a) => a.findIndex(t => (t.id === v.id || t.orderNumber === v.orderNumber)) === i)
 
     const matched = uniqueOrders.find((o: any) => {
@@ -98,22 +96,7 @@ export default function TrackOrderPage() {
     })
 
     if (matched) {
-      setTrackedOrder({
-        orderNumber: matched.orderNumber || matched.id,
-        status: matched.status || 'confirmed',
-        items: (matched.items || []).map((i: any) => ({
-          name: i.name || 'Ayurvedic Wellness Product',
-          quantity: i.quantity || 1,
-          total: i.total || i.price || matched.total,
-        })),
-        total: matched.total,
-        timeline: [
-          { status: 'confirmed', date: matched.createdAt, note: `Order confirmed via ${matched.paymentMethod === 'whatsapp' ? 'WhatsApp Concierge' : matched.paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'Prepaid Express'}` },
-          { status: 'processing', date: matched.createdAt, note: 'Formulation authenticated & sealed in tamper-proof discreet box' },
-        ],
-        trackingNumber: `EXP-${(matched.orderNumber || matched.id).slice(-8)}`,
-        carrier: 'BlueDart / Express Logistics India',
-      })
+      setTrackedOrder(matched)
       setError('')
       setLoading(false)
       return
@@ -136,35 +119,35 @@ export default function TrackOrderPage() {
     const StatusIcon = config.icon
 
     return (
-      <div className="container py-5 sm:py-7 lg:py-9">
-        <div className="max-w-3xl mx-auto">
-          <div className="mb-4 sm:mb-5 text-center space-y-1">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-[#C2A265]">Live Package Tracking</span>
-            <h1 className="font-heading text-lg sm:text-xl md:text-2xl font-medium text-[#FAF7EE]">Order Status</h1>
-            <p className="text-xs sm:text-sm text-[#A8A295]">
-              Reference #{trackedOrder.orderNumber} is currently{' '}
-              <strong className="text-[#D4B678] font-semibold">{config.label}</strong>
+      <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F] py-8 sm:py-12">
+        <div className="container max-w-3xl mx-auto">
+          <div className="mb-6 text-center space-y-1">
+            <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#737373]">Live Package Tracking</span>
+            <h1 className="font-heading text-2xl sm:text-3xl font-normal text-[#1C1D1F]">Order Status</h1>
+            <p className="text-xs text-[#555555]">
+              Reference #{trackedOrder.orderNumber || trackedOrder.id} is currently{' '}
+              <strong className="text-[#1C1D1F] font-medium">{config.label}</strong>
             </p>
           </div>
 
-          <div className="card-luxury p-5 sm:p-6 rounded-2xl border border-ayur-gold/30 bg-ayur-charcoal/95 shadow-luxury">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 sm:pb-5 border-b border-ayur-forest-dark/50 gap-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold shadow-inner" style={{ background: 'rgba(12, 56, 34, 0.6)' }}>
-                <StatusIcon className="w-4 h-4 text-ayur-gold" />
-                <span className="text-ayur-ivory">{config.label}</span>
+          <div className="p-6 sm:p-8 rounded-2xl border border-[#E2DDD5] bg-[#FFFFFF] shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-[#E2DDD5] gap-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E2DDD5] text-xs font-mono">
+                <StatusIcon className={`w-3.5 h-3.5 ${config.color}`} />
+                <span className="text-[#1C1D1F]">{config.label}</span>
               </div>
               <div className="sm:text-right">
-                <p className="text-[11px] text-ayur-stone">Total Amount</p>
-                <p className="text-lg sm:text-xl font-bold text-ayur-gold">{formatINR(trackedOrder.total)}</p>
-                <p className="text-[11px] text-ayur-stone/80">{trackedOrder.items.length} item{trackedOrder.items.length !== 1 ? 's' : ''}</p>
+                <p className="text-[11px] font-mono text-[#737373]">Total Amount</p>
+                <p className="text-base font-medium text-[#1C1D1F]">{formatINR(trackedOrder.total)}</p>
+                <p className="text-[11px] text-[#737373]">{trackedOrder.items?.length || 1} item(s)</p>
               </div>
             </div>
 
-            {/* 4-Day Animated Delivery Timeline */}
-            <div className="my-5">
+            {/* 4-Day Delivery Timeline */}
+            <div className="my-6">
               <DeliveryTracker4Day
-                orderNumber={trackedOrder.orderNumber}
-                createdAt={trackedOrder.timeline?.[0]?.date}
+                orderNumber={trackedOrder.orderNumber || trackedOrder.id}
+                createdAt={trackedOrder.timeline?.[0]?.date || trackedOrder.createdAt}
                 carrier={trackedOrder.carrier}
                 trackingNumber={trackedOrder.trackingNumber}
                 currentDay={
@@ -179,23 +162,23 @@ export default function TrackOrderPage() {
               />
             </div>
 
-            <div className="pt-5 border-t border-ayur-forest-dark/50 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="pt-5 border-t border-[#E2DDD5] flex flex-col sm:flex-row items-center justify-between gap-3">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => { setTrackedOrder(null); setOrderId(''); setContact('') }}
-                className="w-full sm:w-auto text-xs border-ayur-gold/40 text-ayur-gold-light"
+                className="w-full sm:w-auto text-xs border-[#1C1D1F] text-[#1C1D1F] hover:bg-[#FAF7F2]"
               >
                 <Search className="w-3.5 h-3.5 mr-1.5" /> Track Another Order
               </Button>
 
               <a
-                href={`https://wa.me/919123485451?text=${encodeURIComponent(`Hi Ayur Veda Global, I would like an update on my Order #${trackedOrder.orderNumber}`)}`}
+                href={`https://wa.me/919123485451?text=${encodeURIComponent(`Hi Ayur Veda Global, I would like an update on my Order #${trackedOrder.orderNumber || trackedOrder.id}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-emerald-600/90 hover:bg-emerald-500 text-white transition shadow-lg"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full text-xs font-medium uppercase tracking-wider bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] transition shadow-xs"
               >
-                <MessageSquare className="w-3.5 h-3.5" /> WhatsApp Dispatch Support
+                <MessageSquare className="w-3.5 h-3.5" /> WhatsApp Dispatch Desk
               </a>
             </div>
           </div>
@@ -205,82 +188,68 @@ export default function TrackOrderPage() {
   }
 
   return (
-    <div className="container py-5 sm:py-7 lg:py-9">
-      <div className="max-w-md mx-auto">
-        <div className="text-center mb-4 sm:mb-5 space-y-1.5">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-full bg-ayur-emerald-card border border-ayur-gold/30 flex items-center justify-center shadow-luxury">
-            <Package className="w-6 h-6 sm:w-7 sm:h-7 text-ayur-gold" />
+    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F] py-8 sm:py-12">
+      <div className="container max-w-md mx-auto">
+        <div className="text-center mb-6 space-y-1">
+          <div className="w-12 h-12 mx-auto rounded-full bg-[#FFFFFF] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52] shadow-xs mb-3">
+            <Package className="w-6 h-6" />
           </div>
-          <h1 className="font-heading text-lg sm:text-xl md:text-2xl font-medium text-ayur-ivory">Track Your Order</h1>
-          <p className="text-xs sm:text-[13px] text-ayur-sand/80 leading-relaxed">
-            Enter your Order ID (e.g. AVG-123456) or registered phone number to track your package in real-time.
+          <h1 className="font-heading text-2xl font-normal text-[#1C1D1F]">Track Your Order</h1>
+          <p className="text-xs text-[#555555] leading-relaxed font-sans">
+            Enter your Order ID (e.g. AVG-123456) or registered mobile number to track dispatch in real-time.
           </p>
         </div>
 
-        <div className="card-luxury p-5 sm:p-6 rounded-2xl border border-ayur-gold/25 bg-ayur-charcoal/95 space-y-4 shadow-luxury">
+        <div className="p-6 rounded-2xl border border-[#E2DDD5] bg-[#FFFFFF] space-y-4 shadow-xs">
           <div>
-            <label className="block text-xs font-semibold text-ayur-sand mb-1.5 uppercase tracking-wider">
-              Order ID
-            </label>
             <Input
+              label="Order ID / Reference Number"
+              placeholder="e.g. AVG-123456"
               value={orderId}
-              onChange={e => setOrderId(e.target.value.toUpperCase())}
-              placeholder="ORD-..."
-              className="font-mono text-sm"
-              autoFocus
+              onChange={(e) => setOrderId(e.target.value)}
             />
           </div>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-ayur-forest-dark/60" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-ayur-charcoal px-3 text-ayur-stone font-semibold">Or</span>
-            </div>
-          </div>
+          <div className="text-center text-[11px] font-mono text-[#737373]">— OR —</div>
 
           <div>
-            <label className="block text-xs font-semibold text-ayur-sand mb-1.5 uppercase tracking-wider">
-              Registered Phone or Email
-            </label>
             <Input
+              label="Registered Phone Number"
+              placeholder="10-digit mobile number"
               value={contact}
-              onChange={e => setContact(e.target.value)}
-              placeholder="e.g. 9123485451 or client@example.com"
-              type="text"
+              onChange={(e) => setContact(e.target.value)}
             />
           </div>
 
           {error && (
-            <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs text-center" role="alert">
-              {error}
-            </div>
+            <p className="text-xs text-red-500 font-sans">{error}</p>
           )}
 
-          <Button
-            variant="gold"
-            size="lg"
-            className="w-full font-bold shadow-xl gold-shimmer py-3.5"
-            onClick={handleTrack}
-            loading={loading}
-          >
-            <Search className="w-4 h-4 mr-2" /> Track Shipment
-          </Button>
-
-          <div className="pt-4 border-t border-ayur-forest-dark/40 text-center space-y-2">
-            <p className="text-xs text-ayur-stone">
-              Need immediate assistance?{' '}
-              <a
-                href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20need%20help%20tracking%20my%20order."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-ayur-gold hover:underline font-semibold"
-              >
-                Chat on WhatsApp
-              </a>
-            </p>
+          <div className="pt-2">
+            <Button
+              variant="primary"
+              onClick={handleTrack}
+              disabled={loading}
+              loading={loading}
+              className="w-full py-2.5 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] text-xs font-medium uppercase tracking-wider shadow-xs"
+            >
+              <Search className="w-3.5 h-3.5 mr-2" />
+              Check Delivery Status
+            </Button>
           </div>
+        </div>
+
+        <div className="mt-8 text-center text-xs text-[#737373] space-y-2">
+          <p>Need urgent assistance with order modifications?</p>
+          <a
+            href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20need%20help%20tracking%20my%20order."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs text-[#1C1D1F] hover:text-[#9E8047] font-medium transition-colors"
+          >
+            <MessageSquare className="w-3.5 h-3.5 text-[#4E5F52]" />
+            <span>Connect with WhatsApp Dispatch Desk</span>
+          </a>
         </div>
       </div>
     </div>

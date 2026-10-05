@@ -1,12 +1,9 @@
 import { Metadata } from 'next'
 import { generateWebsiteStructuredData, generateOrganizationStructuredData } from '@/lib/seo'
 import { CleanHero } from '@/components/home/CleanHero'
-import { FeaturedProducts } from '@/components/home/FeaturedProducts'
-import { CollectionStrip } from '@/components/home/CollectionStrip'
-import { BrandHeritageStory } from '@/components/home/BrandHeritageStory'
 import { QualityTrustLedger } from '@/components/home/QualityTrustLedger'
-import { BotanicalIngredients } from '@/components/home/BotanicalIngredients'
-import { PatronTestimonials } from '@/components/home/PatronTestimonials'
+import { FeaturedProducts } from '@/components/home/FeaturedProducts'
+import { BrandHeritageStory } from '@/components/home/BrandHeritageStory'
 import { ApothecaryFAQ } from '@/components/home/ApothecaryFAQ'
 import { VaidyaConsultationDesk } from '@/components/home/VaidyaConsultationDesk'
 
@@ -35,31 +32,22 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* 1. Direct Brand & Natural Hero */}
+      {/* 1. Clean, Simple, Premium Hero with Strong Tagline */}
       <CleanHero />
 
-      {/* 2. Early Position Master Formulations Grid */}
-      <FeaturedProducts />
-
-      {/* 3. Curated Product Collections Strip */}
-      <CollectionStrip />
-
-      {/* 4. Classical Brand & Heritage Story */}
-      <BrandHeritageStory />
-
-      {/* 5. Key Trust & Quality Ledger (AYUSH, GMP, NABL, 100% Discreet) */}
+      {/* 2. Sleek 1-Row Purity & Compliance Trust Bar */}
       <QualityTrustLedger />
 
-      {/* 6. Standardized Botanical Actives & Clinical Affinities */}
-      <BotanicalIngredients />
+      {/* 3. Products Early Position: Master Formulations Grid */}
+      <FeaturedProducts />
 
-      {/* 7. Documented Patron Reflections & Verified Accounts */}
-      <PatronTestimonials />
+      {/* 4. Quiet Classical Apothecary Heritage & Philosophy */}
+      <BrandHeritageStory />
 
-      {/* 8. Formulary & Logistics FAQ */}
+      {/* 5. Essential Logistics & Formulary FAQs */}
       <ApothecaryFAQ />
 
-      {/* 9. Clean Resident Vaidya Consultation CTA Desk */}
+      {/* 6. Clean Resident Vaidya Consultation Invitation */}
       <VaidyaConsultationDesk />
     </>
   )
