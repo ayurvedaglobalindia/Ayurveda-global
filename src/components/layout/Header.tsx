@@ -49,8 +49,8 @@ export function Header() {
     <header
       className={`w-full transition-all duration-200 z-50 ${
         isScrolled
-          ? 'bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E2DDD5] shadow-sm'
-          : 'bg-[#FAF7F2] border-b border-[#E2DDD5]'
+          ? 'bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#999999]/30 shadow-sm'
+          : 'bg-[#FAF7F2] border-b border-[#999999]/30'
       }`}
     >
       <div className="container">
@@ -128,12 +128,12 @@ export function Header() {
             <button
               type="button"
               onClick={() => openSearch()}
-              className="hidden md:flex items-center gap-2 w-44 lg:w-48 pl-3 pr-2 py-1.5 bg-[#FFFFFF] border border-[#E2DDD5] hover:border-[#1C1D1F] rounded-full text-xs text-[#737373] hover:text-[#1C1D1F] transition-colors"
+              className="hidden md:flex items-center gap-2 w-44 lg:w-48 pl-3 pr-2 py-1.5 bg-[#FFFFFF] border border-[#999999]/35 hover:border-[#1C1D1F] rounded-full text-xs text-[#737373] hover:text-[#1C1D1F] transition-colors"
               aria-label="Search formulations"
             >
-              <Search className="w-3.5 h-3.5 text-[#737373]" />
+              <Search className="w-3.5 h-3.5 text-[#999999]" />
               <span className="truncate">Search catalog...</span>
-              <kbd className="ml-auto hidden lg:inline-flex items-center text-[9px] font-mono text-[#737373] bg-[#F4EFEA] px-1.5 py-0.5 rounded border border-[#E2DDD5]">
+              <kbd className="ml-auto hidden lg:inline-flex items-center text-[9px] font-mono text-[#737373] bg-[#FAF7F2] px-1.5 py-0.5 rounded border border-[#999999]/30">
                 ⌘K
               </kbd>
             </button>
@@ -197,25 +197,25 @@ export function Header() {
                     initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
-                    className="absolute right-0 top-full mt-2 w-48 bg-[#FFFFFF] rounded-xl shadow-lg border border-[#E2DDD5] py-1.5 z-50 text-xs"
+                    className="absolute right-0 top-full mt-2 w-48 bg-[#FFFFFF] rounded-xl shadow-lg border border-[#999999]/30 py-1.5 z-50 text-xs"
                   >
                     <Link
                       href="/account"
-                      className="block px-4 py-2 text-[#1C1D1F] hover:bg-[#F4EFEA] transition-colors"
+                      className="block px-4 py-2 text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors"
                       onClick={() => setIsAccountOpen(false)}
                     >
                       Account Details
                     </Link>
                     <Link
                       href="/orders"
-                      className="block px-4 py-2 text-[#1C1D1F] hover:bg-[#F4EFEA] transition-colors"
+                      className="block px-4 py-2 text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors"
                       onClick={() => setIsAccountOpen(false)}
                     >
                       Orders &amp; Shipments
                     </Link>
                     <Link
                       href="/wishlist"
-                      className="block px-4 py-2 text-[#1C1D1F] hover:bg-[#F4EFEA] transition-colors"
+                      className="block px-4 py-2 text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors"
                       onClick={() => setIsAccountOpen(false)}
                     >
                       Saved Formulations
@@ -227,7 +227,7 @@ export function Header() {
                         setIsAccountOpen(false)
                         showToast({ type: 'info', title: 'Signed Out' })
                       }}
-                      className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition-colors border-t border-[#E2DDD5]"
+                      className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition-colors border-t border-[#999999]/25"
                     >
                       Sign Out
                     </button>

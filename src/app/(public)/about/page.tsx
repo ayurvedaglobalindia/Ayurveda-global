@@ -84,7 +84,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#F5F1EB] border border-[#E2DDD5] shadow-xs">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#F5F1EB] border border-[#999999]/30 shadow-xs">
               <Image
                 src="/images/products/vitality-power-combo-card.jpg"
                 alt="Ayur Veda Global Botanical Heritage"
@@ -121,7 +121,7 @@ export default function AboutPage() {
         </section>
 
         {/* Core Values */}
-        <section className="mb-14 sm:mb-18 border-t border-[#E2DDD5] pt-12">
+        <section className="mb-14 sm:mb-18 border-t border-[#999999]/30 pt-12">
           <div className="text-center max-w-xl mx-auto mb-8">
             <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1">
               Guiding Principles
@@ -132,9 +132,9 @@ export default function AboutPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {values.map((value) => (
-              <div key={value.title} className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs flex flex-col justify-between">
+              <div key={value.title} className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 shadow-xs flex flex-col justify-between">
                 <div>
-                  <div className="w-9 h-9 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center mb-3 text-[#4E5F52]">
+                  <div className="w-9 h-9 rounded-lg bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center mb-3 text-[#4E5F52]">
                     <value.icon className="w-4 h-4" />
                   </div>
                   <h3 className="font-heading text-sm font-medium text-[#1C1D1F] mb-1.5">{value.title}</h3>
@@ -146,7 +146,7 @@ export default function AboutPage() {
         </section>
 
         {/* Leadership */}
-        <section className="mb-14 sm:mb-18 border-t border-[#E2DDD5] pt-12">
+        <section className="mb-14 sm:mb-18 border-t border-[#999999]/30 pt-12">
           <div className="text-center max-w-xl mx-auto mb-8">
             <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1">
               Administration
@@ -157,8 +157,8 @@ export default function AboutPage() {
           </div>
           <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {team.map((member) => (
-              <div key={member.name} className="p-6 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs text-center">
-                <div className="w-16 h-16 mx-auto mb-3 rounded-full overflow-hidden bg-[#FAF7F2] relative border border-[#E2DDD5]">
+              <div key={member.name} className="p-6 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 shadow-xs text-center">
+                <div className="w-16 h-16 mx-auto mb-3 rounded-full overflow-hidden bg-[#FAF7F2] relative border border-[#999999]/30">
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -176,7 +176,7 @@ export default function AboutPage() {
         </section>
 
         {/* Milestones */}
-        <section className="mb-12 border-t border-[#E2DDD5] pt-12">
+        <section className="mb-12 border-t border-[#999999]/30 pt-12">
           <div className="text-center max-w-xl mx-auto mb-8">
             <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1">
               Historical Milestones
@@ -185,7 +185,7 @@ export default function AboutPage() {
               Chronicle of Growth
             </h2>
           </div>
-          <div className="relative max-w-xl mx-auto pl-6 border-l border-[#E2DDD5] space-y-6">
+          <div className="relative max-w-xl mx-auto pl-6 border-l border-[#999999]/30 space-y-6">
             {milestones.map((m) => (
               <div key={m.year} className="relative">
                 <div className="absolute -left-[31px] top-0.5 w-4 h-4 rounded-full bg-[#1C1D1F] border border-[#FFFFFF]" />
@@ -198,7 +198,7 @@ export default function AboutPage() {
         </section>
 
         {/* Bottom CTA */}
-        <section className="rounded-2xl p-8 text-center bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs max-w-3xl mx-auto mt-12">
+        <section className="rounded-2xl p-8 text-center bg-[#FFFFFF] border border-[#999999]/30 shadow-xs max-w-3xl mx-auto mt-12">
           <h2 className="font-heading text-xl sm:text-2xl font-normal text-[#1C1D1F] mb-2">
             Explore Classical Formulations
           </h2>

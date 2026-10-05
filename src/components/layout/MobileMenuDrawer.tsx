@@ -64,10 +64,10 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-            className="w-screen max-w-sm bg-[#FAF7F2] border-l border-[#E2DDD5] flex flex-col shadow-2xl text-[#1C1D1F]"
+            className="w-screen max-w-sm bg-[#FAF7F2] border-l border-[#999999]/30 flex flex-col shadow-2xl text-[#1C1D1F]"
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[#E2DDD5] bg-[#FAF7F2]">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#999999]/30 bg-[#FAF7F2]">
               <Link href="/" onClick={onClose} className="flex items-center gap-2.5">
                 <div className="w-7 h-7 relative flex-shrink-0">
                   <Image
@@ -105,7 +105,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   onClose()
                   openSearch()
                 }}
-                className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] text-xs text-[#737373] transition-colors text-left"
+                className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-[#FFFFFF] border border-[#999999]/30 text-xs text-[#737373] transition-colors text-left"
                 aria-label="Search catalog"
               >
                 <Search className="w-3.5 h-3.5 text-[#737373]" />
@@ -166,7 +166,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
               </div>
 
               {/* Formulations Quick List */}
-              <div className="pt-2 border-t border-[#E2DDD5]">
+              <div className="pt-2 border-t border-[#999999]/30">
                 <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#737373] mb-2 px-1">
                   Key Formulations
                 </p>
@@ -210,7 +210,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
               </div>
 
               {/* Orders & Tracking */}
-              <div className="pt-2 border-t border-[#E2DDD5]">
+              <div className="pt-2 border-t border-[#999999]/30">
                 <div className="space-y-1">
                   <Link
                     href="/track-order"
@@ -234,7 +234,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
             </div>
 
             {/* Drawer Footer */}
-            <div className="p-4 border-t border-[#E2DDD5] bg-[#FAF7F2] space-y-2">
+            <div className="p-4 border-t border-[#999999]/30 bg-[#FAF7F2] space-y-2">
               <a
                 href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20an%20enquiry%20about%20ordering."
                 target="_blank"

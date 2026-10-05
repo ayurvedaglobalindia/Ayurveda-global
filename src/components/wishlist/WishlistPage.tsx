@@ -44,7 +44,7 @@ export function WishlistPage() {
       <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
         <div className="container py-12 sm:py-16">
           <div className="max-w-md mx-auto text-center space-y-3">
-            <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52]">
+            <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-[#FFFFFF] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52]">
               <Heart className="w-6 h-6" />
             </div>
             <h1 className="font-heading text-2xl font-normal text-[#1C1D1F]">Your Wishlist is Empty</h1>
@@ -66,7 +66,7 @@ export function WishlistPage() {
     <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
       <div className="container py-6 sm:py-8 lg:py-10">
         
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#E2DDD5]">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#999999]/30">
           <Link href="/" className="p-2 rounded-lg text-[#737373] hover:text-[#1C1D1F] transition-colors">
             <ArrowLeft className="w-4 h-4" />
           </Link>
@@ -101,7 +101,7 @@ function WishlistItemCard({
   const compareAtPrice = item.product.variants.find(v => v.id === item.variantId)?.compareAtPrice || item.product.compareAtPrice
 
   return (
-    <article className="rounded-xl overflow-hidden bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs flex flex-col justify-between group">
+    <article className="rounded-xl overflow-hidden bg-[#FFFFFF] border border-[#999999]/30 shadow-xs flex flex-col justify-between group">
       <div>
         <div className="relative aspect-[4/5] overflow-hidden bg-[#F5F1EB]">
           <Link href={`/product/${item.product.slug}`}>
@@ -116,7 +116,7 @@ function WishlistItemCard({
           <div className="absolute top-2.5 right-2.5">
             <button
               onClick={() => onRemove(item.productId, item.variantId)}
-              className="w-8 h-8 rounded-full bg-[#FFFFFF]/90 border border-[#E2DDD5] flex items-center justify-center text-[#737373] hover:text-red-600 transition-colors shadow-xs"
+              className="w-8 h-8 rounded-full bg-[#FFFFFF]/90 border border-[#999999]/30 flex items-center justify-center text-[#737373] hover:text-red-600 transition-colors shadow-xs"
               aria-label="Remove from wishlist"
             >
               <Trash2 className="w-4 h-4" />

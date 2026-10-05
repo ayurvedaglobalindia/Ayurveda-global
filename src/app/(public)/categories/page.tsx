@@ -33,7 +33,7 @@ export default function CategoriesPage() {
       />
 
       <div className="container py-6 sm:py-8 lg:py-10">
-        <div className="mb-6 sm:mb-8 pb-4 border-b border-[#E2DDD5]">
+        <div className="mb-6 sm:mb-8 pb-4 border-b border-[#999999]/30">
           <nav className="flex items-center gap-2 text-xs text-[#737373] mb-2 font-mono" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-[#1C1D1F] transition-colors">Home</Link>
             <span>/</span>
@@ -54,7 +54,7 @@ export default function CategoriesPage() {
               <Link
                 key={category.slug}
                 href={`/categories/${category.slug}`}
-                className="group block rounded-2xl overflow-hidden bg-[#FFFFFF] border border-[#E2DDD5] hover:border-[#1C1D1F] transition-all p-5 shadow-xs hover:shadow-md"
+                className="group block rounded-2xl overflow-hidden bg-[#FFFFFF] border border-[#999999]/30 hover:border-[#1C1D1F] transition-all p-5 shadow-xs hover:shadow-md"
               >
                 <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-[#F5F1EB] mb-4">
                   {categoryImages[category.slug] && (
@@ -66,7 +66,7 @@ export default function CategoriesPage() {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   )}
-                  <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-[#FFFFFF]/90 backdrop-blur-xs border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52]">
+                  <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-[#FFFFFF]/90 backdrop-blur-xs border border-[#999999]/30 flex items-center justify-center text-[#4E5F52]">
                     <Icon className="w-4 h-4" />
                   </div>
                 </div>
@@ -85,7 +85,7 @@ export default function CategoriesPage() {
                     {category.description}
                   </p>
 
-                  <div className="mt-4 pt-3 border-t border-[#E2DDD5] flex items-center justify-between text-xs font-medium text-[#1C1D1F]">
+                  <div className="mt-4 pt-3 border-t border-[#999999]/30 flex items-center justify-between text-xs font-medium text-[#1C1D1F]">
                     <span>Explore Collection</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </div>
@@ -95,7 +95,7 @@ export default function CategoriesPage() {
           })}
         </div>
 
-        <section className="mt-14 sm:mt-16 pt-8 border-t border-[#E2DDD5]">
+        <section className="mt-14 sm:mt-16 pt-8 border-t border-[#999999]/30">
           <div className="text-center max-w-xl mx-auto mb-8">
             <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1">
               Quality Assurance
@@ -106,8 +106,8 @@ export default function CategoriesPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
-            <div className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] text-center shadow-xs">
-              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center mx-auto text-[#4E5F52] mb-3">
+            <div className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 text-center shadow-xs">
+              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center mx-auto text-[#4E5F52] mb-3">
                 <Leaf className="w-5 h-5" />
               </div>
               <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">Pure Botanicals</h3>
@@ -116,8 +116,8 @@ export default function CategoriesPage() {
               </p>
             </div>
 
-            <div className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] text-center shadow-xs">
-              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center mx-auto text-[#4E5F52] mb-3">
+            <div className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 text-center shadow-xs">
+              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center mx-auto text-[#4E5F52] mb-3">
                 <Shield className="w-5 h-5" />
               </div>
               <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">NABL Tested</h3>
@@ -126,8 +126,8 @@ export default function CategoriesPage() {
               </p>
             </div>
 
-            <div className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] text-center shadow-xs">
-              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center mx-auto text-[#4E5F52] mb-3">
+            <div className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 text-center shadow-xs">
+              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center mx-auto text-[#4E5F52] mb-3">
                 <Sparkles className="w-5 h-5" />
               </div>
               <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">Discreet Parcels</h3>

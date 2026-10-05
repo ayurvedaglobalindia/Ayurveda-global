@@ -37,9 +37,9 @@ export default function AccountPage() {
       <div className="container py-6 sm:py-8 lg:py-10 max-w-4xl mx-auto px-4 sm:px-6">
         
         {/* Profile Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-[#E2DDD5]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-[#999999]/30">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52] shadow-xs flex-shrink-0">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#FFFFFF] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52] shadow-xs flex-shrink-0">
               <User className="w-6 h-6" />
             </div>
             <div>
@@ -60,7 +60,7 @@ export default function AccountPage() {
           {isMounted && isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[#E2DDD5] bg-[#FFFFFF] text-[#737373] hover:text-[#1C1D1F] hover:border-[#1C1D1F] text-xs font-mono uppercase tracking-wider transition-colors self-start sm:self-center"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[#999999]/30 bg-[#FFFFFF] text-[#737373] hover:text-[#1C1D1F] hover:border-[#1C1D1F] text-xs font-mono uppercase tracking-wider transition-colors self-start sm:self-center"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Sign Out</span>
@@ -80,7 +80,7 @@ export default function AccountPage() {
 
         {/* Guest Notice Banner if Not Authenticated */}
         {isMounted && !isAuthenticated && (
-          <div className="mb-6 p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+          <div className="mb-6 p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
             <div className="space-y-1">
               <div className="text-xs font-mono uppercase tracking-wider text-[#9E8047]">
                 Patron Access
@@ -104,10 +104,10 @@ export default function AccountPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <Link
             href="/orders"
-            className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] hover:border-[#1C1D1F] transition-all group flex flex-col justify-between shadow-xs"
+            className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 hover:border-[#1C1D1F] transition-all group flex flex-col justify-between shadow-xs"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] text-[#4E5F52] flex items-center justify-center border border-[#E2DDD5]">
+              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] text-[#4E5F52] flex items-center justify-center border border-[#999999]/30">
                 <Package className="w-4 h-4" />
               </div>
               <ArrowRight className="w-3.5 h-3.5 text-[#737373] group-hover:text-[#1C1D1F] group-hover:translate-x-0.5 transition-all" />
@@ -120,10 +120,10 @@ export default function AccountPage() {
 
           <Link
             href="/track-order"
-            className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] hover:border-[#1C1D1F] transition-all group flex flex-col justify-between shadow-xs"
+            className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 hover:border-[#1C1D1F] transition-all group flex flex-col justify-between shadow-xs"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] text-[#4E5F52] flex items-center justify-center border border-[#E2DDD5]">
+              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] text-[#4E5F52] flex items-center justify-center border border-[#999999]/30">
                 <Truck className="w-4 h-4" />
               </div>
               <ArrowRight className="w-3.5 h-3.5 text-[#737373] group-hover:text-[#1C1D1F] group-hover:translate-x-0.5 transition-all" />
@@ -136,13 +136,13 @@ export default function AccountPage() {
 
           <Link
             href="/wishlist"
-            className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] hover:border-[#1C1D1F] transition-all group flex flex-col justify-between shadow-xs"
+            className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 hover:border-[#1C1D1F] transition-all group flex flex-col justify-between shadow-xs"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] text-[#4E5F52] flex items-center justify-center border border-[#E2DDD5]">
+              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] text-[#4E5F52] flex items-center justify-center border border-[#999999]/30">
                 <Heart className="w-4 h-4" />
               </div>
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#FAF7F2] text-[#1C1D1F] border border-[#E2DDD5]">
+              <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#FAF7F2] text-[#1C1D1F] border border-[#999999]/30">
                 {wishlistItems.length}
               </span>
             </div>
@@ -154,7 +154,7 @@ export default function AccountPage() {
         </div>
 
         {/* Support Card */}
-        <div className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] mb-6 shadow-xs">
+        <div className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 mb-6 shadow-xs">
           <h2 className="font-heading text-sm font-medium text-[#1C1D1F] mb-1.5 flex items-center gap-2">
             <Shield className="w-4 h-4 text-[#4E5F52]" />
             <span>Ayurvedic Guidance &amp; Support Desk</span>
@@ -166,7 +166,7 @@ export default function AccountPage() {
             href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20need%20help%20with%20my%20account%20or%20order."
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E2DDD5] bg-[#FFFFFF] text-[#1C1D1F] hover:border-[#1C1D1F] text-xs font-mono uppercase tracking-wider transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#999999]/30 bg-[#FFFFFF] text-[#1C1D1F] hover:border-[#1C1D1F] text-xs font-mono uppercase tracking-wider transition-colors"
           >
             <MessageCircle className="w-3.5 h-3.5 text-[#4E5F52]" />
             <span>Chat on WhatsApp Support Desk</span>

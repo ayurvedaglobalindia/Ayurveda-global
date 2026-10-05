@@ -106,10 +106,10 @@ export function DeliveryTracker4Day({
   }
 
   return (
-    <div className="rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] p-4 sm:p-5 shadow-sm space-y-4 text-left">
+    <div className="rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 p-4 sm:p-5 shadow-sm space-y-4 text-left">
       
       {/* Header with Live Status & Order ID */}
-      <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3 border-b border-[#E2DDD5]">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3 border-b border-[#999999]/30">
         <div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
@@ -136,7 +136,7 @@ export function DeliveryTracker4Day({
       {/* 4-Day Animated Progress Timeline Bar */}
       <div className="relative pt-3 pb-2">
         {/* Background Track Line */}
-        <div className="absolute top-7 left-4 right-4 sm:left-6 sm:right-6 h-1 bg-[#E2DDD5] rounded-full z-0" />
+        <div className="absolute top-7 left-4 right-4 sm:left-6 sm:right-6 h-1 bg-[#999999]/20 rounded-full z-0" />
         
         {/* Animated Progress Line */}
         <motion.div
@@ -166,7 +166,7 @@ export function DeliveryTracker4Day({
                       ? 'bg-[#4E5F52] text-white shadow-xs'
                       : isCurrent
                       ? 'bg-[#FFFFFF] border-2 border-[#4E5F52] text-[#4E5F52] ring-4 ring-[#4E5F52]/10 shadow-sm'
-                      : 'bg-[#FAF7F2] border border-[#E2DDD5] text-[#999999]'
+                      : 'bg-[#FAF7F2] border border-[#999999]/30 text-[#999999]'
                   } ${isSelected ? 'scale-110' : 'hover:scale-105'}`}
                 >
                   {isCurrent && (
@@ -206,9 +206,9 @@ export function DeliveryTracker4Day({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="p-3.5 sm:p-4 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5] space-y-2.5"
+          className="p-3.5 sm:p-4 rounded-xl bg-[#FAF7F2] border border-[#999999]/30 space-y-2.5"
         >
-          <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#E2DDD5]">
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#999999]/30">
             <div className="flex items-center gap-2">
               <span className="text-[9.5px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30">
                 {activeStep.day} Landmark
@@ -226,7 +226,7 @@ export function DeliveryTracker4Day({
             {activeStep.desc}
           </p>
 
-          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#E2DDD5] text-[10px] text-[#737373]">
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#999999]/30 text-[10px] text-[#737373]">
             <div className="flex items-center gap-1.5 text-[#1C1D1F]">
               <MapPin className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
               <span>{activeStep.location}</span>
@@ -250,7 +250,7 @@ export function DeliveryTracker4Day({
 
         <button
           onClick={handleWhatsAppStatus}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FAF7F2] hover:bg-[#F5F1EB] border border-[#E2DDD5] text-[#1C1D1F] text-[11px] font-medium transition-all"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FAF7F2] hover:bg-[#F5F1EB] border border-[#999999]/30 text-[#1C1D1F] text-[11px] font-medium transition-all"
         >
           <MessageCircle className="w-3.5 h-3.5 text-[#4E5F52]" />
           <span>Ask Live Status via WhatsApp</span>

@@ -38,7 +38,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
     <div className={classNames('relative', className)}>
       {/* Main Image Stage */}
       <div
-        className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#F5F1EB] border border-[#E2DDD5] group shadow-sm"
+        className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#F5F1EB] border border-[#999999]/30 group shadow-sm"
         role="region"
         aria-label="Product image gallery"
       >
@@ -61,14 +61,14 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] hover:bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] hover:bg-[#FFFFFF] border border-[#999999]/30 shadow-sm flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-5 h-5 -ml-0.5" />
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] hover:bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] hover:bg-[#FFFFFF] border border-[#999999]/30 shadow-sm flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100"
               aria-label="Next image"
             >
               <ChevronRight className="w-5 h-5 ml-0.5" />
@@ -79,7 +79,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
         {/* Fullscreen Expansion Button */}
         <button
           onClick={() => setIsFullscreen(true)}
-          className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] hover:bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm flex items-center justify-center transition-all"
+          className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] hover:bg-[#FFFFFF] border border-[#999999]/30 shadow-sm flex items-center justify-center transition-all"
           aria-label="View high-resolution image"
           title="Zoom image"
         >
@@ -101,7 +101,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
                 'relative flex-shrink-0 w-16 h-20 rounded-xl overflow-hidden border transition-all duration-200 bg-[#FFFFFF] shadow-xs',
                 index === selectedIndex
                   ? 'border-[#1C1D1F] ring-1 ring-[#1C1D1F]'
-                  : 'border-[#E2DDD5] opacity-75 hover:opacity-100'
+                  : 'border-[#999999]/30 opacity-75 hover:opacity-100'
               )}
             >
               <Image
@@ -125,7 +125,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
         showCloseButton
       >
         <div className="flex flex-col items-center justify-center gap-4" onKeyDown={handleKeyDown}>
-          <div className="relative w-full aspect-square max-h-[55vh] sm:max-h-[60vh] bg-[#F5F1EB] rounded-2xl overflow-hidden border border-[#E2DDD5] flex items-center justify-center">
+          <div className="relative w-full aspect-square max-h-[55vh] sm:max-h-[60vh] bg-[#F5F1EB] rounded-2xl overflow-hidden border border-[#999999]/30 flex items-center justify-center">
             <Image
               src={currentImage.src}
               alt={currentImage.alt || alt}
@@ -139,14 +139,14 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
               <>
                 <button
                   onClick={goToPrevious}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] border border-[#E2DDD5] shadow flex items-center justify-center transition-all z-10"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] border border-[#999999]/30 shadow flex items-center justify-center transition-all z-10"
                   aria-label="Previous image"
                 >
                   <ChevronLeft className="w-6 h-6 -ml-0.5" />
                 </button>
                 <button
                   onClick={goToNext}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] border border-[#E2DDD5] shadow flex items-center justify-center transition-all z-10"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] border border-[#999999]/30 shadow flex items-center justify-center transition-all z-10"
                   aria-label="Next image"
                 >
                   <ChevronRight className="w-6 h-6 ml-0.5" />
@@ -166,7 +166,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
                     'relative w-14 h-16 rounded-xl overflow-hidden border transition-all bg-[#FFFFFF]',
                     index === selectedIndex
                       ? 'border-[#1C1D1F] ring-1 ring-[#1C1D1F]'
-                      : 'border-[#E2DDD5] opacity-70 hover:opacity-100'
+                      : 'border-[#999999]/30 opacity-70 hover:opacity-100'
                   )}
                 >
                   <Image src={image.src} alt="" fill className="object-cover" sizes="56px" />

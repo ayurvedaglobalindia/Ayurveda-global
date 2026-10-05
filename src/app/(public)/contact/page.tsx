@@ -126,7 +126,7 @@ export default function ContactPage() {
         <div className="max-w-5xl mx-auto">
           
           {/* Header */}
-          <div className="mb-8 pb-4 border-b border-[#E2DDD5]">
+          <div className="mb-8 pb-4 border-b border-[#999999]/30">
             <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1">
               Patron Concierge
             </span>
@@ -143,17 +143,17 @@ export default function ContactPage() {
             {contactInfo.map((info) => (
               <div
                 key={info.title}
-                className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs flex flex-col justify-between"
+                className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 shadow-xs flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52] mb-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52] mb-3">
                     <info.icon className="w-4 h-4" />
                   </div>
                   <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">{info.title}</h3>
                   <p className="text-xs font-mono text-[#1C1D1F] mt-1 font-medium">{info.value}</p>
                   <p className="text-[11px] text-[#737373] mt-0.5">{info.desc}</p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-[#E2DDD5]">
+                <div className="mt-4 pt-3 border-t border-[#999999]/30">
                   <button
                     onClick={() => handleDirectWhatsApp(info.title)}
                     className="text-xs font-mono uppercase tracking-wider text-[#1C1D1F] hover:text-[#9E8047] transition-colors"
@@ -169,7 +169,7 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-12 gap-8 items-start">
             
             {/* Left: Message Form */}
-            <div className="lg:col-span-7 bg-[#FFFFFF] border border-[#E2DDD5] rounded-2xl p-6 sm:p-8 shadow-xs">
+            <div className="lg:col-span-7 bg-[#FFFFFF] border border-[#999999]/30 rounded-2xl p-6 sm:p-8 shadow-xs">
               <h2 className="font-heading text-xl font-normal text-[#1C1D1F] mb-1">Send a Message</h2>
               <p className="text-xs text-[#737373] mb-6">Our Ayurvedic team responds within 24 hours.</p>
 
@@ -265,16 +265,16 @@ export default function ContactPage() {
             {/* Right: Management & Logistics Desk */}
             <div className="lg:col-span-5 space-y-4">
               
-              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs">
+              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 shadow-xs">
                 <span className="text-[10px] font-mono tracking-[0.2em] text-[#9E8047] uppercase block mb-1">
                   Executive Desk
                 </span>
                 <h3 className="font-heading text-base font-medium text-[#1C1D1F]">Direct Administration</h3>
                 
-                <div className="space-y-4 mt-4 pt-4 border-t border-[#E2DDD5]">
+                <div className="space-y-4 mt-4 pt-4 border-t border-[#999999]/30">
                   {/* Mageesh */}
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border border-[#E2DDD5] relative flex-shrink-0 bg-[#FAF7F2]">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border border-[#999999]/30 relative flex-shrink-0 bg-[#FAF7F2]">
                       <Image
                         src="/images/team/mageesh.jpg"
                         alt="Mageesh"
@@ -293,8 +293,8 @@ export default function ContactPage() {
                   </div>
 
                   {/* Umesh */}
-                  <div className="flex items-center gap-3 pt-3 border-t border-[#E2DDD5]">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border border-[#E2DDD5] relative flex-shrink-0 bg-[#FAF7F2]">
+                  <div className="flex items-center gap-3 pt-3 border-t border-[#999999]/30">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border border-[#999999]/30 relative flex-shrink-0 bg-[#FAF7F2]">
                       <Image
                         src="/images/team/umesh.jpg"
                         alt="Umesh"
@@ -315,7 +315,7 @@ export default function ContactPage() {
               </div>
 
               {/* Physical Address */}
-              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-xs">
+              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 shadow-xs">
                 <div className="flex items-center gap-2 mb-2">
                   <MapPin className="w-4 h-4 text-[#4E5F52]" />
                   <h3 className="font-heading text-sm font-medium text-[#1C1D1F]">Discreet Dispatch Center</h3>

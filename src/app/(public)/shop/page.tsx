@@ -174,7 +174,7 @@ function ShopContent() {
     <div className="container py-6 sm:py-8 lg:py-10 pb-16">
       
       {/* Page Header */}
-      <div className="pb-4 mb-6 border-b border-[#E2DDD5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="pb-4 mb-6 border-b border-[#999999]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1">
             Ayurveda Global Formulary
@@ -190,7 +190,7 @@ function ShopContent() {
         {/* Active Search Badge */}
         {filters.search && (
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] text-xs text-[#1C1D1F] font-medium flex items-center gap-1.5 shadow-xs">
+            <span className="px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#999999]/30 text-xs text-[#1C1D1F] font-medium flex items-center gap-1.5 shadow-xs">
               <Search className="w-3.5 h-3.5 text-[#4E5F52]" />
               <span>&ldquo;{filters.search}&rdquo;</span>
               <button
@@ -214,7 +214,7 @@ function ShopContent() {
             value={filters.search}
             onChange={(e) => updateFilters({ search: e.target.value })}
             placeholder="Search Shilajit, Ashwagandha, Spray, Combo..."
-            className="w-full pl-10 pr-10 py-2.5 bg-[#FFFFFF] border border-[#E2DDD5] focus:border-[#1C1D1F] rounded-full text-xs sm:text-sm text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-colors"
+            className="w-full pl-10 pr-10 py-2.5 bg-[#FFFFFF] border border-[#999999]/30 focus:border-[#1C1D1F] rounded-full text-xs sm:text-sm text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-colors"
             aria-label="Search all catalog formulations"
           />
           {filters.search && (
@@ -242,7 +242,7 @@ function ShopContent() {
                 className={`px-3 py-1 rounded-full text-xs transition-colors ${
                   isSelected
                     ? 'bg-[#1C1D1F] text-[#FAF7F2] font-medium'
-                    : 'bg-[#FFFFFF] text-[#555555] hover:text-[#1C1D1F] border border-[#E2DDD5]'
+                    : 'bg-[#FFFFFF] text-[#555555] hover:text-[#1C1D1F] border border-[#999999]/30'
                 }`}
               >
                 {tag}
@@ -281,7 +281,7 @@ function ShopContent() {
         <div className="flex-1 w-full min-w-0">
           
           {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] mb-5">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 mb-5">
             <div className="flex items-center gap-2.5">
               {/* Mobile Filter Button */}
               <div className="lg:hidden">
@@ -322,7 +322,7 @@ function ShopContent() {
             <div className="flex items-center gap-2.5 ml-auto">
               <ProductSort selectedSort={filters.sort} onSortChange={sort => updateFilters({ sort })} />
               
-              <div className="flex items-center gap-1 bg-[#FAF7F2] border border-[#E2DDD5] rounded-lg p-0.5">
+              <div className="flex items-center gap-1 bg-[#FAF7F2] border border-[#999999]/30 rounded-lg p-0.5">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={classNames(
@@ -351,8 +351,8 @@ function ShopContent() {
           {loading ? (
             <ProductGrid products={[]} loading={true} />
           ) : filteredProducts.length === 0 ? (
-            <div className="py-12 px-4 text-center rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] space-y-3">
-              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center mx-auto text-[#737373]">
+            <div className="py-12 px-4 text-center rounded-xl bg-[#FFFFFF] border border-[#999999]/30 space-y-3">
+              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center mx-auto text-[#737373]">
                 <Search className="w-4 h-4" />
               </div>
               <h3 className="font-heading text-base font-normal text-[#1C1D1F]">

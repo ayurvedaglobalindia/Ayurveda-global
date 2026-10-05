@@ -10,15 +10,15 @@
   --font-dm-sans: 'DM Sans', system-ui, sans-serif;
   --font-cormorant: 'Cormorant Garamond', Georgia, serif;
 
-  --color-void: #FAF7F2;
-  --color-obsidian: #F5F1EB;
-  --color-charcoal: #EFEAE2;
-  --color-forest: #F2EDE5;
-  --color-forest-deep: #FFFFFF;
-  --color-forest-dark: #FAF7F2;
+  --color-void: #EFEFEF;
+  --color-obsidian: #EAEAE8;
+  --color-charcoal: #E2E2E0;
+  --color-forest: #EBEBE9;
+  --color-forest-deep: #FAF7F2;
+  --color-forest-dark: #EFEFEF;
   --color-forest-light: #FBF9F5;
-  --color-emerald-dark: #E9EFEA;
-  --color-emerald-deep: #F1F6F2;
+  --color-emerald-dark: #E4E7E5;
+  --color-emerald-deep: #ECEFE8;
   --color-emerald-card: #FFFFFF;
 
   /* Explicit #999999 Neutral Gray */
@@ -26,7 +26,7 @@
   --color-gray-light: #737373;
   --color-gray-deep: #404040;
   --color-stone: #737373;
-  --color-stone-light: #E2DDD5;
+  --color-stone-light: #999999;
 
   /* Muted Earthy Nature Green (Soft Sage / Olive, Zero Neon) */
   --color-herbal: #4E5F52;
@@ -41,9 +41,9 @@
   --color-leaf: #586D5E;
   --color-herb: #445347;
 
-  /* Warm Ivory & Soft Light Surfaces */
+  /* Warm Cream Top Surfaces & Accents */
   --color-ivory: #FAF7F2;
-  --color-cream: #1C1D1F;
+  --color-cream: #FAF7F2;
   --color-beige: #F4EFEA;
   --color-sand: #666666;
 
@@ -96,7 +96,7 @@ html {
 
 body {
   font-family: var(--font-dm-sans);
-  background-color: #FAF7F2;
+  background-color: #EFEFEF;
   color: #1C1D1F;
   font-size: 14px;
   line-height: 1.5;
@@ -215,7 +215,7 @@ input, textarea, select {
   }
 
   .btn-ivory {
-    @apply btn bg-[#FAF7F2] border border-[#E2DDD5] text-[#1C1D1F] hover:bg-[#F0ECE4] focus:ring-[#9E8047];
+    @apply btn bg-[#FAF7F2] border border-[#999999]/30 text-[#1C1D1F] hover:bg-[#F0ECE4] focus:ring-[#9E8047];
   }
 
   .btn-ghost {
@@ -223,7 +223,7 @@ input, textarea, select {
   }
 
   .input {
-    @apply w-full px-4 py-2.5 bg-[#FFFFFF] border border-[#E2DDD5] rounded-lg text-[#1C1D1F] placeholder-[#999999] transition-colors focus:outline-none focus:border-[#1C1D1F];
+    @apply w-full px-4 py-2.5 bg-[#FFFFFF] border border-[#999999]/35 rounded-lg text-[#1C1D1F] placeholder-[#999999] transition-colors focus:outline-none focus:border-[#1C1D1F];
   }
 
   .input-error {
@@ -235,11 +235,11 @@ input, textarea, select {
   }
 
   .card-luxury {
-    @apply bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl shadow-sm transition-colors hover:border-[#D5CEC4] overflow-hidden;
+    @apply bg-[#FFFFFF] border border-[#999999]/35 rounded-xl shadow-sm transition-colors hover:border-[#1C1D1F] overflow-hidden;
   }
 
   .card-luxury-elevated {
-    @apply bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl shadow-md transition-shadow hover:shadow-lg;
+    @apply bg-[#FFFFFF] border border-[#999999]/35 rounded-xl shadow-md transition-shadow hover:shadow-lg;
   }
 
   .badge {
@@ -287,7 +287,7 @@ input, textarea, select {
   }
 
   .border-soft-gray {
-    border-color: #E2DDD5;
+    border-color: #999999;
   }
 
   .text-gradient-gold {
@@ -303,15 +303,15 @@ input, textarea, select {
   }
 
   .glass-luxury {
-    @apply bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl shadow-xs;
+    @apply bg-[#FFFFFF] border border-[#999999]/30 rounded-xl shadow-xs;
   }
 
   .glass-luxury-card {
-    @apply bg-[#FFFFFF] border border-[#E2DDD5] rounded-2xl shadow-xs;
+    @apply bg-[#FFFFFF] border border-[#999999]/30 rounded-2xl shadow-xs;
   }
 
   .card-atelier {
-    @apply bg-[#FFFFFF] border border-[#E2DDD5] rounded-2xl shadow-xs;
+    @apply bg-[#FFFFFF] border border-[#999999]/30 rounded-2xl shadow-xs;
   }
 
   .glass-emerald {
@@ -320,12 +320,12 @@ input, textarea, select {
 
   .divider-gold {
     height: 1px;
-    background: #E2DDD5;
+    background: #999999;
   }
 
   .divider-emerald {
     height: 1px;
-    background: #E2DDD5;
+    background: #999999;
   }
 }
 

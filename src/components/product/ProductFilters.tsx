@@ -54,7 +54,7 @@ export function ProductFilters({
 
   const filterContent = (
     <div className="space-y-5">
-      <div className="flex items-center justify-between pb-3 border-b border-[#E2DDD5]">
+      <div className="flex items-center justify-between pb-3 border-b border-[#999999]/30">
         <h2 className="font-heading text-base font-medium text-[#1C1D1F]">Refine Catalog</h2>
         {hasActiveFilters && (
           <button
@@ -78,7 +78,7 @@ export function ProductFilters({
                   name="category"
                   checked={!selectedCategory}
                   onChange={() => onCategoryChange(undefined)}
-                  className="w-4 h-4 text-[#4E5F52] border-[#E2DDD5] focus:ring-[#4E5F52]"
+                  className="w-4 h-4 text-[#4E5F52] border-[#999999]/30 focus:ring-[#4E5F52]"
                 />
                 <span className="text-[#1C1D1F] font-medium">All Formulations</span>
               </label>
@@ -89,7 +89,7 @@ export function ProductFilters({
                     name="category"
                     checked={selectedCategory === category.slug}
                     onChange={() => onCategoryChange(category.slug)}
-                    className="w-4 h-4 text-[#4E5F52] border-[#E2DDD5] focus:ring-[#4E5F52]"
+                    className="w-4 h-4 text-[#4E5F52] border-[#999999]/30 focus:ring-[#4E5F52]"
                   />
                   <span className="text-[#333333]">{category.name}</span>
                   <span className="text-[#737373] text-[11px] font-mono">({category.productCount})</span>
@@ -129,7 +129,7 @@ export function ProductFilters({
                   max="500000"
                   value={priceMin}
                   onChange={e => setPriceMin(Math.min(priceMax, parseInt(e.target.value)))}
-                  className="w-full h-1.5 bg-[#E2DDD5] rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
+                  className="w-full h-1.5 bg-[#999999]/20 rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
                 />
                 <input
                   type="range"
@@ -137,7 +137,7 @@ export function ProductFilters({
                   max="500000"
                   value={priceMax}
                   onChange={e => setPriceMax(Math.max(priceMin, parseInt(e.target.value)))}
-                  className="w-full h-1.5 bg-[#E2DDD5] rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
+                  className="w-full h-1.5 bg-[#999999]/20 rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
                 />
               </div>
               <Button size="sm" variant="primary" onClick={handlePriceApply} className="w-full text-xs py-2 bg-[#1C1D1F] text-[#FAF7F2]">
@@ -168,7 +168,7 @@ export function ProductFilters({
                     'px-2.5 py-1 rounded-full text-[11px] font-sans border transition-colors inline-block',
                     selectedTags.includes(tag)
                       ? 'bg-[#1C1D1F] text-[#FAF7F2] border-[#1C1D1F] font-medium'
-                      : 'bg-[#FAF7F2] text-[#555555] border-[#E2DDD5] hover:border-[#1C1D1F]'
+                      : 'bg-[#FAF7F2] text-[#555555] border-[#999999]/30 hover:border-[#1C1D1F]'
                   )}>
                     {tag.replace(/-/g, ' ')}
                   </span>
@@ -186,7 +186,7 @@ export function ProductFilters({
                 type="checkbox"
                 checked={inStockOnly}
                 onChange={e => onInStockChange(e.target.checked)}
-                className="w-4 h-4 text-[#4E5F52] border-[#E2DDD5] focus:ring-[#4E5F52] rounded"
+                className="w-4 h-4 text-[#4E5F52] border-[#999999]/30 focus:ring-[#4E5F52] rounded"
               />
               <span className="text-xs text-[#1C1D1F]">In stock ready to dispatch</span>
             </label>
@@ -201,7 +201,7 @@ export function ProductFilters({
       <>
         <Button
           variant="outline"
-          className="w-full sm:w-auto gap-2 border-[#E2DDD5] text-[#1C1D1F] hover:bg-[#FFFFFF] text-xs py-2"
+          className="w-full sm:w-auto gap-2 border-[#999999]/30 text-[#1C1D1F] hover:bg-[#FFFFFF] text-xs py-2"
           onClick={() => setIsOpen(true)}
         >
           <Filter className="w-3.5 h-3.5 text-[#4E5F52]" />
@@ -230,10 +230,10 @@ export function ProductFilters({
                 animate={{ x: 0 }}
                 exit={{ x: -300 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-[#FAF7F2] border-r border-[#E2DDD5] shadow-xl z-50 overflow-y-auto"
+                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-[#FAF7F2] border-r border-[#999999]/30 shadow-xl z-50 overflow-y-auto"
                 onClick={e => e.stopPropagation()}
               >
-                <div className="p-4 border-b border-[#E2DDD5] flex items-center justify-between bg-[#FFFFFF]">
+                <div className="p-4 border-b border-[#999999]/30 flex items-center justify-between bg-[#FFFFFF]">
                   <h2 className="font-heading text-base font-medium text-[#1C1D1F]">Filters</h2>
                   <button
                     onClick={() => setIsOpen(false)}
@@ -252,7 +252,7 @@ export function ProductFilters({
   }
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#E2DDD5] p-5 shadow-xs">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#999999]/30 p-5 shadow-xs">
       {filterContent}
     </div>
   )

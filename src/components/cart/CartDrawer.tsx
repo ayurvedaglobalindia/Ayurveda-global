@@ -138,12 +138,12 @@ export function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="fixed right-0 top-0 bottom-0 z-[65] w-full max-w-full sm:max-w-md bg-[#FAF7F2] border-l border-[#E2DDD5] shadow-2xl flex flex-col text-[#1C1D1F]"
+            className="fixed right-0 top-0 bottom-0 z-[65] w-full max-w-full sm:max-w-md bg-[#FAF7F2] border-l border-[#999999]/30 shadow-2xl flex flex-col text-[#1C1D1F]"
             role="dialog"
             aria-modal="true"
             aria-label="Shopping cart"
           >
-            <div className="flex items-center justify-between p-3.5 sm:p-4 border-b border-[#E2DDD5]">
+            <div className="flex items-center justify-between p-3.5 sm:p-4 border-b border-[#999999]/30">
               <h2 className="font-heading text-base font-semibold text-[#1C1D1F] flex items-center gap-2">
                 <span>Shopping Cart</span>
                 <span className="text-[11px] font-sans px-2 py-0.5 rounded-full bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30 font-semibold">
@@ -162,7 +162,7 @@ export function CartDrawer() {
             <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3.5">
               {items.length === 0 ? (
                 <div className="text-center py-10">
-                  <div className="w-14 h-14 mx-auto mb-3.5 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] flex items-center justify-center text-[#9E8047]">
+                  <div className="w-14 h-14 mx-auto mb-3.5 rounded-full bg-[#FFFFFF] border border-[#999999]/30 flex items-center justify-center text-[#9E8047]">
                     <Gift className="w-6 h-6" />
                   </div>
                   <h3 className="font-medium text-sm text-[#1C1D1F] mb-1.5">Your cart is empty</h3>
@@ -204,7 +204,7 @@ export function CartDrawer() {
             </div>
 
             {items.length > 0 && (
-              <div className="p-3.5 sm:p-4 border-t border-[#E2DDD5] bg-[#FFFFFF] space-y-2">
+              <div className="p-3.5 sm:p-4 border-t border-[#999999]/30 bg-[#FFFFFF] space-y-2">
                 <div className="flex gap-2">
                   <Link href="/checkout" onClick={closeCartDrawer} className="flex-1">
                     <Button variant="gold" size="md" className="w-full text-xs font-semibold py-2.5 shadow-sm">
@@ -230,19 +230,19 @@ export function CartDrawer() {
                   <span className="flex items-center gap-1"><Shield className="w-3 h-3 text-[#4E5F52]" /> AYUSH Certified</span>
                 </div>
                 <div className="grid grid-cols-4 gap-1.5 text-center pt-1">
-                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5]">
+                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#999999]/30">
                     <Truck className="w-3.5 h-3.5 text-[#4E5F52] mx-auto mb-0.5" />
                     <span className="text-[9.5px] text-[#737373] block">Free Express</span>
                   </div>
-                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5]">
+                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#999999]/30">
                     <Lock className="w-3.5 h-3.5 text-[#4E5F52] mx-auto mb-0.5" />
                     <span className="text-[9.5px] text-[#737373] block">Discreet Box</span>
                   </div>
-                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5]">
+                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#999999]/30">
                     <Shield className="w-3.5 h-3.5 text-[#4E5F52] mx-auto mb-0.5" />
                     <span className="text-[9.5px] text-[#737373] block">Doorstep COD</span>
                   </div>
-                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5]">
+                  <div className="p-1.5 rounded-lg bg-[#FAF7F2] border border-[#999999]/30">
                     <RotateCcw className="w-3.5 h-3.5 text-[#4E5F52] mx-auto mb-0.5" />
                     <span className="text-[9.5px] text-[#737373] block">Easy Return</span>
                   </div>
@@ -285,11 +285,11 @@ function CartDrawerItem({
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="flex items-start gap-2.5 p-2.5 bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl hover:border-[#D5CEC4] transition-colors"
+      className="flex items-start gap-2.5 p-2.5 bg-[#FFFFFF] border border-[#999999]/30 rounded-xl hover:border-[#D5CEC4] transition-colors"
     >
       <Link
         href={`/product/${item.productId}`}
-        className="flex-shrink-0 w-13 h-13 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-[#FAF7F2] border border-[#E2DDD5] relative"
+        className="flex-shrink-0 w-13 h-13 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-[#FAF7F2] border border-[#999999]/30 relative"
       >
         <Image
           src={imgSrc}
@@ -372,7 +372,7 @@ export function CouponInput({
               value={code}
               onChange={e => setCode(e.target.value.toUpperCase())}
               placeholder="Enter coupon code"
-              className="flex-1 bg-[#FAF7F2] border border-[#E2DDD5] focus:border-[#4E5F52] rounded-lg px-3 py-1.5 text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none"
+              className="flex-1 bg-[#FAF7F2] border border-[#999999]/30 focus:border-[#4E5F52] rounded-lg px-3 py-1.5 text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none"
               aria-label="Coupon code"
             />
             <Button variant="gold" size="sm" onClick={() => onApply(code)} disabled={!code.trim() || loading} className="text-xs px-3 py-1.5">
@@ -431,7 +431,7 @@ function CartSummary({
             <span className="text-[#1C1D1F] font-medium">{formatINR(tax)}</span>
           </div>
         )}
-        <div className="flex justify-between border-t border-[#E2DDD5] pt-2">
+        <div className="flex justify-between border-t border-[#999999]/30 pt-2">
           <span className="font-medium text-[#1C1D1F]">Total</span>
           <span className="font-semibold text-[#1C1D1F] text-sm sm:text-base">{formatINR(total)}</span>
         </div>

@@ -27,7 +27,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           className={classNames(
             'w-full px-4 py-3 bg-[#FFFFFF] border rounded-xl text-[#1C1D1F] placeholder-[#999999] transition-all duration-200 focus:outline-none focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20 resize-y min-h-[100px]',
             error && 'border-red-500 focus:ring-red-500',
-            !error && 'border-[#E2DDD5] hover:border-[#D5CEC4]',
+            !error && 'border-[#999999]/30 hover:border-[#D5CEC4]',
             className
           )}
           aria-invalid={error ? 'true' : 'false'}

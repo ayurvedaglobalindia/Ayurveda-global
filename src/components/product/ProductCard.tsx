@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Heart, ShoppingBag, Eye, Sparkles, Shield, CheckCircle2, Plus, Truck, Lock, RotateCcw } from 'lucide-react'
+import { Heart, ShoppingBag, Eye, Sparkles, Shield, CheckCircle2, Plus, Truck, Lock, RotateCcw, Leaf } from 'lucide-react'
 import { PriceDisplay } from '@/components/ui/PriceDisplay'
 import { Rating } from '@/components/ui/Rating'
 import type { Product } from '@/types'
@@ -204,13 +204,19 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
 
   const feature = getFeatureHighlight()
 
+  const handleQuickView = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    openModal('quick-view', { product })
+  }
+
   if (variant === 'compact') {
     return (
       <Link
         href={`/product/${product.slug}`}
-        className="flex gap-3.5 p-2.5 bg-[#FFFFFF] rounded-xl border border-[#E2DDD5] hover:border-[#1C1D1F] transition-colors group"
+        className="flex gap-3.5 p-2.5 bg-[#FFFFFF] rounded-xl border border-[#999999]/35 hover:border-[#1C1D1F] transition-colors group"
       >
-        <div className="w-16 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-[#F4EFEA] relative">
+        <div className="w-16 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-[#FAF7F2] relative">
           <Image
             src={primaryImage.src}
             alt={primaryImage.alt}
@@ -233,14 +239,19 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
   }
 
   return (
-    <article
-      className="group relative rounded-xl border border-[#E2DDD5] bg-[#FFFFFF] hover:border-[#1C1D1F] transition-all flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md"
+    <motion.article
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-20px' }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -4, transition: { duration: 0.22 } }}
+      className="group relative rounded-2xl border border-[#999999]/35 bg-[#FFFFFF] hover:border-[#1C1D1F] transition-colors flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md"
     >
       {/* Product Image Stage */}
       <div className="relative">
         <Link
           href={`/product/${product.slug}`}
-          className="block relative aspect-[4/5] overflow-hidden bg-[#F4EFEA]"
+          className="block relative aspect-[4/5] overflow-hidden bg-[#FAF7F2]"
           aria-label={`View ${product.name}`}
         >
           <Image
@@ -255,84 +266,107 @@ export function ProductCard({ product, variant = 'default', showQuickActions = t
           {/* Discreet courtesy badge if on sale */}
           {hasDiscount && (
             <div className="absolute top-3 left-3 z-10 pointer-events-none">
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium tracking-wider text-[#1C1D1F] bg-[#FAF7F2] border border-[#E2DDD5]">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium tracking-wider text-[#1C1D1F] bg-[#FAF7F2]/95 border border-[#999999]/40 shadow-xs">
                 {discountPercentage}% Courtesy
               </span>
             </div>
           )}
 
-          {/* Wishlist Button */}
-          <div className="absolute top-3 right-3 z-10">
-            <button
+          {/* Top-Right Action Pill: Quick View + Wishlist */}
+          <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5">
+            <motion.button
+              whileTap={{ scale: 0.92 }}
+              onClick={handleQuickView}
+              className="w-8 h-8 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] backdrop-blur-sm flex items-center justify-center border border-[#999999]/35 text-[#737373] hover:text-[#1C1D1F] hover:border-[#1C1D1F] transition-colors shadow-xs"
+              aria-label="Quick view formulation"
+              title="Quick View"
+            >
+              <Eye className="w-3.5 h-3.5" />
+            </motion.button>
+
+            <motion.button
+              whileTap={{ scale: 0.92 }}
               onClick={handleWishlistToggle}
-              className={`w-8 h-8 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm flex items-center justify-center border border-[#E2DDD5] transition-colors ${
+              className={`w-8 h-8 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] backdrop-blur-sm flex items-center justify-center border border-[#999999]/35 transition-colors shadow-xs ${
                 inWishlist ? 'text-red-500 border-red-200' : 'text-[#737373] hover:text-[#1C1D1F] hover:border-[#1C1D1F]'
               }`}
               aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+              title={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
             >
               <Heart className={`w-3.5 h-3.5 ${inWishlist ? 'fill-current text-red-500' : ''}`} />
-            </button>
+            </motion.button>
           </div>
         </Link>
       </div>
 
-      {/* Card Content Stage: Image → Product Name → One-line Purpose → Price → View/Add to Cart */}
+      {/* Card Content Stage: Botanical Badge → Product Name → Purpose/Description → Price → Actions */}
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3 bg-[#FFFFFF]">
-        <div>
+        <div className="space-y-1.5">
+          {/* Nature Botanic Tag */}
+          <div className="inline-flex items-center gap-1.5 text-[10.5px] font-mono text-[#4E5F52] bg-[#FAF7F2] border border-[#999999]/30 px-2 py-0.5 rounded-full">
+            <Leaf className="w-3 h-3 text-[#4E5F52] flex-shrink-0" />
+            <span className="truncate">{feature.pill}</span>
+          </div>
+
           {/* Product Name */}
-          <h3 className="font-heading font-medium text-sm sm:text-base text-[#1C1D1F] line-clamp-1 group-hover:text-[#9E8047] transition-colors">
+          <h3 className="font-heading font-medium text-base text-[#1C1D1F] line-clamp-1 group-hover:text-[#9E8047] transition-colors">
             <Link href={`/product/${product.slug}`}>{product.name}</Link>
           </h3>
 
-          {/* One-Line Purpose */}
-          <p className="text-xs text-[#737373] mt-1 font-sans line-clamp-1">
-            {feature.pill}
+          {/* Product Description */}
+          <p className="text-xs text-[#555555] line-clamp-2 leading-relaxed font-sans">
+            {product.shortDescription}
           </p>
         </div>
 
         {/* Pricing & CTA Block */}
-        <div className="pt-3 border-t border-[#E2DDD5] space-y-3">
+        <div className="pt-3 border-t border-[#999999]/25 space-y-3">
           <div className="flex items-baseline justify-between">
-            <PriceDisplay price={product.price} compareAtPrice={product.compareAtPrice} size="sm" />
-            <span className="text-[11px] text-[#999999] font-sans">
-              Complimentary Delivery
+            <PriceDisplay price={product.price} compareAtPrice={product.compareAtPrice} size="md" />
+            <span className="text-[11px] text-[#737373] font-sans flex items-center gap-1">
+              <Truck className="w-3 h-3 text-[#4E5F52]" />
+              <span>Free Delivery</span>
             </span>
           </div>
 
-          {/* Action Buttons: Simple & Functional */}
+          {/* Action Buttons: Add to Cart + View Details */}
           <div className="grid grid-cols-2 gap-2">
             {inCart ? (
-              <div className="col-span-2 flex items-center justify-between bg-[#F4EFEA] p-1.5 px-3 rounded-full border border-[#E2DDD5]">
+              <div className="col-span-2 flex items-center justify-between bg-[#FAF7F2] p-1.5 px-3 rounded-full border border-[#999999]/40">
                 <span className="text-xs font-mono text-[#1C1D1F]">
                   In Cart ({cartQuantity})
                 </span>
                 <button
-                  className="text-xs py-1 px-3 bg-[#1C1D1F] text-[#FAF7F2] font-medium rounded-full hover:bg-[#333333] transition-colors font-sans uppercase tracking-wider"
+                  className="text-xs py-1 px-3 bg-[#1C1D1F] text-[#FAF7F2] font-medium rounded-full hover:bg-[#333333] transition-colors font-sans uppercase tracking-wider inline-flex items-center gap-1"
                   onClick={() => openCartDrawer()}
                 >
-                  View Cart
+                  <ShoppingBag className="w-3 h-3" />
+                  <span>View Cart</span>
                 </button>
               </div>
             ) : (
               <>
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
                   onClick={handleAddToCart}
                   disabled={product.inventory.trackQuantity && product.inventory.quantity === 0}
-                  className="w-full text-xs font-medium py-2 px-3 rounded-full border border-[#1C1D1F] hover:bg-[#1C1D1F] hover:text-[#FAF7F2] text-[#1C1D1F] transition-colors"
+                  className="w-full text-xs font-medium py-2 px-2.5 rounded-full border border-[#1C1D1F] bg-[#FAF7F2] hover:bg-[#1C1D1F] hover:text-[#FAF7F2] text-[#1C1D1F] transition-colors inline-flex items-center justify-center gap-1.5 shadow-xs"
                 >
-                  Add to Cart
-                </button>
+                  <ShoppingBag className="w-3.5 h-3.5" />
+                  <span>Add to Cart</span>
+                </motion.button>
                 <Link
                   href={`/product/${product.slug}`}
-                  className="w-full text-xs font-medium py-2 px-3 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] transition-colors text-center flex items-center justify-center"
+                  className="w-full text-xs font-medium py-2 px-2.5 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] transition-transform active:scale-95 text-center inline-flex items-center justify-center gap-1.5 shadow-xs"
                 >
-                  View Details
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>Details</span>
                 </Link>
               </>
             )}
           </div>
         </div>
       </div>
-    </article>
+    </motion.article>
   )
 }

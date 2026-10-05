@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Heart, Share2, Truck, ShieldCheck, RotateCcw, Leaf, Check, X, Star, ThumbsUp, MessageSquarePlus, MessageCircle } from 'lucide-react'
+import { Heart, Share2, Truck, ShieldCheck, RotateCcw, Leaf, Check, X, Star, ThumbsUp, MessageSquarePlus, MessageCircle, ShoppingBag, Zap } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { classNames } from '@/lib/utils/formatters'
 import { Button } from '@/components/ui/Button'
@@ -180,7 +180,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
           {product.ingredients.map((ingredient, index) => (
             <div
               key={index}
-              className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5]"
+              className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30"
             >
               <Check className="w-4 h-4 text-[#4E5F52] flex-shrink-0 mt-0.5" />
               <span className="text-[#1C1D1F] text-xs sm:text-sm font-sans">{ingredient}</span>
@@ -204,7 +204,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
           {product.warnings.map((warning, index) => (
             <div
               key={index}
-              className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5]"
+              className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FAF7F2] border border-[#999999]/30"
             >
               <ShieldCheck className="w-4 h-4 text-[#4E5F52] flex-shrink-0 mt-0.5" />
               <span className="text-[#555555] text-xs sm:text-sm font-sans">{warning}</span>
@@ -248,7 +248,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
               {product.category === 'supplements' ? 'Herbal Supplement' : product.category === 'personal-care' ? 'Topical Care' : 'Synergistic Kit'}
             </span>
             {product.ageRestricted && (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F5F1EB] border border-[#E2DDD5] text-[#737373]">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F5F1EB] border border-[#999999]/30 text-[#737373]">
                 18+ Adult
               </span>
             )}
@@ -266,7 +266,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
                   'p-2.5 rounded-full border transition-colors',
                   inWishlist
                     ? 'bg-rose-50 text-rose-600 border-rose-200'
-                    : 'bg-[#FFFFFF] text-[#737373] border-[#E2DDD5] hover:border-[#1C1D1F]'
+                    : 'bg-[#FFFFFF] text-[#737373] border-[#999999]/30 hover:border-[#1C1D1F]'
                 )}
                 aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
               >
@@ -274,7 +274,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
               </button>
               <button
                 onClick={handleShare}
-                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] text-[#737373] hover:border-[#1C1D1F] transition-colors"
+                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#999999]/30 text-[#737373] hover:border-[#1C1D1F] transition-colors"
                 aria-label="Share product"
               >
                 <Share2 className="w-4 h-4" />
@@ -288,7 +288,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
         </div>
 
         {/* Price & Rating Reassurance */}
-        <div className="flex items-baseline gap-4 flex-wrap pt-1 border-t border-[#E2DDD5]/60">
+        <div className="flex items-baseline gap-4 flex-wrap pt-1 border-t border-[#999999]/30">
           <PriceDisplay
             price={currentVariant?.price || product.price}
             compareAtPrice={currentVariant?.compareAtPrice || product.compareAtPrice}
@@ -327,7 +327,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
                     'px-3.5 py-2 rounded-lg border text-xs transition-colors',
                     selectedVariantId === variant.id
                       ? 'border-[#1C1D1F] bg-[#1C1D1F] text-[#FAF7F2] font-medium'
-                      : 'border-[#E2DDD5] bg-[#FFFFFF] text-[#555555] hover:border-[#1C1D1F]'
+                      : 'border-[#999999]/30 bg-[#FFFFFF] text-[#555555] hover:border-[#1C1D1F]'
                   )}
                   disabled={variant.inventory === 0}
                 >
@@ -340,7 +340,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
         )}
 
         {/* Plain Packaging Reassurance */}
-        <div className="p-3 rounded-lg bg-[#F5F1EB] border border-[#E2DDD5] flex items-center justify-between text-xs text-[#555555]">
+        <div className="p-3 rounded-lg bg-[#F5F1EB] border border-[#999999]/30 flex items-center justify-between text-xs text-[#555555]">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#4E5F52]" />
             <span className="text-[#1C1D1F] font-medium">Confidential Delivery:</span>
@@ -365,38 +365,40 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
             variant="outline"
             onClick={handleAddToCart}
             disabled={product.inventory.trackQuantity && maxQuantity === 0}
-            className="flex-1 min-w-[130px] py-3 rounded-full border-[#1C1D1F] text-[#1C1D1F] hover:bg-[#FAF7F2] font-medium text-xs tracking-wider uppercase"
+            className="flex-1 min-w-[130px] py-3 rounded-full border-[#1C1D1F] text-[#1C1D1F] hover:bg-[#FAF7F2] font-medium text-xs tracking-wider uppercase inline-flex items-center justify-center gap-1.5"
           >
-            {product.inventory.trackQuantity && maxQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+            <ShoppingBag className="w-4 h-4" />
+            <span>{product.inventory.trackQuantity && maxQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
           </Button>
 
           <Button
             variant="primary"
             onClick={handleBuyNow}
             disabled={product.inventory.trackQuantity && maxQuantity === 0}
-            className="flex-1 min-w-[130px] py-3 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] font-medium text-xs tracking-wider uppercase shadow-sm"
+            className="flex-1 min-w-[130px] py-3 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] font-medium text-xs tracking-wider uppercase shadow-sm inline-flex items-center justify-center gap-1.5"
           >
-            Buy Now (COD)
+            <Zap className="w-4 h-4" />
+            <span>Buy Now (COD)</span>
           </Button>
         </div>
 
         {/* Quick WhatsApp Guidance / Order Button */}
         <button
           onClick={handleWhatsAppClick}
-          className="w-full py-2.5 px-4 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] hover:border-[#1C1D1F] text-[#1C1D1F] font-medium text-xs tracking-wider uppercase transition-colors flex items-center justify-center gap-2"
+          className="w-full py-2.5 px-4 rounded-full bg-[#FFFFFF] border border-[#999999]/30 hover:border-[#1C1D1F] text-[#1C1D1F] font-medium text-xs tracking-wider uppercase transition-colors flex items-center justify-center gap-2"
         >
           <MessageCircle className="w-4 h-4 text-[#4E5F52]" />
           <span>Quick WhatsApp Order / Dosage Enquiry</span>
         </button>
 
         {/* 4-Item Quality Guarantee Grid */}
-        <div className="grid grid-cols-2 gap-2.5 pt-4 border-t border-[#E2DDD5]">
+        <div className="grid grid-cols-2 gap-2.5 pt-4 border-t border-[#999999]/30">
           {trustBadges.map((badge, index) => (
             <div
               key={index}
-              className="p-2.5 rounded-lg bg-[#FFFFFF] border border-[#E2DDD5] flex items-start gap-2.5"
+              className="p-2.5 rounded-lg bg-[#FFFFFF] border border-[#999999]/30 flex items-start gap-2.5"
             >
-              <div className="w-7 h-7 rounded bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52] flex-shrink-0">
+              <div className="w-7 h-7 rounded bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52] flex-shrink-0">
                 <badge.icon className="w-3.5 h-3.5" />
               </div>
               <div className="min-w-0">
@@ -410,7 +412,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
       </div>
 
       {/* Tabs: Description, Ingredients, Usage, Quality, Verified Reviews */}
-      <div className="md:col-span-2 mt-8 pt-8 border-t border-[#E2DDD5]">
+      <div className="md:col-span-2 mt-8 pt-8 border-t border-[#999999]/30">
         <Tabs items={tabItems} variant="pills" className="w-full" />
       </div>
 
@@ -421,10 +423,10 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="md:hidden fixed bottom-[56px] left-0 right-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-t border-[#E2DDD5] p-2.5 shadow-lg flex items-center justify-between gap-3"
+            className="md:hidden fixed bottom-[56px] left-0 right-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-t border-[#999999]/30 p-2.5 shadow-lg flex items-center justify-between gap-3"
           >
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
-              <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-[#E2DDD5] flex-shrink-0 bg-[#FFFFFF]">
+              <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-[#999999]/30 flex-shrink-0 bg-[#FFFFFF]">
                 <Image
                   src={getProductImage(product, product.id, 'thumb').src}
                   alt={product.name}
@@ -654,7 +656,7 @@ function ProductReviewsSection({ product, showToast }: { product: Product; showT
   return (
     <div className="space-y-6 py-2">
       {/* Summary Header */}
-      <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] grid grid-cols-1 md:grid-cols-3 gap-6 items-center shadow-xs">
+      <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 grid grid-cols-1 md:grid-cols-3 gap-6 items-center shadow-xs">
         <div className="text-center md:text-left space-y-1.5">
           <div className="flex items-center justify-center md:justify-start gap-2.5">
             <span className="font-heading text-3xl sm:text-4xl font-normal text-[#1C1D1F]">4.9</span>
@@ -715,7 +717,7 @@ function ProductReviewsSection({ product, showToast }: { product: Product; showT
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             onSubmit={handleSubmit}
-            className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] space-y-4 overflow-hidden shadow-xs"
+            className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 space-y-4 overflow-hidden shadow-xs"
           >
             <h3 className="font-heading text-base font-medium text-[#1C1D1F]">Share Your Experience</h3>
             <p className="text-xs text-[#737373]">How has {product.name} contributed to your routine?</p>
@@ -732,13 +734,13 @@ function ProductReviewsSection({ product, showToast }: { product: Product; showT
                     onClick={() => setRating(star)}
                     onMouseEnter={() => setHoverRating(star)}
                     onMouseLeave={() => setHoverRating(0)}
-                    className="p-1 text-[#E2DDD5] hover:text-[#9E8047] transition-colors focus:outline-none"
+                    className="p-1 text-[#999999] hover:text-[#9E8047] transition-colors focus:outline-none"
                     aria-label={`Rate ${star} stars`}
                   >
                     <Star
                       className={classNames(
                         'w-5 h-5',
-                        (hoverRating || rating) >= star ? 'fill-current text-[#9E8047]' : 'text-[#E2DDD5]'
+                        (hoverRating || rating) >= star ? 'fill-current text-[#9E8047]' : 'text-[#999999]'
                       )}
                     />
                   </button>
@@ -806,18 +808,18 @@ function ProductReviewsSection({ product, showToast }: { product: Product; showT
         {reviews.map(item => (
           <div
             key={item.id}
-            className="p-5 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5] space-y-2.5 shadow-xs"
+            className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 space-y-2.5 shadow-xs"
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center text-xs font-mono font-medium text-[#1C1D1F]">
+                <div className="w-8 h-8 rounded-full bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-xs font-mono font-medium text-[#1C1D1F]">
                   {item.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-xs sm:text-sm text-[#1C1D1F]">{item.name}</span>
                     {item.verified && (
-                      <span className="text-[10px] font-mono text-[#4E5F52] bg-[#F5F1EB] px-2 py-0.5 rounded-full border border-[#E2DDD5]">
+                      <span className="text-[10px] font-mono text-[#4E5F52] bg-[#F5F1EB] px-2 py-0.5 rounded-full border border-[#999999]/30">
                         Verified Buyer
                       </span>
                     )}
@@ -840,7 +842,7 @@ function ProductReviewsSection({ product, showToast }: { product: Product; showT
               </p>
             </div>
 
-            <div className="pt-2 border-t border-[#E2DDD5] flex items-center justify-between text-xs">
+            <div className="pt-2 border-t border-[#999999]/30 flex items-center justify-between text-xs">
               <span className="text-[#737373] text-[11px]">
                 Product: <strong className="text-[#1C1D1F] font-normal">{product.name}</strong>
               </span>
@@ -852,7 +854,7 @@ function ProductReviewsSection({ product, showToast }: { product: Product; showT
                   'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] transition-colors border',
                   helpfulMap[item.id]
                     ? 'text-[#4E5F52] bg-[#F5F1EB] border-[#4E5F52]/30 cursor-default'
-                    : 'text-[#737373] border-[#E2DDD5] hover:text-[#1C1D1F] hover:border-[#1C1D1F]'
+                    : 'text-[#737373] border-[#999999]/30 hover:text-[#1C1D1F] hover:border-[#1C1D1F]'
                 )}
               >
                 <ThumbsUp className="w-3 h-3" />

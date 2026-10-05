@@ -76,7 +76,7 @@ export function Modal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[70] overflow-y-auto p-4 sm:p-6 flex min-h-full items-center justify-center bg-ayur-void/80 backdrop-blur-xl"
+          className="fixed inset-0 z-[70] overflow-y-auto p-4 sm:p-6 flex min-h-full items-center justify-center bg-black/40 backdrop-blur-sm"
           onClick={closeOnOverlayClick ? onClose : undefined}
           role="dialog"
           aria-modal="true"
@@ -84,26 +84,26 @@ export function Modal({
           aria-describedby={description ? 'modal-description' : undefined}
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 16 }}
+            initial={{ opacity: 0, scale: 0.96, y: 14 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 16 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            exit={{ opacity: 0, scale: 0.96, y: 14 }}
+            transition={{ type: 'spring', damping: 26, stiffness: 320 }}
             className={classNames(
-              'relative w-full max-h-[calc(100vh-3rem)] sm:max-h-[calc(100vh-4rem)] flex flex-col bg-ayur-charcoal rounded-3xl shadow-luxury border border-ayur-gold/25 overflow-hidden my-auto text-ayur-cream',
+              'relative w-full max-h-[calc(100vh-3rem)] sm:max-h-[calc(100vh-4rem)] flex flex-col bg-[#FAF7F2] rounded-2xl shadow-2xl border border-[#999999]/35 overflow-hidden my-auto text-[#1C1D1F]',
               sizeClasses[size]
             )}
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
             {(title || showCloseButton) && (
-              <div className="flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5 border-b border-ayur-forest-dark/50 bg-ayur-forest-deep/90 backdrop-blur-md flex-shrink-0">
+              <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-[#999999]/30 bg-[#FFFFFF] flex-shrink-0">
                 <div className="min-w-0 pr-4">
                   {title && (
-                    <h2 id="modal-title" className="font-heading text-lg sm:text-xl font-normal text-ayur-ivory truncate">
+                    <h2 id="modal-title" className="font-heading text-lg sm:text-xl font-normal text-[#1C1D1F] truncate">
                       {title}
                     </h2>
                   )}
                   {description && (
-                    <p id="modal-description" className="mt-0.5 text-xs sm:text-sm text-ayur-stone truncate">
+                    <p id="modal-description" className="mt-0.5 text-xs sm:text-sm text-[#737373] truncate">
                       {description}
                     </p>
                   )}
@@ -111,7 +111,7 @@ export function Modal({
                 {showCloseButton && (
                   <button
                     onClick={onClose}
-                    className="p-1.5 rounded-full text-ayur-stone hover:text-ayur-gold hover:bg-ayur-gold/10 transition-colors focus-visible-ring flex-shrink-0"
+                    className="p-1.5 rounded-full text-[#737373] hover:text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors focus-visible-ring flex-shrink-0"
                     aria-label="Close modal"
                   >
                     <X className="w-5 h-5" />

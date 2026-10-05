@@ -24,14 +24,65 @@ export function ProductGrid({
   emptyMessage = 'No products found',
   emptyAction,
 }: ProductGridProps) {
-  const columns = { base: 1, sm: 2, md: 2, lg: 3, xl: 4, ...customColumns }
+  const columns = { base: 1, sm: 2, md: 2, lg: 3, xl: 3, ...customColumns }
+
+  const getColClass = (cols: number) => {
+    switch (cols) {
+      case 1: return 'grid-cols-1'
+      case 2: return 'grid-cols-2'
+      case 3: return 'grid-cols-3'
+      case 4: return 'grid-cols-4'
+      default: return 'grid-cols-1'
+    }
+  }
+
+  const getSmColClass = (cols: number) => {
+    switch (cols) {
+      case 1: return 'sm:grid-cols-1'
+      case 2: return 'sm:grid-cols-2'
+      case 3: return 'sm:grid-cols-3'
+      case 4: return 'sm:grid-cols-4'
+      default: return 'sm:grid-cols-2'
+    }
+  }
+
+  const getMdColClass = (cols: number) => {
+    switch (cols) {
+      case 1: return 'md:grid-cols-1'
+      case 2: return 'md:grid-cols-2'
+      case 3: return 'md:grid-cols-3'
+      case 4: return 'md:grid-cols-4'
+      default: return 'md:grid-cols-2'
+    }
+  }
+
+  const getLgColClass = (cols: number) => {
+    switch (cols) {
+      case 1: return 'lg:grid-cols-1'
+      case 2: return 'lg:grid-cols-2'
+      case 3: return 'lg:grid-cols-3'
+      case 4: return 'lg:grid-cols-4'
+      default: return 'lg:grid-cols-3'
+    }
+  }
+
+  const getXlColClass = (cols: number) => {
+    switch (cols) {
+      case 1: return 'xl:grid-cols-1'
+      case 2: return 'xl:grid-cols-2'
+      case 3: return 'xl:grid-cols-3'
+      case 4: return 'xl:grid-cols-4'
+      default: return 'xl:grid-cols-3'
+    }
+  }
+
   const gridClasses = classNames(
-    'grid gap-6',
-    `grid-cols-${columns.base}`,
-    `sm:grid-cols-${columns.sm}`,
-    `md:grid-cols-${columns.md}`,
-    `lg:grid-cols-${columns.lg}`,
-    `xl:grid-cols-${columns.xl}`
+    'grid gap-5 sm:gap-6',
+    getColClass(columns.base),
+    getSmColClass(columns.sm),
+    getMdColClass(columns.md),
+    getLgColClass(columns.lg),
+    getXlColClass(columns.xl)
   )
 
   if (loading) {
@@ -47,7 +98,7 @@ export function ProductGrid({
   if (products.length === 0) {
     return (
       <div className="col-span-full text-center py-16">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#FFFFFF] border border-[#E2DDD5] flex items-center justify-center text-[#9E8047]">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#FFFFFF] border border-[#999999]/30 flex items-center justify-center text-[#9E8047]">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
           </svg>

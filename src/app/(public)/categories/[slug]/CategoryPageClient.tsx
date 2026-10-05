@@ -89,7 +89,7 @@ export default function CategoryPageClient() {
   return (
     <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
       <div className="container py-6 sm:py-8 lg:py-10">
-        <div className="mb-6 pb-4 border-b border-[#E2DDD5]">
+        <div className="mb-6 pb-4 border-b border-[#999999]/30">
           <nav className="flex items-center gap-2 text-xs text-[#737373] mb-2 font-mono" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-[#1C1D1F] transition-colors">Home</Link>
             <span>/</span>
@@ -101,7 +101,7 @@ export default function CategoryPageClient() {
           <p className="text-[#555555] text-xs sm:text-sm mt-1 font-sans">{category.description}</p>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 p-3 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5]">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 p-3 rounded-xl bg-[#FFFFFF] border border-[#999999]/30">
           <div>
             <span className="text-xs font-sans text-[#737373]">
               {filteredProducts.length} {filteredProducts.length === 1 ? 'Formulation' : 'Formulations'} in this collection
@@ -109,7 +109,7 @@ export default function CategoryPageClient() {
           </div>
           <div className="flex items-center gap-3 ml-auto">
             <ProductSort selectedSort={sortBy} onSortChange={setSortBy} />
-            <div className="flex items-center gap-1 bg-[#FAF7F2] border border-[#E2DDD5] rounded-lg p-0.5">
+            <div className="flex items-center gap-1 bg-[#FAF7F2] border border-[#999999]/30 rounded-lg p-0.5">
               <button
                 onClick={() => setViewMode('grid')}
                 className={classNames(
@@ -137,7 +137,7 @@ export default function CategoryPageClient() {
         {loading ? (
           <ProductGrid products={[]} loading={true} />
         ) : filteredProducts.length === 0 ? (
-          <div className="p-8 text-center bg-[#FFFFFF] rounded-xl border border-[#E2DDD5]">
+          <div className="p-8 text-center bg-[#FFFFFF] rounded-xl border border-[#999999]/30">
             <p className="text-xs text-[#737373]">No formulations available in this collection.</p>
           </div>
         ) : (

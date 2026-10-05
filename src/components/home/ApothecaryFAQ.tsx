@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const faqs = [
   {
@@ -39,15 +40,15 @@ export function ApothecaryFAQ() {
   }
 
   return (
-    <section className="bg-[#FAF7F2] py-12 sm:py-16 border-b border-[#E2DDD5]">
+    <section className="bg-[#EFEFEF] py-8 sm:py-10 lg:py-12 border-b border-[#999999]/30">
       <div className="container">
         
         {/* Section Header */}
-        <div className="max-w-2xl mb-10 sm:mb-12 text-left">
+        <div className="max-w-2xl mb-6 sm:mb-8 text-left">
           <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1.5">
             Apothecary Guidance
           </span>
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#1C1D1F] tracking-tight">
+          <h2 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-[#1C1D1F] tracking-tight">
             Frequently Asked Questions
           </h2>
           <p className="text-xs sm:text-sm text-[#555555] mt-2 font-sans leading-relaxed">
@@ -65,7 +66,7 @@ export function ApothecaryFAQ() {
                 className={`rounded-xl overflow-hidden transition-colors border ${
                   isOpen
                     ? 'bg-[#FFFFFF] border-[#1C1D1F]'
-                    : 'bg-[#FFFFFF] border-[#E2DDD5] hover:border-[#1C1D1F]/50'
+                    : 'bg-[#FAF7F2] border-[#999999]/35 hover:border-[#1C1D1F]/50'
                 }`}
               >
                 <button
@@ -80,18 +81,28 @@ export function ApothecaryFAQ() {
                     className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-200 border ${
                       isOpen
                         ? 'rotate-180 bg-[#1C1D1F] border-[#1C1D1F] text-[#FAF7F2]'
-                        : 'border-[#E2DDD5] text-[#737373]'
+                        : 'border-[#999999]/40 text-[#737373]'
                     }`}
                   >
                     <ChevronDown className="w-3.5 h-3.5" />
                   </div>
                 </button>
 
-                {isOpen && (
-                  <div className="px-4 pb-5 sm:px-5 sm:pb-6 text-xs sm:text-[13px] text-[#555555] leading-relaxed border-t border-[#E2DDD5] pt-4 font-sans">
-                    {faq.answer}
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-5 sm:px-5 sm:pb-6 text-xs sm:text-[13px] text-[#555555] leading-relaxed border-t border-[#999999]/25 pt-4 font-sans">
+                        {faq.answer}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             )
           })}

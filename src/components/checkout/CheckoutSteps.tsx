@@ -432,7 +432,7 @@ export function CheckoutForm() {
       <div className="max-w-5xl mx-auto">
         
         {/* Compact Page Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 sm:mb-5 border-b border-[#E2DDD5]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 sm:mb-5 border-b border-[#999999]/30">
           <div>
             <span className="text-[9.5px] uppercase tracking-[0.2em] font-semibold text-[#9E8047] block">
               Direct Apothecary Dispatch
@@ -461,10 +461,10 @@ export function CheckoutForm() {
           <div className="lg:col-span-7 space-y-4">
             
             {/* Card 1: Contact & Delivery Address */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm space-y-4">
-              <div className="flex items-center justify-between border-b border-[#E2DDD5] pb-2.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 shadow-sm space-y-4">
+              <div className="flex items-center justify-between border-b border-[#999999]/30 pb-2.5">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52]">
+                  <div className="w-7 h-7 rounded-lg bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52]">
                     <MapPin className="w-3.5 h-3.5" />
                   </div>
                   <div>
@@ -494,7 +494,7 @@ export function CheckoutForm() {
                     className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.firstName
                         ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                        : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
+                        : 'border-[#999999]/30 focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                     }`}
                   />
                   {errors.firstName && (
@@ -518,7 +518,7 @@ export function CheckoutForm() {
                     className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.lastName
                         ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                        : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
+                        : 'border-[#999999]/30 focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                     }`}
                   />
                   {errors.lastName && (
@@ -558,7 +558,7 @@ export function CheckoutForm() {
                           ? 'border-[#4E5F52]/50 bg-[#EFF4F0] text-[#4E5F52] font-semibold'
                           : errors.phone
                           ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                          : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
+                          : 'border-[#999999]/30 focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                       }`}
                     />
                     {isPhoneVerified ? (
@@ -588,7 +588,7 @@ export function CheckoutForm() {
 
                   {/* Inline OTP Verification Box when OTP is sent */}
                   {!isPhoneVerified && otpSent && (
-                    <div className="mt-2.5 p-3 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5] space-y-2.5 shadow-sm">
+                    <div className="mt-2.5 p-3 rounded-xl bg-[#FAF7F2] border border-[#999999]/30 space-y-2.5 shadow-sm">
                       <div className="flex items-center justify-between text-xs text-[#1C1D1F]">
                         <span className="flex items-center gap-1.5 font-semibold text-[11px]">
                           <KeyRound className="w-3.5 h-3.5 text-[#4E5F52]" />
@@ -626,7 +626,7 @@ export function CheckoutForm() {
                             if (otpError) setOtpError(null)
                           }}
                           placeholder="••••••"
-                          className="flex-1 px-3 py-1.5 rounded-lg bg-[#FFFFFF] border border-[#E2DDD5] text-center font-mono text-sm tracking-[0.3em] text-[#1C1D1F] focus:outline-none focus:border-[#4E5F52]"
+                          className="flex-1 px-3 py-1.5 rounded-lg bg-[#FFFFFF] border border-[#999999]/30 text-center font-mono text-sm tracking-[0.3em] text-[#1C1D1F] focus:outline-none focus:border-[#4E5F52]"
                         />
                         <button
                           type="button"
@@ -646,7 +646,7 @@ export function CheckoutForm() {
                       )}
 
                       {whatsappVerifyUrl && (
-                        <div className="pt-1 text-center border-t border-[#E2DDD5]">
+                        <div className="pt-1 text-center border-t border-[#999999]/30">
                           <a
                             href={whatsappVerifyUrl}
                             target="_blank"
@@ -690,7 +690,7 @@ export function CheckoutForm() {
                     className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.email
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
+                        : 'border-[#999999]/30 focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                     }`}
                   />
                   {errors.email && (
@@ -716,7 +716,7 @@ export function CheckoutForm() {
                   className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                     errors.addressLine1
                       ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                      : 'border-[#E2DDD5] focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
+                      : 'border-[#999999]/30 focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20'
                   }`}
                 />
                 {errors.addressLine1 && (
@@ -734,7 +734,7 @@ export function CheckoutForm() {
                   value={formData.addressLine2}
                   onChange={e => setFormData({ ...formData, addressLine2: e.target.value })}
                   placeholder="e.g. Near Metro Station / Behind Axis Bank"
-                  className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5] focus:border-[#4E5F52] text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none focus:ring-1 focus:ring-[#4E5F52]/20 transition-all"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#999999]/30 focus:border-[#4E5F52] text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none focus:ring-1 focus:ring-[#4E5F52]/20 transition-all"
                 />
               </div>
 
@@ -756,7 +756,7 @@ export function CheckoutForm() {
                     className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.city
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-[#E2DDD5] focus:border-[#4E5F52]'
+                        : 'border-[#999999]/30 focus:border-[#4E5F52]'
                     }`}
                   />
                   {errors.city && (
@@ -772,7 +772,7 @@ export function CheckoutForm() {
                     id="field-state"
                     value={formData.state}
                     onChange={e => setFormData({ ...formData, state: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5] focus:border-[#4E5F52] text-xs text-[#1C1D1F] focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#999999]/30 focus:border-[#4E5F52] text-xs text-[#1C1D1F] focus:outline-none"
                   >
                     {INDIAN_STATES.map(s => (
                       <option key={s} value={s} className="bg-[#FFFFFF] text-[#1C1D1F]">
@@ -800,7 +800,7 @@ export function CheckoutForm() {
                     className={`w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
                       errors.pincode
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-[#E2DDD5] focus:border-[#4E5F52]'
+                        : 'border-[#999999]/30 focus:border-[#4E5F52]'
                     }`}
                   />
                   {errors.pincode && (
@@ -811,10 +811,10 @@ export function CheckoutForm() {
             </div>
 
             {/* Card 2: Payment & Order Confirmation Preference */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm space-y-3">
-              <div className="flex items-center justify-between border-b border-[#E2DDD5] pb-2.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 shadow-sm space-y-3">
+              <div className="flex items-center justify-between border-b border-[#999999]/30 pb-2.5">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52]">
+                  <div className="w-7 h-7 rounded-lg bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52]">
                     <CreditCard className="w-3.5 h-3.5" />
                   </div>
                   <h2 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#1C1D1F]">
@@ -831,7 +831,7 @@ export function CheckoutForm() {
                   className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                     formData.paymentMethod === 'whatsapp'
                       ? 'bg-[#F5F1EB] border-[#4E5F52] shadow-xs'
-                      : 'bg-[#FAF7F2] border-[#E2DDD5] hover:border-[#D5CEC4]'
+                      : 'bg-[#FAF7F2] border-[#999999]/30 hover:border-[#D5CEC4]'
                   }`}
                 >
                   <input
@@ -863,7 +863,7 @@ export function CheckoutForm() {
                   className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                     formData.paymentMethod === 'cod'
                       ? 'bg-[#F5F1EB] border-[#4E5F52] shadow-xs'
-                      : 'bg-[#FAF7F2] border-[#E2DDD5] hover:border-[#D5CEC4]'
+                      : 'bg-[#FAF7F2] border-[#999999]/30 hover:border-[#D5CEC4]'
                   }`}
                 >
                   <input
@@ -895,7 +895,7 @@ export function CheckoutForm() {
                   className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                     formData.paymentMethod === 'upi'
                       ? 'bg-[#F5F1EB] border-[#4E5F52] shadow-xs'
-                      : 'bg-[#FAF7F2] border-[#E2DDD5] hover:border-[#D5CEC4]'
+                      : 'bg-[#FAF7F2] border-[#999999]/30 hover:border-[#D5CEC4]'
                   }`}
                 >
                   <input
@@ -919,7 +919,7 @@ export function CheckoutForm() {
             </div>
 
             {/* Card 3: Optional Delivery Note */}
-            <div className="p-3.5 sm:p-4 rounded-xl bg-[#FFFFFF] border border-[#E2DDD5]">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-[#FFFFFF] border border-[#999999]/30">
               <label className="block text-[11px] font-medium text-[#1C1D1F] mb-1">
                 Special Delivery Instructions <span className="text-[#999999] font-normal">(Optional)</span>
               </label>
@@ -928,7 +928,7 @@ export function CheckoutForm() {
                 value={formData.notes}
                 onChange={e => setFormData({ ...formData, notes: e.target.value })}
                 placeholder="e.g. Deliver between 2 PM - 6 PM, leave with security guard, plain brown box."
-                className="w-full px-3 py-2 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] focus:border-[#4E5F52] text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none focus:ring-1 focus:ring-[#4E5F52]/20 resize-none"
+                className="w-full px-3 py-2 rounded-lg bg-[#FAF7F2] border border-[#999999]/30 focus:border-[#4E5F52] text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none focus:ring-1 focus:ring-[#4E5F52]/20 resize-none"
               />
             </div>
 
@@ -936,10 +936,10 @@ export function CheckoutForm() {
 
           {/* Right Column: Sticky Order Summary & Direct WhatsApp Action (5 Cols) */}
           <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-20">
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm space-y-4">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 shadow-sm space-y-4">
               
               {/* Summary Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-[#E2DDD5]">
+              <div className="flex items-center justify-between pb-3 border-b border-[#999999]/30">
                 <h3 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#1C1D1F]">
                   Order Summary ({itemCount} {itemCount === 1 ? 'item' : 'items'})
                 </h3>
@@ -956,9 +956,9 @@ export function CheckoutForm() {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center gap-3 p-2 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5]"
+                      className="flex items-center gap-3 p-2 rounded-xl bg-[#FAF7F2] border border-[#999999]/30"
                     >
-                      <div className="relative w-11 h-11 rounded-lg bg-[#FFFFFF] border border-[#E2DDD5] flex-shrink-0 overflow-hidden">
+                      <div className="relative w-11 h-11 rounded-lg bg-[#FFFFFF] border border-[#999999]/30 flex-shrink-0 overflow-hidden">
                         <Image
                           src={resolvedImg.src}
                           alt={item.product.name}
@@ -991,7 +991,7 @@ export function CheckoutForm() {
               </div>
 
               {/* Compact Coupon Code Input */}
-              <div className="pt-2 border-t border-[#E2DDD5]">
+              <div className="pt-2 border-t border-[#999999]/30">
                 {couponCode ? (
                   <div className="flex items-center justify-between p-2 rounded-lg bg-[#EFF4F0] border border-[#4E5F52]/30 text-xs">
                     <div className="flex items-center gap-1.5 text-[#4E5F52]">
@@ -1014,7 +1014,7 @@ export function CheckoutForm() {
                         value={couponInput}
                         onChange={e => setCouponInput(e.target.value.toUpperCase())}
                         placeholder="Promo code (e.g. AYUR10)"
-                        className="flex-1 px-2.5 py-1.5 rounded-lg bg-[#FAF7F2] border border-[#E2DDD5] text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none uppercase"
+                        className="flex-1 px-2.5 py-1.5 rounded-lg bg-[#FAF7F2] border border-[#999999]/30 text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none uppercase"
                       />
                       <button
                         onClick={handleApplyCoupon}
@@ -1032,7 +1032,7 @@ export function CheckoutForm() {
               </div>
 
               {/* Price Calculations */}
-              <div className="space-y-1.5 text-xs pt-2 border-t border-[#E2DDD5]">
+              <div className="space-y-1.5 text-xs pt-2 border-t border-[#999999]/30">
                 <div className="flex justify-between text-[#737373]">
                   <span>Subtotal</span>
                   <span className="text-[#1C1D1F] font-medium">{formatINR(subtotal)}</span>
@@ -1049,7 +1049,7 @@ export function CheckoutForm() {
                     {shippingCalc.freeShipping ? 'FREE' : formatINR(shippingCalc.cost)}
                   </span>
                 </div>
-                <div className="flex justify-between text-base font-semibold text-[#1C1D1F] pt-2 border-t border-[#E2DDD5]">
+                <div className="flex justify-between text-base font-semibold text-[#1C1D1F] pt-2 border-t border-[#999999]/30">
                   <span>Grand Total</span>
                   <span className="text-[#1C1D1F] font-bold">{formatINR(total)}</span>
                 </div>
@@ -1092,7 +1092,7 @@ export function CheckoutForm() {
                       <button
                         onClick={() => handlePlaceOrder('cod')}
                         disabled={isSubmitting}
-                        className="w-full py-2.5 px-4 rounded-xl bg-[#FAF7F2] hover:bg-[#F0ECE4] border border-[#E2DDD5] text-[#1C1D1F] font-medium text-xs tracking-wide transition-all"
+                        className="w-full py-2.5 px-4 rounded-xl bg-[#FAF7F2] hover:bg-[#F0ECE4] border border-[#999999]/30 text-[#1C1D1F] font-medium text-xs tracking-wide transition-all"
                       >
                         Confirm Doorstep COD ({formatINR(total)})
                       </button>

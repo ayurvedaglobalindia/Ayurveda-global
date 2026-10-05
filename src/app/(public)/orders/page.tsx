@@ -43,10 +43,10 @@ const mockOrders = [
 ]
 
 const statusConfig = {
-  confirmed: { label: 'Confirmed', icon: CheckCircle2, color: 'bg-[#F5F1EB] text-[#4E5F52] border border-[#E2DDD5]' },
-  processing: { label: 'Processing', icon: Clock, color: 'bg-[#FAF7F2] text-[#9E8047] border border-[#E2DDD5]' },
-  shipped: { label: 'Dispatched', icon: Truck, color: 'bg-[#FAF7F2] text-[#1C1D1F] border border-[#E2DDD5]' },
-  delivered: { label: 'Delivered', icon: CheckCircle2, color: 'bg-[#F5F1EB] text-[#4E5F52] border border-[#E2DDD5]' },
+  confirmed: { label: 'Confirmed', icon: CheckCircle2, color: 'bg-[#F5F1EB] text-[#4E5F52] border border-[#999999]/30' },
+  processing: { label: 'Processing', icon: Clock, color: 'bg-[#FAF7F2] text-[#9E8047] border border-[#999999]/30' },
+  shipped: { label: 'Dispatched', icon: Truck, color: 'bg-[#FAF7F2] text-[#1C1D1F] border border-[#999999]/30' },
+  delivered: { label: 'Delivered', icon: CheckCircle2, color: 'bg-[#F5F1EB] text-[#4E5F52] border border-[#999999]/30' },
   cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-rose-50 text-rose-700 border border-rose-200' },
 }
 
@@ -55,7 +55,7 @@ export default function OrdersPage() {
     <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
       <div className="container py-6 sm:py-8 lg:py-10">
         
-        <div className="mb-6 pb-4 border-b border-[#E2DDD5]">
+        <div className="mb-6 pb-4 border-b border-[#999999]/30">
           <Link href="/account" className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#737373] hover:text-[#1C1D1F] transition-colors mb-2">
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Account</span>
@@ -71,10 +71,10 @@ export default function OrdersPage() {
 
             return (
               <Link key={order.id} href={`/orders/${order.id}`} className="block">
-                <div className="bg-[#FFFFFF] border border-[#E2DDD5] rounded-xl p-4 sm:p-5 hover:border-[#1C1D1F] transition-colors shadow-xs">
+                <div className="bg-[#FFFFFF] border border-[#999999]/30 rounded-xl p-4 sm:p-5 hover:border-[#1C1D1F] transition-colors shadow-xs">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-14 h-14 rounded-lg bg-[#F5F1EB] border border-[#E2DDD5] flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      <div className="w-14 h-14 rounded-lg bg-[#F5F1EB] border border-[#999999]/30 flex items-center justify-center flex-shrink-0 overflow-hidden">
                         {order.items[0] && (
                           <Image
                             src={order.items[0].image}

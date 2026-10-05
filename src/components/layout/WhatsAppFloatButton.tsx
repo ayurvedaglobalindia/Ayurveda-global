@@ -65,10 +65,10 @@ export function WhatsAppFloatButton() {
             transition={{ duration: 0.2 }}
             className="absolute bottom-16 right-0 w-64"
           >
-            <div className="bg-[#FAF7F2] rounded-2xl shadow-xl border border-[#E2DDD5] p-3.5 space-y-2">
+            <div className="bg-[#FAF7F2] rounded-2xl shadow-xl border border-[#999999]/30 p-3.5 space-y-2">
               <button
                 onClick={() => handleWhatsAppClick('float')}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#E2DDD5] transition-colors text-left group"
+                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#999999]/30 transition-colors text-left group"
               >
                 <div className="w-9 h-9 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                   <MessageCircle className="w-5 h-5 text-[#4E5F52]" />
@@ -81,7 +81,7 @@ export function WhatsAppFloatButton() {
 
               <button
                 onClick={() => handleWhatsAppClick('contact')}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#E2DDD5] transition-colors text-left group"
+                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#999999]/30 transition-colors text-left group"
               >
                 <div className="w-9 h-9 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                   <Zap className="w-5 h-5 text-[#4E5F52]" />
@@ -94,7 +94,7 @@ export function WhatsAppFloatButton() {
 
               <button
                 onClick={() => handleWhatsAppClick('checkout')}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#E2DDD5] transition-colors text-left group"
+                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#999999]/30 transition-colors text-left group"
               >
                 <div className="w-9 h-9 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                   <ShoppingBag className="w-5 h-5 text-[#4E5F52]" />
@@ -147,9 +147,9 @@ export function WhatsAppFloatButton() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
-          className="absolute bottom-16 right-0 bg-[#FFFFFF] text-[#1C1D1F] px-3.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap shadow-md border border-[#E2DDD5]"
+          className="absolute bottom-16 right-0 bg-[#FFFFFF] text-[#1C1D1F] px-3.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap shadow-md border border-[#999999]/30"
         >
-          Chat with Ayurvedic Desk
+          Vaidya Consult
         </motion.div>
       )}
     </div>

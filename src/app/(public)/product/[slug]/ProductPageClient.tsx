@@ -33,7 +33,7 @@ export default function ProductPageClient() {
       />
 
       <div className="container py-4 sm:py-6 lg:py-8">
-        <div className="mb-4 sm:mb-6 pb-3 border-b border-[#E2DDD5]">
+        <div className="mb-4 sm:mb-6 pb-3 border-b border-[#999999]/30">
           <Breadcrumb items={breadcrumbItems} className="mb-0 text-xs sm:text-sm text-[#737373]" />
         </div>
 
@@ -52,7 +52,7 @@ export default function ProductPageClient() {
         </div>
 
         {relatedProducts.length > 0 && (
-          <section className="mt-10 sm:mt-14 pt-8 sm:pt-10 border-t border-[#E2DDD5]">
+          <section className="mt-10 sm:mt-14 pt-8 sm:pt-10 border-t border-[#999999]/30">
             <div className="mb-6">
               <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block">
                 Complementary Formulations

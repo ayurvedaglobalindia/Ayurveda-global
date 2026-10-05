@@ -43,7 +43,7 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Mobile Bottom Navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-t border-[#E2DDD5] px-2 py-1.5 shadow-lg safe-area-pb"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-t border-[#999999]/30 px-2 py-1.5 shadow-lg safe-area-pb"
     >
       <div className="flex items-center justify-around max-w-md mx-auto">
         {/* 1. Home */}
@@ -71,18 +71,19 @@ export function MobileBottomNav() {
           <span>Search</span>
         </button>
 
-        {/* 3. Center Action: Vaidya Doctor Desk */}
+        {/* 3. Center Action: Vaidya Consult */}
         <button
           type="button"
           onClick={handleDoctorWhatsApp}
           className="flex flex-col items-center gap-0.5 text-[10px] text-[#4E5F52] hover:text-[#3D4B40] transition-colors -mt-4 group"
           aria-label="Consult Chief Vaidya on WhatsApp"
         >
-          <div className="w-12 h-12 rounded-full bg-[#FFFFFF] border-2 border-[#4E5F52]/40 flex items-center justify-center shadow-md text-[#4E5F52] group-hover:scale-105 transition-transform">
-            <HeartPulse className="w-5 h-5 text-[#4E5F52]" />
+          <div className="relative w-12 h-12 rounded-full bg-[#FFFFFF] border-2 border-[#4E5F52]/50 flex items-center justify-center shadow-md text-[#4E5F52] group-hover:scale-105 transition-transform">
+            <span className="absolute inset-0 rounded-full bg-[#4E5F52]/10 animate-ping opacity-75 pointer-events-none" />
+            <HeartPulse className="w-5 h-5 text-[#4E5F52] animate-pulse relative z-10" />
           </div>
           <span className="text-[9.5px] font-semibold text-[#4E5F52] mt-0.5 tracking-wide">
-            Vaidya Desk
+            Vaidya Consult
           </span>
         </button>
 

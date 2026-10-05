@@ -8,7 +8,7 @@ interface SkeletonProps {
 }
 
 export function Skeleton({ className, variant = 'text' }: SkeletonProps) {
-  const baseStyles = 'animate-pulse bg-[#E2DDD5]/60 border border-[#E2DDD5]/40 rounded'
+  const baseStyles = 'animate-pulse bg-[#999999]/20 border border-[#999999]/30 rounded'
 
   const variantStyles = {
     text: 'h-4 w-full',
@@ -75,7 +75,7 @@ export function ProductDetailSkeleton() {
 
 export function CartItemSkeleton() {
   return (
-    <div className="flex gap-4 p-4 bg-[#FFFFFF] rounded-xl border border-[#E2DDD5]">
+    <div className="flex gap-4 p-4 bg-[#FFFFFF] rounded-xl border border-[#999999]/30">
       <Skeleton variant="product" className="w-20 h-20 flex-shrink-0" />
       <div className="flex-1 space-y-3">
         <Skeleton variant="text" className="w-3/4" />

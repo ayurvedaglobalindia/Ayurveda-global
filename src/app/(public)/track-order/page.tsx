@@ -130,9 +130,9 @@ export default function TrackOrderPage() {
             </p>
           </div>
 
-          <div className="p-6 sm:p-8 rounded-2xl border border-[#E2DDD5] bg-[#FFFFFF] shadow-xs">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-[#E2DDD5] gap-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E2DDD5] text-xs font-mono">
+          <div className="p-6 sm:p-8 rounded-2xl border border-[#999999]/30 bg-[#FFFFFF] shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-[#999999]/30 gap-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FAF7F2] border border-[#999999]/30 text-xs font-mono">
                 <StatusIcon className={`w-3.5 h-3.5 ${config.color}`} />
                 <span className="text-[#1C1D1F]">{config.label}</span>
               </div>
@@ -162,7 +162,7 @@ export default function TrackOrderPage() {
               />
             </div>
 
-            <div className="pt-5 border-t border-[#E2DDD5] flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="pt-5 border-t border-[#999999]/30 flex flex-col sm:flex-row items-center justify-between gap-3">
               <Button
                 variant="outline"
                 size="sm"
@@ -191,7 +191,7 @@ export default function TrackOrderPage() {
     <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F] py-8 sm:py-12">
       <div className="container max-w-md mx-auto">
         <div className="text-center mb-6 space-y-1">
-          <div className="w-12 h-12 mx-auto rounded-full bg-[#FFFFFF] border border-[#E2DDD5] flex items-center justify-center text-[#4E5F52] shadow-xs mb-3">
+          <div className="w-12 h-12 mx-auto rounded-full bg-[#FFFFFF] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52] shadow-xs mb-3">
             <Package className="w-6 h-6" />
           </div>
           <h1 className="font-heading text-2xl font-normal text-[#1C1D1F]">Track Your Order</h1>
@@ -200,7 +200,7 @@ export default function TrackOrderPage() {
           </p>
         </div>
 
-        <div className="p-6 rounded-2xl border border-[#E2DDD5] bg-[#FFFFFF] space-y-4 shadow-xs">
+        <div className="p-6 rounded-2xl border border-[#999999]/30 bg-[#FFFFFF] space-y-4 shadow-xs">
           <div>
             <Input
               label="Order ID / Reference Number"
