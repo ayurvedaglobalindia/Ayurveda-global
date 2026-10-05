@@ -36,78 +36,66 @@ export function EditorialHero() {
   }
 
   return (
-    <section className="relative bg-[#08090C] text-[#FAF7EE] py-10 sm:py-14 lg:py-20 border-b border-[#999999]/20 overflow-hidden">
-      {/* Bespoke Dual Atmospheric Lighting: Soft Champagne Gold (Left) & Herbal Nature Green (Right) */}
-      <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-[#D8C28A]/8 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-10 right-0 w-[450px] h-[450px] bg-[#6EE7B7]/7 rounded-full blur-[140px] pointer-events-none" />
-
-      {/* Decorative Subtle Grid Lines for Architectural Luxury Precision */}
+    <section className="relative bg-[#090A0D] text-[#FAF7EE] py-12 sm:py-16 lg:py-24 border-b border-[#999999]/20 overflow-hidden">
+      {/* Subtle organic warmth */}
       <div className="container relative z-10">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
-          {/* Left Column (Editorial Narrative & Clinical Authority) */}
-          <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
+          {/* Left Column (Editorial Narrative & Classical Authority) */}
+          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             
-            {/* Atelier Hallmark Pill */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#11141E]/95 border border-[#999999]/30 text-xs shadow-md mx-auto lg:mx-0 backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#6EE7B7] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#6EE7B7]" />
-              </span>
-              <span className="text-[10px] font-mono tracking-[0.24em] text-[#999999] uppercase font-medium">
-                № 01 • Rasayana Atelier
-              </span>
+            {/* Atelier Heritage Tag */}
+            <div className="inline-flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-[#999999] uppercase">
+              <span>Ayur Veda Global</span>
               <span className="text-[#999999]/40">•</span>
-              <span className="text-[10px] font-semibold text-[#E6D5AC] uppercase tracking-[0.16em]">
-                100% Herbal Actives
-              </span>
+              <span className="text-[#D8C28A] tracking-[0.18em]">Charaka Samhita Classical Pharmacopeia</span>
             </div>
 
             {/* Regal Heading - High-Precision Editorial Typography */}
-            <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-[44px] xl:text-5xl font-light text-[#FAF7EE] leading-[1.18] tracking-tight">
-              Sacred Botanical Science,{' '}
-              <span className="italic font-serif block sm:inline bg-gradient-to-r from-[#F4EBD0] via-[#D8C28A] to-[#6EE7B7] bg-clip-text text-transparent font-normal">
+            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[52px] font-normal text-[#FAF7EE] leading-[1.14] tracking-tight">
+              Classical Botanical Chemistry.{' '}
+              <span className="italic font-serif text-[#D8C28A] font-normal block sm:inline">
                 Formulated for Sustained Vigor.
               </span>
             </h1>
 
             {/* Editorial Thesis Statement in Refined #999999 Gray */}
-            <p className="text-xs sm:text-sm lg:text-[15px] text-[#999999] max-w-xl mx-auto lg:mx-0 leading-relaxed font-sans font-normal">
-              Rooted in classical Charaka Samhita texts. Formulated with high-altitude Himalayan Shilajit, pure organic Ashwagandha, and sacred Rasayana botanicals for cellular ATP vitality, endocrine balance, and enduring stamina.
+            <p className="text-sm sm:text-[15px] text-[#999999] max-w-xl mx-auto lg:mx-0 leading-relaxed font-sans font-normal">
+              Rooted in centuries of classical Ayurvedic compendia. We harvest high-altitude Himalayan Shilajit, pure organic Ashwagandha, and sacred adaptogenic botanicals to restore cellular ATP energy, endocrine balance, and enduring constitutional vitality.
             </p>
 
-            {/* Master Quality Specifications (3-Column Atelier Specification Strip) */}
-            <div className="grid grid-cols-3 gap-2.5 sm:gap-3 pt-1 text-left max-w-xl mx-auto lg:mx-0">
-              <div className="py-2.5 px-3 rounded-2xl bg-gradient-to-br from-[#11141E]/95 to-[#0B0D14]/95 border border-[#999999]/25 hover:border-[#6EE7B7]/40 transition-all duration-300 shadow-sm group">
-                <span className="text-[9.5px] uppercase tracking-[0.18em] text-[#E6D5AC] font-semibold block truncate">
-                  Ashwagandha
+            {/* Master Quality Specifications (3-Column Minimalist Ledger) */}
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-2 text-left max-w-xl mx-auto lg:mx-0 border-y border-[#999999]/20 py-4">
+              <div>
+                <span className="text-[10px] uppercase tracking-[0.16em] text-[#999999] font-mono block">
+                  01 / Ashwagandha
                 </span>
-                <p className="text-xs sm:text-sm font-semibold text-[#FAF7EE] mt-1">5% Withanolides</p>
-                <p className="text-[10px] text-[#999999] hidden sm:block mt-0.5">KSM-66 Standard</p>
+                <p className="text-xs sm:text-sm font-medium text-[#FAF7EE] mt-1">5% Standardized</p>
+                <p className="text-[11px] text-[#999999] mt-0.5">HPLC Withanolides</p>
               </div>
 
-              <div className="py-2.5 px-3 rounded-2xl bg-gradient-to-br from-[#11141E]/95 to-[#0B0D14]/95 border border-[#999999]/25 hover:border-[#D8C28A]/40 transition-all duration-300 shadow-sm group">
-                <span className="text-[9.5px] uppercase tracking-[0.18em] text-[#E6D5AC] font-semibold block truncate">
-                  Pure Shilajit
+              <div className="border-l border-[#999999]/20 pl-3 sm:pl-4">
+                <span className="text-[10px] uppercase tracking-[0.16em] text-[#999999] font-mono block">
+                  02 / Himalayan Shilajit
                 </span>
-                <p className="text-xs sm:text-sm font-semibold text-[#FAF7EE] mt-1">84+ Minerals</p>
-                <p className="text-[10px] text-[#999999] hidden sm:block mt-0.5">16,000+ Ft Sourced</p>
+                <p className="text-xs sm:text-sm font-medium text-[#FAF7EE] mt-1">84+ Ionic Minerals</p>
+                <p className="text-[11px] text-[#999999] mt-0.5">75%+ Fulvic Acid</p>
               </div>
 
-              <div className="py-2.5 px-3 rounded-2xl bg-gradient-to-br from-[#11141E]/95 to-[#0B0D14]/95 border border-[#999999]/25 hover:border-[#6EE7B7]/40 transition-all duration-300 shadow-sm group">
-                <span className="text-[9.5px] uppercase tracking-[0.18em] text-[#E6D5AC] font-semibold block truncate">
-                  Vedic Shodhana
+              <div className="border-l border-[#999999]/20 pl-3 sm:pl-4">
+                <span className="text-[10px] uppercase tracking-[0.16em] text-[#999999] font-mono block">
+                  03 / Vedic Shodhana
                 </span>
-                <p className="text-xs sm:text-sm font-semibold text-[#FAF7EE] mt-1">21-Day Cycles</p>
-                <p className="text-[10px] text-[#999999] hidden sm:block mt-0.5">Triphala Purified</p>
+                <p className="text-xs sm:text-sm font-medium text-[#FAF7EE] mt-1">21 Purification Cycles</p>
+                <p className="text-[11px] text-[#999999] mt-0.5">Triphala Decoctions</p>
               </div>
             </div>
 
             {/* Action CTAs & Concierge */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-1">
               <a
                 href="#apothecary"
-                className="px-7 py-3 sm:py-3.5 rounded-full bg-gradient-to-r from-[#E6D5AC] to-[#D8C28A] hover:from-[#F0E2C2] hover:to-[#E6D5AC] text-[#08090C] font-bold text-xs uppercase tracking-[0.12em] transition-all duration-300 hover:-translate-y-0.5 shadow-[0_6px_24px_rgba(216,194,138,0.25)] flex items-center gap-2 group"
+                className="px-8 py-3.5 rounded-full bg-[#D8C28A] hover:bg-[#E6D5AC] text-[#090A0D] font-semibold text-xs uppercase tracking-[0.14em] transition-all duration-300 hover:scale-[1.02] shadow-sm flex items-center gap-2 group"
               >
                 <span>Explore Formulations</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -115,51 +103,42 @@ export function EditorialHero() {
 
               <button
                 onClick={handleVaidyaConsult}
-                className="px-6 py-3 sm:py-3.5 rounded-full bg-[#11141E]/95 hover:bg-[#151926] border border-[#6EE7B7]/40 hover:border-[#6EE7B7]/70 text-[#6EE7B7] font-semibold text-xs uppercase tracking-[0.12em] transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2 shadow-[0_4px_16px_rgba(110,231,183,0.12)] backdrop-blur-md"
+                className="px-7 py-3.5 rounded-full bg-transparent hover:bg-[#141720] border border-[#999999]/30 hover:border-[#D8C28A]/50 text-[#FAF7EE] font-medium text-xs uppercase tracking-[0.14em] transition-all duration-300 flex items-center gap-2"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-[#6EE7B7]" />
                 <span>Consult Chief Vaidya</span>
               </button>
             </div>
 
-            {/* Trust Proof Metrics Line with #999999 Details */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 pt-1 text-xs text-[#999999]">
+            {/* Quiet Hallmark Footnote */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-1.5 pt-2 text-xs text-[#999999]">
               <div className="flex items-center gap-1.5">
-                <div className="flex text-[#D8C28A]">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                  ))}
-                </div>
-                <span className="text-[#FAF7EE] font-semibold text-xs">4.9 / 5</span>
-                <span>(1,240+ Verified Patrons)</span>
+                <span className="text-[#FAF7EE] font-serif text-sm">4.9 / 5</span>
+                <span>• 1,240+ verified patrons across India</span>
               </div>
               <span className="hidden sm:inline text-[#999999]/40">•</span>
-              <span className="text-[#6EE7B7] font-medium flex items-center gap-1.5 text-xs">
+              <div className="flex items-center gap-1.5 text-[#999999]">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#6EE7B7]" />
-                Pan-India Free Express Delivery • COD Available
-              </span>
+                <span>AYUSH Licensed • 100% Confidential Delivery</span>
+              </div>
             </div>
 
           </div>
 
-          {/* Right Column (Apothecary Arched Showcase & Product Pedestal) */}
-          <div className="lg:col-span-5 flex justify-center relative">
-            {/* Ambient Vitrine Glow */}
-            <div className="absolute inset-0 max-w-[320px] aspect-[4/5] mx-auto bg-gradient-to-t from-[#D8C28A]/10 via-[#6EE7B7]/5 to-transparent rounded-t-[100px] rounded-b-3xl blur-2xl pointer-events-none" />
-
-            <div className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[4/5] flex flex-col justify-between items-center p-4 sm:p-5 rounded-t-[90px] rounded-b-3xl bg-gradient-to-b from-[#151926] via-[#10131B] to-[#08090C] border border-[#999999]/30 hover:border-[#D8C28A]/50 transition-all duration-500 shadow-2xl overflow-hidden group">
+          {/* Right Column (Archival Product Vitrine Presentation) */}
+          <div className="lg:col-span-5 flex justify-center">
+            <div className="relative w-full max-w-[340px] sm:max-w-[380px] p-5 sm:p-6 rounded-3xl bg-[#0D0F15] border border-[#999999]/20 hover:border-[#999999]/40 transition-all duration-500 shadow-xl overflow-hidden group">
               
-              {/* Arch Top Header */}
-              <div className="text-center pt-1 z-10">
-                <span className="inline-block px-3.5 py-1 rounded-full bg-[#08090C]/90 border border-[#6EE7B7]/35 text-[9px] sm:text-[10px] tracking-[0.24em] uppercase text-[#6EE7B7] font-bold shadow-sm backdrop-blur-md">
-                  Master Rasayana Series
-                </span>
+              {/* Monograph Index Header */}
+              <div className="flex items-center justify-between pb-3.5 border-b border-[#999999]/15 text-[10px] font-mono text-[#999999] uppercase tracking-wider">
+                <span>Formulation: Power Combo</span>
+                <span className="text-[#D8C28A]">Batch № 24-AVG</span>
               </div>
 
               {/* Product Photography Showcase with Direct Link */}
               <Link
                 href="/product/vitality-power-combo"
-                className="relative z-10 w-full h-[72%] block my-auto"
+                className="relative w-full aspect-[4/5] block my-3 overflow-hidden rounded-2xl bg-[#090A0D]"
                 aria-label="View Vitality & Performance Power Combo"
               >
                 <Image
@@ -167,19 +146,27 @@ export function EditorialHero() {
                   alt="Ayur Veda Global Vitality Power Combo - Ayurvedic Rasayana Capsules & Topical Elixir"
                   fill
                   priority
-                  className="object-contain drop-shadow-[0_16px_36px_rgba(0,0,0,0.95)] group-hover:scale-105 transition-transform duration-500 rounded-xl"
-                  sizes="(max-width: 768px) 280px, 320px"
+                  className="object-cover group-hover:scale-103 transition-transform duration-700"
+                  sizes="(max-width: 768px) 340px, 380px"
                 />
               </Link>
 
-              {/* Pedestal Base Hallmark Strip */}
-              <div className="w-full border-t border-[#999999]/20 pt-2.5 flex items-center justify-between text-xs z-10">
-                <div className="flex items-center gap-1.5 text-[#E6D5AC] font-medium text-[10px] sm:text-[11px]">
-                  <Leaf className="w-3.5 h-3.5 text-[#6EE7B7] flex-shrink-0" />
-                  <span>100% Classical Actives</span>
+              {/* Archival Monograph Details */}
+              <div className="pt-3 border-t border-[#999999]/15 space-y-1.5 text-[11px] text-[#999999]">
+                <div className="flex justify-between">
+                  <span className="font-mono uppercase text-[9.5px]">Composition</span>
+                  <span className="text-[#FAF7EE] text-right font-medium">Shilajit + Ashwagandha + Delay Spray</span>
                 </div>
-                <span className="text-[9px] sm:text-[10px] text-[#999999] uppercase tracking-wider font-mono">AVG-2026-R</span>
+                <div className="flex justify-between">
+                  <span className="font-mono uppercase text-[9.5px]">Standardization</span>
+                  <span className="text-[#6EE7B7] text-right">HPLC Tested &amp; Heavy Metal Screened</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-mono uppercase text-[9.5px]">Discretion</span>
+                  <span className="text-[#FAF7EE] text-right">Plain Unmarked Box • COD Available</span>
+                </div>
               </div>
+
             </div>
           </div>
 

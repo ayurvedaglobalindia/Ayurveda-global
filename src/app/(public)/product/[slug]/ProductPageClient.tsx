@@ -26,15 +26,15 @@ export default function ProductPageClient() {
   ]
 
   return (
-    <>
+    <div className="bg-[#FAF7F2] text-[#1C1D1F] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateProductSEO(product).structuredData) }}
       />
 
       <div className="container py-4 sm:py-6 lg:py-8">
-        <div className="mb-4 sm:mb-5 pb-2.5 border-b border-[#D4AF37]/20">
-          <Breadcrumb items={breadcrumbItems} className="mb-0 text-xs sm:text-sm text-[#A7B3A9]" />
+        <div className="mb-4 sm:mb-6 pb-3 border-b border-[#E2DDD5]">
+          <Breadcrumb items={breadcrumbItems} className="mb-0 text-xs sm:text-sm text-[#737373]" />
         </div>
 
         {product.ageRestricted && (
@@ -45,19 +45,21 @@ export default function ProductPageClient() {
           />
         )}
 
-        <div className="mb-6 sm:mb-8">
-          <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center text-[#D4AF37]">Loading details...</div>}>
+        <div className="mb-8 sm:mb-12">
+          <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center text-[#737373]">Loading formulation details...</div>}>
             <ProductDetails product={product} />
           </Suspense>
         </div>
 
         {relatedProducts.length > 0 && (
-          <section className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-[#D4AF37]/20">
-            <div className="flex items-center justify-between mb-5">
-              <div>
-                <span className="text-[10px] sm:text-xs font-bold text-[#D4AF37] uppercase tracking-wider">Synergistic Pairings</span>
-                <h2 className="font-heading text-lg sm:text-xl md:text-2xl font-medium text-white mt-0.5">Complete Your Ayurvedic Regimen</h2>
-              </div>
+          <section className="mt-10 sm:mt-14 pt-8 sm:pt-10 border-t border-[#E2DDD5]">
+            <div className="mb-6">
+              <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block">
+                Complementary Formulations
+              </span>
+              <h2 className="font-heading text-xl sm:text-2xl font-normal text-[#1C1D1F] mt-1">
+                Complete Your Ayurvedic Regimen
+              </h2>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {relatedProducts.map(relatedProduct => (
@@ -67,6 +69,6 @@ export default function ProductPageClient() {
           </section>
         )}
       </div>
-    </>
+    </div>
   )
 }

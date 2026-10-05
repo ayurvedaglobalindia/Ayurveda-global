@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   }
 
 export const viewport: Viewport = {
-  themeColor: '#08090C',
+  themeColor: '#FAF7F2',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -63,13 +63,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="antialiased dark">
+    <html lang="en" className="antialiased">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://wa.me" />
       </head>
-      <body className="min-h-screen bg-ayur-void text-ayur-cream font-body selection:bg-ayur-gold selection:text-ayur-void overflow-x-hidden w-full max-w-full">
+      <body className="min-h-screen bg-[#FAF7F2] text-[#1C1D1F] font-body selection:bg-[#EAE4DC] selection:text-[#1C1D1F] overflow-x-hidden w-full max-w-full">
         <Providers>
           {children}
           <Toaster />

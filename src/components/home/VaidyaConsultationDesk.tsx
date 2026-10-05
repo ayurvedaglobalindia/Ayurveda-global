@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { MessageCircle, PhoneCall, ShieldCheck, Clock, Award, CheckCircle2, User, Phone, MapPin } from 'lucide-react'
+import { MessageCircle, ShieldCheck, CheckCircle2, User, Phone, MapPin } from 'lucide-react'
 import { useUserStore } from '@/store/userStore'
 import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from '@/store/whatsappStore'
 import { normalizeIndianPhone } from '@/lib/auth/otpService'
 
 export function VaidyaConsultationDesk() {
   const { user } = useUserStore()
-  const [selectedConcern, setSelectedConcern] = useState('Daily Fatigue & Workout Stamina')
+  const [selectedConcern, setSelectedConcern] = useState('Daily Stamina & Energy Optimization')
   const [patientName, setPatientName] = useState('')
   const [patientPhone, setPatientPhone] = useState('')
   const [patientCity, setPatientCity] = useState('')
@@ -28,10 +28,10 @@ export function VaidyaConsultationDesk() {
   }, [user])
 
   const concerns = [
-    'Daily Fatigue & Workout Stamina',
+    'Daily Stamina & Energy Optimization',
     'Intimate Endurance & Performance Timing',
-    'Vitality Power Combo Course Guidance',
-    'Dosha Imbalance & Agni Cleansing',
+    'Scalp Nutrition & Hair Regrowth Protocol',
+    'Dosha Balance & General Wellness',
   ]
 
   const handleStartConsultation = () => {
@@ -40,7 +40,7 @@ export function VaidyaConsultationDesk() {
     const finalPhone = patientPhone.trim() || user?.phone || ''
 
     if (!finalName) {
-      newErrors.name = 'Please enter your full name'
+      newErrors.name = 'Please enter your name'
     }
 
     const phoneVal = normalizeIndianPhone(finalPhone)
@@ -59,128 +59,115 @@ export function VaidyaConsultationDesk() {
       patientPhone: phoneVal.phone,
       patientCity: patientCity.trim() || (user?.addresses?.[0]?.city ? `${user.addresses[0].city}, ${user.addresses[0].state || ''}` : ''),
       concern: selectedConcern,
-      enquiry: `Pranam Vaidya Ji. I would like confidential Ayurvedic guidance regarding: "${selectedConcern}". Please advise me on the recommended herbal dosage, timing, and dietary lifestyle guidelines.`,
+      enquiry: `Pranam Vaidya Ji. I would like confidential Ayurvedic guidance regarding: "${selectedConcern}". Please advise me on the recommended herbal dosage, timing, and routine.`,
       source: 'doctor-section',
     })
     window.open(buildWhatsAppUrl(msg), '_blank')
   }
 
   return (
-    <section className="bg-[#08090C] py-12 sm:py-16 lg:py-20 border-b border-[#999999]/20 text-[#FAF7EE] relative overflow-hidden">
-      <div className="container relative z-10">
-        <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-b from-[#131722] via-[#0E1118] to-[#0A0C11] border border-[#999999]/25 p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
-          
-          {/* Subtle Background Lighting */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#6EE7B7]/5 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#D8C28A]/5 rounded-full blur-[120px] pointer-events-none" />
-
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+    <section className="bg-[#FAF7F2] py-14 sm:py-20 lg:py-24 border-b border-[#E2DDD5]">
+      <div className="container">
+        <div className="max-w-5xl mx-auto rounded-2xl bg-[#FFFFFF] border border-[#E2DDD5] p-6 sm:p-8 lg:p-12 shadow-sm">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left Column: Doctor Profile & Narrative */}
-            <div className="lg:col-span-7 space-y-5">
-              <div className="flex flex-wrap items-center gap-2.5">
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#151926] border border-[#999999]/25 text-[#D8C28A] text-[10px] font-semibold tracking-[0.24em] uppercase">
-                  <Award className="w-3.5 h-3.5 text-[#D8C28A]" />
-                  <span>№ 06 • Certified BAMS / MD Vaidyas</span>
-                </div>
-
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#151926] border border-[#6EE7B7]/30 text-[10px] text-[#6EE7B7] font-medium">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#6EE7B7] opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#6EE7B7]" />
-                  </span>
-                  <span>Physician Desk Active</span>
+            {/* Left Column: Doctor Profile & Guidance Narrative */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-[#737373]">
+                  Confidential Guidance
+                </span>
+                <span className="text-[#999999]/40">•</span>
+                <div className="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-[0.16em] text-[#4E5F52]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#4E5F52]" />
+                  <span>Resident Vaidya Desk</span>
                 </div>
               </div>
 
-              <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-[#FAF7EE] tracking-tight leading-snug">
-                Confidential Ayurvedic Consultation,{' '}
-                <span className="italic font-serif text-[#D8C28A]">
-                  Tailored to Your Constitution.
-                </span>
+              <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#1C1D1F] tracking-tight leading-snug">
+                Confidential Ayurvedic Consultation
               </h2>
 
-              <p className="text-xs sm:text-sm text-[#999999] leading-relaxed font-sans font-normal">
-                Every human constitution (Prakriti) possesses distinct biological requirements. Our in-house Ayurvedic physicians assess your lifestyle, doshic balance, and stamina goals to provide discreet, individualized herbal dosage protocols.
+              <p className="text-xs sm:text-sm text-[#555555] leading-relaxed font-sans font-normal">
+                Every constitution has unique physiological requirements. Our Ayurvedic practitioners review your daily lifestyle, doshic balance, and health goals to provide personalized dosage recommendations.
               </p>
 
               {/* Consultation Features */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2 text-xs text-[#FAF7EE]">
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#6EE7B7] flex-shrink-0" />
-                  <span>100% Confidential &amp; Private</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#1C1D1F]">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#4E5F52] flex-shrink-0" />
+                  <span className="text-[#555555]">100% Confidential &amp; Private</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#6EE7B7] flex-shrink-0" />
-                  <span>No Consultation Fees</span>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#4E5F52] flex-shrink-0" />
+                  <span className="text-[#555555]">Complimentary Consultation</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#6EE7B7] flex-shrink-0" />
-                  <span>Personalized Diet &amp; Herb Regimen</span>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#4E5F52] flex-shrink-0" />
+                  <span className="text-[#555555]">Personalized Herbal Routine</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#6EE7B7] flex-shrink-0" />
-                  <span>Instant WhatsApp / Phone Callback</span>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#4E5F52] flex-shrink-0" />
+                  <span className="text-[#555555]">Direct WhatsApp Interaction</span>
                 </div>
               </div>
 
               {/* Verified Physician Badge */}
-              <div className="pt-4 border-t border-[#999999]/20 flex items-center gap-4">
-                <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#D8C28A]/60 shadow-md flex-shrink-0 bg-[#151926]">
+              <div className="pt-4 border-t border-[#E2DDD5] flex items-center gap-4">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden border border-[#E2DDD5] flex-shrink-0 bg-[#F5F1EB]">
                   <Image
                     src="/images/team/mageesh.jpg"
                     alt="Ayurvedic Vaidya Panel Lead"
                     fill
                     className="object-cover object-top"
-                    sizes="56px"
+                    sizes="48px"
                   />
-                  <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#6EE7B7] rounded-full border-2 border-[#08090C]" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-[#FAF7EE] flex items-center gap-1.5">
-                    <span>Dr. Vaidya Panel (BAMS, MD Ayu)</span>
-                    <ShieldCheck className="w-4 h-4 text-[#6EE7B7]" />
+                  <p className="text-xs sm:text-sm font-medium text-[#1C1D1F] flex items-center gap-1.5">
+                    <span>Ayurvedic Vaidya Panel (BAMS)</span>
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#4E5F52]" />
                   </p>
-                  <p className="text-xs text-[#999999] mt-0.5">Over 25+ Years of Classical Rasayana &amp; Clinical Practice</p>
+                  <p className="text-[11px] text-[#737373] font-sans mt-0.5">Classical Rasayana Guidance • Mon–Sat: 09:00 – 20:00 IST</p>
                 </div>
               </div>
             </div>
 
             {/* Right Column: Interactive Consultation Card */}
-            <div className="lg:col-span-5 p-6 sm:p-7 rounded-3xl bg-[#090C12]/95 border border-[#999999]/25 shadow-2xl space-y-4">
+            <div className="lg:col-span-5 p-6 sm:p-7 rounded-xl bg-[#FAF7F2] border border-[#E2DDD5] space-y-5">
               <div>
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#6EE7B7] block mb-1">
-                  Step 1: Select Your Primary Concern
+                <span className="text-[10px] uppercase tracking-[0.18em] font-mono text-[#737373] block mb-2">
+                  01 / Select Primary Concern
                 </span>
-                <div className="space-y-2 mt-2.5">
+                <div className="space-y-1.5">
                   {concerns.map((c) => (
                     <button
                       key={c}
                       onClick={() => setSelectedConcern(c)}
-                      className={`w-full text-left p-3 rounded-xl text-xs transition-all border flex items-center justify-between ${
+                      className={`w-full text-left p-2.5 rounded-lg text-xs transition-colors border flex items-center justify-between ${
                         selectedConcern === c
-                          ? 'bg-[#151926] border-[#6EE7B7]/60 text-[#FAF7EE] font-medium shadow-md'
-                          : 'bg-[#11141E] border-[#999999]/20 text-[#999999] hover:text-[#FAF7EE] hover:border-[#999999]/40'
+                          ? 'bg-[#1C1D1F] border-[#1C1D1F] text-[#FAF7F2] font-medium'
+                          : 'bg-[#FFFFFF] border-[#E2DDD5] text-[#555555] hover:text-[#1C1D1F]'
                       }`}
                     >
-                      <span className="text-xs leading-snug">{c}</span>
+                      <span className="text-xs">{c}</span>
                       {selectedConcern === c && (
-                        <CheckCircle2 className="w-4 h-4 text-[#6EE7B7] flex-shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#FAF7F2] flex-shrink-0" />
                       )}
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Step 2: Patient Context (Prefilled / Editable) */}
-              <div className="space-y-3 pt-3 border-t border-[#999999]/20">
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#6EE7B7] block">
-                  Step 2: Patient Details
+              {/* Step 2: Patient Context */}
+              <div className="space-y-2.5 pt-3 border-t border-[#E2DDD5]">
+                <span className="text-[10px] uppercase tracking-[0.18em] font-mono text-[#737373] block">
+                  02 / Patient Information
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <div>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#999999] pointer-events-none" />
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#737373] pointer-events-none" />
                       <input
                         type="text"
                         value={patientName}
@@ -188,17 +175,17 @@ export function VaidyaConsultationDesk() {
                           setPatientName(e.target.value)
                           if (errors.name) setErrors(prev => ({ ...prev, name: '' }))
                         }}
-                        placeholder="Your Full Name *"
-                        className={`w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#11141E] border text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:outline-none transition-all ${
-                          errors.name ? 'border-red-500 focus:border-red-500' : 'border-[#999999]/25 focus:border-[#6EE7B7]'
+                        placeholder="Your Name *"
+                        className={`w-full pl-8 pr-3 py-2 rounded-lg bg-[#FFFFFF] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-colors ${
+                          errors.name ? 'border-red-500' : 'border-[#E2DDD5] focus:border-[#1C1D1F]'
                         }`}
                       />
                     </div>
-                    {errors.name && <p className="text-[10px] text-red-400 mt-1">{errors.name}</p>}
+                    {errors.name && <p className="text-[10px] text-red-500 mt-1">{errors.name}</p>}
                   </div>
                   <div>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#999999] pointer-events-none" />
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#737373] pointer-events-none" />
                       <input
                         type="tel"
                         maxLength={10}
@@ -207,23 +194,23 @@ export function VaidyaConsultationDesk() {
                           setPatientPhone(e.target.value.replace(/\D/g, ''))
                           if (errors.phone) setErrors(prev => ({ ...prev, phone: '' }))
                         }}
-                        placeholder="10-Digit Mobile / WhatsApp *"
-                        className={`w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#11141E] border text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:outline-none transition-all ${
-                          errors.phone ? 'border-red-500 focus:border-red-500' : 'border-[#999999]/25 focus:border-[#6EE7B7]'
+                        placeholder="10-Digit Mobile *"
+                        className={`w-full pl-8 pr-3 py-2 rounded-lg bg-[#FFFFFF] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-colors ${
+                          errors.phone ? 'border-red-500' : 'border-[#E2DDD5] focus:border-[#1C1D1F]'
                         }`}
                       />
                     </div>
-                    {errors.phone && <p className="text-[10px] text-red-400 mt-1">{errors.phone}</p>}
+                    {errors.phone && <p className="text-[10px] text-red-500 mt-1">{errors.phone}</p>}
                   </div>
                 </div>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#999999] pointer-events-none" />
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#737373] pointer-events-none" />
                   <input
                     type="text"
                     value={patientCity}
                     onChange={(e) => setPatientCity(e.target.value)}
                     placeholder="City / State (e.g. Pune, Maharashtra)"
-                    className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#11141E] border border-[#999999]/25 text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:border-[#6EE7B7] focus:outline-none"
+                    className="w-full pl-8 pr-3 py-2 rounded-lg bg-[#FFFFFF] border border-[#E2DDD5] text-xs text-[#1C1D1F] placeholder-[#999999] focus:border-[#1C1D1F] focus:outline-none"
                   />
                 </div>
               </div>
@@ -231,20 +218,19 @@ export function VaidyaConsultationDesk() {
               <div className="pt-2">
                 <button
                   onClick={handleStartConsultation}
-                  className="w-full py-3.5 px-4 rounded-full bg-gradient-to-r from-[#E6D5AC] to-[#D8C28A] hover:from-[#F0E2C2] hover:to-[#E6D5AC] text-[#08090C] font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#D8C28A]/20 flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] font-medium text-xs tracking-wider uppercase transition-colors flex items-center justify-center gap-2"
                 >
-                  <MessageCircle className="w-4 h-4 text-[#08090C]" />
-                  <span>Start WhatsApp Doctor Consult</span>
+                  <MessageCircle className="w-3.5 h-3.5 text-[#FAF7F2]" />
+                  <span>Initiate WhatsApp Consultation</span>
                 </button>
 
-                <p className="text-[10.5px] text-center text-[#999999] mt-2.5">
-                  Available Mon–Sat: 9:00 AM – 8:00 PM IST • Free Confidential Service
+                <p className="text-[10px] text-center text-[#737373] mt-2 font-mono">
+                  Confidential &amp; Secure • Private Dispatches
                 </p>
               </div>
             </div>
 
           </div>
-
         </div>
       </div>
     </section>

@@ -1,33 +1,33 @@
 'use client'
 
 import React, { useState } from 'react'
-import { ChevronDown, HelpCircle, ShieldCheck } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
 const faqs = [
   {
     question: 'How discreet is the packaging and delivery?',
     answer:
-      'We understand that intimate wellness and health products require absolute privacy. All Ayur Veda Global shipments are dispatched in plain, unmarked brown corrugated boxes. There are zero brand logos, product names, or sensitive keywords printed on the exterior carton. Even the courier shipping slip states only a discreet warehouse sender name.',
+      'All Ayur Veda Global shipments are dispatched in plain, unmarked brown cardboard boxes. There are zero brand logos, product names, or sensitive keywords printed on the exterior carton. Even the courier shipping slip states only a discreet warehouse sender name to safeguard your absolute privacy.',
   },
   {
     question: 'How do I use BODY Essential Nutrition and STAYMAX+ Spray together?',
     answer:
-      'They are formulated to work as an inside-out synergistic protocol in our Vitality Power Combo. For daily constitutional vitality, take 1 to 2 capsules of BODY Essential Nutrition twice daily after meals with warm water or lukewarm milk. For topical endurance, apply 2 to 3 metered sprays of STAYMAX+ 10 to 15 minutes prior to intimate moments and massage lightly into the dermal tissue until absorbed.',
+      'They are formulated to work as an inside-out synergistic protocol in our Vitality Power Combo. For daily constitutional stamina, take 1 to 2 capsules of BODY Essential Nutrition twice daily after meals with warm water or milk. For topical endurance, apply 2 to 3 metered sprays of STAYMAX+ 10 to 15 minutes prior to intimate moments and massage lightly into the dermal tissue until absorbed.',
   },
   {
-    question: 'Is Cash on Delivery (COD) available in my area?',
+    question: 'Is Cash on Delivery (COD) available across India?',
     answer:
-      'Yes. We provide Cash on Delivery (COD) service across 25,000+ pin codes across India, covering all major metropolitan regions, Tier 2/3 cities, and towns. You can inspect the outer packaging and pay the courier executive via cash or UPI upon doorstep delivery.',
+      'Yes. We provide Cash on Delivery (COD) service across 19,000+ pin codes in India, covering all major metropolitan regions, Tier 2/3 cities, and towns. You can inspect the outer packaging and pay the courier executive via cash or UPI upon doorstep delivery.',
   },
   {
-    question: 'Are these formulations safe for regular, long-term use?',
+    question: 'Are these formulations safe for regular, daily use?',
     answer:
-      'Yes, 100%. Our formulations are classical Ayurvedic Rasayanas prepared with standardized herbal extracts and purified minerals. They contain zero synthetic hormones, steroids, or chemical stimulants. They are screened for heavy metals and produced under strict AYUSH and GMP certifications, making them safe, non-habit forming, and non-addictive.',
+      'Yes. Our formulations are classical Ayurvedic Rasayanas prepared with standardized botanical extracts and purified minerals. They contain zero synthetic hormones, steroids, or chemical stimulants. Every batch is tested for heavy metals and produced in an AYUSH-licensed and GMP-certified facility.',
   },
   {
     question: 'When can I expect to feel noticeable results?',
     answer:
-      'STAYMAX+ Delay Spray works topically within 10 to 15 minutes of application. For BODY Essential Nutrition capsules, most patrons report enhanced digestion, deeper sleep, and reduced fatigue within 7 to 10 days, with deep muscular stamina and intimate endurance reaching peak levels between days 21 and 30.',
+      'STAYMAX+ Delay Spray works topically within 10 to 15 minutes of application. For BODY Essential Nutrition capsules, most patrons observe improved daily energy, digestion, and reduced physical fatigue within 7 to 10 days, with deep stamina stabilizing across a 3 to 4 week routine.',
   },
 ]
 
@@ -39,39 +39,33 @@ export function ApothecaryFAQ() {
   }
 
   return (
-    <section className="bg-[#08090C] py-12 sm:py-16 lg:py-20 border-b border-[#999999]/20 text-[#FAF7EE] relative overflow-hidden">
-      {/* Background radial atmosphere */}
-      <div className="absolute top-1/3 right-1/4 translate-x-1/2 w-[450px] h-[450px] bg-[#6EE7B7]/5 rounded-full blur-[140px] pointer-events-none" />
-
-      <div className="container relative z-10">
+    <section className="bg-[#FAF7F2] py-14 sm:py-20 lg:py-24 border-b border-[#E2DDD5]">
+      <div className="container">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#11141E] border border-[#6EE7B7]/30 text-[#6EE7B7] text-[10px] font-semibold tracking-[0.24em] uppercase mb-3 backdrop-blur-md shadow-sm">
-            <HelpCircle className="w-3.5 h-3.5 text-[#6EE7B7]" />
-            <span>№ 08 • Formulation &amp; Delivery Inquiries</span>
-          </div>
-
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-[#FAF7EE] tracking-tight">
+        <div className="max-w-2xl mb-10 sm:mb-12 text-left">
+          <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1.5">
+            Apothecary Guidance
+          </span>
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#1C1D1F] tracking-tight">
             Frequently Asked Questions
           </h2>
-
-          <p className="text-xs sm:text-sm text-[#999999] mt-3 max-w-xl mx-auto leading-relaxed font-sans font-normal">
-            Transparent guidance regarding our ingredients, delivery discretion, payment methods, and usage regimens.
+          <p className="text-xs sm:text-sm text-[#555555] mt-2 font-sans leading-relaxed">
+            Transparent guidance regarding botanical sources, discreet parcel protocols, Cash on Delivery, and daily usage.
           </p>
         </div>
 
         {/* Accordion List */}
-        <div className="max-w-3xl mx-auto space-y-3.5">
+        <div className="max-w-3xl space-y-3">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx
             return (
               <div
                 key={idx}
-                className={`rounded-2xl overflow-hidden transition-all duration-300 ${
+                className={`rounded-xl overflow-hidden transition-colors border ${
                   isOpen
-                    ? 'bg-gradient-to-b from-[#151926] to-[#10131E] border border-[#6EE7B7]/50 shadow-xl'
-                    : 'bg-[#0E1118] border border-[#999999]/20 hover:border-[#D8C28A]/40'
+                    ? 'bg-[#FFFFFF] border-[#1C1D1F]'
+                    : 'bg-[#FFFFFF] border-[#E2DDD5] hover:border-[#1C1D1F]/50'
                 }`}
               >
                 <button
@@ -79,44 +73,28 @@ export function ApothecaryFAQ() {
                   className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 group"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-heading text-sm sm:text-base font-medium text-[#FAF7EE] group-hover:text-[#D8C28A] transition-colors leading-snug">
+                  <span className="font-heading text-sm sm:text-base font-medium text-[#1C1D1F] leading-snug">
                     {faq.question}
                   </span>
                   <div
-                    className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 ${
+                    className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-200 border ${
                       isOpen
-                        ? 'rotate-180 bg-[#D8C28A] text-[#08090C]'
-                        : 'bg-[#151926] border border-[#999999]/25 text-[#6EE7B7]'
+                        ? 'rotate-180 bg-[#1C1D1F] border-[#1C1D1F] text-[#FAF7F2]'
+                        : 'border-[#E2DDD5] text-[#737373]'
                     }`}
                   >
-                    <ChevronDown className="w-4 h-4" />
+                    <ChevronDown className="w-3.5 h-3.5" />
                   </div>
                 </button>
 
                 {isOpen && (
-                  <div className="px-4 pb-5 sm:px-5 sm:pb-6 text-xs sm:text-[13.5px] text-[#999999] leading-relaxed border-t border-[#999999]/20 pt-4 font-sans animate-fade-in">
+                  <div className="px-4 pb-5 sm:px-5 sm:pb-6 text-xs sm:text-[13px] text-[#555555] leading-relaxed border-t border-[#E2DDD5] pt-4 font-sans">
                     {faq.answer}
                   </div>
                 )}
               </div>
             )
           })}
-        </div>
-
-        {/* Bottom Contact Help */}
-        <div className="mt-10 sm:mt-14 text-center text-xs text-[#999999]">
-          <div className="inline-block p-3.5 sm:px-6 rounded-full bg-[#11141E]/80 border border-[#999999]/25 backdrop-blur-md shadow-sm">
-            <span>Still have an unanswered question? </span>
-            <a
-              href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20a%20question%20regarding%20your%20products."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#D8C28A] hover:text-[#E6D5AC] hover:underline font-semibold ml-1 inline-flex items-center gap-1"
-            >
-              <span>Chat directly with our Ayurvedic Concierge on WhatsApp</span>
-              <span>→</span>
-            </a>
-          </div>
         </div>
 
       </div>

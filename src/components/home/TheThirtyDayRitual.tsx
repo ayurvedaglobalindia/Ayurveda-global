@@ -39,52 +39,38 @@ const ritualPhases = [
 
 export function TheThirtyDayRitual() {
   return (
-    <section className="bg-[#08090C] py-12 sm:py-16 lg:py-20 border-b border-[#999999]/20 text-[#FAF7EE] relative overflow-hidden">
-      {/* Background radial atmosphere */}
-      <div className="absolute top-0 right-1/4 translate-x-1/2 w-[450px] h-[450px] bg-[#6EE7B7]/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 -translate-x-1/2 w-[450px] h-[450px] bg-[#D8C28A]/5 rounded-full blur-[140px] pointer-events-none" />
-
+    <section className="bg-[#090A0D] py-14 sm:py-20 lg:py-24 border-b border-[#999999]/20 text-[#FAF7EE] relative overflow-hidden">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#11141E] border border-[#6EE7B7]/30 text-[#6EE7B7] text-[10px] font-semibold tracking-[0.24em] uppercase mb-3 backdrop-blur-md shadow-sm">
-            <Clock className="w-3.5 h-3.5 text-[#6EE7B7]" />
-            <span>№ 04 • The Circadian Biological Timeline</span>
-          </div>
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <p className="text-[11px] font-mono tracking-[0.24em] text-[#999999] uppercase mb-2">
+            Chronological Cellular Adaptation
+          </p>
 
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-[#FAF7EE] tracking-tight">
-            The 30-Day Physiological Ritual
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FAF7EE] tracking-tight">
+            The Thirty-Day Protocol
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#999999] mt-3 max-w-xl mx-auto leading-relaxed font-sans font-normal">
+          <p className="text-sm sm:text-[15px] text-[#999999] mt-3.5 max-w-xl mx-auto leading-relaxed font-sans font-normal">
             How authentic Ayurvedic Rasayana works inside your biology over a consistent four-week protocol.
           </p>
         </div>
 
         {/* 3-Step Journey Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {ritualPhases.map((phase, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.45, delay: idx * 0.12 }}
-              className="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-[#131722] via-[#0E1118] to-[#0A0C11] border border-[#999999]/25 hover:border-[#D8C28A]/45 shadow-2xl flex flex-col justify-between relative overflow-hidden hover:-translate-y-2 transition-all duration-300 ease-out group"
+              className="p-6 sm:p-7 rounded-2xl bg-[#0D0F15] border border-[#999999]/15 hover:border-[#999999]/35 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 {/* Phase Number & Timeline */}
-                <div className="flex items-center justify-between pb-4 border-b border-[#999999]/20">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-[#151926] border border-[#999999]/25 flex items-center justify-center text-[#6EE7B7] group-hover:border-[#6EE7B7]/50 group-hover:shadow-[0_0_12px_rgba(110,231,183,0.25)] transition-all">
-                      <phase.icon className="w-4 h-4" />
-                    </div>
-                    <span className="text-[10px] uppercase font-bold tracking-[0.24em] text-[#6EE7B7]">
-                      {phase.phase}
-                    </span>
-                  </div>
-                  <span className="px-3 py-1 rounded-full bg-[#08090C] text-xs font-semibold text-[#D8C28A] border border-[#D8C28A]/30 shadow-inner">
+                <div className="flex items-center justify-between pb-4 border-b border-[#999999]/15">
+                  <span className="text-[11px] font-mono uppercase tracking-[0.16em] text-[#D8C28A]">
+                    {phase.phase}
+                  </span>
+                  <span className="text-xs font-mono text-[#999999]">
                     {phase.days}
                   </span>
                 </div>
@@ -95,7 +81,7 @@ export function TheThirtyDayRitual() {
                 </p>
 
                 {/* Title */}
-                <h3 className="font-heading text-lg sm:text-xl font-normal text-[#FAF7EE] mt-1.5 leading-snug group-hover:text-[#D8C28A] transition-colors">
+                <h3 className="font-heading text-lg sm:text-xl font-normal text-[#FAF7EE] mt-1.5 leading-snug">
                   {phase.title}
                 </h3>
 
@@ -106,27 +92,23 @@ export function TheThirtyDayRitual() {
               </div>
 
               {/* Verified Result Milestone */}
-              <div className="mt-6 pt-4 border-t border-[#999999]/20">
-                <div className="p-3.5 rounded-2xl bg-[#090C12]/90 border border-[#999999]/20 group-hover:border-[#6EE7B7]/30 transition-colors">
-                  <span className="text-[10px] uppercase tracking-wider text-[#6EE7B7] font-semibold block mb-1">
-                    Expected Physiological Landmark:
-                  </span>
-                  <p className="text-xs font-medium text-[#FAF7EE] leading-relaxed">
-                    {phase.milestone}
-                  </p>
-                </div>
+              <div className="mt-6 pt-4 border-t border-[#999999]/15">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#999999] block mb-1">
+                  Physiological Landmark
+                </span>
+                <p className="text-xs text-[#FAF7EE] leading-relaxed font-normal">
+                  {phase.milestone}
+                </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Bottom Recommendation */}
-        <div className="mt-10 sm:mt-14 text-center">
-          <div className="inline-block p-4 sm:px-6 rounded-2xl bg-[#11141E]/80 border border-[#999999]/25 backdrop-blur-md max-w-2xl mx-auto shadow-md">
-            <p className="text-xs text-[#999999] leading-relaxed">
-              <strong className="text-[#FAF7EE] font-semibold">Recommended Clinical Regimen:</strong> 1 to 2 capsules of BODY Essential Nutrition twice daily after meals with lukewarm water. Use STAYMAX+ spray 10–15 mins prior to intimate moments.
-            </p>
-          </div>
+        <div className="mt-12 text-center">
+          <p className="text-xs text-[#999999] max-w-xl mx-auto leading-relaxed">
+            *Recommended regimen: 1 to 2 capsules of BODY Essential Nutrition twice daily after meals with lukewarm water. Apply STAYMAX+ spray 10–15 mins prior to intimate moments.
+          </p>
         </div>
 
       </div>

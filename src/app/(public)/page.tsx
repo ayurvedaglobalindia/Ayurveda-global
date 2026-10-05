@@ -1,15 +1,14 @@
 import { Metadata } from 'next'
 import { generateWebsiteStructuredData, generateOrganizationStructuredData } from '@/lib/seo'
-import { EditorialHero } from '@/components/home/EditorialHero'
-import { ApothecaryTrustTicker } from '@/components/home/ApothecaryTrustTicker'
-import { FeaturedApothecary } from '@/components/home/FeaturedApothecary'
-import { ApothecaryPillars } from '@/components/home/ApothecaryPillars'
-import { HairRegrowthShowcase } from '@/components/home/HairRegrowthShowcase'
-import { BotanicalPharmacopeia } from '@/components/home/BotanicalPharmacopeia'
-import { TheThirtyDayRitual } from '@/components/home/TheThirtyDayRitual'
-import { VaidyaConsultationDesk } from '@/components/home/VaidyaConsultationDesk'
+import { CleanHero } from '@/components/home/CleanHero'
+import { FeaturedProducts } from '@/components/home/FeaturedProducts'
+import { CollectionStrip } from '@/components/home/CollectionStrip'
+import { BrandHeritageStory } from '@/components/home/BrandHeritageStory'
+import { QualityTrustLedger } from '@/components/home/QualityTrustLedger'
+import { BotanicalIngredients } from '@/components/home/BotanicalIngredients'
 import { PatronTestimonials } from '@/components/home/PatronTestimonials'
 import { ApothecaryFAQ } from '@/components/home/ApothecaryFAQ'
+import { VaidyaConsultationDesk } from '@/components/home/VaidyaConsultationDesk'
 
 export const metadata: Metadata = {
   title: 'Ayur Veda Global | Classical Ayurvedic Formulations & Vitality Rasayana',
@@ -36,35 +35,32 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* 1. Stately Magazine Editorial Hero */}
-      <EditorialHero />
+      {/* 1. Direct Brand & Natural Hero */}
+      <CleanHero />
 
-      {/* 2. Sleek Four-Point Trust Ribbon (AYUSH, HPLC, Discreet, COD) */}
-      <ApothecaryTrustTicker />
+      {/* 2. Early Position Master Formulations Grid */}
+      <FeaturedProducts />
 
-      {/* 3. Master Formulations Showcase & Dynamic Catalog */}
-      <FeaturedApothecary />
+      {/* 3. Curated Product Collections Strip */}
+      <CollectionStrip />
 
-      {/* 4. Four Vedic Pillars of Classical Quality */}
-      <ApothecaryPillars />
+      {/* 4. Classical Brand & Heritage Story */}
+      <BrandHeritageStory />
 
-      {/* 5. Clinical Hair Revitalization & Creative Innovation Showcase */}
-      <HairRegrowthShowcase />
+      {/* 5. Key Trust & Quality Ledger (AYUSH, GMP, NABL, 100% Discreet) */}
+      <QualityTrustLedger />
 
-      {/* 6. The Sacred Pharmacopeia: Interactive Botanical Explorer */}
-      <BotanicalPharmacopeia />
+      {/* 6. Standardized Botanical Actives & Clinical Affinities */}
+      <BotanicalIngredients />
 
-      {/* 6. The 30-Day Physiological Rejuvenation Ritual */}
-      <TheThirtyDayRitual />
-
-      {/* 7. Confidential Ayurvedic Vaidya Consultation Desk */}
-      <VaidyaConsultationDesk />
-
-      {/* 8. Verified Patron Experiences & Real Accounts */}
+      {/* 7. Documented Patron Reflections & Verified Accounts */}
       <PatronTestimonials />
 
-      {/* 9. Apothecary Guidance & Frequently Asked Questions */}
+      {/* 8. Formulary & Logistics FAQ */}
       <ApothecaryFAQ />
+
+      {/* 9. Clean Resident Vaidya Consultation CTA Desk */}
+      <VaidyaConsultationDesk />
     </>
   )
 }

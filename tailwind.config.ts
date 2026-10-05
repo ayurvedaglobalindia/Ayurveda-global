@@ -10,67 +10,66 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Modern Luxury Ayurvedic Color Palette — Soft Velvet Obsidian, #999999 Slate-Gray, Soft Champagne Gold & Herbal Nature Green
+        // Authentic Ayurvedic Apothecary Palette — Warm Ivory/Off-White, Deep Charcoal, #999999 Neutral Gray, Muted Earthy Sage & Antique Gold
         ayur: {
-          black: '#08090C',
-          // Sleek Obsidian & Soft Dark UI Surfaces
-          void: '#050608',
-          obsidian: '#090B0F',
-          charcoal: '#0F121A',
-          forest: '#141822',
-          'forest-deep': '#0C0E14',
-          'forest-dark': '#090B10',
-          'forest-light': '#1A1F2C',
-          'emerald-dark': '#0C0F16',
-          'emerald-deep': '#111520',
-          'emerald-card': '#151924',
+          black: '#1C1D1F',
+          void: '#FAF7F2',
+          obsidian: '#F5F1EB',
+          charcoal: '#EFEAE2',
+          forest: '#F2EDE5',
+          'forest-deep': '#FFFFFF',
+          'forest-dark': '#FAF7F2',
+          'forest-light': '#FBF9F5',
+          'emerald-dark': '#E9EFEA',
+          'emerald-deep': '#F1F6F2',
+          'emerald-card': '#FFFFFF',
 
-          // Explicit #999999 Soft Gray Palette (User Requested)
+          // Explicit #999999 Neutral Gray
           gray: '#999999',
           'gray-soft': '#999999',
-          'gray-light': '#BDBDBD',
-          'gray-deep': '#707070',
-          'gray-muted': '#888888',
+          'gray-light': '#737373',
+          'gray-deep': '#404040',
+          'gray-muted': '#999999',
 
-          // Soft Herbal Nature Green (Authentic Ayurvedic Herbs, Calming & Organic)
-          herbal: '#6EE7B7',
-          'herbal-soft': '#86EFAC',
-          'herbal-glow': '#34D399',
-          'herbal-light': '#A7F3D0',
-          'herbal-dew': '#D1FAE5',
-          sage: '#86EFAC',
-          'sage-light': '#BBF7D0',
-          'mint-soft': '#E6FDF4',
-          'soft-green': '#A7F3D0',
-          moss: '#4ADE80',
-          leaf: '#6EE7B7',
-          herb: '#34D399',
+          // Muted Earthy Nature Green (Soft Sage / Olive, Zero Neon)
+          herbal: '#4E5F52',
+          'herbal-soft': '#586D5E',
+          'herbal-glow': '#445347',
+          'herbal-light': '#EBF1EC',
+          'herbal-dew': '#F2F6F3',
+          sage: '#4E5F52',
+          'sage-light': '#EBF1EC',
+          'mint-soft': '#F4F8F5',
+          'soft-green': '#DDE7E0',
+          moss: '#4E5F52',
+          leaf: '#586D5E',
+          herb: '#445347',
 
-          // Ivory & Cream Soft Neutrals
-          ivory: '#FAF7EF',
-          cream: '#FFFDF5',
-          beige: '#F5EFE1',
-          sand: '#E8DCC8',
-          stone: '#999999',
-          'stone-light': '#CBD5E1',
+          // Warm Ivory & Soft Light Surfaces
+          ivory: '#FAF7F2',
+          cream: '#1C1D1F',
+          beige: '#F4EFEA',
+          sand: '#666666',
+          stone: '#737373',
+          'stone-light': '#E2DDD5',
 
-          // Soft Champagne / Imperial Gold (Light & Soft Warm Luxury)
-          gold: '#D8C28A',
-          'gold-light': '#EFE2C2',
-          'gold-soft': '#E6D5AC',
-          'gold-bright': '#F8E9C4',
-          'gold-deep': '#C0A566',
-          'gold-amber': '#D4AF37',
-          'gold-champagne': '#F7EED8',
-          copper: '#C9935A',
-          earth: '#8D6E63',
+          // Muted Warm Antique Gold (Micro-Accents Only)
+          gold: '#9E8047',
+          'gold-light': '#B39255',
+          'gold-soft': '#C4A66B',
+          'gold-bright': '#9E8047',
+          'gold-deep': '#856A35',
+          'gold-amber': '#9E8047',
+          'gold-champagne': '#F7F3EB',
+          copper: '#B87A44',
+          earth: '#7A6258',
 
           // Semantic
-          crimson: '#8B0000',
-          'crimson-light': '#B71C1C',
-          'crimson-deep': '#5D0000',
-          ruby: '#C0392B',
-          'ruby-light': '#E74C3C',
+          crimson: '#9E2A2B',
+          'crimson-light': '#C84B4C',
+          'crimson-deep': '#701D1E',
+          ruby: '#9E2A2B',
+          'ruby-light': '#C84B4C',
         },
       },
       fontFamily: {

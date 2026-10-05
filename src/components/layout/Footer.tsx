@@ -1,224 +1,43 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import {
-  Instagram,
-  Facebook,
-  Youtube,
-  Truck,
-  Shield,
-  RotateCcw,
-  Sparkles,
-  ArrowRight,
-  Lock,
-  Mail,
-  Check,
-} from 'lucide-react'
-import { useGSAP } from '@gsap/react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
-const footerLinks = {
-  shop: [
-    { label: 'All Products', href: '/shop' },
-    { label: 'Vitality Power Combo (29% OFF)', href: '/product/vitality-power-combo' },
-    { label: 'BODY Nutrition (60 Caps)', href: '/product/body-essential-nutrition' },
-    { label: 'STAYMAX+ Delay Spray (30 ml)', href: '/product/staymax-delay-spray' },
-    { label: 'Herbal Supplements', href: '/shop?category=supplements' },
-    { label: 'Personal Care & Sprays', href: '/shop?category=personal-care' },
-  ],
-  support: [
-    { label: 'Doctor Teleconsultation (BAMS)', href: 'https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor.' },
-    { label: 'WhatsApp Consultation Desk', href: 'https://wa.me/919123485451' },
-    { label: 'Contact Us', href: '/contact' },
-    { label: 'Frequently Asked Questions', href: '/faq' },
-    { label: 'Track Your Order', href: '/track-order' },
-    { label: 'Discreet Shipping Policy', href: '/legal/shipping' },
-    { label: 'Returns & Refunds', href: '/legal/returns' },
-  ],
-  company: [
-    { label: 'Health Journal & Research', href: '/about' },
-    { label: 'Our Ayurvedic Heritage', href: '/about' },
-    { label: 'Botanical Science & Shilajit', href: '/about#ingredients' },
-    { label: 'Lab Screening & GMP Certified', href: '/about#philosophy' },
-    { label: 'Sustainable Sourcing', href: '/about#sustainability' },
-    { label: 'Careers', href: '/contact?type=careers' },
-  ],
-  legal: [
-    { label: 'Privacy Policy', href: '/legal/privacy' },
-    { label: 'Terms of Service', href: '/legal/terms' },
-    { label: 'Discreet Delivery Guarantee', href: '/legal/shipping' },
-    { label: 'Cookie Policy', href: '/legal/privacy' },
-  ],
-}
-
-const trustBadges = [
-  { icon: Lock, label: '100% Discreet Packaging', desc: 'Dispatched in plain unmarked boxes with zero sensitive labels' },
-  { icon: RotateCcw, label: 'Cash on Delivery (COD)', desc: 'Pay safely at your doorstep via cash or instant UPI' },
-  { icon: Truck, label: 'Free Express Shipping', desc: 'Pan-India delivery across 25,000+ pincodes on orders over ₹999' },
-  { icon: Shield, label: 'AYUSH & GMP Certified', desc: 'Tested for heavy metals and purity with zero synthetic chemicals' },
-]
+import { Instagram, Facebook, Youtube } from 'lucide-react'
 
 export function Footer() {
-  const [email, setEmail] = useState('')
-  const [subscribed, setSubscribed] = useState(false)
-  const [emailError, setEmailError] = useState(false)
-  const footerRef = useRef<HTMLDivElement>(null)
-
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
-      if (!footerRef.current) return
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      })
-
-      tl.from('.footer-section', {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out',
-      })
-
-      tl.from('.footer-badge', {
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        stagger: 0.08,
-        ease: 'power3.out',
-      }, '-=0.4')
-    }, footerRef)
-
-    return () => ctx.revert()
-  }, [])
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (email.trim() && emailRegex.test(email)) {
-      setSubscribed(true)
-      setEmailError(false)
-      const currentEmail = email.trim()
-      setEmail('')
-      try {
-        if (typeof window !== 'undefined') {
-          const stored = JSON.parse(localStorage.getItem('avg_newsletter_subscribers') || '[]')
-          if (!stored.includes(currentEmail)) {
-            stored.push(currentEmail)
-            localStorage.setItem('avg_newsletter_subscribers', JSON.stringify(stored))
-          }
-        }
-      } catch {}
-      setTimeout(() => setSubscribed(false), 5000)
-    } else {
-      setEmailError(true)
-      setTimeout(() => setEmailError(false), 3000)
-    }
-  }
-
   return (
-    <footer
-      ref={footerRef}
-      className="bg-[#07080B] text-[#FAF7EE] relative overflow-hidden border-t border-[#999999]/20 pb-16 md:pb-0"
-    >
-      {/* Top Gold Hairline */}
-      <div className="h-px bg-gradient-to-r from-transparent via-[#D8C28A]/30 to-transparent" aria-hidden="true" />
-
-      {/* Trust Badges Bar */}
-      <div className="border-b border-[#999999]/20 py-4 sm:py-5 relative z-10">
-        <div className="container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {trustBadges.map((badge, idx) => (
-              <div
-                key={idx}
-                className="footer-badge flex items-start gap-3 p-3.5 rounded-2xl bg-[#11141E] border border-[#999999]/20 hover:border-[#6EE7B7]/40 transition-all duration-300 shadow-sm"
-              >
-                <div className="w-8 h-8 rounded-xl bg-[#151926] border border-[#999999]/25 flex items-center justify-center flex-shrink-0 text-[#6EE7B7]">
-                  <badge.icon className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="font-heading text-xs sm:text-[13px] font-medium text-[#FAF7EE]">{badge.label}</p>
-                  <p className="text-[10.5px] text-[#999999] mt-0.5 leading-relaxed">{badge.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Main Footer Content */}
-      <div className="container py-8 sm:py-10 lg:py-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
+    <footer className="bg-[#18191B] text-[#FAF7F2] border-t border-[#2C2D30] pt-12 pb-16 md:pb-12 text-xs font-sans">
+      <div className="container">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 pb-10 border-b border-[#2C2D30]">
           {/* Brand Column */}
-          <div className="lg:col-span-2 space-y-6 footer-section">
-            <Link href="/" className="flex items-center gap-2.5 sm:gap-3" aria-label="Ayur Veda Global Home">
-              <div className="relative w-8.5 h-8.5 sm:w-9 sm:h-9 flex items-center justify-center flex-shrink-0">
+          <div className="lg:col-span-2 space-y-4">
+            <Link href="/" className="flex items-center gap-2.5" aria-label="Ayur Veda Global Home">
+              <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0">
                 <Image
                   src="/images/brand-logo.png"
                   alt="Ayur Veda Global"
-                  width={34}
-                  height={34}
-                  className="object-contain filter drop-shadow-[0_2px_6px_rgba(216,194,138,0.25)]"
-                  priority
+                  width={30}
+                  height={30}
+                  className="object-contain"
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-heading text-base sm:text-lg font-normal tracking-tight text-[#FAF7EE]">
+                <span className="font-heading text-base font-normal tracking-tight text-[#FAF7F2]">
                   Ayur Veda Global
                 </span>
-                <span className="text-[8px] sm:text-[8.5px] uppercase font-semibold tracking-[0.24em] text-[#D8C28A] -mt-0.5">
+                <span className="text-[8.5px] uppercase tracking-[0.2em] text-[#9E8047] -mt-0.5 font-sans">
                   Classical Apothecary
                 </span>
               </div>
             </Link>
 
-            <p className="text-xs sm:text-sm text-[#999999] max-w-sm leading-relaxed font-sans">
-              Rooted in the Charaka Samhita and certified under AYUSH clinical standards. Delivering authentic Rasayana chemistry and 100% confidential doorstep support across India.
+            <p className="text-xs text-[#999999] max-w-sm leading-relaxed">
+              Classical Rasayana formulations engineered in compliance with AYUSH standards. Prepared with standardized Himalayan Shilajit, Ashwagandha, and Bhringraj — lab-certified for purity and delivered in 100% confidential unmarked parcels across India.
             </p>
 
-            {/* VIP Newsletter */}
-            <div className="pt-2 border-t border-[#999999]/20">
-              <p className="text-[11px] font-semibold text-[#D8C28A] uppercase tracking-[0.2em] mb-2.5 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#6EE7B7]" />
-                Ayurvedic Wellness Dispatch
-              </p>
-              <form onSubmit={handleSubscribe} className="relative flex items-center max-w-sm">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="Enter email address..."
-                  required
-                  className={`w-full pl-3.5 pr-24 py-2.5 bg-[#11141E] border rounded-xl text-xs text-[#FAF7EE] placeholder-[#999999]/60 focus:outline-none focus:ring-1 focus:ring-[#6EE7B7] transition-all ${
-                    emailError ? 'border-red-500' : 'border-[#999999]/25 hover:border-[#999999]/40'
-                  }`}
-                  aria-label="Email address for dispatch"
-                />
-                <button
-                  type="submit"
-                  disabled={subscribed}
-                  className="absolute right-1 top-1/2 -translate-y-1/2 px-3.5 py-1.5 rounded-lg bg-[#D8C28A] hover:bg-[#E6D5AC] text-[#08090C] font-semibold text-[11px] transition-all disabled:opacity-50"
-                >
-                  {subscribed ? 'Joined ✓' : 'Subscribe'}
-                </button>
-              </form>
-              <p className="text-[10px] text-[#999999] mt-1.5">Private seasonal wellness dispatches. Zero marketing spam.</p>
-            </div>
-
             {/* Social Icons */}
-            <div className="flex items-center gap-2.5 pt-2 border-t border-[#999999]/20">
+            <div className="flex items-center gap-3 pt-2">
               {[
                 { icon: Instagram, href: 'https://www.instagram.com/ayurveda.global?stkn=MTFvZHQ2NnltZHlwcA==', label: 'Instagram' },
                 { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61594780446401', label: 'Facebook' },
@@ -229,124 +48,129 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-xl bg-[#11141E] border border-[#999999]/25 flex items-center justify-center text-[#D8C28A] hover:bg-[#D8C28A] hover:text-[#08090C] transition-all shadow-sm"
+                  className="w-8 h-8 rounded-full border border-[#999999]/30 flex items-center justify-center text-[#999999] hover:text-[#FAF7F2] hover:border-[#FAF7F2] transition-colors"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-4 h-4" />
+                  <social.icon className="w-3.5 h-3.5" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Shop Column */}
-          <div className="footer-section">
-            <h3 className="font-heading text-xs font-semibold mb-4 text-[#D8C28A] uppercase tracking-[0.2em]">
-              The Formulations
+          {/* Formulations Column */}
+          <div className="space-y-3">
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#FAF7F2]">
+              Formulations
             </h3>
-            <nav className="space-y-2.5">
-              {footerLinks.shop.map(link => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-xs text-[#999999] hover:text-[#FAF7EE] transition-colors group flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D8C28A]/40 group-hover:bg-[#6EE7B7] transition-all" />
-                  {link.label}
+            <ul className="space-y-2 text-[#999999]">
+              <li>
+                <Link href="/shop" className="hover:text-[#FAF7F2] transition-colors">
+                  Shop All Products
                 </Link>
-              ))}
-            </nav>
+              </li>
+              <li>
+                <Link href="/product/body-essential-nutrition" className="hover:text-[#FAF7F2] transition-colors">
+                  BODY Essential Nutrition
+                </Link>
+              </li>
+              <li>
+                <Link href="/product/staymax-delay-spray" className="hover:text-[#FAF7F2] transition-colors">
+                  STAYMAX+ Delay Spray
+                </Link>
+              </li>
+              <li>
+                <Link href="/product/vitality-power-combo" className="hover:text-[#FAF7F2] transition-colors">
+                  Vitality &amp; Performance Combo
+                </Link>
+              </li>
+              <li>
+                <Link href="/product/hair-regrow-kit" className="hover:text-[#FAF7F2] transition-colors">
+                  HAIR RE-GROW Complete Kit
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Support Column */}
-          <div className="footer-section">
-            <h3 className="font-heading text-xs font-semibold mb-4 text-[#D8C28A] uppercase tracking-[0.2em]">
-              Client Concierge
+          {/* Guidance Column */}
+          <div className="space-y-3">
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#FAF7F2]">
+              Guidance &amp; Care
             </h3>
-            <nav className="space-y-2.5">
-              {footerLinks.support.map(link => (
-                link.href.startsWith('http') ? (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-[#999999] hover:text-[#FAF7EE] transition-colors group flex items-center gap-2"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D8C28A]/40 group-hover:bg-[#6EE7B7] transition-all" />
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-xs text-[#999999] hover:text-[#FAF7EE] transition-colors group flex items-center gap-2"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D8C28A]/40 group-hover:bg-[#6EE7B7] transition-all" />
-                    {link.label}
-                  </Link>
-                )
-              ))}
-            </nav>
+            <ul className="space-y-2 text-[#999999]">
+              <li>
+                <a
+                  href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#FAF7F2] transition-colors"
+                >
+                  Doctor Consultation (WhatsApp)
+                </a>
+              </li>
+              <li>
+                <Link href="/faq" className="hover:text-[#FAF7F2] transition-colors">
+                  Frequently Asked Questions
+                </Link>
+              </li>
+              <li>
+                <Link href="/track-order" className="hover:text-[#FAF7F2] transition-colors">
+                  Track Delivery
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-[#FAF7F2] transition-colors">
+                  Contact Concierge
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-[#FAF7F2] transition-colors">
+                  Ayurvedic Heritage &amp; Science
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Heritage Column */}
-          <div className="footer-section">
-            <h3 className="font-heading text-xs font-semibold mb-4 text-[#D8C28A] uppercase tracking-[0.2em]">
-              Apothecary Heritage
+          {/* Policies Column */}
+          <div className="space-y-3">
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#FAF7F2]">
+              Assurances
             </h3>
-            <nav className="space-y-2.5">
-              {footerLinks.company.map(link => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-xs text-[#999999] hover:text-[#FAF7EE] transition-colors group flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D8C28A]/40 group-hover:bg-[#6EE7B7] transition-all" />
-                  {link.label}
+            <ul className="space-y-2 text-[#999999]">
+              <li>
+                <Link href="/legal/shipping" className="hover:text-[#FAF7F2] transition-colors">
+                  Discreet Shipping Guarantee
                 </Link>
-              ))}
-            </nav>
+              </li>
+              <li>
+                <Link href="/legal/privacy" className="hover:text-[#FAF7F2] transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/legal/terms" className="hover:text-[#FAF7F2] transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/legal/returns" className="hover:text-[#FAF7F2] transition-colors">
+                  Returns &amp; Refunds
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Statutory Regulatory Disclaimer */}
-        <div className="mt-12 pt-6 border-t border-[#999999]/20 text-[11px] text-[#999999] leading-relaxed space-y-1.5 footer-section">
+        {/* Regulatory Compliance & Disclaimer */}
+        <div className="py-6 border-b border-[#2C2D30] text-[11px] text-[#999999] leading-relaxed">
           <p>
-            <strong className="text-[#FAF7EE]">AYUSH &amp; Statutory Compliance Notice:</strong> Statements regarding dietary supplements and herbal wellness products have not been evaluated by the FDA or the Drug Controller General of India. Ayur Veda Global products are classical and proprietary Ayurvedic formulations intended to support natural stamina, vitality, and well-being. They are not intended to diagnose, treat, cure, or prevent any acute or chronic medical condition. Individual results may vary based on physiological constitution (Prakriti), lifestyle, and consistent usage. Always read packaging labels and consult an Ayurvedic physician or qualified healthcare provider before initiating any new supplement regimen.
+            <strong className="text-[#FAF7F2] font-medium">AYUSH Compliance Notice:</strong> Formulations are classical and proprietary Ayurvedic dietary supplements and personal care products formulated under AYUSH and GMP standards. These statements have not been evaluated by regulatory bodies to diagnose, treat, cure, or prevent any acute disease. Results may vary depending on individual constitution (Prakriti), diet, and consistency. Consult an Ayurvedic physician for tailored guidance.
           </p>
         </div>
 
-        {/* Bottom Sub-footer */}
-        <div className="mt-6 pt-6 border-t border-[#999999]/20 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#999999] footer-section">
-          <p>© {new Date().getFullYear()} Ayur Veda Global. All rights reserved. AYUSH Ministry Licensed &amp; GMP Certified.</p>
-          <div className="flex flex-wrap items-center gap-6">
-            {footerLinks.legal.map(link => (
-              <Link key={link.href} href={link.href} className="hover:text-[#D8C28A] transition-colors">
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* WhatsApp Consultation Action Bar */}
-      <div className="bg-[#07080B] border-t border-[#999999]/20 py-3.5 relative z-10">
-        <div className="container flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <div className="flex items-center justify-center sm:justify-start gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-[#6EE7B7] animate-pulse" />
-            <span className="text-xs text-[#FAF7EE] font-medium">
-              Chief Ayurvedic Vaidya Desk Online for Confidential Guidance
-            </span>
-          </div>
-          <a
-            href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20want%20to%20place%20an%20order."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-[#D8C28A] hover:bg-[#E6D5AC] text-[#08090C] transition-all shadow-md shadow-[#D8C28A]/20"
-          >
-            <span>Confidential WhatsApp Order / Advice</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+        {/* Sub-Footer */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#999999]">
+          <p>© {new Date().getFullYear()} Ayur Veda Global. All rights reserved. 100% Confidential Delivery Nationwide.</p>
+          <p className="font-mono text-[10px] text-[#737373]">ESTD. BHARAT • DISCREET ARCHIVAL DISPATCH</p>
         </div>
       </div>
     </footer>

@@ -101,62 +101,48 @@ export function FeaturedApothecary() {
   }
 
   return (
-    <section id="apothecary" className="bg-[#08090C] py-12 sm:py-16 lg:py-24 border-b border-[#999999]/20 relative overflow-hidden">
-      {/* Subtle dual atmospheric ambient glow */}
-      <div className="absolute top-0 left-1/4 -translate-x-1/2 w-[500px] h-[500px] bg-[#D8C28A]/6 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 translate-x-1/2 w-[500px] h-[500px] bg-[#6EE7B7]/6 rounded-full blur-[150px] pointer-events-none" />
-
+    <section id="apothecary" className="bg-[#090A0D] py-14 sm:py-20 lg:py-28 border-b border-[#999999]/20 relative overflow-hidden">
       <div className="container relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#11141E]/95 border border-[#6EE7B7]/30 text-[#6EE7B7] text-[10px] font-semibold tracking-[0.24em] uppercase mb-3 backdrop-blur-md shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-[#6EE7B7]" />
-            <span>Master Pharmacopeia Catalog • № 02</span>
-          </div>
-
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-light text-[#FAF7EE] tracking-tight leading-[1.2]">
-            Targeted Ayurvedic Formulations
-          </h2>
-
-          <p className="text-xs sm:text-sm lg:text-[15px] text-[#999999] mt-3 max-w-xl mx-auto leading-relaxed font-sans font-normal">
-            Classical rasayanas refined with pharmaceutical HPLC precision. Standardized bioactives, 100% vegetarian capsules, zero synthetic chemicals.
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <p className="text-[11px] font-mono tracking-[0.24em] text-[#999999] uppercase mb-3">
+            Classical Botanical Formulations
           </p>
 
-          {/* Filter Pills - High-End Minimalist Tabs */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mt-8">
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FAF7EE] tracking-tight leading-[1.16]">
+            The Apothecary Catalog
+          </h2>
+
+          <p className="text-sm sm:text-[15px] text-[#999999] mt-3.5 max-w-xl mx-auto leading-relaxed font-sans font-normal">
+            Targeted Rasayana protocols prepared in strict accordance with the Charaka Samhita. Standardized bioactives, 100% vegetarian capsules, zero synthetic chemical additives.
+          </p>
+
+          {/* Filter Tabs - Quiet Minimalist Architecture */}
+          <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mt-8">
             {[
-              { id: 'all', label: 'All Formulations', count: allProducts.length },
-              { id: 'supplements', label: 'Daily Stamina & Energy', count: allProducts.filter(p => p.category === 'supplements' && !p.id.includes('hair')).length },
-              { id: 'personal-care', label: 'Intimate Control & Delay', count: allProducts.filter(p => p.category === 'personal-care' && !p.id.includes('hair')).length },
-              { id: 'combos', label: 'Master Synergy Kits', count: allProducts.filter(p => p.category === 'wellness' && !p.id.includes('hair')).length },
-              { id: 'hair-regrow', label: 'Hair Re-Grow Line', count: allProducts.filter(p => p.id.includes('hair')).length },
+              { id: 'all', label: 'All Formulations' },
+              { id: 'supplements', label: 'Daily Stamina & Energy' },
+              { id: 'personal-care', label: 'Intimate Control & Delay' },
+              { id: 'combos', label: 'Master Synergy Kits' },
+              { id: 'hair-regrow', label: 'Hair Re-Grow Line' },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveCategory(tab.id as any)}
-                className={`px-4 sm:px-5 py-2 rounded-full text-xs transition-all duration-300 flex items-center gap-2 ${
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs transition-all duration-300 ${
                   activeCategory === tab.id
-                    ? 'bg-gradient-to-r from-[#E6D5AC] to-[#D8C28A] text-[#08090C] font-bold shadow-md shadow-[#D8C28A]/20 scale-[1.02]'
-                    : 'bg-[#11141E]/90 text-[#999999] hover:text-[#FAF7EE] hover:bg-[#151926] border border-[#999999]/20 hover:border-[#999999]/40'
+                    ? 'bg-[#FAF7EE] text-[#090A0D] font-medium shadow-sm'
+                    : 'bg-[#12141A] text-[#999999] hover:text-[#FAF7EE] border border-[#999999]/20'
                 }`}
               >
                 <span className="tracking-wide">{tab.label}</span>
-                <span
-                  className={`text-[9.5px] px-1.5 py-0.5 rounded-full font-semibold ${
-                    activeCategory === tab.id
-                      ? 'bg-[#08090C]/20 text-[#08090C]'
-                      : 'bg-[#151926] text-[#6EE7B7]'
-                  }`}
-                >
-                  {tab.count}
-                </span>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Product Grid - Dynamic centering so filtered categories never show empty columns */}
+        {/* Product Grid */}
         <div
           className={`gap-6 lg:gap-8 ${
             filteredProducts.length === 1
@@ -176,20 +162,20 @@ export function FeaturedApothecary() {
               : 0
             const cardImage = getProductImage(product, product.id, 'card')
 
-            const badgeLabel =
+            const classificationLabel =
               product.id === 'vitality-power-combo'
-                ? 'Master Synergy'
+                ? 'Synergistic Protocol • Capsules & Topical'
                 : product.id === 'body-essential-nutrition'
-                ? 'Flagship Rasayana'
+                ? 'Daily Rasayana • 60 Vegetarian Capsules'
                 : product.id === 'hair-regrow-kit'
-                ? 'Dual Therapy Kit'
+                ? 'Dual Follicular Therapy • 100ml Oil & 60 Caps'
                 : product.id === 'hair-regrow-oil'
-                ? 'Ayurvedic Scalp Oil'
+                ? 'Classical Scalp Taila • 100 ml'
                 : product.id === 'hair-regrow-capsules'
-                ? 'Hair Nutrients'
+                ? 'Follicle Bioactives • 60 Vegetarian Capsules'
                 : product.id === 'staymax-delay-spray'
-                ? 'Topical Delay Elixir'
-                : 'Pure Classical'
+                ? 'Topical Herbal Spray • 30 ml'
+                : 'Classical Rasayana Formulation'
 
             const bioactivesSnippet =
               product.shortDescription ||
@@ -200,20 +186,13 @@ export function FeaturedApothecary() {
             return (
               <div
                 key={product.id}
-                className="rounded-3xl bg-gradient-to-b from-[#131722] via-[#0E1118] to-[#0A0C11] border border-[#999999]/25 flex flex-col justify-between overflow-hidden group hover:border-[#D8C28A]/45 hover:-translate-y-2 transition-all duration-500 ease-out shadow-xl hover:shadow-[0_24px_50px_rgba(0,0,0,0.85),0_0_30px_rgba(216,194,138,0.1)] max-w-sm md:max-w-none mx-auto w-full"
+                className="rounded-2xl bg-[#0D0F15] border border-[#999999]/20 flex flex-col justify-between overflow-hidden group hover:border-[#999999]/40 transition-all duration-500 ease-out shadow-lg max-w-sm md:max-w-none mx-auto w-full"
               >
-                {/* Product Image Stage (Tailored 4:5 Aspect Ratio) */}
-                <div className="relative aspect-[4/5] w-full bg-[#07080B] overflow-hidden border-b border-[#999999]/20">
-                  {/* Subtle Hallmark Badge */}
-                  <div className="absolute top-3.5 left-3.5 z-10">
-                    <span className="px-3 py-1 rounded-full text-[9px] uppercase tracking-[0.2em] font-semibold bg-[#08090C]/90 backdrop-blur-md border border-[#999999]/30 text-[#FAF7EE] shadow-md">
-                      {badgeLabel}
-                    </span>
-                  </div>
-
+                {/* Product Image Stage */}
+                <div className="relative aspect-[4/5] w-full bg-[#08090C] overflow-hidden border-b border-[#999999]/15">
                   {discountPercent > 0 && (
                     <div className="absolute top-3.5 right-3.5 z-10">
-                      <span className="px-3 py-1 rounded-full text-[9px] font-bold bg-[#D8C28A] text-[#08090C] shadow-md uppercase tracking-wider">
+                      <span className="px-2.5 py-0.5 rounded-full text-[9.5px] font-mono tracking-wider text-[#D8C28A] bg-[#090A0D]/90 border border-[#D8C28A]/30">
                         {discountPercent}% OFF
                       </span>
                     </div>
@@ -224,61 +203,49 @@ export function FeaturedApothecary() {
                       src={cardImage.src}
                       alt={cardImage.alt || product.name}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="object-cover group-hover:scale-103 transition-transform duration-700 ease-out"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
                       priority={product.id === 'vitality-power-combo'}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0E1118]/95 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D0F15]/80 via-transparent to-transparent pointer-events-none" />
                   </Link>
                 </div>
 
-                {/* Card Body - Streamlined & High-Converting */}
-                <div className="p-5 sm:p-6 flex flex-col flex-1 justify-between">
+                {/* Card Body */}
+                <div className="p-5 sm:p-6 flex flex-col flex-1 justify-between space-y-4">
                   <div>
-                    {/* Rating & AYUSH Standard */}
-                    <div className="flex items-center justify-between text-xs text-[#999999] mb-2">
-                      <div className="flex items-center gap-1.5">
-                        <div className="flex text-[#D8C28A]">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                          ))}
-                        </div>
-                        <span className="font-semibold text-[#FAF7EE] text-[11.5px]">4.9★</span>
-                        <span className="text-[10.5px] text-[#999999]">(1,240+ verified)</span>
-                      </div>
-                      <span className="text-[10px] font-semibold text-[#6EE7B7] bg-[#151926] px-2.5 py-0.5 rounded-full border border-[#6EE7B7]/30 tracking-wider">
-                        AYUSH Standard
-                      </span>
-                    </div>
+                    {/* Archival Classification */}
+                    <p className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#999999] mb-1.5">
+                      {classificationLabel}
+                    </p>
 
                     {/* Product Title */}
                     <Link href={`/product/${product.slug}`}>
-                      <h3 className="font-heading text-lg sm:text-xl font-normal text-[#FAF7EE] group-hover:text-[#D8C28A] transition-colors leading-snug line-clamp-1 mt-1">
+                      <h3 className="font-heading text-lg sm:text-xl font-normal text-[#FAF7EE] group-hover:text-[#D8C28A] transition-colors leading-snug line-clamp-1">
                         {product.name}
                       </h3>
                     </Link>
 
-                    {/* 1-Line Concentrated Bioactives Subtitle */}
-                    <p className="text-xs text-[#999999] mt-2 line-clamp-1 font-normal flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#6EE7B7] flex-shrink-0" />
-                      <span>{bioactivesSnippet}</span>
+                    {/* Bioactives Monograph Subtitle */}
+                    <p className="text-xs text-[#999999] mt-2 line-clamp-2 font-normal leading-relaxed">
+                      {bioactivesSnippet}
                     </p>
 
-                    {/* Compact Course Pack Pills (if multiple variants) */}
+                    {/* Course Variants (if applicable) */}
                     {product.variants && product.variants.length > 1 && (
-                      <div className="flex items-center gap-2 mt-3.5">
-                        <span className="text-[10px] uppercase tracking-wider text-[#999999] font-semibold">
-                          Course:
+                      <div className="flex items-center gap-2 mt-4 pt-3 border-t border-[#999999]/15">
+                        <span className="text-[10px] uppercase font-mono tracking-wider text-[#999999]">
+                          Size:
                         </span>
                         <div className="flex gap-1.5 flex-1">
                           {product.variants.map((v) => (
                             <button
                               key={v.id}
                               onClick={() => handleVariantChange(product.id, v.id)}
-                              className={`px-2.5 py-1 rounded-lg text-[10.5px] transition-all font-medium truncate flex-1 text-center ${
+                              className={`px-2.5 py-1 rounded-md text-[10.5px] transition-all font-medium truncate flex-1 text-center ${
                                 currentVariantId === v.id
-                                  ? 'bg-[#151926] border border-[#6EE7B7]/50 text-[#6EE7B7] shadow-sm font-semibold'
-                                  : 'bg-[#0A0D14] border border-[#999999]/20 text-[#999999] hover:text-[#FAF7EE]'
+                                  ? 'bg-[#181C26] border border-[#D8C28A]/50 text-[#FAF7EE]'
+                                  : 'bg-[#090A0D] border border-[#999999]/20 text-[#999999] hover:text-[#FAF7EE]'
                               }`}
                             >
                               {v.name}
@@ -290,11 +257,11 @@ export function FeaturedApothecary() {
                   </div>
 
                   {/* Price & Action Area */}
-                  <div className="mt-5 pt-4 border-t border-[#999999]/20">
+                  <div className="pt-4 border-t border-[#999999]/15">
                     <div className="flex items-baseline justify-between mb-3.5">
                       <div>
                         <div className="flex items-baseline gap-2.5">
-                          <span className="font-heading text-xl sm:text-2xl font-bold text-[#FAF7EE]">
+                          <span className="font-serif text-xl sm:text-2xl font-normal text-[#FAF7EE]">
                             {formatPrice(activePrice)}
                           </span>
                           {activeComparePrice && (
@@ -304,27 +271,26 @@ export function FeaturedApothecary() {
                           )}
                         </div>
                         <p className="text-[10px] text-[#999999] mt-0.5">
-                          Free Express Delivery • COD Available
+                          Doorstep Cash on Delivery Available
                         </p>
                       </div>
 
-                      {discountPercent > 0 && (
-                        <span className="text-[10px] text-[#6EE7B7] font-semibold bg-[#151926] px-2.5 py-0.5 rounded-full border border-[#6EE7B7]/30">
-                          Save {formatPrice(activeComparePrice! - activePrice)}
-                        </span>
-                      )}
+                      <span className="text-[10px] text-[#6EE7B7] font-medium flex items-center gap-1">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#6EE7B7]" />
+                        <span>AYUSH Certified</span>
+                      </span>
                     </div>
 
-                    {/* Dual Action Buttons */}
+                    {/* Action Buttons */}
                     <div className="grid grid-cols-2 gap-2.5">
                       <button
                         onClick={() => handleAddToCart(product)}
-                        className="py-3 px-3 rounded-full bg-gradient-to-r from-[#E6D5AC] to-[#D8C28A] hover:from-[#F0E2C2] hover:to-[#E6D5AC] text-[#08090C] font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-[#D8C28A]/20 flex items-center justify-center gap-1.5"
+                        className="py-3 px-3 rounded-full bg-[#D8C28A] hover:bg-[#E6D5AC] text-[#090A0D] font-semibold text-xs uppercase tracking-[0.12em] transition-all duration-300 flex items-center justify-center gap-1.5 shadow-sm"
                       >
                         {addedNotice === product.id ? (
                           <>
                             <Check className="w-3.5 h-3.5" />
-                            <span>Added ✓</span>
+                            <span>Added</span>
                           </>
                         ) : (
                           <>
@@ -336,20 +302,20 @@ export function FeaturedApothecary() {
 
                       <button
                         onClick={() => handleWhatsAppOrder(product)}
-                        className="py-3 px-3 rounded-full bg-[#151926] hover:bg-[#1E2536] border border-[#999999]/25 hover:border-[#6EE7B7]/40 text-[#FAF7EE] font-semibold text-xs tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5"
+                        className="py-3 px-3 rounded-full bg-transparent hover:bg-[#141720] border border-[#999999]/30 hover:border-[#6EE7B7]/50 text-[#FAF7EE] font-medium text-xs tracking-wider transition-all duration-300 flex items-center justify-center gap-1.5"
                       >
                         <MessageCircle className="w-3.5 h-3.5 text-[#6EE7B7]" />
                         <span>Quick COD</span>
                       </button>
                     </div>
 
-                    {/* Direct PDP Dossier Link */}
-                    <div className="mt-3.5 text-center">
+                    {/* Direct Monograph Link */}
+                    <div className="mt-3 text-center">
                       <Link
                         href={`/product/${product.slug}`}
-                        className="inline-flex items-center gap-1.5 text-[11px] tracking-wider uppercase text-[#999999] hover:text-[#D8C28A] transition-colors font-medium"
+                        className="inline-flex items-center gap-1 text-[10.5px] uppercase tracking-wider text-[#999999] hover:text-[#D8C28A] transition-colors font-medium"
                       >
-                        <span>View Formulation Dossier</span>
+                        <span>View Formulation Details</span>
                         <ArrowRight className="w-3 h-3" />
                       </Link>
                     </div>

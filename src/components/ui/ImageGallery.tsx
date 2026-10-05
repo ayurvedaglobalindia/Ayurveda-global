@@ -2,8 +2,8 @@
 
 import { useState, useCallback } from 'react'
 import Image from 'next/image'
-import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronLeft, ChevronRight, Expand } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { classNames } from '@/lib/utils/formatters'
 import { Modal } from './Modal'
 import type { ProductImage } from '@/types'
@@ -38,7 +38,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
     <div className={classNames('relative', className)}>
       {/* Main Image Stage */}
       <div
-        className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-b from-ayur-void to-ayur-charcoal shadow-luxury border border-ayur-gold/20 group"
+        className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#F5F1EB] border border-[#E2DDD5] group shadow-sm"
         role="region"
         aria-label="Product image gallery"
       >
@@ -61,14 +61,14 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-ayur-charcoal/90 backdrop-blur-md text-ayur-gold hover:bg-ayur-forest-dark shadow-lg flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100 focus-visible-ring"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] hover:bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-5 h-5 -ml-0.5" />
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-ayur-charcoal/90 backdrop-blur-md text-ayur-gold hover:bg-ayur-forest-dark shadow-lg flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100 focus-visible-ring"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] hover:bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm flex items-center justify-center transition-all opacity-80 sm:opacity-0 group-hover:opacity-100"
               aria-label="Next image"
             >
               <ChevronRight className="w-5 h-5 ml-0.5" />
@@ -79,35 +79,30 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
         {/* Fullscreen Expansion Button */}
         <button
           onClick={() => setIsFullscreen(true)}
-          className="absolute bottom-3.5 right-3.5 w-9 h-9 rounded-full bg-ayur-charcoal/90 backdrop-blur-md text-ayur-gold hover:bg-ayur-forest-dark shadow-lg flex items-center justify-center transition-all focus-visible-ring"
+          className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] hover:bg-[#FFFFFF] border border-[#E2DDD5] shadow-sm flex items-center justify-center transition-all"
           aria-label="View high-resolution image"
           title="Zoom image"
         >
-          <Expand className="w-4.5 h-4.5" />
+          <Expand className="w-4 h-4" />
         </button>
       </div>
 
       {/* Thumbnails Row */}
       {images.length > 1 && (
-        <div className="flex gap-2.5 mt-3.5 overflow-x-auto pb-1" role="tablist" aria-label="Product thumbnails">
+        <div className="flex gap-2.5 mt-3 overflow-x-auto pb-1" role="tablist" aria-label="Product thumbnails">
           {images.map((image, index) => (
-            <motion.button
+            <button
               key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
               onClick={() => setSelectedIndex(index)}
               role="tab"
               aria-selected={index === selectedIndex}
               aria-label={`View image ${index + 1}`}
               className={classNames(
-                'relative flex-shrink-0 w-16 h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 bg-ayur-charcoal shadow-sm focus-visible-ring',
+                'relative flex-shrink-0 w-16 h-20 rounded-xl overflow-hidden border transition-all duration-200 bg-[#FFFFFF] shadow-xs',
                 index === selectedIndex
-                  ? 'border-ayur-gold ring-2 ring-ayur-gold/25'
-                  : 'border-ayur-forest-dark/50 hover:border-ayur-gold/40'
+                  ? 'border-[#1C1D1F] ring-1 ring-[#1C1D1F]'
+                  : 'border-[#E2DDD5] opacity-75 hover:opacity-100'
               )}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
             >
               <Image
                 src={image.src}
@@ -116,7 +111,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
                 className="object-cover"
                 sizes="64px"
               />
-            </motion.button>
+            </button>
           ))}
         </div>
       )}
@@ -130,7 +125,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
         showCloseButton
       >
         <div className="flex flex-col items-center justify-center gap-4" onKeyDown={handleKeyDown}>
-          <div className="relative w-full aspect-square max-h-[55vh] sm:max-h-[60vh] bg-gradient-to-b from-ayur-void to-ayur-charcoal rounded-2xl overflow-hidden border border-ayur-gold/20 shadow-inner flex items-center justify-center">
+          <div className="relative w-full aspect-square max-h-[55vh] sm:max-h-[60vh] bg-[#F5F1EB] rounded-2xl overflow-hidden border border-[#E2DDD5] flex items-center justify-center">
             <Image
               src={currentImage.src}
               alt={currentImage.alt || alt}
@@ -144,14 +139,14 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
               <>
                 <button
                   onClick={goToPrevious}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-ayur-charcoal/90 backdrop-blur-md text-ayur-gold hover:bg-ayur-forest-dark shadow-lg flex items-center justify-center transition-all z-10"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] border border-[#E2DDD5] shadow flex items-center justify-center transition-all z-10"
                   aria-label="Previous image"
                 >
                   <ChevronLeft className="w-6 h-6 -ml-0.5" />
                 </button>
                 <button
                   onClick={goToNext}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-ayur-charcoal/90 backdrop-blur-md text-ayur-gold hover:bg-ayur-forest-dark shadow-lg flex items-center justify-center transition-all z-10"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#FFFFFF]/90 backdrop-blur-sm text-[#1C1D1F] border border-[#E2DDD5] shadow flex items-center justify-center transition-all z-10"
                   aria-label="Next image"
                 >
                   <ChevronRight className="w-6 h-6 ml-0.5" />
@@ -164,23 +159,18 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
           {images.length > 1 && (
             <div className="flex gap-2 justify-center flex-wrap pt-2">
               {images.map((image, index) => (
-                <motion.button
+                <button
                   key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.05 }}
                   onClick={() => setSelectedIndex(index)}
                   className={classNames(
-                    'relative w-14 h-16 rounded-xl overflow-hidden border-2 transition-all bg-ayur-charcoal shadow-sm',
+                    'relative w-14 h-16 rounded-xl overflow-hidden border transition-all bg-[#FFFFFF]',
                     index === selectedIndex
-                      ? 'border-ayur-gold ring-2 ring-ayur-gold/30'
-                      : 'border-ayur-forest-dark/50 hover:border-ayur-gold/40 opacity-70 hover:opacity-100'
+                      ? 'border-[#1C1D1F] ring-1 ring-[#1C1D1F]'
+                      : 'border-[#E2DDD5] opacity-70 hover:opacity-100'
                   )}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
-                  <Image src={image.src} alt="" fill className="object-contain p-1" sizes="56px" />
-                </motion.button>
+                  <Image src={image.src} alt="" fill className="object-cover" sizes="56px" />
+                </button>
               ))}
             </div>
           )}
