@@ -45,10 +45,10 @@ const mockOrders = [
 ]
 
 const statusConfig = {
-  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/30' },
+  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' },
   processing: { label: 'Processing', icon: Clock, color: 'bg-amber-950/80 text-[#D4B678] border border-[#C2A265]/40' },
-  shipped: { label: 'Dispatched', icon: Truck, color: 'bg-[#142A1D] text-[#FAF7EE] border border-[#C2A265]/30' },
-  delivered: { label: 'Delivered', icon: CheckCircle, color: 'bg-[#183525] text-[#D4B678] border border-[#C2A265]/50' },
+  shipped: { label: 'Dispatched', icon: Truck, color: 'bg-[#18202C] text-[#FAF7EE] border border-[#C2A265]/30' },
+  delivered: { label: 'Delivered', icon: CheckCircle, color: 'bg-[#161B26] text-[#D4B678] border border-[#C2A265]/50' },
   cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-rose-950/80 text-rose-300 border border-rose-500/30' },
 }
 
@@ -72,11 +72,11 @@ export default function OrdersPage() {
 
           return (
             <Link key={order.id} href={`/orders/${order.id}`} className="block">
-              <div className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl overflow-hidden hover:border-[#C2A265]/50 transition-all shadow-lg">
+              <div className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl overflow-hidden hover:border-[#C2A265]/50 transition-all shadow-lg">
                 <div className="p-4 sm:p-5">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3.5 mb-3.5">
                     <div className="flex items-center gap-3.5">
-                      <div className="w-16 h-16 rounded-xl bg-[#0B150F] border border-[#C2A265]/20 flex items-center justify-center flex-shrink-0">
+                      <div className="w-16 h-16 rounded-xl bg-[#0D1017] border border-[#C2A265]/20 flex items-center justify-center flex-shrink-0">
                         {order.items[0] && (
                           <Image src={order.items[0].image} alt={order.items[0].name} width={64} height={64} className="w-full h-full object-cover rounded-lg" />
                         )}
@@ -111,7 +111,7 @@ export default function OrdersPage() {
 
         {mockOrders.length === 0 && (
           <div className="text-center py-12">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#061A10] border border-[#C2A265]/20 flex items-center justify-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#121622] border border-[#C2A265]/20 flex items-center justify-center">
               <Package className="w-8 h-8 text-ayur-stone" />
             </div>
             <h2 className="font-heading text-xl font-medium text-ayur-ivory mb-1.5">No orders yet</h2>

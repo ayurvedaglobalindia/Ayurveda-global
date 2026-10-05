@@ -26,8 +26,8 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="container py-8 sm:py-12 lg:py-16 text-center max-w-md mx-auto">
-        <div className="p-6 sm:p-8 rounded-2xl bg-[#102016] border border-[#C2A265]/30 shadow-2xl">
-          <div className="w-12 h-12 rounded-full bg-[#142A1D] text-[#C2A265] border border-[#C2A265]/30 flex items-center justify-center mx-auto mb-3.5">
+        <div className="p-6 sm:p-8 rounded-2xl bg-[#121622] border border-[#C2A265]/30 shadow-2xl">
+          <div className="w-12 h-12 rounded-full bg-[#18202C] text-[#C2A265] border border-[#C2A265]/30 flex items-center justify-center mx-auto mb-3.5">
             <ShoppingBag className="w-6 h-6" />
           </div>
           <h1 className="font-heading text-lg sm:text-xl font-medium text-[#FAF7EE] mb-2">Your Cart is Empty</h1>
@@ -35,7 +35,7 @@ export default function CheckoutPage() {
             Add authentic Ayurvedic formulations to your bag to proceed with confidential doorstep delivery and Cash on Delivery.
           </p>
           <Link href="/shop" className="inline-block w-full">
-            <button className="w-full py-2.5 px-4 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-xs tracking-wide shadow-md transition-all">
+            <button className="w-full py-2.5 px-4 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#08090C] font-semibold text-xs tracking-wide shadow-md transition-all">
               Explore Formulations
             </button>
           </Link>

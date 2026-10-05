@@ -10,34 +10,36 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Luxury Ayurvedic Color Palette
+        // Modern Luxury Ayurvedic Color Palette — Obsidian Black, Refined Gray & Radiant Light Green
         ayur: {
-          black: '#0A120D',
-          // Deep Emerald Greens
-          void: '#010804',
-          obsidian: '#030F07',
-          charcoal: '#061A10',
-          forest: '#0A2E1E',
-          'forest-deep': '#052014',
-          'forest-dark': '#04180E',
-          'forest-light': '#124A30',
-          'emerald-dark': '#041C0F',
-          'emerald-deep': '#082C1A',
-          'emerald-card': '#0C3822',
-          'emerald-glow': '#1A6B3A',
-          sage: '#2E8B3A',
-          'sage-light': '#4DB85E',
-          'mint-soft': '#E8F5ED',
-          'soft-green': '#D7E9DE',
-          moss: '#4C8A3F',
+          black: '#07080A',
+          // Sleek Obsidian & Soft Dark UI Surfaces
+          void: '#060709',
+          obsidian: '#0A0C10',
+          charcoal: '#11141A',
+          forest: '#161A22',
+          'forest-deep': '#0E1116',
+          'forest-dark': '#0B0D12',
+          'forest-light': '#1E232E',
+          'emerald-dark': '#0D1016',
+          'emerald-deep': '#131720',
+          'emerald-card': '#171B24',
+
+          // Vibrant Light Green, Mint & Sage Accents
+          'emerald-glow': '#10B981',
+          sage: '#34D399',
+          'sage-light': '#6EE7B7',
+          'mint-soft': '#E6F7ED',
+          'soft-green': '#A7F3D0',
+          moss: '#10B981',
 
           // Ivory & Cream Neutrals
           ivory: '#FAF7EF',
           cream: '#FFFDF5',
           beige: '#F5EFE1',
           sand: '#E8DCC8',
-          stone: '#A89F91',
-          'stone-light': '#C4BDB1',
+          stone: '#94A3B8',
+          'stone-light': '#CBD5E1',
 
           // Luxury Gold Accents
           gold: '#C9A84C',
@@ -48,9 +50,9 @@ const config: Config = {
           'gold-champagne': '#F0E6D0',
           copper: '#B87333',
 
-          // Botanical Accents
-          leaf: '#1A6B3A',
-          herb: '#1B5E20',
+          // Botanical & Herbal Light Green Accents
+          leaf: '#10B981',
+          herb: '#059669',
           earth: '#8D6E63',
 
           // Semantic
@@ -72,7 +74,8 @@ const config: Config = {
         'botanical-lines': "url('/images/textures/botanical-lines.svg')",
         'hero-pattern': "url('/images/textures/botanical-lines.svg')",
         'gold-gradient': 'linear-gradient(135deg, #E8D4A0 0%, #C9A84C 50%, #B8963E 100%)',
-        'emerald-gradient': 'linear-gradient(135deg, #0A2E1E 0%, #052014 50%, #010804 100%)',
+        'emerald-gradient': 'linear-gradient(135deg, #181D26 0%, #10131A 50%, #080A0D 100%)',
+        'light-green-gradient': 'linear-gradient(135deg, #34D399 0%, #10B981 50%, #059669 100%)',
         'ivory-gradient': 'linear-gradient(180deg, #FAF7EF 0%, #F5EFE1 100%)',
       },
       animation: {
@@ -164,9 +167,9 @@ const config: Config = {
         'gold': '0 0 25px rgba(201, 168, 76, 0.3)',
         'gold-lg': '0 0 45px rgba(201, 168, 76, 0.2)',
         'inner-gold': 'inset 0 0 25px rgba(201, 168, 76, 0.12)',
-        'emerald': '0 0 30px rgba(26, 107, 58, 0.3)',
-        'card': '0 12px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-        'card-hover': '0 24px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(201, 168, 76, 0.15)',
+        'emerald': '0 0 30px rgba(52, 211, 153, 0.25)',
+        'card': '0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+        'card-hover': '0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(52, 211, 153, 0.15)',
       },
       transitionDuration: {
         '400': '400ms',

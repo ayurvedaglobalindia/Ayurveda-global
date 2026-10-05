@@ -131,7 +131,7 @@ export function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="bg-[#08100B] text-[#F5EFE6] relative overflow-hidden border-t border-[#C2A265]/20 pb-16 md:pb-0"
+      className="bg-[#07080B] text-[#F5EFE6] relative overflow-hidden border-t border-[#C2A265]/20 pb-16 md:pb-0"
     >
       {/* Top Gold Hairline */}
       <div className="h-px bg-gradient-to-r from-transparent via-[#C2A265]/30 to-transparent" aria-hidden="true" />
@@ -143,9 +143,9 @@ export function Footer() {
             {trustBadges.map((badge, idx) => (
               <div
                 key={idx}
-                className="footer-badge flex items-start gap-2.5 p-3 rounded-xl bg-[#0D1A12] border border-[#C2A265]/15 hover:border-[#C2A265]/40 transition-all duration-300"
+                className="footer-badge flex items-start gap-2.5 p-3 rounded-xl bg-[#10131B] border border-slate-700/50 hover:border-[#C2A265]/40 transition-all duration-300"
               >
-                <div className="w-8 h-8 rounded-lg bg-[#14281D] border border-[#C2A265]/25 flex items-center justify-center flex-shrink-0 text-[#C2A265]">
+                <div className="w-8 h-8 rounded-lg bg-[#161B26] border border-slate-700/60 flex items-center justify-center flex-shrink-0 text-emerald-400">
                   <badge.icon className="w-4 h-4" />
                 </div>
                 <div>
@@ -201,15 +201,15 @@ export function Footer() {
                   onChange={e => setEmail(e.target.value)}
                   placeholder="Enter email address..."
                   required
-                  className={`w-full pl-3.5 pr-24 py-2.5 bg-[#0D1A12] border rounded-xl text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-all ${
-                    emailError ? 'border-red-500' : 'border-[#C2A265]/20 hover:border-[#C2A265]/40'
+                  className={`w-full pl-3.5 pr-24 py-2.5 bg-[#10131B] border rounded-xl text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-emerald-400 transition-all ${
+                    emailError ? 'border-red-500' : 'border-slate-700/60 hover:border-slate-500'
                   }`}
                   aria-label="Email address for dispatch"
                 />
                 <button
                   type="submit"
                   disabled={subscribed}
-                  className="absolute right-1 top-1/2 -translate-y-1/2 px-3.5 py-1.5 rounded-lg bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-[11px] transition-all disabled:opacity-50"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 px-3.5 py-1.5 rounded-lg bg-[#C2A265] hover:bg-[#D4B678] text-black font-semibold text-[11px] transition-all disabled:opacity-50"
                 >
                   {subscribed ? 'Joined ✓' : 'Subscribe'}
                 </button>
@@ -229,7 +229,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-[#0D1A12] border border-[#C2A265]/20 flex items-center justify-center text-[#C2A265] hover:bg-[#C2A265] hover:text-[#0B150F] transition-all"
+                  className="w-9 h-9 rounded-lg bg-[#10131B] border border-slate-700/60 flex items-center justify-center text-[#C2A265] hover:bg-[#C2A265] hover:text-black transition-all"
                   aria-label={social.label}
                 >
                   <social.icon className="w-4 h-4" />
@@ -330,10 +330,10 @@ export function Footer() {
       </div>
 
       {/* WhatsApp Consultation Action Bar */}
-      <div className="bg-[#0B150F] border-t border-[#C2A265]/20 py-3.5 relative z-10">
+      <div className="bg-[#0A0C10] border-t border-slate-800 py-3.5 relative z-10">
         <div className="container flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <div className="flex items-center justify-center sm:justify-start gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-[#C2A265]" />
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-xs text-[#FAF7EE] font-medium">
               Chief Ayurvedic Vaidya Desk Online for Confidential Guidance
             </span>
@@ -342,7 +342,7 @@ export function Footer() {
             href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20want%20to%20place%20an%20order."
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] transition-all shadow-md"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold bg-[#C2A265] hover:bg-[#D4B678] text-black transition-all shadow-md"
           >
             <span>Confidential WhatsApp Order / Advice</span>
             <ArrowRight className="w-3.5 h-3.5" />

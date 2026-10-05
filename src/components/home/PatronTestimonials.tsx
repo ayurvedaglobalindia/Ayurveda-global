@@ -38,13 +38,13 @@ const testimonials = [
 
 export function PatronTestimonials() {
   return (
-    <section className="bg-[#0E1E14] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#08090C] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
-            <ShieldCheck className="w-3 h-3" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#121622] border border-emerald-500/30 text-emerald-400 text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
+            <ShieldCheck className="w-3 h-3 text-emerald-400" />
             <span>Verified Patron Accounts</span>
           </div>
 
@@ -52,7 +52,7 @@ export function PatronTestimonials() {
             Trusted by Discerning Patrons Across India
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#C5BFB3] mt-1.5 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-[11px] sm:text-xs text-[#CBD5E1] mt-1.5 max-w-lg mx-auto leading-relaxed font-sans">
             Real experiences from individuals who chose Classical Ayurvedic Rasayana over synthetic temporary fixes.
           </p>
         </div>
@@ -62,31 +62,31 @@ export function PatronTestimonials() {
           {testimonials.map((t, idx) => (
             <div
               key={idx}
-              className="p-4 sm:p-5 rounded-xl bg-[#12241A] border border-[#C2A265]/20 shadow-lg flex flex-col justify-between hover:-translate-y-0.5 transition-all duration-300 ease-out"
+              className="p-4 sm:p-5 rounded-xl bg-[#121622] border border-slate-800 shadow-lg flex flex-col justify-between hover:-translate-y-0.5 transition-all duration-300 ease-out"
             >
               <div>
                 {/* Star Rating */}
-                <div className="flex items-center justify-between pb-3 border-b border-[#C2A265]/15">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <div className="flex text-[#C2A265]">
                     {[...Array(t.rating)].map((_, i) => (
                       <Star key={i} className="w-3 h-3 fill-current" />
                     ))}
                   </div>
-                  <span className="text-[9.5px] uppercase tracking-wider text-[#A8A295] font-medium">
+                  <span className="text-[9.5px] uppercase tracking-wider text-[#94A3B8] font-medium">
                     {t.location}
                   </span>
                 </div>
 
                 {/* Review Text */}
-                <p className="text-xs sm:text-[12.5px] text-[#C5BFB3] leading-relaxed mt-3 italic font-serif">
+                <p className="text-xs sm:text-[12.5px] text-[#CBD5E1] leading-relaxed mt-3 italic font-serif">
                   &ldquo;{t.quote}&rdquo;
                 </p>
               </div>
 
               {/* Author Info with Monogram Avatar */}
-              <div className="mt-4 pt-3 border-t border-[#C2A265]/15">
+              <div className="mt-4 pt-3 border-t border-slate-800">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-[#183525] border border-[#C2A265]/40 flex items-center justify-center text-xs font-semibold text-[#D4B678] font-serif flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-[#18202C] border border-slate-700 flex items-center justify-center text-xs font-semibold text-[#D4B678] font-serif flex-shrink-0">
                     {t.initials}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -110,7 +110,7 @@ export function PatronTestimonials() {
         </div>
 
         {/* Trust Badges Bar */}
-        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-5 sm:gap-8 text-xs text-[#A8A295] pt-5 border-t border-[#C2A265]/15">
+        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-5 sm:gap-8 text-xs text-[#94A3B8] pt-5 border-t border-slate-800">
           <div className="flex items-center gap-2">
             <span className="font-heading text-base font-bold text-[#FAF7EE]">4.9 / 5</span>
             <span>Average Patron Rating</span>

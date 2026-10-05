@@ -101,13 +101,13 @@ export function FeaturedApothecary() {
   }
 
   return (
-    <section id="apothecary" className="bg-[#0B150F] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 relative">
+    <section id="apothecary" className="bg-[#08090C] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#12241A] border border-[#C2A265]/30 text-[#C2A265] text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
-            <Sparkles className="w-3 h-3" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#121622] border border-emerald-500/30 text-emerald-400 text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
+            <Sparkles className="w-3 h-3 text-emerald-400" />
             <span>Master Apothecary Catalog</span>
           </div>
 
@@ -115,7 +115,7 @@ export function FeaturedApothecary() {
             Targeted Ayurvedic Formulations
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#C5BFB3] mt-2 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-[11px] sm:text-xs text-[#CBD5E1] mt-2 max-w-lg mx-auto leading-relaxed font-sans">
             Classical rasayanas refined with pharmaceutical HPLC precision. Standardized bioactives, 100% vegetarian capsules, zero synthetic chemicals.
           </p>
 
@@ -133,16 +133,16 @@ export function FeaturedApothecary() {
                 onClick={() => setActiveCategory(tab.id as any)}
                 className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs transition-all duration-200 flex items-center gap-1.5 ${
                   activeCategory === tab.id
-                    ? 'bg-[#C2A265] text-[#0B150F] font-semibold shadow-md'
-                    : 'bg-[#12241A] text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#162C20] border border-[#C2A265]/15'
+                    ? 'bg-[#C2A265] text-[#08090C] font-semibold shadow-md'
+                    : 'bg-[#121622] text-[#94A3B8] hover:text-[#FAF7EE] hover:bg-[#1A202E] border border-slate-800'
                 }`}
               >
                 <span>{tab.label}</span>
                 <span
                   className={`text-[9.5px] px-1.5 py-0.5 rounded-full font-semibold ${
                     activeCategory === tab.id
-                      ? 'bg-[#0B150F]/20 text-[#0B150F]'
-                      : 'bg-[#183525] text-[#D4B678]'
+                      ? 'bg-[#08090C]/20 text-[#08090C]'
+                      : 'bg-[#1E2534] text-emerald-300'
                   }`}
                 >
                   {tab.count}
@@ -196,20 +196,20 @@ export function FeaturedApothecary() {
             return (
               <div
                 key={product.id}
-                className="rounded-2xl bg-[#102016] border border-[#C2A265]/20 flex flex-col justify-between overflow-hidden group hover:border-[#C2A265]/60 hover:-translate-y-1.5 transition-all duration-300 ease-out shadow-lg hover:shadow-[0_16px_36px_rgba(0,0,0,0.7),0_0_24px_rgba(194,162,101,0.12)] max-w-sm md:max-w-none mx-auto w-full"
+                className="rounded-2xl bg-[#121622] border border-slate-800 flex flex-col justify-between overflow-hidden group hover:border-emerald-500/40 hover:-translate-y-1.5 transition-all duration-300 ease-out shadow-lg hover:shadow-[0_16px_36px_rgba(0,0,0,0.7),0_0_24px_rgba(16,185,129,0.12)] max-w-sm md:max-w-none mx-auto w-full"
               >
                 {/* Product Image Stage (Tailored 4:5 Aspect Ratio) */}
-                <div className="relative aspect-[4/5] w-full bg-[#0D1B12] overflow-hidden border-b border-[#C2A265]/15">
+                <div className="relative aspect-[4/5] w-full bg-[#0C0E14] overflow-hidden border-b border-slate-800">
                   {/* Subtle Badge */}
                   <div className="absolute top-3 left-3 z-10">
-                    <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-wider font-bold bg-[#0B150F]/90 backdrop-blur-md border border-[#C2A265]/40 text-[#FAF7EE] shadow-md">
+                    <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-wider font-bold bg-[#08090C]/90 backdrop-blur-md border border-slate-700/60 text-[#FAF7EE] shadow-md">
                       {badgeLabel}
                     </span>
                   </div>
 
                   {discountPercent > 0 && (
                     <div className="absolute top-3 right-3 z-10">
-                      <span className="px-2.5 py-1 rounded-full text-[9px] font-bold bg-[#C2A265] text-[#0B150F] shadow-md">
+                      <span className="px-2.5 py-1 rounded-full text-[9px] font-bold bg-[#C2A265] text-[#08090C] shadow-md">
                         {discountPercent}% OFF
                       </span>
                     </div>
@@ -224,7 +224,7 @@ export function FeaturedApothecary() {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
                       priority={product.id === 'vitality-power-combo'}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#102016]/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#121622]/90 via-transparent to-transparent pointer-events-none" />
                   </Link>
                 </div>
 
@@ -240,9 +240,9 @@ export function FeaturedApothecary() {
                           ))}
                         </div>
                         <span className="font-semibold text-[#FAF7EE] text-[11px]">4.9★</span>
-                        <span className="text-[10px] text-[#A8A295]">(1.2k+)</span>
+                        <span className="text-[10px] text-[#94A3B8]">(1.2k+)</span>
                       </div>
-                      <span className="text-[9.5px] font-semibold text-[#C2A265] bg-[#162D1F] px-2 py-0.5 rounded border border-[#C2A265]/20">
+                      <span className="text-[9.5px] font-semibold text-emerald-400 bg-[#16202E] px-2 py-0.5 rounded border border-emerald-500/30">
                         AYUSH Certified
                       </span>
                     </div>
@@ -255,7 +255,7 @@ export function FeaturedApothecary() {
                     </Link>
 
                     {/* 1-Line Concentrated Bioactives Subtitle */}
-                    <p className="text-[11px] text-[#C5BFB3] mt-1 line-clamp-1 font-medium flex items-center gap-1">
+                    <p className="text-[11px] text-[#CBD5E1] mt-1 line-clamp-1 font-medium flex items-center gap-1">
                       <Sparkles className="w-3 h-3 text-[#C2A265] flex-shrink-0" />
                       <span>{bioactivesSnippet}</span>
                     </p>
@@ -263,7 +263,7 @@ export function FeaturedApothecary() {
                     {/* Compact Course Pack Pills (if multiple variants) */}
                     {product.variants && product.variants.length > 1 && (
                       <div className="flex items-center gap-1.5 mt-2.5">
-                        <span className="text-[9.5px] uppercase tracking-wider text-[#A8A295] font-semibold">
+                        <span className="text-[9.5px] uppercase tracking-wider text-[#94A3B8] font-semibold">
                           Pack:
                         </span>
                         <div className="flex gap-1.5 flex-1">
@@ -273,8 +273,8 @@ export function FeaturedApothecary() {
                               onClick={() => handleVariantChange(product.id, v.id)}
                               className={`px-2 py-1 rounded-md text-[10.5px] transition-all font-medium truncate flex-1 text-center ${
                                 currentVariantId === v.id
-                                  ? 'bg-[#183525] border border-[#C2A265] text-[#FAF7EE] shadow-sm'
-                                  : 'bg-[#0D1B12] border border-[#C2A265]/15 text-[#A8A295] hover:text-[#FAF7EE]'
+                                  ? 'bg-[#1E2534] border border-emerald-400 text-emerald-300 shadow-sm'
+                                  : 'bg-[#0D1017] border border-slate-800 text-[#94A3B8] hover:text-[#FAF7EE]'
                               }`}
                             >
                               {v.name}
@@ -286,7 +286,7 @@ export function FeaturedApothecary() {
                   </div>
 
                   {/* Price & Action Area */}
-                  <div className="mt-3 pt-2.5 border-t border-[#C2A265]/15">
+                  <div className="mt-3 pt-2.5 border-t border-slate-800">
                     <div className="flex items-baseline justify-between mb-2.5">
                       <div>
                         <div className="flex items-baseline gap-2">
@@ -294,18 +294,18 @@ export function FeaturedApothecary() {
                             {formatPrice(activePrice)}
                           </span>
                           {activeComparePrice && (
-                            <span className="text-[11px] text-[#8A8478] line-through">
+                            <span className="text-[11px] text-[#94A3B8] line-through">
                               {formatPrice(activeComparePrice)}
                             </span>
                           )}
                         </div>
-                        <p className="text-[9.5px] text-[#A8A295] mt-0.5">
+                        <p className="text-[9.5px] text-[#94A3B8] mt-0.5">
                           Free Express Delivery • COD Available
                         </p>
                       </div>
 
                       {discountPercent > 0 && (
-                        <span className="text-[9.5px] text-[#C2A265] font-semibold bg-[#142A1D] px-2 py-0.5 rounded border border-[#C2A265]/20">
+                        <span className="text-[9.5px] text-emerald-400 font-semibold bg-[#16202E] px-2 py-0.5 rounded border border-emerald-500/30">
                           Save {formatPrice(activeComparePrice! - activePrice)}
                         </span>
                       )}
@@ -315,7 +315,7 @@ export function FeaturedApothecary() {
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         onClick={() => handleAddToCart(product)}
-                        className="py-2.5 px-2 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-bold text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-1.5"
+                        className="py-2.5 px-2 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#08090C] font-bold text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-md flex items-center justify-center gap-1.5"
                       >
                         {addedNotice === product.id ? (
                           <>
@@ -332,9 +332,9 @@ export function FeaturedApothecary() {
 
                       <button
                         onClick={() => handleWhatsAppOrder(product)}
-                        className="py-2.5 px-2 rounded-xl bg-[#142A1D] hover:bg-[#183525] border border-[#C2A265]/30 text-[#FAF7EE] font-medium text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5"
+                        className="py-2.5 px-2 rounded-xl bg-[#18202C] hover:bg-[#1E2636] border border-slate-700 hover:border-emerald-500/40 text-[#FAF7EE] font-medium text-xs tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5"
                       >
-                        <MessageCircle className="w-3.5 h-3.5 text-[#C2A265]" />
+                        <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
                         <span>Quick COD</span>
                       </button>
                     </div>

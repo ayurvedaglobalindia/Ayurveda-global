@@ -47,7 +47,7 @@ export function WishlistPage() {
     return (
       <div className="container py-10 sm:py-14 lg:py-16">
         <div className="max-w-md mx-auto text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#061A10] border border-[#C2A265]/20 flex items-center justify-center">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#121622] border border-[#C2A265]/20 flex items-center justify-center">
             <Heart className="w-8 h-8 text-ayur-gold" />
           </div>
           <h1 className="font-heading text-xl sm:text-2xl font-medium text-ayur-ivory mb-2">Your wishlist is empty</h1>
@@ -65,7 +65,7 @@ export function WishlistPage() {
   return (
     <div className="container py-5 sm:py-7 lg:py-9">
       <div className="flex items-center gap-3 mb-5 sm:mb-6">
-        <Link href="/" className="p-2 rounded-lg text-ayur-stone hover:text-ayur-gold hover:bg-[#061A10] transition-colors">
+        <Link href="/" className="p-2 rounded-lg text-ayur-stone hover:text-ayur-gold hover:bg-[#18202C] transition-colors">
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <h1 className="font-heading text-xl sm:text-2xl font-medium text-ayur-ivory">My Wishlist ({itemCount})</h1>
@@ -95,7 +95,7 @@ function WishlistItemCard({
 
   return (
     <article className="card-luxury rounded-2xl overflow-hidden group relative">
-      <div className="relative aspect-[4/5] overflow-hidden bg-[#061A10]">
+      <div className="relative aspect-[4/5] overflow-hidden bg-[#121622]">
         <Link href={`/product/${item.product.slug}`}>
           <Image
             src={primaryImage.src}
@@ -108,7 +108,7 @@ function WishlistItemCard({
         <div className="absolute top-3 right-3">
           <button
             onClick={() => onRemove(item.productId, item.variantId)}
-            className="w-9 h-9 rounded-full bg-[#0B150F]/90 border border-[#C2A265]/30 flex items-center justify-center shadow-medium text-[#C4BDA8] hover:text-red-400 transition-colors"
+            className="w-9 h-9 rounded-full bg-[#08090C]/90 border border-[#C2A265]/30 flex items-center justify-center shadow-medium text-[#C4BDA8] hover:text-red-400 transition-colors"
             aria-label="Remove from wishlist"
           >
             <Trash2 className="w-5 h-5" />

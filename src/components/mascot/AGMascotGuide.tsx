@@ -64,12 +64,12 @@ export function AGMascotGuide() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 15, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="mb-2 w-80 rounded-2xl bg-[#0E1E14]/95 backdrop-blur-xl border border-[#C2A265]/35 p-4 shadow-2xl text-[#FAF7EE] ring-1 ring-black/40"
+            className="mb-2 w-80 rounded-2xl bg-[#0C0E14]/95 backdrop-blur-xl border border-emerald-500/35 p-4 shadow-2xl text-[#FAF7EE] ring-1 ring-black/40"
           >
             {/* Header */}
-            <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-[#C2A265]/20">
+            <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-800">
               <div className="flex items-center gap-2">
-                <div className="relative w-6 h-6 rounded-full overflow-hidden border border-[#C2A265]/50 flex-shrink-0 bg-[#142A1D]">
+                <div className="relative w-6 h-6 rounded-full overflow-hidden border border-emerald-500/50 flex-shrink-0 bg-[#161B26]">
                   <Image
                     src="/images/team/mageesh.jpg"
                     alt="Ayurveda Guide"
@@ -79,7 +79,7 @@ export function AGMascotGuide() {
                   />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold text-[#D4B678] uppercase tracking-wider block">
+                  <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">
                     Vaidya Desk Assistant
                   </span>
                   <span className="text-[9px] text-[#A8A295] block -mt-0.5">
@@ -90,7 +90,7 @@ export function AGMascotGuide() {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="text-[#A8A295] hover:text-[#FAF7EE] p-1 rounded-lg hover:bg-[#142A1D] transition-colors"
+                className="text-[#A8A295] hover:text-[#FAF7EE] p-1 rounded-lg hover:bg-[#1A202C] transition-colors"
                 aria-label="Close Guide"
               >
                 <X className="w-3.5 h-3.5" />
@@ -100,10 +100,10 @@ export function AGMascotGuide() {
             {/* Tip Content */}
             <div className="space-y-1.5 mb-3">
               <h4 className="font-heading text-xs font-semibold text-[#FAF7EE] flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-[#C2A265]" />
+                <Sparkles className="w-3 h-3 text-emerald-400" />
                 <span>{current.title}</span>
               </h4>
-              <p className="text-[11px] text-[#C5BFB3] leading-relaxed font-sans">
+              <p className="text-[11px] text-[#CBD5E1] leading-relaxed font-sans">
                 {current.body}
               </p>
             </div>
@@ -114,7 +114,7 @@ export function AGMascotGuide() {
                 <Link
                   href={current.actionHref}
                   onClick={() => setIsOpen(false)}
-                  className="inline-flex items-center gap-1 text-[10.5px] font-semibold text-[#D4B678] hover:text-[#FAF7EE] transition-colors bg-[#142A1D] hover:bg-[#183525] px-2.5 py-1 rounded-lg border border-[#C2A265]/25"
+                  className="inline-flex items-center gap-1 text-[10.5px] font-semibold text-emerald-300 hover:text-white transition-colors bg-[#161B26] hover:bg-[#1E2534] px-2.5 py-1 rounded-lg border border-slate-700/60"
                 >
                   <span>{current.actionLabel} &rarr;</span>
                 </Link>
@@ -122,11 +122,11 @@ export function AGMascotGuide() {
             )}
 
             {/* Footer Navigation */}
-            <div className="flex items-center justify-between pt-2 border-t border-[#C2A265]/15 text-[10px]">
+            <div className="flex items-center justify-between pt-2 border-t border-slate-800 text-[10px]">
               <button
                 type="button"
                 onClick={nextTip}
-                className="text-[#D4B678] hover:underline font-medium flex items-center gap-1"
+                className="text-emerald-400 hover:underline font-medium flex items-center gap-1"
               >
                 <span>Next Advice ({tipIndex + 1}/{tips.length})</span>
               </button>
@@ -144,11 +144,11 @@ export function AGMascotGuide() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#12241A]/95 hover:bg-[#183525] border border-[#C2A265]/50 shadow-xl text-xs text-[#D4B678] transition-all hover:scale-105 active:scale-95 backdrop-blur-md group"
+        className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0E121A]/95 hover:bg-[#161C28] border border-emerald-500/40 shadow-xl text-xs text-emerald-300 transition-all hover:scale-105 active:scale-95 backdrop-blur-md group"
         title="Ayurvedic Wellness Assistant"
         aria-expanded={isOpen}
       >
-        <div className="relative w-4 h-4 rounded-full overflow-hidden border border-[#C2A265]/60 flex-shrink-0">
+        <div className="relative w-4 h-4 rounded-full overflow-hidden border border-emerald-500/60 flex-shrink-0">
           <Image
             src="/images/team/mageesh.jpg"
             alt="Vaidya Guide"
@@ -157,13 +157,13 @@ export function AGMascotGuide() {
             sizes="16px"
           />
         </div>
-        <span className="font-medium text-[11px] text-[#FAF7EE] group-hover:text-[#D4B678] transition-colors">
+        <span className="font-medium text-[11px] text-[#FAF7EE] group-hover:text-emerald-300 transition-colors">
           Vaidya Tips
         </span>
         {isOpen ? (
           <X className="w-3 h-3 text-[#A8A295]" />
         ) : (
-          <ChevronUp className="w-3 h-3 text-[#C2A265] transition-transform group-hover:-translate-y-0.5" />
+          <ChevronUp className="w-3 h-3 text-emerald-400 transition-transform group-hover:-translate-y-0.5" />
         )}
       </button>
     </aside>

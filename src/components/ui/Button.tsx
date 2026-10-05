@@ -16,12 +16,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles = {
       primary: 'bg-ayur-forest text-ayur-cream hover:bg-ayur-leaf focus-visible:ring-ayur-forest',
-      secondary: 'bg-ayur-gold text-[#0B150F] font-semibold hover:bg-ayur-gold-light focus-visible:ring-ayur-gold',
+      secondary: 'bg-ayur-gold text-[#08090C] font-semibold hover:bg-ayur-gold-light focus-visible:ring-ayur-gold',
       outline: 'border border-[#C2A265]/40 text-[#FAF7EE] hover:bg-[#C2A265]/10 hover:border-ayur-gold focus-visible:ring-ayur-gold',
       ghost: 'text-[#FAF7EE] hover:bg-white/5 focus-visible:ring-ayur-gold',
-      whatsapp: 'bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-500',
-      gold: 'bg-gradient-to-r from-ayur-gold to-ayur-copper text-[#0B150F] font-semibold hover:from-ayur-gold-light hover:to-ayur-gold focus-visible:ring-ayur-gold shadow-lg shadow-ayur-gold/30',
-      emerald: 'bg-ayur-forest-deep text-white hover:bg-ayur-forest focus-visible:ring-emerald-500 shadow-md',
+      whatsapp: 'bg-emerald-600 text-white hover:bg-emerald-500 focus-visible:ring-emerald-500',
+      gold: 'bg-gradient-to-r from-ayur-gold to-ayur-copper text-[#08090C] font-semibold hover:from-ayur-gold-light hover:to-ayur-gold focus-visible:ring-ayur-gold shadow-lg shadow-ayur-gold/30',
+      emerald: 'bg-emerald-500 text-[#08090C] font-semibold hover:bg-emerald-400 focus-visible:ring-emerald-400 shadow-md shadow-emerald-500/20',
       'emerald-outline': 'border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10 focus-visible:ring-emerald-500',
       'gold-outline': 'border border-ayur-gold/40 text-ayur-gold hover:bg-ayur-gold/10 focus-visible:ring-ayur-gold',
     }

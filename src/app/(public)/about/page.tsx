@@ -109,7 +109,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#061B12] border border-[#D4AF37]/30 relative shadow-xl group max-w-md mx-auto w-full">
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#121622] border border-[#D4AF37]/30 relative shadow-xl group max-w-md mx-auto w-full">
               <Image
                 src="/images/products/vitality-power-combo-card.jpg"
                 alt="Ayur Veda Global Botanical Formulations & Heritage"
@@ -117,9 +117,9 @@ export default function AboutPage() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#061B12]/85 via-[#061B12]/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#08090C]/85 via-[#08090C]/20 to-transparent" />
               <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
-                <span className="px-2.5 py-0.5 rounded-full bg-[#061B12]/90 border border-[#D4AF37]/40 text-[#D4AF37] font-semibold text-[10.5px] backdrop-blur-md">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#121622]/90 border border-[#D4AF37]/40 text-[#D4AF37] font-semibold text-[10.5px] backdrop-blur-md">
                   Vedic Botanical Science
                 </span>
                 <span className="text-[#FAF7EE]/80 text-[10px] font-mono">EST. 2020</span>
@@ -172,7 +172,7 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-4">
             {team.slice(0, 2).map((member) => (
               <div key={member.name} className="text-center p-4 sm:p-5 rounded-2xl glass-luxury-card border border-[#D4AF37]/30 shadow-md hover:border-[#D4AF37]/60 transition-all duration-300 group">
-                <div className="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden bg-[#061B12] flex items-center justify-center relative border-2 border-[#D4AF37]/50 shadow-md group-hover:scale-105 transition-transform duration-300">
+                <div className="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden bg-[#121622] flex items-center justify-center relative border-2 border-[#D4AF37]/50 shadow-md group-hover:scale-105 transition-transform duration-300">
                   {member.image ? (
                     <Image
                       src={member.image}
@@ -196,7 +196,7 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {team.slice(2).map((member) => (
               <div key={member.name} className="text-center p-3.5 sm:p-4 rounded-xl glass-luxury-card border border-[#D4AF37]/20 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 group">
-                <div className="w-14 h-14 mx-auto mb-2.5 rounded-full overflow-hidden bg-[#061B12] flex items-center justify-center relative border border-[#D4AF37]/30 shadow-sm group-hover:scale-105 transition-transform duration-300">
+                <div className="w-14 h-14 mx-auto mb-2.5 rounded-full overflow-hidden bg-[#121622] flex items-center justify-center relative border border-[#D4AF37]/30 shadow-sm group-hover:scale-105 transition-transform duration-300">
                   <Users className="w-6 h-6 text-[#D4AF37]" />
                 </div>
                 <h3 className="font-heading text-sm font-medium text-white mb-0.5">{member.name}</h3>

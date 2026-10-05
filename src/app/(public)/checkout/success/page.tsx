@@ -84,7 +84,7 @@ function CheckoutSuccessContent() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', damping: 15, stiffness: 200 }}
-          className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full bg-[#1A4D36]/80 border-2 border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.25)] flex items-center justify-center relative"
+          className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full bg-[#121622] border-2 border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.25)] flex items-center justify-center relative"
         >
           <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-[#F4E295]" />
           <div className="absolute inset-0 rounded-full border border-[#D4AF37]/40 animate-ping opacity-25" />
@@ -116,7 +116,7 @@ function CheckoutSuccessContent() {
           className="text-[#C5BFB3] text-xs sm:text-sm mb-6 leading-relaxed max-w-lg mx-auto"
         >
           Thank you for choosing Ayur Veda Global. Your confidential order reference is{' '}
-          <span className="font-mono font-bold text-[#D4B678] bg-[#0E1E14] px-2.5 py-0.5 rounded-md border border-[#C2A265]/35 inline-block ml-1">
+          <span className="font-mono font-bold text-[#D4B678] bg-[#18202C] px-2.5 py-0.5 rounded-md border border-[#C2A265]/35 inline-block ml-1">
             {orderNumber || 'ORD-PROCESSING'}
           </span>
         </motion.p>
@@ -141,7 +141,7 @@ function CheckoutSuccessContent() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="mb-6 p-4 rounded-2xl bg-[#102016] border border-[#C2A265]/25 text-left space-y-2.5"
+            className="mb-6 p-4 rounded-2xl bg-[#121622] border border-[#C2A265]/25 text-left space-y-2.5"
           >
             <div className="flex items-center justify-between pb-2 border-b border-[#C2A265]/15">
               <span className="text-[11px] uppercase tracking-wider text-[#C2A265] font-semibold">Order Summary</span>
@@ -222,7 +222,7 @@ function CheckoutSuccessContent() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-10 p-4 rounded-xl bg-[#061B12]/80 border border-[#D4AF37]/20 max-w-lg mx-auto text-xs text-[#8A9B8F] leading-relaxed"
+          className="mt-10 p-4 rounded-xl bg-[#121622]/80 border border-[#D4AF37]/20 max-w-lg mx-auto text-xs text-[#8A9B8F] leading-relaxed"
         >
           Need to monitor your package in real-time? Track anytime using your phone or order ID at{' '}
           <Link href="/track-order" className="text-[#F4E295] underline underline-offset-4 hover:text-white transition-colors">

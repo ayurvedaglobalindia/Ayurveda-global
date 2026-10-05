@@ -146,7 +146,7 @@ export function CartDrawer() {
             <div className="flex items-center justify-between p-3.5 sm:p-4 border-b border-ayur-forest-dark/50">
               <h2 className="font-heading text-base font-semibold text-ayur-ivory flex items-center gap-2">
                 <span>Shopping Cart</span>
-                <span className="text-[11px] font-sans px-2 py-0.5 rounded-full bg-[#142A1D] text-[#D4B678] border border-[#C2A265]/30">
+                <span className="text-[11px] font-sans px-2 py-0.5 rounded-full bg-[#1E2534] text-emerald-400 border border-emerald-500/30 font-semibold">
                   {itemCount}
                 </span>
               </h2>

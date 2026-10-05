@@ -78,7 +78,7 @@ export function ProductFilters({
                   name="category"
                   checked={!selectedCategory}
                   onChange={() => onCategoryChange(undefined)}
-                  className="w-4 h-4 text-ayur-gold border-[#C2A265]/40 bg-[#061A10] focus:ring-ayur-gold"
+                  className="w-4 h-4 text-emerald-400 border-slate-700 bg-[#121622] focus:ring-emerald-400"
                 />
                 <span className="text-ayur-ivory">All Categories</span>
               </label>
@@ -89,7 +89,7 @@ export function ProductFilters({
                     name="category"
                     checked={selectedCategory === category.slug}
                     onChange={() => onCategoryChange(category.slug)}
-                    className="w-4 h-4 text-ayur-gold border-[#C2A265]/40 bg-[#061A10] focus:ring-ayur-gold"
+                    className="w-4 h-4 text-emerald-400 border-slate-700 bg-[#121622] focus:ring-emerald-400"
                   />
                   <span className="text-ayur-ivory">{category.name}</span>
                   <span className="text-[#C4BDA8] text-sm">({category.productCount})</span>
@@ -129,7 +129,7 @@ export function ProductFilters({
                   max="500000"
                   value={priceMin}
                   onChange={e => setPriceMin(Math.min(priceMax, parseInt(e.target.value)))}
-                  className="w-full h-2 bg-[#12241A] rounded-lg appearance-none cursor-pointer accent-ayur-gold"
+                  className="w-full h-2 bg-[#1E2534] rounded-lg appearance-none cursor-pointer accent-emerald-400"
                 />
                 <input
                   type="range"
@@ -137,7 +137,7 @@ export function ProductFilters({
                   max="500000"
                   value={priceMax}
                   onChange={e => setPriceMax(Math.max(priceMin, parseInt(e.target.value)))}
-                  className="w-full h-2 bg-[#12241A] rounded-lg appearance-none cursor-pointer accent-ayur-gold"
+                  className="w-full h-2 bg-[#1E2534] rounded-lg appearance-none cursor-pointer accent-emerald-400"
                 />
               </div>
               <Button size="sm" variant="gold" onClick={handlePriceApply} className="w-full">Apply</Button>
@@ -165,8 +165,8 @@ export function ProductFilters({
                   <span className={classNames(
                     'px-3 py-1.5 rounded-full text-sm border transition-colors',
                     selectedTags.includes(tag)
-                      ? 'bg-ayur-gold text-[#0B150F] border-ayur-gold font-medium'
-                      : 'bg-[#0B150F] text-[#FAF7EE] border-[#C2A265]/20 hover:border-ayur-gold/50'
+                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 font-medium'
+                      : 'bg-[#121622] text-[#CBD5E1] border-slate-800 hover:border-slate-700'
                   )}>
                     {tag.replace(/-/g, ' ')}
                   </span>
@@ -184,7 +184,7 @@ export function ProductFilters({
                 type="checkbox"
                 checked={inStockOnly}
                 onChange={e => onInStockChange(e.target.checked)}
-                className="w-4 h-4 text-ayur-gold border-[#C2A265]/40 bg-[#061A10] focus:ring-ayur-gold rounded"
+                className="w-4 h-4 text-emerald-400 border-slate-700 bg-[#121622] focus:ring-emerald-400 rounded"
               />
               <span className="text-ayur-ivory">In stock only</span>
             </label>
@@ -205,7 +205,7 @@ export function ProductFilters({
           <Filter className="w-4 h-4" />
           Filters
           {hasActiveFilters && (
-            <span className="w-5 h-5 rounded-full bg-ayur-gold text-[#0B150F] text-xs font-bold flex items-center justify-center">
+            <span className="w-5 h-5 rounded-full bg-ayur-gold text-[#08090C] text-xs font-bold flex items-center justify-center">
               {availableTags.filter(t => selectedTags.includes(t)).length +
                 (selectedCategory ? 1 : 0) +
                 (inStockOnly ? 1 : 0) +
@@ -228,10 +228,10 @@ export function ProductFilters({
                 animate={{ x: 0 }}
                 exit={{ x: -300 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-[#061A10] border-r border-[#C2A265]/20 shadow-2xl z-50 overflow-y-auto"
+                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-[#0C0E14] border-r border-slate-800 shadow-2xl z-50 overflow-y-auto"
                 onClick={e => e.stopPropagation()}
               >
-                <div className="p-4 border-b border-[#C2A265]/20 flex items-center justify-between bg-[#0B150F]">
+                <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-[#121622]">
                   <h2 className="font-heading text-lg font-medium text-ayur-ivory">Filters</h2>
                   <button
                     onClick={() => setIsOpen(false)}
@@ -250,7 +250,7 @@ export function ProductFilters({
   }
 
   return (
-    <div className="bg-[#061A10] rounded-2xl border border-[#C2A265]/20 p-6 sticky top-24 shadow-lg">
+    <div className="bg-[#0E1118] rounded-2xl border border-slate-800 p-6 sticky top-24 shadow-lg">
       {filterContent}
     </div>
   )

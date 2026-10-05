@@ -64,10 +64,10 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-            className="w-screen max-w-sm bg-[#06150C] border-l border-[#D4AF37]/25 flex flex-col shadow-2xl text-white"
+            className="w-screen max-w-sm bg-[#0B0D13] border-l border-slate-700/60 flex flex-col shadow-2xl text-white"
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[#D4AF37]/20 bg-[#040F08]">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-[#08090E]">
               <Link href="/" onClick={onClose} className="flex items-center gap-2.5">
                 <div className="w-8 h-8 relative flex-shrink-0">
                   <Image
@@ -82,14 +82,14 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   <span className="font-heading text-base font-bold text-white block">
                     Ayur Veda Global
                   </span>
-                  <span className="text-[9px] uppercase tracking-wider text-[#D4AF37] block -mt-0.5">
+                  <span className="text-[9px] uppercase tracking-wider text-emerald-400 block -mt-0.5">
                     Authentic Herbal Wellness
                   </span>
                 </div>
               </Link>
               <button
                 onClick={onClose}
-                className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-emerald-950/60 transition-colors"
+                className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-[#161B26] transition-colors"
                 aria-label="Close menu"
               >
                 <X className="w-5 h-5" />
@@ -105,12 +105,12 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   onClose()
                   openSearch()
                 }}
-                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-[#0B1D12] hover:bg-[#122A1A] border border-[#C2A265]/35 text-xs text-[#FAF7EE] shadow-inner transition-all group"
+                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-[#121622] hover:bg-[#181D2C] border border-slate-700/60 text-xs text-[#FAF7EE] shadow-inner transition-all group"
                 aria-label="Search apothecary catalog"
               >
-                <Search className="w-4 h-4 text-[#C2A265] group-hover:scale-110 transition-transform" />
+                <Search className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
                 <span className="text-[#A8A295] group-hover:text-[#FAF7EE] transition-colors">Search formulations, herbs...</span>
-                <span className="ml-auto text-[10px] font-mono text-[#C2A265] bg-[#07130B] px-1.5 py-0.5 rounded border border-[#C2A265]/20">
+                <span className="ml-auto text-[10px] font-mono text-emerald-400 bg-[#0D1017] px-1.5 py-0.5 rounded border border-slate-700/50">
                   ⌘K
                 </span>
               </button>
@@ -119,7 +119,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
               <Link
                 href="/product/vitality-power-combo"
                 onClick={onClose}
-                className="block p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950 to-[#0A2E1A] border border-[#D4AF37]/30 shadow-md group"
+                className="block p-3.5 rounded-2xl bg-gradient-to-r from-[#161B26] to-[#0E121A] border border-slate-700/60 shadow-md group"
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[10px] font-black uppercase tracking-wider bg-gradient-to-r from-amber-400 to-[#D4AF37] text-black px-2 py-0.5 rounded shadow">
@@ -141,10 +141,10 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={onClose}
-                className="flex items-center justify-between p-3 rounded-2xl bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/70 transition-colors"
+                className="flex items-center justify-between p-3 rounded-2xl bg-[#131B24] border border-emerald-500/40 text-emerald-300 hover:bg-[#182330] transition-colors"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-900/80 border border-emerald-400/40 flex items-center justify-center text-emerald-400 flex-shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 flex-shrink-0">
                     <HeartPulse className="w-4 h-4" />
                   </div>
                   <div>
@@ -167,7 +167,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   <Link
                     href="/shop"
                     onClick={onClose}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-950/50 text-sm font-medium text-gray-200 hover:text-white transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#151924] text-sm font-medium text-gray-200 hover:text-white transition-colors"
                   >
                     <span className="flex items-center gap-2.5">
                       <ShoppingBag className="w-4 h-4 text-emerald-400" />
@@ -179,25 +179,25 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   <Link
                     href="/product/body-essential-nutrition"
                     onClick={onClose}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-950/50 text-sm font-medium text-gray-200 hover:text-white transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#151924] text-sm font-medium text-gray-200 hover:text-white transition-colors"
                   >
                     <span className="flex items-center gap-2.5">
                       <Leaf className="w-4 h-4 text-emerald-400" />
                       BODY Essential Nutrition
                     </span>
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/20">60 Caps</span>
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">60 Caps</span>
                   </Link>
 
                   <Link
                     href="/product/staymax-delay-spray"
                     onClick={onClose}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-950/50 text-sm font-medium text-gray-200 hover:text-white transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#151924] text-sm font-medium text-gray-200 hover:text-white transition-colors"
                   >
                     <span className="flex items-center gap-2.5">
                       <Tag className="w-4 h-4 text-emerald-400" />
                       STAYMAX+ Delay Spray
                     </span>
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/20">30 ml</span>
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">30 ml</span>
                   </Link>
                 </div>
               </div>
@@ -211,7 +211,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   <Link
                     href="/track-order"
                     onClick={onClose}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-950/50 text-sm font-medium text-gray-200 hover:text-white transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#151924] text-sm font-medium text-gray-200 hover:text-white transition-colors"
                   >
                     <span className="flex items-center gap-2.5">
                       <Truck className="w-4 h-4 text-emerald-400" />
@@ -223,7 +223,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   <Link
                     href="/orders"
                     onClick={onClose}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-950/50 text-sm font-medium text-gray-200 hover:text-white transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#151924] text-sm font-medium text-gray-200 hover:text-white transition-colors"
                   >
                     <span className="flex items-center gap-2.5">
                       <Package className="w-4 h-4 text-emerald-400" />
@@ -235,7 +235,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   <Link
                     href="/wishlist"
                     onClick={onClose}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-950/50 text-sm font-medium text-gray-200 hover:text-white transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#151924] text-sm font-medium text-gray-200 hover:text-white transition-colors"
                   >
                     <span className="flex items-center gap-2.5">
                       <Heart className="w-4 h-4 text-emerald-400" />
@@ -255,7 +255,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   <Link
                     href="/about"
                     onClick={onClose}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-950/50 text-sm font-medium text-gray-200 hover:text-white transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#151924] text-sm font-medium text-gray-200 hover:text-white transition-colors"
                   >
                     <span className="flex items-center gap-2.5">
                       <Info className="w-4 h-4 text-emerald-400" />
@@ -267,7 +267,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   <Link
                     href="/faq"
                     onClick={onClose}
-                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-950/50 text-sm font-medium text-gray-200 hover:text-white transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#151924] text-sm font-medium text-gray-200 hover:text-white transition-colors"
                   >
                     <span className="flex items-center gap-2.5">
                       <HelpCircle className="w-4 h-4 text-emerald-400" />
@@ -280,7 +280,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
             </div>
 
             {/* Drawer Footer */}
-            <div className="p-4 border-t border-[#D4AF37]/20 bg-[#040F08] space-y-3">
+            <div className="p-4 border-t border-slate-800 bg-[#08090E] space-y-3">
               <a
                 href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20an%20enquiry%20about%20ordering."
                 target="_blank"

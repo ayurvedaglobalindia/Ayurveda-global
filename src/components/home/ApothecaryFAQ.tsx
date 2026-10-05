@@ -39,13 +39,13 @@ export function ApothecaryFAQ() {
   }
 
   return (
-    <section className="bg-[#0E1E14] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#08090C] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
-            <HelpCircle className="w-3 h-3" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#121622] border border-emerald-500/30 text-emerald-400 text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
+            <HelpCircle className="w-3 h-3 text-emerald-400" />
             <span>Common Inquiries</span>
           </div>
 
@@ -53,7 +53,7 @@ export function ApothecaryFAQ() {
             Frequently Asked Questions
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#C5BFB3] mt-1.5 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-[11px] sm:text-xs text-[#CBD5E1] mt-1.5 max-w-lg mx-auto leading-relaxed font-sans">
             Transparent guidance regarding our ingredients, delivery discretion, payment methods, and usage regimens.
           </p>
         </div>
@@ -67,8 +67,8 @@ export function ApothecaryFAQ() {
                 key={idx}
                 className={`rounded-xl overflow-hidden transition-all duration-300 ${
                   isOpen
-                    ? 'bg-[#142A1D] border border-[#C2A265]/45 shadow-md'
-                    : 'bg-[#12241A] border border-[#C2A265]/20 hover:border-[#C2A265]/35'
+                    ? 'bg-[#161B28] border border-emerald-500/40 shadow-md'
+                    : 'bg-[#10141E] border border-slate-800 hover:border-slate-700'
                 }`}
               >
                 <button
@@ -80,8 +80,8 @@ export function ApothecaryFAQ() {
                     {faq.question}
                   </span>
                   <div
-                    className={`w-6 h-6 rounded-full bg-[#162D1F] border border-[#C2A265]/20 flex items-center justify-center text-[#C2A265] flex-shrink-0 transition-transform duration-300 ${
-                      isOpen ? 'rotate-180 bg-[#C2A265] text-[#0B150F]' : ''
+                    className={`w-6 h-6 rounded-full bg-[#18202C] border border-slate-700 flex items-center justify-center text-emerald-400 flex-shrink-0 transition-transform duration-300 ${
+                      isOpen ? 'rotate-180 bg-[#C2A265] text-[#08090C]' : ''
                     }`}
                   >
                     <ChevronDown className="w-3.5 h-3.5" />
@@ -89,7 +89,7 @@ export function ApothecaryFAQ() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-3.5 pb-3.5 sm:px-4 sm:pb-4 text-xs text-[#A8A295] leading-relaxed border-t border-[#C2A265]/10 pt-3 font-sans animate-fade-in">
+                  <div className="px-3.5 pb-3.5 sm:px-4 sm:pb-4 text-xs text-[#94A3B8] leading-relaxed border-t border-slate-800/80 pt-3 font-sans animate-fade-in">
                     {faq.answer}
                   </div>
                 )}

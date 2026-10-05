@@ -37,20 +37,20 @@ const pillars = [
 
 export function ApothecaryPillars() {
   return (
-    <section className="bg-[#0E1E14] border-b border-[#C2A265]/20 py-5 sm:py-7 text-[#F5EFE6] relative overflow-hidden">
+    <section className="bg-[#08090C] border-b border-[#C2A265]/20 py-5 sm:py-7 text-[#F5EFE6] relative overflow-hidden">
       <div className="container relative z-10">
         
         {/* Compact Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-4 sm:mb-5 pb-2.5 border-b border-[#C2A265]/15">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-4 sm:mb-5 pb-2.5 border-b border-slate-800">
           <div>
-            <span className="text-[9px] uppercase tracking-[0.22em] font-semibold text-[#C2A265] block">
+            <span className="text-[9px] uppercase tracking-[0.22em] font-semibold text-emerald-400 block">
               Classical Quality Standards
             </span>
             <h2 className="font-heading text-base sm:text-lg font-medium text-[#FAF7EE] tracking-tight mt-0.5">
               The Four Vedic Pillars of Potency
             </h2>
           </div>
-          <p className="text-[11px] text-[#A8A295] max-w-md leading-relaxed font-sans">
+          <p className="text-[11px] text-[#94A3B8] max-w-md leading-relaxed font-sans">
             Every formulation is prepared under strict Charaka Samhita directives and validated by NABL-accredited laboratory assays.
           </p>
         </div>
@@ -64,14 +64,14 @@ export function ApothecaryPillars() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.35, delay: idx * 0.08 }}
-              className="p-3 sm:p-3.5 rounded-xl bg-[#12241A]/70 border border-[#C2A265]/20 hover:border-[#C2A265]/45 hover:bg-[#142A1D] transition-all duration-300 shadow-sm flex flex-col justify-between group hover:-translate-y-1"
+              className="p-3 sm:p-3.5 rounded-xl bg-[#121622]/90 border border-slate-800 hover:border-emerald-500/40 hover:bg-[#161B28] transition-all duration-300 shadow-sm flex flex-col justify-between group hover:-translate-y-1"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#142A1D] border border-[#C2A265]/25 group-hover:border-[#C2A265]/50 flex items-center justify-center text-[#C2A265] transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-[#18202C] border border-slate-700 group-hover:border-emerald-500/40 flex items-center justify-center text-emerald-400 transition-colors">
                     <pillar.icon className="w-4 h-4" />
                   </div>
-                  <span className="font-serif text-xs font-semibold tracking-widest text-[#C2A265]/60 group-hover:text-[#D4B678] transition-colors">
+                  <span className="font-serif text-xs font-semibold tracking-widest text-[#C2A265]/70 group-hover:text-[#D4B678] transition-colors">
                     {pillar.num}
                   </span>
                 </div>
@@ -79,16 +79,16 @@ export function ApothecaryPillars() {
                 <h3 className="font-heading text-sm sm:text-base font-medium text-[#FAF7EE] tracking-tight group-hover:text-[#D4B678] transition-colors">
                   {pillar.title}
                 </h3>
-                <p className="text-[10px] uppercase tracking-wider text-[#C2A265] font-semibold mt-0.5">
+                <p className="text-[10px] uppercase tracking-wider text-emerald-400 font-semibold mt-0.5">
                   {pillar.subtitle}
                 </p>
-                <p className="text-[11px] sm:text-xs text-[#A8A295] leading-relaxed mt-2 font-sans">
+                <p className="text-[11px] sm:text-xs text-[#94A3B8] leading-relaxed mt-2 font-sans">
                   {pillar.desc}
                 </p>
               </div>
 
-              <div className="mt-4 pt-2.5 border-t border-[#C2A265]/10 flex items-center gap-1.5 text-[10px] sm:text-[11px] text-[#D4B678]">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#C2A265]" />
+              <div className="mt-4 pt-2.5 border-t border-slate-800 flex items-center gap-1.5 text-[10px] sm:text-[11px] text-emerald-300">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                 <span className="font-medium">Vedic Standard Verified</span>
               </div>
             </motion.div>

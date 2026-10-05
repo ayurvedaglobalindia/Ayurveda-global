@@ -263,14 +263,14 @@ export default function ContactPage() {
                 <div className="mt-3 flex flex-wrap gap-2 justify-center sm:justify-start">
                   <a
                     href="tel:+919123485451"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#061B12] hover:bg-[#0A261A] border border-[#D4AF37]/30 px-2.5 py-1 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#18202C] hover:bg-[#1E2636] border border-[#D4AF37]/30 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <Phone className="w-3.5 h-3.5 text-[#D4AF37]" />
                     +91 91234 85451
                   </a>
                   <button
                     onClick={() => handleWhatsAppClick('Executive Inquiry - Owner Mageesh')}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#061B12] hover:bg-[#0A261A] border border-[#25D366]/40 px-2.5 py-1 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#18202C] hover:bg-[#1E2636] border border-[#25D366]/40 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     Direct WhatsApp
@@ -299,14 +299,14 @@ export default function ContactPage() {
                 <div className="mt-3 flex flex-wrap gap-2 justify-center sm:justify-start">
                   <a
                     href="mailto:umesh@ayurvedaglobal.com"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#061B12] hover:bg-[#0A261A] border border-[#D4AF37]/30 px-2.5 py-1 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#FAF7EE] bg-[#18202C] hover:bg-[#1E2636] border border-[#D4AF37]/30 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5 text-[#D4AF37]" />
                     umesh@ayurvedaglobal.com
                   </a>
                   <button
                     onClick={() => handleWhatsAppClick('Operations Support - Manager Umesh')}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#061B12] hover:bg-[#0A261A] border border-[#25D366]/40 px-2.5 py-1 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#25D366] bg-[#18202C] hover:bg-[#1E2636] border border-[#25D366]/40 px-2.5 py-1 rounded-lg transition-colors"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     WhatsApp Desk

@@ -37,7 +37,7 @@ export default function AccountPage() {
     <div className="container py-5 sm:py-7 lg:py-9 max-w-4xl mx-auto px-4 sm:px-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 mb-5 pb-4 sm:pb-5 border-b border-ayur-gold/20">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-emerald-950 to-emerald-900 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-lg flex-shrink-0">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-[#161B26] to-[#121622] border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-lg flex-shrink-0">
             <User className="w-6 h-6 sm:w-7 sm:h-7" />
           </div>
           <div>
@@ -78,7 +78,7 @@ export default function AccountPage() {
 
       {/* Guest Notice Banner if Not Authenticated */}
       {isMounted && !isAuthenticated && (
-        <div className="mb-5 sm:mb-6 p-4 sm:p-5 rounded-2xl bg-[#102016] border border-ayur-gold/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+        <div className="mb-5 sm:mb-6 p-4 sm:p-5 rounded-2xl bg-[#121622] border border-ayur-gold/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
           <div className="space-y-1">
             <div className="flex items-center gap-1.5 text-xs font-bold text-ayur-gold-light uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5 text-ayur-gold" />
@@ -106,7 +106,7 @@ export default function AccountPage() {
           className="card-luxury p-4 sm:p-5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-950/80 text-emerald-400 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#18202C] text-emerald-400 flex items-center justify-center">
               <Package className="w-4.5 h-4.5" />
             </div>
             <ArrowRight className="w-4 h-4 text-ayur-stone group-hover:text-emerald-400 transition-colors" />
@@ -122,7 +122,7 @@ export default function AccountPage() {
           className="card-luxury p-4 sm:p-5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-950/80 text-emerald-400 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#18202C] text-emerald-400 flex items-center justify-center">
               <Truck className="w-4.5 h-4.5" />
             </div>
             <ArrowRight className="w-4 h-4 text-ayur-stone group-hover:text-emerald-400 transition-colors" />
@@ -138,7 +138,7 @@ export default function AccountPage() {
           className="card-luxury p-4 sm:p-5 rounded-2xl border border-emerald-500/20 hover:border-emerald-500/50 transition-all group flex flex-col justify-between"
         >
           <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-950/80 text-emerald-400 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-[#18202C] text-emerald-400 flex items-center justify-center">
               <Heart className="w-4.5 h-4.5" />
             </div>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-ayur-gold/20 text-ayur-gold-light border border-ayur-gold/30">

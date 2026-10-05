@@ -36,10 +36,10 @@ export function EditorialHero() {
   }
 
   return (
-    <section className="relative bg-[#0B150F] text-[#F5EFE6] pt-3.5 sm:pt-4 lg:pt-5 pb-4 sm:pb-5 lg:pb-6 border-b border-[#C2A265]/20 overflow-hidden">
+    <section className="relative bg-[#08090C] text-[#F5EFE6] pt-3.5 sm:pt-4 lg:pt-5 pb-4 sm:pb-5 lg:pb-6 border-b border-[#C2A265]/20 overflow-hidden">
       {/* Subtle Warm Atmospheric Lighting - Restrained, non-neon */}
       <div className="absolute top-0 right-1/4 w-[350px] h-[350px] bg-[#C2A265]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-[300px] h-[300px] bg-[#1B3624]/20 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-[300px] h-[300px] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Decorative Botanical Border Hairline */}
       <div className="container relative z-10">
@@ -63,7 +63,7 @@ export function EditorialHero() {
 
             {/* Master Quality Specifications (3-Column Clean Stat Strip) */}
             <div className="grid grid-cols-3 gap-2 sm:gap-2.5 pt-0.5 text-left max-w-lg mx-auto lg:mx-0">
-              <div className="py-1.5 px-2 sm:py-2 sm:px-2.5 rounded-lg bg-[#12241A]/90 border border-[#C2A265]/20">
+              <div className="py-1.5 px-2 sm:py-2 sm:px-2.5 rounded-lg bg-[#121622]/90 border border-slate-800 hover:border-emerald-500/30 transition-colors">
                 <span className="text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-[#C2A265] font-semibold block truncate">
                   Ashwagandha
                 </span>
@@ -71,7 +71,7 @@ export function EditorialHero() {
                 <p className="text-[9.5px] text-[#A6A094] hidden sm:block mt-0.5">Pure Root Extract</p>
               </div>
 
-              <div className="py-1.5 px-2 sm:py-2 sm:px-2.5 rounded-lg bg-[#12241A]/90 border border-[#C2A265]/20">
+              <div className="py-1.5 px-2 sm:py-2 sm:px-2.5 rounded-lg bg-[#121622]/90 border border-slate-800 hover:border-emerald-500/30 transition-colors">
                 <span className="text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-[#C2A265] font-semibold block truncate">
                   Himalayan Shilajit
                 </span>
@@ -79,7 +79,7 @@ export function EditorialHero() {
                 <p className="text-[9.5px] text-[#A6A094] hidden sm:block mt-0.5">16,000+ Ft Sourced</p>
               </div>
 
-              <div className="py-1.5 px-2 sm:py-2 sm:px-2.5 rounded-lg bg-[#12241A]/90 border border-[#C2A265]/20">
+              <div className="py-1.5 px-2 sm:py-2 sm:px-2.5 rounded-lg bg-[#121622]/90 border border-slate-800 hover:border-emerald-500/30 transition-colors">
                 <span className="text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-[#C2A265] font-semibold block truncate">
                   Vedic Shodhana
                 </span>
@@ -92,7 +92,7 @@ export function EditorialHero() {
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-0.5">
               <a
                 href="#apothecary"
-                className="px-5 sm:px-6 py-2.5 rounded-full bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] font-semibold text-xs sm:text-[13px] tracking-wide transition-all duration-200 hover:-translate-y-0.5 shadow-md flex items-center gap-1.5 group"
+                className="px-5 sm:px-6 py-2.5 rounded-full bg-[#C2A265] hover:bg-[#D4B678] text-[#08090C] font-semibold text-xs sm:text-[13px] tracking-wide transition-all duration-200 hover:-translate-y-0.5 shadow-md flex items-center gap-1.5 group"
               >
                 <span>Explore Formulations</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -100,9 +100,9 @@ export function EditorialHero() {
 
               <button
                 onClick={handleVaidyaConsult}
-                className="px-4 sm:px-5 py-2.5 rounded-full bg-[#12241A] hover:bg-[#183222] border border-[#C2A265]/40 hover:border-[#C2A265] text-[#FAF7EE] font-medium text-xs sm:text-[13px] tracking-wide transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-1.5"
+                className="px-4 sm:px-5 py-2.5 rounded-full bg-[#121622] hover:bg-[#1A202E] border border-slate-700/80 hover:border-emerald-400/60 text-[#FAF7EE] font-medium text-xs sm:text-[13px] tracking-wide transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-1.5"
               >
-                <MessageCircle className="w-3.5 h-3.5 text-[#C2A265]" />
+                <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Consult Chief Vaidya</span>
               </button>
             </div>
@@ -129,11 +129,11 @@ export function EditorialHero() {
 
           {/* Right Column (Apothecary Arched Showcase & Product Pedestal) */}
           <div className="lg:col-span-5 flex justify-center relative">
-            <div className="relative w-full max-w-[260px] sm:max-w-[290px] aspect-[4/5] flex flex-col justify-between items-center p-3.5 sm:p-4 rounded-t-[80px] rounded-b-2xl bg-gradient-to-b from-[#13281C] via-[#0E1E14] to-[#0A160F] border border-[#C2A265]/30 shadow-2xl overflow-hidden group">
+            <div className="relative w-full max-w-[260px] sm:max-w-[290px] aspect-[4/5] flex flex-col justify-between items-center p-3.5 sm:p-4 rounded-t-[80px] rounded-b-2xl bg-gradient-to-b from-[#181D2A] via-[#10131B] to-[#0A0C11] border border-slate-700/60 shadow-2xl overflow-hidden group">
               
               {/* Arch Top Header */}
               <div className="text-center pt-1 z-10">
-                <span className="inline-block px-3 py-0.5 rounded-full bg-[#162D1F] border border-[#C2A265]/40 text-[8.5px] sm:text-[9.5px] tracking-[0.2em] uppercase text-[#D4B678] font-bold">
+                <span className="inline-block px-3 py-0.5 rounded-full bg-[#1A2232] border border-emerald-500/30 text-[8.5px] sm:text-[9.5px] tracking-[0.2em] uppercase text-emerald-400 font-bold">
                   Master Rasayana Series
                 </span>
               </div>

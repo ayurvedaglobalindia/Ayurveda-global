@@ -39,7 +39,7 @@ export default function TermsOfServicePage() {
                 2. Products and Services
               </h2>
               <p>We offer authentic Ayurvedic wellness products including dietary supplements and personal care items. Product descriptions, imagery, and prices are subject to change without notice. We make reasonable efforts to display botanical ingredients and packaging accurately.</p>
-              <p className="mt-3 text-[#F4E295] bg-[#061B12] p-3 rounded-lg border border-[#D4AF37]/30 text-xs">
+              <p className="mt-3 text-[#F4E295] bg-[#121622] p-3 rounded-lg border border-[#D4AF37]/30 text-xs">
                 <strong>Age Restriction:</strong> STAYMAX+ Delay Spray is formulated for individuals 18 years and older only. By purchasing, you legally confirm you meet this requirement.
               </p>
             </section>

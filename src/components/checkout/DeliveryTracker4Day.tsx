@@ -106,17 +106,17 @@ export function DeliveryTracker4Day({
   }
 
   return (
-    <div className="rounded-2xl bg-[#0D1B12] border border-[#C2A265]/30 p-4 sm:p-5 shadow-2xl space-y-4 text-left">
+    <div className="rounded-2xl bg-[#0C0E14] border border-slate-800 p-4 sm:p-5 shadow-2xl space-y-4 text-left">
       
       {/* Header with Live Status & Order ID */}
-      <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3 border-b border-[#C2A265]/15">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3 border-b border-slate-800">
         <div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#C2A265]">
+            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-emerald-400">
               4-Day Express Dispatch Journey
             </span>
           </div>
@@ -126,8 +126,8 @@ export function DeliveryTracker4Day({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="px-2.5 py-1 rounded-full bg-[#142A1D] border border-emerald-500/30 text-emerald-400 text-[10.5px] font-semibold flex items-center gap-1.5">
-            <Clock className="w-3 h-3" />
+          <span className="px-2.5 py-1 rounded-full bg-[#141824] border border-emerald-500/30 text-emerald-400 text-[10.5px] font-semibold flex items-center gap-1.5">
+            <Clock className="w-3 h-3 text-emerald-400" />
             Day {currentDay} of 4 • On Schedule
           </span>
         </div>
@@ -136,7 +136,7 @@ export function DeliveryTracker4Day({
       {/* 4-Day Animated Progress Timeline Bar */}
       <div className="relative pt-3 pb-2">
         {/* Background Track Line */}
-        <div className="absolute top-7 left-4 right-4 sm:left-6 sm:right-6 h-1 bg-[#162D1F] rounded-full z-0" />
+        <div className="absolute top-7 left-4 right-4 sm:left-6 sm:right-6 h-1 bg-[#1A202C] rounded-full z-0" />
         
         {/* Animated Progress Line */}
         <motion.div
@@ -163,19 +163,19 @@ export function DeliveryTracker4Day({
                 <div
                   className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-300 relative ${
                     isCompleted
-                      ? 'bg-emerald-500 text-[#0B150F] shadow-md shadow-emerald-500/20'
+                      ? 'bg-emerald-500 text-[#08090C] shadow-md shadow-emerald-500/20'
                       : isCurrent
-                      ? 'bg-[#183525] border-2 border-[#C2A265] text-[#FAF7EE] ring-4 ring-[#C2A265]/20 shadow-lg'
-                      : 'bg-[#102016] border border-[#C2A265]/20 text-[#8A8478]'
+                      ? 'bg-[#18202C] border-2 border-emerald-400 text-[#FAF7EE] ring-4 ring-emerald-500/20 shadow-lg'
+                      : 'bg-[#121622] border border-slate-800 text-[#8A8478]'
                   } ${isSelected ? 'scale-110' : 'hover:scale-105'}`}
                 >
                   {isCurrent && (
-                    <span className="absolute inset-0 rounded-full border border-[#C2A265] animate-ping opacity-30" />
+                    <span className="absolute inset-0 rounded-full border border-emerald-400 animate-ping opacity-30" />
                   )}
                   {isCompleted ? (
                     <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
                   ) : (
-                    <step.icon className={`w-3.5 h-3.5 ${isCurrent ? 'text-[#D4B678]' : ''}`} />
+                    <step.icon className={`w-3.5 h-3.5 ${isCurrent ? 'text-emerald-400' : ''}`} />
                   )}
                 </div>
 
@@ -206,11 +206,11 @@ export function DeliveryTracker4Day({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="p-3.5 sm:p-4 rounded-xl bg-[#12241A] border border-[#C2A265]/20 space-y-2.5"
+          className="p-3.5 sm:p-4 rounded-xl bg-[#121622] border border-slate-800 space-y-2.5"
         >
-          <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#C2A265]/10">
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-800">
             <div className="flex items-center gap-2">
-              <span className="text-[9.5px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#183525] text-[#D4B678] border border-[#C2A265]/30">
+              <span className="text-[9.5px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#1A2230] text-emerald-300 border border-emerald-500/30">
                 {activeStep.day} Landmark
               </span>
               <h4 className="font-heading text-xs sm:text-sm font-semibold text-[#FAF7EE]">
@@ -222,11 +222,11 @@ export function DeliveryTracker4Day({
             </span>
           </div>
 
-          <p className="text-[11px] sm:text-xs text-[#C5BFB3] leading-relaxed font-sans">
+          <p className="text-[11px] sm:text-xs text-[#CBD5E1] leading-relaxed font-sans">
             {activeStep.desc}
           </p>
 
-          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#C2A265]/10 text-[10px] text-[#A8A295]">
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 text-[10px] text-[#A8A295]">
             <div className="flex items-center gap-1.5 text-[#D4B678]">
               <MapPin className="w-3.5 h-3.5 text-[#C2A265] flex-shrink-0" />
               <span>{activeStep.location}</span>
@@ -250,7 +250,7 @@ export function DeliveryTracker4Day({
 
         <button
           onClick={handleWhatsAppStatus}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#142A1D] hover:bg-[#183525] border border-[#C2A265]/30 text-[#FAF7EE] text-[11px] font-medium transition-all"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#141824] hover:bg-[#1A202E] border border-slate-700 text-[#FAF7EE] text-[11px] font-medium transition-all"
         >
           <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
           <span>Ask Live Status via WhatsApp</span>

@@ -100,17 +100,17 @@ export default function CategoryPageClient() {
         </div>
         <div className="flex items-center gap-3 ml-auto">
           <ProductSort selectedSort={sortBy} onSortChange={setSortBy} />
-          <div className="flex items-center gap-1 bg-[#061A10] border border-[#C2A265]/20 rounded-lg p-1">
+          <div className="flex items-center gap-1 bg-[#121622] border border-[#C2A265]/20 rounded-lg p-1">
             <button
               onClick={() => setViewMode('grid')}
-              className={classNames('p-2 rounded transition-colors', viewMode === 'grid' ? 'bg-ayur-gold text-[#0B150F] shadow-sm' : 'text-[#C4BDA8] hover:text-white')}
+              className={classNames('p-2 rounded transition-colors', viewMode === 'grid' ? 'bg-ayur-gold text-[#08090C] shadow-sm' : 'text-[#C4BDA8] hover:text-white')}
               aria-label="Grid view"
             >
               <Grid className="w-5 h-5" />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={classNames('p-2 rounded transition-colors', viewMode === 'list' ? 'bg-ayur-gold text-[#0B150F] shadow-sm' : 'text-[#C4BDA8] hover:text-white')}
+              className={classNames('p-2 rounded transition-colors', viewMode === 'list' ? 'bg-ayur-gold text-[#08090C] shadow-sm' : 'text-[#C4BDA8] hover:text-white')}
               aria-label="List view"
             >
               <List className="w-5 h-5" />

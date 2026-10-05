@@ -153,7 +153,7 @@ export function SearchModal() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={closeSearch}
-            className="fixed inset-0 bg-[#020804]/85 backdrop-blur-xl -z-10"
+            className="fixed inset-0 bg-[#040507]/90 backdrop-blur-xl -z-10"
             aria-hidden="true"
           />
 
@@ -165,11 +165,11 @@ export function SearchModal() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: -16 }}
               transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-              className="pointer-events-auto relative w-full max-w-2xl bg-[#0B180F] border border-[#C2A265]/40 rounded-2xl sm:rounded-3xl shadow-[0_25px_80px_rgba(0,0,0,0.95),0_0_0_1px_rgba(194,162,101,0.25)] overflow-hidden text-[#FAF7EE] flex flex-col text-left my-auto sm:my-0"
+              className="pointer-events-auto relative w-full max-w-2xl bg-[#0C0E14] border border-[#C2A265]/40 rounded-2xl sm:rounded-3xl shadow-[0_25px_80px_rgba(0,0,0,0.95),0_0_0_1px_rgba(194,162,101,0.25)] overflow-hidden text-[#FAF7EE] flex flex-col text-left my-auto sm:my-0"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Top Search Input Bar (100% Solid Opaque #07130A) */}
-              <form onSubmit={handleFormSubmit} className="relative border-b border-[#C2A265]/20 bg-[#07130A]">
+              {/* Top Search Input Bar (100% Solid Opaque #10131B) */}
+              <form onSubmit={handleFormSubmit} className="relative border-b border-[#C2A265]/20 bg-[#10131B]">
               <div className="flex items-center px-4 sm:px-6 py-3.5 sm:py-4 gap-3">
                 <Search className="w-5 h-5 text-[#C2A265] flex-shrink-0" />
                 <input
@@ -189,7 +189,7 @@ export function SearchModal() {
                       setQuery('')
                       inputRef.current?.focus()
                     }}
-                    className="p-1 rounded-full text-[#8A8478] hover:text-[#FAF7EE] hover:bg-[#12241A] transition-colors"
+                    className="p-1 rounded-full text-[#8A8478] hover:text-[#FAF7EE] hover:bg-[#18202C] transition-colors"
                     aria-label="Clear search query"
                   >
                     <X className="w-4 h-4" />
@@ -198,10 +198,10 @@ export function SearchModal() {
                 <button
                   type="button"
                   onClick={closeSearch}
-                  className="p-1.5 rounded-xl text-[#8A8478] hover:text-[#FAF7EE] hover:bg-[#12241A] transition-colors flex items-center gap-1"
+                  className="p-1.5 rounded-xl text-[#8A8478] hover:text-[#FAF7EE] hover:bg-[#18202C] transition-colors flex items-center gap-1"
                   aria-label="Close search modal"
                 >
-                  <span className="hidden sm:inline text-[10px] font-mono uppercase bg-[#12241A] border border-[#C2A265]/20 px-1.5 py-0.5 rounded text-[#C2A265]">
+                  <span className="hidden sm:inline text-[10px] font-mono uppercase bg-[#18202C] border border-[#C2A265]/20 px-1.5 py-0.5 rounded text-[#C2A265]">
                     ESC
                   </span>
                   <X className="w-5 h-5 sm:hidden" />
@@ -229,9 +229,9 @@ export function SearchModal() {
                             key={product.id}
                             href={`/product/${product.slug || product.id}`}
                             onClick={closeSearch}
-                            className="flex items-center gap-3.5 p-3 rounded-2xl bg-[#0D1E13] hover:bg-[#142E1E] border border-[#C2A265]/15 hover:border-[#C2A265]/50 transition-all group"
+                            className="flex items-center gap-3.5 p-3 rounded-2xl bg-[#121622] hover:bg-[#18202C] border border-[#C2A265]/15 hover:border-[#C2A265]/50 transition-all group"
                           >
-                            <div className="relative w-14 h-14 rounded-xl bg-[#061009] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
+                            <div className="relative w-14 h-14 rounded-xl bg-[#0C0E14] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
                               <Image
                                 src={img.src}
                                 alt={product.name}
@@ -242,7 +242,7 @@ export function SearchModal() {
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#C2A265] px-2 py-0.5 rounded-full bg-[#12241A] border border-[#C2A265]/25">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-[#C2A265] px-2 py-0.5 rounded-full bg-[#18202C] border border-[#C2A265]/25">
                                   {product.category === 'supplements'
                                     ? 'Supplement'
                                     : product.category === 'personal-care'
@@ -250,7 +250,7 @@ export function SearchModal() {
                                     : 'Power Combo'}
                                 </span>
                                 {hasDiscount && (
-                                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
                                     SAVE {Math.round(((product.compareAtPrice! - product.price) / product.compareAtPrice!) * 100)}%
                                   </span>
                                 )}
@@ -279,7 +279,7 @@ export function SearchModal() {
                       <button
                         type="button"
                         onClick={() => executeSearch(query)}
-                        className="w-full mt-3 py-3 px-4 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 shadow-md group"
+                        className="w-full mt-3 py-3 px-4 rounded-xl bg-[#C2A265] hover:bg-[#D4B678] text-[#08090C] text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 shadow-md group"
                       >
                         <span>View all matching formulations in Shop Catalog</span>
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -287,8 +287,8 @@ export function SearchModal() {
                     </div>
                   ) : (
                     /* NO RESULTS STATE */
-                    <div className="py-8 px-4 text-center rounded-2xl bg-[#0D1E13] border border-[#C2A265]/15 space-y-3">
-                      <div className="w-12 h-12 rounded-full bg-[#12241A] border border-[#C2A265]/30 flex items-center justify-center mx-auto text-[#C2A265]">
+                    <div className="py-8 px-4 text-center rounded-2xl bg-[#121622] border border-[#C2A265]/15 space-y-3">
+                      <div className="w-12 h-12 rounded-full bg-[#18202C] border border-[#C2A265]/30 flex items-center justify-center mx-auto text-[#C2A265]">
                         <Search className="w-5 h-5" />
                       </div>
                       <h4 className="font-heading text-base font-medium text-[#FAF7EE]">
@@ -303,7 +303,7 @@ export function SearchModal() {
                           closeSearch()
                           router.push('/shop')
                         }}
-                        className="px-4 py-2 rounded-xl bg-[#142A1D] hover:bg-[#183222] border border-[#C2A265]/40 text-[#D4B678] text-xs font-semibold transition-all inline-block"
+                        className="px-4 py-2 rounded-xl bg-[#18202C] hover:bg-[#1E2636] border border-[#C2A265]/40 text-[#D4B678] text-xs font-semibold transition-all inline-block"
                       >
                         Browse Complete Catalog →
                       </button>
@@ -325,7 +325,7 @@ export function SearchModal() {
                           key={term}
                           type="button"
                           onClick={() => executeSearch(term)}
-                          className="px-3 py-1.5 rounded-full text-xs font-medium text-[#FAF7EE] bg-[#0D1E13] hover:bg-[#142E1E] border border-[#C2A265]/25 hover:border-[#C2A265] hover:text-[#D4B678] transition-all"
+                          className="px-3 py-1.5 rounded-full text-xs font-medium text-[#FAF7EE] bg-[#121622] hover:bg-[#18202C] border border-[#C2A265]/25 hover:border-[#C2A265] hover:text-[#D4B678] transition-all"
                         >
                           {term}
                         </button>
@@ -344,7 +344,7 @@ export function SearchModal() {
                           key={cat.label}
                           href={cat.href}
                           onClick={closeSearch}
-                          className="flex items-center gap-2.5 p-3 rounded-xl bg-[#0D1E13] hover:bg-[#142E1E] border border-[#C2A265]/20 hover:border-[#C2A265]/45 transition-all text-xs font-medium text-[#FAF7EE] group"
+                          className="flex items-center gap-2.5 p-3 rounded-xl bg-[#121622] hover:bg-[#18202C] border border-[#C2A265]/20 hover:border-[#C2A265]/45 transition-all text-xs font-medium text-[#FAF7EE] group"
                         >
                           <cat.icon className="w-4 h-4 text-[#C2A265] group-hover:scale-110 transition-transform flex-shrink-0" />
                           <span className="truncate">{cat.label}</span>
@@ -354,9 +354,9 @@ export function SearchModal() {
                   </div>
 
                   {/* Doctor Consultation Prompt */}
-                  <div className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/70 to-[#0A2616] border border-emerald-500/30 flex items-center justify-between gap-3">
+                  <div className="p-3.5 rounded-2xl bg-gradient-to-r from-[#161B26] to-[#0E1118] border border-emerald-500/30 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-xl bg-emerald-900/60 border border-emerald-500/40 flex items-center justify-center text-emerald-400 flex-shrink-0">
+                      <div className="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-emerald-400 flex-shrink-0">
                         <HeartPulse className="w-4 h-4" />
                       </div>
                       <div>
@@ -369,7 +369,7 @@ export function SearchModal() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={closeSearch}
-                      className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-colors flex-shrink-0"
+                      className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#08090C] text-xs font-bold transition-colors flex-shrink-0"
                     >
                       Consult Free
                     </a>
@@ -379,7 +379,7 @@ export function SearchModal() {
             </div>
 
             {/* Bottom Keyboard Hint Bar */}
-            <div className="px-4 sm:px-6 py-2.5 border-t border-[#C2A265]/20 bg-[#061009] flex items-center justify-between text-[11px] text-[#8A8478]">
+            <div className="px-4 sm:px-6 py-2.5 border-t border-[#C2A265]/20 bg-[#0A0C11] flex items-center justify-between text-[11px] text-[#8A8478]">
               <div className="flex items-center gap-3">
                 <span className="flex items-center gap-1">
                   <CornerDownLeft className="w-3 h-3 text-[#C2A265]" />

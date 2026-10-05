@@ -71,7 +71,7 @@ export function AnnouncementBar() {
   const current = announcements[currentIndex]
 
   return (
-    <div className="bg-[#08140D] text-[#FAF7EE] py-2 px-3 text-xs sm:text-sm border-b border-[#C2A265]/25 shadow-sm relative z-30">
+    <div className="bg-[#08090C] text-[#FAF7EE] py-2 px-3 text-xs sm:text-sm border-b border-[#C2A265]/20 shadow-sm relative z-30">
       <div className="container flex items-center justify-between gap-2">
         <div className="flex-1 flex items-center justify-center sm:justify-start min-w-0">
           <AnimatePresence mode="wait">
@@ -85,7 +85,7 @@ export function AnnouncementBar() {
             >
               <current.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 text-[#C2A265]" />
 
-              <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider bg-[#12241A] text-[#D4B678] px-2 py-0.5 rounded border border-[#C2A265]/30">
+              <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider bg-[#151922] text-[#D4B678] px-2 py-0.5 rounded border border-slate-700/60">
                 {current.badge}
               </span>
 
@@ -99,7 +99,7 @@ export function AnnouncementBar() {
               {current.badge === 'AYUR10' && (
                 <button
                   onClick={copyCoupon}
-                  className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold text-[#0B150F] bg-[#C2A265] hover:bg-[#D4B678] px-2 py-0.5 rounded shadow transition-colors ml-1"
+                  className="hidden md:inline-flex items-center gap-1 text-[10px] font-bold text-black bg-[#C2A265] hover:bg-[#D4B678] px-2 py-0.5 rounded shadow transition-colors ml-1"
                   title="Copy Coupon"
                 >
                   {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}

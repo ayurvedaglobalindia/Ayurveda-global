@@ -10,28 +10,28 @@
   --font-dm-sans: 'DM Sans', system-ui, sans-serif;
   --font-cormorant: 'Cormorant Garamond', Georgia, serif;
 
-  --color-void: #010804;
-  --color-obsidian: #030F07;
-  --color-charcoal: #061A10;
-  --color-forest: #0A2E1E;
-  --color-forest-deep: #052014;
-  --color-forest-dark: #04180E;
-  --color-forest-light: #124A30;
-  --color-emerald-dark: #041C0F;
-  --color-emerald-deep: #082C1A;
-  --color-emerald-card: #0C3822;
-  --color-emerald-glow: #1A6B3A;
-  --color-sage: #2E8B3A;
-  --color-sage-light: #4DB85E;
-  --color-mint-soft: #E8F5ED;
-  --color-soft-green: #D7E9DE;
-  --color-moss: #4C8A3F;
+  --color-void: #060709;
+  --color-obsidian: #0A0C10;
+  --color-charcoal: #11141A;
+  --color-forest: #161A22;
+  --color-forest-deep: #0E1116;
+  --color-forest-dark: #0B0D12;
+  --color-forest-light: #1E232E;
+  --color-emerald-dark: #0D1016;
+  --color-emerald-deep: #131720;
+  --color-emerald-card: #171B24;
+  --color-emerald-glow: #10B981;
+  --color-sage: #34D399;
+  --color-sage-light: #6EE7B7;
+  --color-mint-soft: #E6F7ED;
+  --color-soft-green: #A7F3D0;
+  --color-moss: #10B981;
   --color-ivory: #FAF7EF;
   --color-cream: #FFFDF5;
   --color-beige: #F5EFE1;
   --color-sand: #E8DCC8;
-  --color-stone: #A89F91;
-  --color-stone-light: #C4BDB1;
+  --color-stone: #94A3B8;
+  --color-stone-light: #CBD5E1;
   --color-gold: #C9A84C;
   --color-gold-light: #E8D4A0;
   --color-gold-bright: #FFDF73;
@@ -39,8 +39,8 @@
   --color-gold-amber: #D9A336;
   --color-gold-champagne: #F0E6D0;
   --color-copper: #B87333;
-  --color-leaf: #1A6B3A;
-  --color-herb: #1B5E20;
+  --color-leaf: #10B981;
+  --color-herb: #059669;
   --color-earth: #8D6E63;
   --color-crimson: #C9302C;
   --color-crimson-light: #E86C6C;
@@ -80,8 +80,8 @@ html {
 
 body {
   font-family: var(--font-dm-sans);
-  background-color: #0B150F;
-  color: #FAF7EE;
+  background-color: #08090C;
+  color: #F8FAFC;
   font-size: 14px;
   line-height: 1.5;
   overflow-x: hidden;
@@ -111,7 +111,7 @@ h5 { font-size: clamp(0.82rem, 1vw, 1rem); }
 h6 { font-size: clamp(0.75rem, 0.9vw, 0.88rem); }
 
 p {
-  color: #C4BDB1;
+  color: #CBD5E1;
 }
 
 a {
@@ -143,8 +143,8 @@ input, textarea, select {
 }
 
 ::selection {
-  background-color: #C9A84C;
-  color: #010804;
+  background-color: #34D399;
+  color: #060709;
 }
 
 ::-webkit-scrollbar {
@@ -153,17 +153,17 @@ input, textarea, select {
 }
 
 ::-webkit-scrollbar-track {
-  background: #030F07;
+  background: #08090C;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #0C3822;
-  border: 1px solid rgba(201, 168, 76, 0.3);
+  background: #1E2532;
+  border: 1px solid rgba(52, 211, 153, 0.25);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C9A84C;
+  background: #34D399;
 }
 
 @layer components {
@@ -184,7 +184,7 @@ input, textarea, select {
   }
 
   .btn-gold {
-    @apply btn bg-gradient-to-r from-ayur-gold-light via-ayur-gold to-ayur-gold-deep text-ayur-void hover:from-ayur-gold-bright hover:via-ayur-gold-light hover:to-ayur-gold focus:ring-ayur-gold shadow-lg shadow-ayur-gold/30 font-bold;
+    @apply btn bg-gradient-to-r from-ayur-gold-light via-ayur-gold to-ayur-gold-deep text-black hover:from-ayur-gold-bright hover:via-ayur-gold-light hover:to-ayur-gold focus:ring-ayur-gold shadow-lg shadow-ayur-gold/30 font-bold;
   }
 
   .btn-gold-outline {
@@ -192,15 +192,15 @@ input, textarea, select {
   }
 
   .btn-emerald {
-    @apply btn bg-gradient-to-r from-ayur-forest-deep to-ayur-forest text-ayur-cream hover:from-ayur-forest hover:to-ayur-forest-light focus:ring-ayur-sage shadow-lg;
+    @apply btn bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 text-black font-bold hover:from-emerald-400 hover:to-teal-500 focus:ring-emerald-400 shadow-lg shadow-emerald-500/25;
   }
 
   .btn-emerald-outline {
-    @apply btn border-2 border-ayur-sage text-ayur-sage-light hover:bg-ayur-sage/10 hover:text-ayur-cream focus:ring-ayur-sage font-semibold;
+    @apply btn border-2 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400 hover:text-emerald-200 focus:ring-emerald-400 font-semibold;
   }
 
   .btn-ivory {
-    @apply btn bg-ayur-ivory text-ayur-void hover:bg-ayur-cream focus:ring-ayur-gold font-semibold;
+    @apply btn bg-ayur-ivory text-black hover:bg-ayur-cream focus:ring-ayur-gold font-semibold;
   }
 
   .btn-ghost {
@@ -208,7 +208,7 @@ input, textarea, select {
   }
 
   .input {
-    @apply w-full px-4 py-3.5 bg-ayur-charcoal border border-ayur-forest-dark rounded-xl text-ayur-ivory placeholder-ayur-stone transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ayur-gold focus:border-transparent;
+    @apply w-full px-4 py-3.5 bg-ayur-charcoal border border-slate-700/60 rounded-xl text-ayur-ivory placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400/80;
   }
 
   .input-error {
@@ -220,11 +220,11 @@ input, textarea, select {
   }
 
   .card-luxury {
-    @apply bg-ayur-emerald-card/90 backdrop-blur-xl border border-ayur-gold/20 rounded-2xl shadow-luxury transition-all duration-500 hover:shadow-card-hover hover:border-ayur-gold/40 overflow-hidden;
+    @apply bg-[#121622]/90 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-luxury transition-all duration-500 hover:shadow-card-hover hover:border-emerald-500/40 overflow-hidden;
   }
 
   .card-luxury-elevated {
-    @apply bg-gradient-to-br from-ayur-emerald-card/95 to-ayur-forest-deep/95 backdrop-blur-2xl border border-ayur-gold/25 rounded-2xl shadow-luxury transition-all duration-500 hover:shadow-card-hover hover:border-ayur-gold/50 hover:-translate-y-1;
+    @apply bg-gradient-to-br from-[#161B26]/95 to-[#0E1219]/95 backdrop-blur-2xl border border-slate-700/50 rounded-2xl shadow-luxury transition-all duration-500 hover:shadow-card-hover hover:border-emerald-500/40 hover:-translate-y-1;
   }
 
   .badge {
@@ -236,7 +236,7 @@ input, textarea, select {
   }
 
   .badge-emerald {
-    @apply badge bg-ayur-sage/15 text-ayur-sage-light border border-ayur-sage/30;
+    @apply badge bg-emerald-500/15 text-emerald-300 border border-emerald-500/30;
   }
 
   .badge-age {
@@ -244,7 +244,7 @@ input, textarea, select {
   }
 
   .badge-new {
-    @apply badge bg-ayur-emerald-glow/20 text-ayur-sage-light border border-ayur-emerald-glow/40;
+    @apply badge bg-emerald-400/20 text-emerald-200 border border-emerald-400/40;
   }
 
   .text-gradient-gold {
@@ -252,7 +252,7 @@ input, textarea, select {
   }
 
   .text-gradient-emerald {
-    @apply bg-gradient-to-r from-ayur-sage via-ayur-emerald-glow to-ayur-moss bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200 bg-clip-text text-transparent;
   }
 
   .text-gradient-ivory {
@@ -279,41 +279,41 @@ input, textarea, select {
   }
 
   .glass-luxury {
-    background: rgba(12, 56, 34, 0.75);
+    background: rgba(16, 20, 28, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(201, 168, 76, 0.18);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
   .glass-luxury-card {
-    background: linear-gradient(160deg, rgba(12, 56, 34, 0.9) 0%, rgba(5, 32, 20, 0.95) 100%);
+    background: linear-gradient(160deg, rgba(20, 25, 35, 0.92) 0%, rgba(13, 16, 24, 0.96) 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(201, 168, 76, 0.15);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(201, 168, 76, 0.1);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .glass-luxury-card:hover {
-    border-color: rgba(201, 168, 76, 0.4);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 25px rgba(201, 168, 76, 0.12);
+    border-color: rgba(52, 211, 153, 0.4);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7), 0 0 25px rgba(52, 211, 153, 0.15);
     transform: translateY(-3px);
   }
 
   .glass-emerald {
-    background: rgba(8, 44, 26, 0.8);
+    background: rgba(16, 21, 29, 0.88);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(201, 168, 76, 0.15);
-    box-shadow: 0 10px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    box-shadow: 0 10px 32px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
   .btn-gold {
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg, #E8D4A0 0%, #C9A84C 50%, #B8963E 100%);
-    color: #010804;
+    color: #060709;
     font-weight: 700;
     letter-spacing: 0.02em;
     border: 1px solid rgba(255, 240, 190, 0.25);
@@ -347,19 +347,19 @@ input, textarea, select {
   .btn-emerald {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, #0A2E1E 0%, #052014 100%);
-    color: #FAF7EF;
-    font-weight: 600;
-    border: 1px solid rgba(201, 168, 76, 0.2);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: #060709;
+    font-weight: 700;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
     transition: all 0.3s ease;
   }
 
   .btn-emerald:hover {
-    background: linear-gradient(135deg, #124A30 0%, #0A2E1E 100%);
-    border-color: rgba(201, 168, 76, 0.5);
-    color: #FFFDF5;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(201, 168, 76, 0.12);
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+    border-color: rgba(52, 211, 153, 0.6);
+    color: #000000;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35), 0 0 15px rgba(52, 211, 153, 0.2);
     transform: translateY(-1px);
   }
 
@@ -406,7 +406,7 @@ input, textarea, select {
 
   .gradient-border {
     position: relative;
-    background: #0A2E1E;
+    background: #11141A;
     border-radius: 1rem;
   }
 
@@ -415,7 +415,7 @@ input, textarea, select {
     position: absolute;
     inset: -1px;
     border-radius: 1.0625rem;
-    background: linear-gradient(135deg, #C9A84C, #B87333, #1A6B3A);
+    background: linear-gradient(135deg, #34D399, #64748B, #C9A84C);
     z-index: -1;
     opacity: 0.4;
     transition: opacity 0.3s ease;
@@ -432,7 +432,7 @@ input, textarea, select {
 
   .divider-emerald {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(26, 107, 58, 0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.5), transparent);
   }
 }
 

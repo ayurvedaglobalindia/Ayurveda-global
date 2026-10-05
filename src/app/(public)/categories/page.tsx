@@ -54,7 +54,7 @@ export default function CategoriesPage() {
               <Link
                 key={category.slug}
                 href={`/categories/${category.slug}`}
-                className="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#061A10] border border-[#C2A265]/25 hover:border-[#C2A265]/60 transition-all shadow-xl"
+                className="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#121622] border border-[#C2A265]/25 hover:border-[#C2A265]/60 transition-all shadow-xl"
               >
                 {categoryImages[category.slug] && (
                   <Image
@@ -65,8 +65,8 @@ export default function CategoriesPage() {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#061A10] via-[#061A10]/75 to-[#061A10]/30 transition-opacity group-hover:opacity-90" />
-                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#0E1E14]/80 border border-[#C2A265]/30 flex items-center justify-center backdrop-blur-sm group-hover:border-[#C2A265] transition-colors z-10">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#08090C] via-[#08090C]/80 to-transparent transition-opacity group-hover:opacity-90" />
+                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#121622]/80 border border-[#C2A265]/30 flex items-center justify-center backdrop-blur-sm group-hover:border-[#C2A265] transition-colors z-10">
                   <Icon className="w-4.5 h-4.5 text-[#C2A265]" />
                 </div>
                 <div className="relative p-5 h-full flex flex-col justify-end z-10">
@@ -108,8 +108,8 @@ export default function CategoriesPage() {
                 desc: 'Rigorous testing for purity, potency, and safety in every batch',
               },
             ].map((item, index) => (
-              <div key={item.title} className="text-center p-6 rounded-2xl bg-[#061A10] border border-[#C2A265]/20 shadow-md">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-[#0A2E1E]/50 border border-[#C2A265]/20 flex items-center justify-center">
+              <div key={item.title} className="text-center p-6 rounded-2xl bg-[#121622] border border-[#C2A265]/20 shadow-md">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-[#18202C] border border-[#C2A265]/20 flex items-center justify-center">
                   <item.icon className="w-8 h-8 text-ayur-gold" />
                 </div>
                 <h3 className="font-heading text-xl font-medium text-ayur-ivory mb-2">{item.title}</h3>

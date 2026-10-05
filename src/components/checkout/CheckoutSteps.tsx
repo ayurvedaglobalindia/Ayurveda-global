@@ -461,10 +461,10 @@ export function CheckoutForm() {
           <div className="lg:col-span-7 space-y-4">
             
             {/* Card 1: Contact & Delivery Address */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#102016] border border-[#C2A265]/25 shadow-lg space-y-4">
-              <div className="flex items-center justify-between border-b border-[#C2A265]/15 pb-2.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#121622] border border-slate-800 shadow-lg space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#142A1D] border border-[#C2A265]/30 flex items-center justify-center text-[#C2A265]">
+                  <div className="w-7 h-7 rounded-lg bg-[#18202C] border border-slate-700 flex items-center justify-center text-emerald-400">
                     <MapPin className="w-3.5 h-3.5" />
                   </div>
                   <div>
@@ -491,10 +491,10 @@ export function CheckoutForm() {
                       if (errors.firstName) setErrors({ ...errors, firstName: '' })
                     }}
                     placeholder="e.g. Vikram"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1B12] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
                       errors.firstName
                         ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                        : 'border-[#C2A265]/25 focus:border-[#C2A265] focus:ring-1 focus:ring-[#C2A265]/30'
+                        : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
                     }`}
                   />
                   {errors.firstName && (
@@ -515,10 +515,10 @@ export function CheckoutForm() {
                       if (errors.lastName) setErrors({ ...errors, lastName: '' })
                     }}
                     placeholder="e.g. Sharma"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1B12] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
                       errors.lastName
                         ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                        : 'border-[#C2A265]/25 focus:border-[#C2A265] focus:ring-1 focus:ring-[#C2A265]/30'
+                        : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
                     }`}
                   />
                   {errors.lastName && (
@@ -535,7 +535,7 @@ export function CheckoutForm() {
                       Mobile Number (+91) <span className="text-[#C2A265]">*</span>
                     </label>
                     {isPhoneVerified && (
-                      <span className="text-[10px] font-bold text-emerald-400 flex items-center gap-1 bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-500/30">
+                      <span className="text-[10px] font-bold text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
                         <CheckCircle2 className="w-3 h-3" />
                         <span>OTP Verified</span>
                       </span>
@@ -553,12 +553,12 @@ export function CheckoutForm() {
                       value={formData.phone}
                       onChange={e => handlePhoneInputChange(e.target.value)}
                       placeholder="98765 43210"
-                      className={`w-full pl-11 pr-20 py-2 rounded-xl bg-[#0D1B12] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                      className={`w-full pl-11 pr-20 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
                         isPhoneVerified
-                          ? 'border-emerald-500/40 bg-emerald-950/20 text-emerald-300'
+                          ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
                           : errors.phone
                           ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                          : 'border-[#C2A265]/25 focus:border-[#C2A265] focus:ring-1 focus:ring-[#C2A265]/30'
+                          : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
                       }`}
                     />
                     {isPhoneVerified ? (
@@ -578,7 +578,7 @@ export function CheckoutForm() {
                           type="button"
                           onClick={handleSendCheckoutOtp}
                           disabled={otpLoading}
-                          className="absolute right-1.5 px-2.5 py-1 rounded-lg bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] text-[10px] font-bold transition-all shadow-sm"
+                          className="absolute right-1.5 px-2.5 py-1 rounded-lg bg-[#C2A265] hover:bg-[#D4B678] text-[#08090C] text-[10px] font-bold transition-all shadow-sm"
                         >
                           {otpLoading ? '...' : 'Send OTP'}
                         </button>
@@ -588,10 +588,10 @@ export function CheckoutForm() {
 
                   {/* Inline OTP Verification Box when OTP is sent */}
                   {!isPhoneVerified && otpSent && (
-                    <div className="mt-2.5 p-3 rounded-xl bg-[#08150C] border border-[#C2A265]/35 space-y-2.5 shadow-md">
+                    <div className="mt-2.5 p-3 rounded-xl bg-[#0A0D14] border border-slate-700 space-y-2.5 shadow-md">
                       <div className="flex items-center justify-between text-xs text-[#FAF7EE]">
                         <span className="flex items-center gap-1.5 font-semibold text-[11px]">
-                          <KeyRound className="w-3.5 h-3.5 text-[#C2A265]" />
+                          <KeyRound className="w-3.5 h-3.5 text-emerald-400" />
                           <span>Enter 6-Digit OTP</span>
                         </span>
                         <button
@@ -599,7 +599,7 @@ export function CheckoutForm() {
                           onClick={handleSendCheckoutOtp}
                           disabled={resendCooldown > 0 || otpLoading}
                           className={`text-[10px] font-medium ${
-                            resendCooldown > 0 ? 'text-gray-500' : 'text-[#C2A265] hover:underline'
+                            resendCooldown > 0 ? 'text-gray-500' : 'text-emerald-400 hover:underline'
                           }`}
                         >
                           {resendCooldown > 0 ? `Resend (${resendCooldown}s)` : 'Resend OTP'}
@@ -626,13 +626,13 @@ export function CheckoutForm() {
                             if (otpError) setOtpError(null)
                           }}
                           placeholder="••••••"
-                          className="flex-1 px-3 py-1.5 rounded-lg bg-[#0D1B12] border border-[#C2A265]/40 text-center font-mono text-sm tracking-[0.3em] text-[#FAF7EE] focus:outline-none focus:ring-1 focus:ring-[#C2A265]"
+                          className="flex-1 px-3 py-1.5 rounded-lg bg-[#0D1017] border border-slate-700 text-center font-mono text-sm tracking-[0.3em] text-[#FAF7EE] focus:outline-none focus:ring-1 focus:ring-emerald-500"
                         />
                         <button
                           type="button"
                           onClick={handleVerifyCheckoutOtp}
                           disabled={otpLoading || otpInput.trim().length !== 6}
-                          className="px-3.5 py-1.5 rounded-lg bg-[#C2A265] hover:bg-[#D4B678] text-[#0B150F] text-xs font-bold transition-all disabled:opacity-50"
+                          className="px-3.5 py-1.5 rounded-lg bg-[#C2A265] hover:bg-[#D4B678] text-[#08090C] text-xs font-bold transition-all disabled:opacity-50"
                         >
                           {otpLoading ? '...' : 'Verify'}
                         </button>
@@ -646,14 +646,14 @@ export function CheckoutForm() {
                       )}
 
                       {whatsappVerifyUrl && (
-                        <div className="pt-1 text-center border-t border-[#C2A265]/15">
+                        <div className="pt-1 text-center border-t border-slate-800">
                           <a
                             href={whatsappVerifyUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-[10px] text-emerald-400 hover:underline inline-flex items-center gap-1"
                           >
-                            <MessageCircle className="w-3 h-3" />
+                            <MessageCircle className="w-3.5 h-3.5" />
                             <span>Verify instantly via WhatsApp Desk</span>
                           </a>
                         </div>
@@ -687,10 +687,10 @@ export function CheckoutForm() {
                       if (errors.email) setErrors({ ...errors, email: '' })
                     }}
                     placeholder="vikram@example.com"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1B12] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
                       errors.email
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-[#C2A265]/25 focus:border-[#C2A265] focus:ring-1 focus:ring-[#C2A265]/30'
+                        : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
                     }`}
                   />
                   {errors.email && (
@@ -713,10 +713,10 @@ export function CheckoutForm() {
                     if (errors.addressLine1) setErrors({ ...errors, addressLine1: '' })
                   }}
                   placeholder="e.g. Flat 402, Block B, Green Heights, MG Road"
-                  className={`w-full px-3 py-2 rounded-xl bg-[#0D1B12] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                  className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
                     errors.addressLine1
                       ? 'border-red-500 focus:border-red-500 ring-1 ring-red-500/20'
-                      : 'border-[#C2A265]/25 focus:border-[#C2A265] focus:ring-1 focus:ring-[#C2A265]/30'
+                      : 'border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/30'
                   }`}
                 />
                 {errors.addressLine1 && (
@@ -734,7 +734,7 @@ export function CheckoutForm() {
                   value={formData.addressLine2}
                   onChange={e => setFormData({ ...formData, addressLine2: e.target.value })}
                   placeholder="e.g. Near Metro Station / Behind Axis Bank"
-                  className="w-full px-3 py-2 rounded-xl bg-[#0D1B12] border border-[#C2A265]/25 focus:border-[#C2A265] text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265]/30 transition-all"
+                  className="w-full px-3 py-2 rounded-xl bg-[#0D1017] border border-slate-700 focus:border-emerald-500 text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-emerald-500/30 transition-all"
                 />
               </div>
 
@@ -753,10 +753,10 @@ export function CheckoutForm() {
                       if (errors.city) setErrors({ ...errors, city: '' })
                     }}
                     placeholder="e.g. New Delhi"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1B12] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
                       errors.city
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-[#C2A265]/25 focus:border-[#C2A265]'
+                        : 'border-slate-700 focus:border-emerald-500'
                     }`}
                   />
                   {errors.city && (
@@ -772,10 +772,10 @@ export function CheckoutForm() {
                     id="field-state"
                     value={formData.state}
                     onChange={e => setFormData({ ...formData, state: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-[#0D1B12] border border-[#C2A265]/25 focus:border-[#C2A265] text-xs text-[#FAF7EE] focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-[#0D1017] border border-slate-700 focus:border-emerald-500 text-xs text-[#FAF7EE] focus:outline-none"
                   >
                     {INDIAN_STATES.map(s => (
-                      <option key={s} value={s} className="bg-[#0B150F] text-[#FAF7EE]">
+                      <option key={s} value={s} className="bg-[#08090C] text-[#FAF7EE]">
                         {s}
                       </option>
                     ))}
@@ -797,10 +797,10 @@ export function CheckoutForm() {
                       if (errors.pincode) setErrors({ ...errors, pincode: '' })
                     }}
                     placeholder="110001"
-                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1B12] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
+                    className={`w-full px-3 py-2 rounded-xl bg-[#0D1017] border text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none transition-all ${
                       errors.pincode
                         ? 'border-red-500 focus:border-red-500'
-                        : 'border-[#C2A265]/25 focus:border-[#C2A265]'
+                        : 'border-slate-700 focus:border-emerald-500'
                     }`}
                   />
                   {errors.pincode && (
@@ -811,10 +811,10 @@ export function CheckoutForm() {
             </div>
 
             {/* Card 2: Payment & Order Confirmation Preference */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#102016] border border-[#C2A265]/25 shadow-lg space-y-3">
-              <div className="flex items-center justify-between border-b border-[#C2A265]/15 pb-2.5">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#121622] border border-slate-800 shadow-lg space-y-3">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-[#142A1D] border border-[#C2A265]/30 flex items-center justify-center text-[#C2A265]">
+                  <div className="w-7 h-7 rounded-lg bg-[#18202C] border border-slate-700 flex items-center justify-center text-emerald-400">
                     <CreditCard className="w-3.5 h-3.5" />
                   </div>
                   <h2 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#C2A265]">
@@ -830,8 +830,8 @@ export function CheckoutForm() {
                   onClick={() => setFormData({ ...formData, paymentMethod: 'whatsapp' })}
                   className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                     formData.paymentMethod === 'whatsapp'
-                      ? 'bg-[#152B1E] border-[#C2A265] shadow-md'
-                      : 'bg-[#0D1B12] border-[#C2A265]/20 hover:border-[#C2A265]/40'
+                      ? 'bg-[#18202C] border-emerald-400 shadow-md'
+                      : 'bg-[#0D1017] border-slate-800 hover:border-slate-700'
                   }`}
                 >
                   <input
@@ -839,7 +839,7 @@ export function CheckoutForm() {
                     name="paymentMethod"
                     checked={formData.paymentMethod === 'whatsapp'}
                     onChange={() => setFormData({ ...formData, paymentMethod: 'whatsapp' })}
-                    className="mt-0.5 accent-[#C2A265]"
+                    className="mt-0.5 accent-emerald-400"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
@@ -862,8 +862,8 @@ export function CheckoutForm() {
                   onClick={() => setFormData({ ...formData, paymentMethod: 'cod' })}
                   className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                     formData.paymentMethod === 'cod'
-                      ? 'bg-[#152B1E] border-[#C2A265] shadow-md'
-                      : 'bg-[#0D1B12] border-[#C2A265]/20 hover:border-[#C2A265]/40'
+                      ? 'bg-[#18202C] border-emerald-400 shadow-md'
+                      : 'bg-[#0D1017] border-slate-800 hover:border-slate-700'
                   }`}
                 >
                   <input
@@ -876,10 +876,10 @@ export function CheckoutForm() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <span className="font-heading text-xs sm:text-[13px] font-medium text-[#FAF7EE] flex items-center gap-1.5">
-                        <Truck className="w-3.5 h-3.5 text-[#C2A265]" />
+                        <Truck className="w-3.5 h-3.5 text-emerald-400" />
                         Cash on Delivery (Doorstep COD)
                       </span>
-                      <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-[#183525] text-[#D4B678] font-semibold border border-[#C2A265]/30 flex-shrink-0">
+                      <span className="text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-[#1E2534] text-emerald-300 font-semibold border border-emerald-500/30 flex-shrink-0">
                         Pay on Delivery
                       </span>
                     </div>
@@ -894,8 +894,8 @@ export function CheckoutForm() {
                   onClick={() => setFormData({ ...formData, paymentMethod: 'upi' })}
                   className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                     formData.paymentMethod === 'upi'
-                      ? 'bg-[#152B1E] border-[#C2A265] shadow-md'
-                      : 'bg-[#0D1B12] border-[#C2A265]/20 hover:border-[#C2A265]/40'
+                      ? 'bg-[#18202C] border-emerald-400 shadow-md'
+                      : 'bg-[#0D1017] border-slate-800 hover:border-slate-700'
                   }`}
                 >
                   <input
@@ -907,7 +907,7 @@ export function CheckoutForm() {
                   />
                   <div className="flex-1 min-w-0">
                     <span className="font-heading text-xs sm:text-[13px] font-medium text-[#FAF7EE] flex items-center gap-1.5">
-                      <Smartphone className="w-3.5 h-3.5 text-[#C2A265]" />
+                      <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
                       Instant UPI (PhonePe / GPay / Paytm)
                     </span>
                     <p className="text-[11px] text-[#A8A295] leading-relaxed mt-0.5">
@@ -919,7 +919,7 @@ export function CheckoutForm() {
             </div>
 
             {/* Card 3: Optional Delivery Note */}
-            <div className="p-3.5 sm:p-4 rounded-xl bg-[#102016] border border-[#C2A265]/20">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-[#121622] border border-slate-800">
               <label className="block text-[11px] font-medium text-[#C5BFB3] mb-1">
                 Special Delivery Instructions <span className="text-[#8A8478] font-normal">(Optional)</span>
               </label>
@@ -928,7 +928,7 @@ export function CheckoutForm() {
                 value={formData.notes}
                 onChange={e => setFormData({ ...formData, notes: e.target.value })}
                 placeholder="e.g. Deliver between 2 PM - 6 PM, leave with security guard, plain brown box."
-                className="w-full px-3 py-2 rounded-lg bg-[#0D1B12] border border-[#C2A265]/25 focus:border-[#C2A265] text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none resize-none"
+                className="w-full px-3 py-2 rounded-lg bg-[#0D1017] border border-slate-700 focus:border-emerald-500 text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none resize-none"
               />
             </div>
 
@@ -936,11 +936,11 @@ export function CheckoutForm() {
 
           {/* Right Column: Sticky Order Summary & Direct WhatsApp Action (5 Cols) */}
           <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-20">
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#102016] border border-[#C2A265]/30 shadow-xl space-y-4">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#121622] border border-slate-800 shadow-xl space-y-4">
               
               {/* Summary Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-[#C2A265]/15">
-                <h3 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-[#C2A265]">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <h3 className="font-heading text-xs sm:text-[13px] font-semibold uppercase tracking-wider text-emerald-400">
                   Order Summary ({itemCount} {itemCount === 1 ? 'item' : 'items'})
                 </h3>
                 <Link href="/cart" className="text-[11px] text-[#D4B678] hover:underline font-medium">
@@ -956,9 +956,9 @@ export function CheckoutForm() {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center gap-3 p-2 rounded-xl bg-[#0D1B12] border border-[#C2A265]/15"
+                      className="flex items-center gap-3 p-2 rounded-xl bg-[#0D1017] border border-slate-800"
                     >
-                      <div className="relative w-11 h-11 rounded-lg bg-[#08120C] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
+                      <div className="relative w-11 h-11 rounded-lg bg-[#08090C] border border-slate-800 flex-shrink-0 overflow-hidden">
                         <Image
                           src={resolvedImg.src}
                           alt={item.product.name}
@@ -991,9 +991,9 @@ export function CheckoutForm() {
               </div>
 
               {/* Compact Coupon Code Input */}
-              <div className="pt-2 border-t border-[#C2A265]/15">
+              <div className="pt-2 border-t border-slate-800">
                 {couponCode ? (
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#142A1D] border border-emerald-500/30 text-xs">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#18202C] border border-emerald-500/30 text-xs">
                     <div className="flex items-center gap-1.5 text-emerald-300">
                       <Gift className="w-3.5 h-3.5" />
                       <span className="font-mono font-semibold">{couponCode}</span>
@@ -1014,12 +1014,12 @@ export function CheckoutForm() {
                         value={couponInput}
                         onChange={e => setCouponInput(e.target.value.toUpperCase())}
                         placeholder="Promo code (e.g. AYUR10)"
-                        className="flex-1 px-2.5 py-1.5 rounded-lg bg-[#0D1B12] border border-[#C2A265]/25 text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none uppercase"
+                        className="flex-1 px-2.5 py-1.5 rounded-lg bg-[#0D1017] border border-slate-700 text-xs text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none uppercase"
                       />
                       <button
                         onClick={handleApplyCoupon}
                         disabled={!couponInput.trim() || couponLoading}
-                        className="px-3 py-1.5 rounded-lg bg-[#142A1D] hover:bg-[#183525] border border-[#C2A265]/40 text-[#FAF7EE] text-xs font-semibold disabled:opacity-50 transition-all"
+                        className="px-3 py-1.5 rounded-lg bg-[#18202C] hover:bg-[#1E2636] border border-slate-700 hover:border-emerald-500/40 text-[#FAF7EE] text-xs font-semibold disabled:opacity-50 transition-all"
                       >
                         {couponLoading ? '...' : 'Apply'}
                       </button>
@@ -1032,7 +1032,7 @@ export function CheckoutForm() {
               </div>
 
               {/* Price Calculations */}
-              <div className="space-y-1.5 text-xs pt-2 border-t border-[#C2A265]/15">
+              <div className="space-y-1.5 text-xs pt-2 border-t border-slate-800">
                 <div className="flex justify-between text-[#A8A295]">
                   <span>Subtotal</span>
                   <span className="text-[#FAF7EE] font-medium">{formatINR(subtotal)}</span>
@@ -1049,7 +1049,7 @@ export function CheckoutForm() {
                     {shippingCalc.freeShipping ? 'FREE' : formatINR(shippingCalc.cost)}
                   </span>
                 </div>
-                <div className="flex justify-between text-base font-semibold text-[#FAF7EE] pt-2 border-t border-[#C2A265]/15">
+                <div className="flex justify-between text-base font-semibold text-[#FAF7EE] pt-2 border-t border-slate-800">
                   <span>Grand Total</span>
                   <span className="text-[#D4B678] font-bold">{formatINR(total)}</span>
                 </div>
@@ -1070,7 +1070,7 @@ export function CheckoutForm() {
                         el.focus()
                       }
                     }}
-                    className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-600 via-amber-500 to-[#C2A265] hover:opacity-95 text-[#0B150F] font-bold text-xs sm:text-sm tracking-wide shadow-xl flex items-center justify-center gap-2 group transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99]"
+                    className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-600 via-amber-500 to-[#C2A265] hover:opacity-95 text-[#08090C] font-bold text-xs sm:text-sm tracking-wide shadow-xl flex items-center justify-center gap-2 group transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99]"
                   >
                     <Lock className="w-4 h-4 flex-shrink-0" />
                     <span>Verify Mobile via OTP to Place Order</span>
@@ -1081,7 +1081,7 @@ export function CheckoutForm() {
                     <button
                       onClick={() => handlePlaceOrder('whatsapp')}
                       disabled={isSubmitting}
-                      className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-[#C2A265] hover:opacity-95 text-[#0B150F] font-bold text-xs sm:text-sm tracking-wide shadow-xl flex items-center justify-center gap-2 group transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99] disabled:opacity-60"
+                      className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-[#C2A265] hover:opacity-95 text-[#08090C] font-bold text-xs sm:text-sm tracking-wide shadow-xl flex items-center justify-center gap-2 group transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.99] disabled:opacity-60"
                     >
                       <MessageCircle className="w-4 h-4 fill-current flex-shrink-0" />
                       <span>Complete Order via WhatsApp</span>
@@ -1092,7 +1092,7 @@ export function CheckoutForm() {
                       <button
                         onClick={() => handlePlaceOrder('cod')}
                         disabled={isSubmitting}
-                        className="w-full py-2.5 px-4 rounded-xl bg-[#142A1D] hover:bg-[#183525] border border-[#C2A265]/40 text-[#FAF7EE] font-semibold text-xs tracking-wide transition-all"
+                        className="w-full py-2.5 px-4 rounded-xl bg-[#18202C] hover:bg-[#1E2636] border border-slate-700 hover:border-emerald-500/40 text-[#FAF7EE] font-semibold text-xs tracking-wide transition-all"
                       >
                         Confirm Doorstep COD ({formatINR(total)})
                       </button>

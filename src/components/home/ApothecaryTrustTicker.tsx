@@ -28,15 +28,15 @@ const trustItems = [
 
 export function ApothecaryTrustTicker() {
   return (
-    <div className="bg-[#08120C] border-y border-[#C2A265]/20 py-3.5 sm:py-4 text-[#F5EFE6] relative z-20">
+    <div className="bg-[#07080C] border-y border-slate-800 py-3.5 sm:py-4 text-[#F5EFE6] relative z-20">
       <div className="container">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-0 lg:divide-x lg:divide-[#C2A265]/15">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-0 lg:divide-x lg:divide-slate-800">
           {trustItems.map((item, idx) => (
             <div
               key={idx}
               className="flex items-center gap-2.5 sm:gap-3 px-2 sm:px-4 lg:justify-center group"
             >
-              <div className="w-8 h-8 rounded-lg bg-[#12241A] border border-[#C2A265]/25 group-hover:border-[#C2A265]/50 flex items-center justify-center text-[#C2A265] flex-shrink-0 transition-colors">
+              <div className="w-8 h-8 rounded-lg bg-[#121622] border border-slate-800 group-hover:border-emerald-500/40 flex items-center justify-center text-emerald-400 flex-shrink-0 transition-colors">
                 <item.icon className="w-4 h-4" />
               </div>
               <div className="min-w-0">

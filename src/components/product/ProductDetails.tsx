@@ -588,7 +588,7 @@ export function ProductDetails({ product, selectedVariant, onVariantChange }: Pr
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 260 }}
-            className="md:hidden fixed bottom-[56px] left-0 right-0 z-40 bg-[#0B150F]/95 backdrop-blur-xl border-t border-[#C2A265]/30 p-2.5 sm:p-3 shadow-2xl flex items-center justify-between gap-3"
+            className="md:hidden fixed bottom-[56px] left-0 right-0 z-40 bg-[#08090C]/95 backdrop-blur-xl border-t border-slate-800 p-2.5 sm:p-3 shadow-2xl flex items-center justify-between gap-3"
           >
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-ayur-gold/25 flex-shrink-0 bg-ayur-forest-deep">
@@ -838,7 +838,7 @@ function ProductReviewsSection({ product, showToast }: { product: Product; showT
               <p className="text-xs text-ayur-stone mt-1">Based on 1,200+ ratings</p>
             </div>
           </div>
-          <p className="text-xs text-emerald-400 font-semibold bg-emerald-950/80 px-2.5 py-1 rounded-md w-fit mx-auto md:mx-0 border border-emerald-500/30">
+          <p className="text-xs text-emerald-400 font-semibold bg-emerald-500/10 px-2.5 py-1 rounded-md w-fit mx-auto md:mx-0 border border-emerald-500/30">
             ✓ 100% Verified Ayurvedic Purchases
           </p>
         </div>
@@ -981,14 +981,14 @@ function ProductReviewsSection({ product, showToast }: { product: Product; showT
           >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-950 to-emerald-800 border border-emerald-500/30 flex items-center justify-center text-sm font-bold text-emerald-300">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#1E2534] to-[#121622] border border-slate-700 flex items-center justify-center text-sm font-bold text-emerald-400">
                   {item.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-sm text-ayur-ivory">{item.name}</span>
                     {item.verified && (
-                      <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                      <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">
                         Verified Buyer
                       </span>
                     )}
@@ -1022,7 +1022,7 @@ function ProductReviewsSection({ product, showToast }: { product: Product; showT
                 className={classNames(
                   'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] transition-colors',
                   helpfulMap[item.id]
-                    ? 'text-emerald-400 bg-emerald-950/50 cursor-default'
+                    ? 'text-emerald-400 bg-emerald-500/15 cursor-default'
                     : 'text-ayur-stone hover:text-ayur-ivory hover:bg-ayur-forest-dark/50'
                 )}
               >

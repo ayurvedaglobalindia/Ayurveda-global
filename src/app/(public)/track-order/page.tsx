@@ -41,7 +41,7 @@ const mockTrackingData = {
 }
 
 const statusConfig = {
-  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'text-emerald-400 bg-emerald-950/80 border border-emerald-500/30', lineColor: 'bg-emerald-500' },
+  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'text-emerald-400 bg-emerald-500/15 border border-emerald-500/30', lineColor: 'bg-emerald-500' },
   processing: { label: 'Apothecary Processing', icon: Clock, color: 'text-amber-300 bg-amber-950/80 border border-amber-500/30', lineColor: 'bg-amber-500' },
   shipped: { label: 'In Discreet Transit', icon: Truck, color: 'text-blue-300 bg-blue-950/80 border border-blue-500/30', lineColor: 'bg-blue-500' },
   delivered: { label: 'Delivered', icon: CheckCircle, color: 'text-ayur-gold-bright bg-ayur-emerald-card border border-ayur-gold/40', lineColor: 'bg-ayur-gold' },

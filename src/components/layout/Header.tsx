@@ -88,8 +88,8 @@ export function Header() {
     <header
       className={`w-full transition-all duration-300 z-50 ${
         isScrolled
-          ? 'bg-[#0B150F]/95 backdrop-blur-2xl border-b border-[#C2A265]/20 shadow-2xl'
-          : 'bg-[#0B150F]/85 backdrop-blur-xl border-b border-[#C2A265]/15'
+          ? 'bg-[#090B0F]/95 backdrop-blur-2xl border-b border-[#C2A265]/20 shadow-2xl'
+          : 'bg-[#090B0F]/85 backdrop-blur-xl border-b border-[#C2A265]/15'
       }`}
     >
       <div className="container">
@@ -127,14 +127,14 @@ export function Header() {
           >
             <Link
               href="/"
-              className="relative px-3.5 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-all"
+              className="relative px-3.5 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#161B24] transition-all"
             >
               Home
             </Link>
 
             <Link
               href="/#apothecary"
-              className="relative px-3.5 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-all"
+              className="relative px-3.5 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#161B24] transition-all"
             >
               Formulations
             </Link>
@@ -146,7 +146,7 @@ export function Header() {
               onMouseLeave={() => setIsMegaMenuOpen(null)}
             >
               <button
-                className="flex items-center gap-1 px-3.5 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-all font-medium"
+                className="flex items-center gap-1 px-3.5 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#161B24] transition-all font-medium"
                 aria-haspopup="true"
                 aria-expanded={isMegaMenuOpen === 'shop'}
               >
@@ -164,7 +164,7 @@ export function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute left-0 top-full mt-3 w-96 bg-[#102016]/98 backdrop-blur-2xl border border-[#C2A265]/25 rounded-2xl shadow-2xl py-4 z-50"
+                    className="absolute left-0 top-full mt-3 w-96 bg-[#0F131A]/98 backdrop-blur-2xl border border-[#C2A265]/25 rounded-2xl shadow-2xl py-4 z-50"
                     role="menu"
                   >
                     {Object.entries(megaMenuContent).map(([key, content]) => (
@@ -183,7 +183,7 @@ export function Header() {
                             <Link
                               key={item.label}
                               href={item.href}
-                              className="flex items-center justify-between gap-2 px-3 py-1.5 rounded-lg text-xs text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#142A1D] transition-all"
+                              className="flex items-center justify-between gap-2 px-3 py-1.5 rounded-lg text-xs text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#1A202C] transition-all"
                             >
                               <span>{item.label}</span>
                               {item.badge && (
@@ -199,7 +199,7 @@ export function Header() {
                     <div className="pt-3 px-4">
                       <Link
                         href="/shop"
-                        className="block w-full py-2.5 rounded-xl bg-[#C2A265] text-[#0B150F] text-center font-semibold text-xs tracking-wider uppercase hover:bg-[#D4B678] transition-all shadow-md"
+                        className="block w-full py-2.5 rounded-xl bg-[#C2A265] text-black text-center font-semibold text-xs tracking-wider uppercase hover:bg-[#D4B678] transition-all shadow-md"
                       >
                         Browse Complete Catalog →
                       </Link>
@@ -212,11 +212,11 @@ export function Header() {
             {/* Power Combo Quick Link */}
             <Link
               href="/product/vitality-power-combo"
-              className="relative px-3.5 py-2 rounded-xl text-[#D4B678] font-medium hover:text-[#FAF7EE] hover:bg-[#142A1D] transition-all flex items-center gap-1.5"
+              className="relative px-3.5 py-2 rounded-xl text-[#D4B678] font-medium hover:text-[#FAF7EE] hover:bg-[#161B24] transition-all flex items-center gap-1.5"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#C2A265]" />
               <span>Power Combo</span>
-              <span className="text-[10px] bg-[#C2A265]/20 text-[#D4B678] px-2 py-0.5 rounded-full border border-[#C2A265]/40 font-bold">
+              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/35 font-bold">
                 29% OFF
               </span>
             </Link>
@@ -226,15 +226,15 @@ export function Header() {
               href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor."
               target="_blank"
               rel="noopener noreferrer"
-              className="relative px-3.5 py-1.5 rounded-full text-[#D4B678] bg-[#142A1D] border border-[#C2A265]/35 hover:bg-[#183525] transition-all flex items-center gap-1.5 text-xs font-semibold shadow-sm group"
+              className="relative px-3.5 py-1.5 rounded-full text-emerald-300 bg-[#131720] border border-emerald-500/35 hover:bg-[#1B2230] transition-all flex items-center gap-1.5 text-xs font-semibold shadow-sm group"
             >
-              <HeartPulse className="w-3.5 h-3.5 text-[#C2A265]" />
+              <HeartPulse className="w-3.5 h-3.5 text-emerald-400" />
               <span>Chief Vaidya Desk</span>
             </a>
 
             <Link
               href="/about"
-              className="relative px-3 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-all"
+              className="relative px-3 py-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#161B24] transition-all"
             >
               Heritage
             </Link>
@@ -246,12 +246,12 @@ export function Header() {
             <button
               type="button"
               onClick={() => openSearch()}
-              className="hidden md:flex items-center gap-2.5 w-44 lg:w-56 pl-3.5 pr-2.5 py-2 bg-[#12241A] hover:bg-[#163022] border border-[#C2A265]/30 hover:border-[#C2A265]/60 rounded-full text-xs text-[#8A8478] hover:text-[#FAF7EE] transition-all shadow-inner group"
+              className="hidden md:flex items-center gap-2.5 w-44 lg:w-56 pl-3.5 pr-2.5 py-2 bg-[#121620] hover:bg-[#181F2C] border border-slate-700/60 hover:border-emerald-500/50 rounded-full text-xs text-[#8A8478] hover:text-[#FAF7EE] transition-all shadow-inner group"
               aria-label="Search formulations and herbs"
             >
-              <Search className="w-3.5 h-3.5 text-[#C2A265] group-hover:scale-110 transition-transform" />
+              <Search className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition-transform" />
               <span className="truncate">Search formulations...</span>
-              <kbd className="ml-auto hidden lg:inline-flex items-center text-[10px] font-mono text-[#C2A265]/80 bg-[#08120C] px-1.5 py-0.5 rounded border border-[#C2A265]/25">
+              <kbd className="ml-auto hidden lg:inline-flex items-center text-[10px] font-mono text-[#C2A265]/80 bg-[#0D1017] px-1.5 py-0.5 rounded border border-slate-700/50">
                 ⌘K
               </kbd>
             </button>
@@ -260,7 +260,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => openSearch()}
-              className="p-2 md:hidden rounded-xl text-ayur-cream hover:text-ayur-gold hover:bg-ayur-forest-dark/50 transition-colors focus-visible-ring"
+              className="p-2 md:hidden rounded-xl text-ayur-cream hover:text-emerald-400 hover:bg-[#161B24] transition-colors focus-visible-ring"
               aria-label="Search formulations"
             >
               <Search className="w-5 h-5" />
@@ -269,7 +269,7 @@ export function Header() {
             {/* Wishlist */}
             <Link
               href="/wishlist"
-              className="relative p-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-colors focus-visible-ring group"
+              className="relative p-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#161B24] transition-colors focus-visible-ring group"
               aria-label={isMounted ? `Wishlist, ${wishlistCount} items` : 'Wishlist'}
             >
               <Heart className="w-5 h-5 transition-transform group-hover:scale-110" />
@@ -284,12 +284,12 @@ export function Header() {
             <button
               type="button"
               onClick={openCartDrawer}
-              className="relative p-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#12241A] transition-colors focus-visible-ring group"
+              className="relative p-2 rounded-xl text-[#FAF7EE] hover:text-[#D4B678] hover:bg-[#161B24] transition-colors focus-visible-ring group"
               aria-label={isMounted ? `Cart, ${cartCount} items` : 'Cart'}
             >
               <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-110 text-[#C2A265]" />
               {isMounted && cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#C2A265] text-[#0B150F] text-[10px] font-bold flex items-center justify-center shadow-md animate-scale-in">
+                <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#C2A265] text-black text-[10px] font-bold flex items-center justify-center shadow-md animate-scale-in">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
@@ -301,7 +301,7 @@ export function Header() {
                 <button
                   type="button"
                   onClick={() => setIsAccountOpen(!isAccountOpen)}
-                  className="flex items-center gap-1.5 p-2 rounded-xl text-ayur-cream hover:text-ayur-gold hover:bg-ayur-forest-dark/50 transition-all"
+                  className="flex items-center gap-1.5 p-2 rounded-xl text-ayur-cream hover:text-ayur-gold hover:bg-[#161B24] transition-all"
                   aria-label="Account menu"
                 >
                   <User className="w-5 h-5" />
@@ -315,25 +315,25 @@ export function Header() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="absolute right-0 top-full mt-3 w-52 bg-ayur-charcoal/98 backdrop-blur-2xl rounded-2xl shadow-luxury border border-ayur-gold/20 py-2 z-50"
+                    className="absolute right-0 top-full mt-3 w-52 bg-[#11141A]/98 backdrop-blur-2xl rounded-2xl shadow-luxury border border-slate-700/60 py-2 z-50"
                   >
                     <Link
                       href="/account"
-                      className="block px-4 py-2.5 text-xs text-ayur-cream hover:bg-ayur-forest-dark hover:text-ayur-gold-light transition-colors"
+                      className="block px-4 py-2.5 text-xs text-ayur-cream hover:bg-[#181C26] hover:text-ayur-gold-light transition-colors"
                       onClick={() => setIsAccountOpen(false)}
                     >
                       My Account
                     </Link>
                     <Link
                       href="/orders"
-                      className="block px-4 py-2.5 text-xs text-ayur-cream hover:bg-ayur-forest-dark hover:text-ayur-gold-light transition-colors"
+                      className="block px-4 py-2.5 text-xs text-ayur-cream hover:bg-[#181C26] hover:text-ayur-gold-light transition-colors"
                       onClick={() => setIsAccountOpen(false)}
                     >
                       My Orders
                     </Link>
                     <Link
                       href="/wishlist"
-                      className="block px-4 py-2.5 text-xs text-ayur-cream hover:bg-ayur-forest-dark hover:text-ayur-gold-light transition-colors"
+                      className="block px-4 py-2.5 text-xs text-ayur-cream hover:bg-[#181C26] hover:text-ayur-gold-light transition-colors"
                       onClick={() => setIsAccountOpen(false)}
                     >
                       Wishlist
@@ -345,7 +345,7 @@ export function Header() {
                         setIsAccountOpen(false)
                         showToast({ type: 'info', title: 'Signed Out' })
                       }}
-                      className="block w-full text-left px-4 py-2 text-xs text-rose-300 hover:bg-rose-950/30 transition-colors border-t border-ayur-forest-dark/50"
+                      className="block w-full text-left px-4 py-2 text-xs text-rose-300 hover:bg-rose-950/30 transition-colors border-t border-slate-800"
                     >
                       Sign Out
                     </button>
@@ -366,7 +366,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => openModal('mobile-menu')}
-              className="lg:hidden p-2 rounded-xl text-ayur-cream hover:text-ayur-gold hover:bg-ayur-forest-dark/50 transition-colors focus-visible-ring"
+              className="lg:hidden p-2 rounded-xl text-ayur-cream hover:text-emerald-400 hover:bg-[#161B24] transition-colors focus-visible-ring"
               aria-label="Open mobile navigation"
             >
               <Menu className="w-6 h-6" />

@@ -39,13 +39,13 @@ const ritualPhases = [
 
 export function TheThirtyDayRitual() {
   return (
-    <section className="bg-[#0E1E14] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
+    <section className="bg-[#08090C] py-6 sm:py-8 lg:py-10 border-b border-[#C2A265]/20 text-[#F5EFE6] relative">
       <div className="container relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-6">
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#142A1D] border border-[#C2A265]/30 text-[#C2A265] text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
-            <Clock className="w-3 h-3" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#121622] border border-emerald-500/30 text-emerald-400 text-[9.5px] font-semibold tracking-[0.22em] uppercase mb-1.5">
+            <Clock className="w-3 h-3 text-emerald-400" />
             <span>The Biological Timeline</span>
           </div>
 
@@ -53,7 +53,7 @@ export function TheThirtyDayRitual() {
             The 30-Day Physiological Ritual
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#C5BFB3] mt-1.5 max-w-lg mx-auto leading-relaxed font-sans">
+          <p className="text-[11px] sm:text-xs text-[#CBD5E1] mt-1.5 max-w-lg mx-auto leading-relaxed font-sans">
             How authentic Ayurvedic Rasayana works inside your biology over a consistent four-week protocol.
           </p>
         </div>
@@ -67,20 +67,20 @@ export function TheThirtyDayRitual() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.4, delay: idx * 0.12 }}
-              className={`p-4 sm:p-5 rounded-xl bg-[#12241A] border ${phase.color} shadow-lg flex flex-col justify-between relative overflow-hidden hover:-translate-y-1 transition-all duration-300 ease-out`}
+              className={`p-4 sm:p-5 rounded-xl bg-[#121622] border ${phase.color} shadow-lg flex flex-col justify-between relative overflow-hidden hover:-translate-y-1 transition-all duration-300 ease-out`}
             >
               <div>
                 {/* Phase Number & Timeline */}
-                <div className="flex items-center justify-between pb-3 border-b border-[#C2A265]/15">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-md bg-[#183525] border border-[#C2A265]/30 flex items-center justify-center text-[#C2A265]">
+                    <div className="w-6 h-6 rounded-md bg-[#18202C] border border-slate-700 flex items-center justify-center text-emerald-400">
                       <phase.icon className="w-3 h-3" />
                     </div>
-                    <span className="text-[9.5px] uppercase font-bold tracking-[0.2em] text-[#C2A265]">
+                    <span className="text-[9.5px] uppercase font-bold tracking-[0.2em] text-emerald-400">
                       {phase.phase}
                     </span>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full bg-[#0E1E14] text-[10.5px] font-semibold text-[#D4B678] border border-[#C2A265]/20">
+                  <span className="px-2 py-0.5 rounded-full bg-[#0A0D14] text-[10.5px] font-semibold text-[#D4B678] border border-slate-800">
                     {phase.days}
                   </span>
                 </div>
@@ -96,14 +96,14 @@ export function TheThirtyDayRitual() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-[11px] sm:text-xs text-[#A8A295] leading-relaxed mt-2 font-sans">
+                <p className="text-[11px] sm:text-xs text-[#94A3B8] leading-relaxed mt-2 font-sans">
                   {phase.desc}
                 </p>
               </div>
 
               {/* Verified Result Milestone */}
-              <div className="mt-6 pt-4 border-t border-[#C2A265]/15">
-                <span className="text-[10px] uppercase tracking-wider text-[#C2A265] font-semibold block mb-1">
+              <div className="mt-6 pt-4 border-t border-slate-800">
+                <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-semibold block mb-1">
                   Expected Physiological Landmark:
                 </span>
                 <p className="text-xs font-medium text-[#FAF7EE] leading-snug">

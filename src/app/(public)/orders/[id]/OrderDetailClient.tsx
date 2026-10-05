@@ -86,10 +86,10 @@ const mockOrderDetails = {
 }
 
 const statusConfig = {
-  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/30', lineColor: 'bg-emerald-500' },
+  confirmed: { label: 'Confirmed', icon: CheckCircle, color: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30', lineColor: 'bg-emerald-500' },
   processing: { label: 'Processing', icon: Clock, color: 'bg-amber-950/80 text-[#D4B678] border border-[#C2A265]/40', lineColor: 'bg-[#C2A265]' },
-  shipped: { label: 'Dispatched', icon: Truck, color: 'bg-[#142A1D] text-[#FAF7EE] border border-[#C2A265]/30', lineColor: 'bg-[#C2A265]' },
-  delivered: { label: 'Delivered', icon: CheckCircle, color: 'bg-[#183525] text-[#D4B678] border border-[#C2A265]/50', lineColor: 'bg-[#D4B678]' },
+  shipped: { label: 'Dispatched', icon: Truck, color: 'bg-[#18202C] text-[#FAF7EE] border border-[#C2A265]/30', lineColor: 'bg-[#C2A265]' },
+  delivered: { label: 'Delivered', icon: CheckCircle, color: 'bg-[#161B26] text-[#D4B678] border border-[#C2A265]/50', lineColor: 'bg-[#D4B678]' },
   cancelled: { label: 'Cancelled', icon: XCircle, color: 'bg-rose-950/80 text-rose-300 border border-rose-500/30', lineColor: 'bg-rose-500' },
 }
 
@@ -127,7 +127,7 @@ export default function OrderDetailPage() {
 
       <div className="grid lg:grid-cols-3 gap-5 sm:gap-6">
         <div className="lg:col-span-2 space-y-4">
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
             <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-4">Order Timeline</h2>
             <div className="relative pl-6 border-l-2 border-[#C2A265]/20">
               {order.timeline.map((event, index) => {
@@ -137,12 +137,12 @@ export default function OrderDetailPage() {
 
                 return (
                   <div key={event.date} className="relative pb-6 last:pb-0">
-                    <div className="absolute left-[-14px] top-1 w-6 h-6 rounded-full border-2 border-[#C2A265]/40 flex items-center justify-center bg-[#0B150F] z-10">
+                    <div className="absolute left-[-14px] top-1 w-6 h-6 rounded-full border-2 border-[#C2A265]/40 flex items-center justify-center bg-[#08090C] z-10">
                       <div className={classNames(
                         'w-2.5 h-2.5 rounded-full',
                         event.status === order.status || index < order.timeline.findIndex(e => e.status === order.status)
                           ? eventConfig.lineColor.replace('bg-', 'bg-')
-                          : 'bg-[#061A10]'
+                          : 'bg-[#121622]'
                       )} />
                     </div>
                     <div className="ml-4">
@@ -151,7 +151,7 @@ export default function OrderDetailPage() {
                           'w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0',
                           event.status === order.status || index < order.timeline.findIndex(e => e.status === order.status)
                             ? eventConfig.lineColor.replace('bg-', 'bg-')
-                            : 'bg-[#0B150F] border border-[#C2A265]/20'
+                            : 'bg-[#18202C] border border-[#C2A265]/20'
                         )}>
                           <EventIcon className={classNames('w-4.5 h-4.5', event.status === order.status || index < order.timeline.findIndex(e => e.status === order.status) ? 'text-white' : 'text-ayur-stone')} />
                         </div>
@@ -171,12 +171,12 @@ export default function OrderDetailPage() {
             </div>
           </section>
 
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
             <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-4">Order Items</h2>
             <div className="space-y-3">
               {order.items.map((item, index) => (
-                <div key={index} className="flex gap-3.5 p-3 sm:p-3.5 bg-[#0B150F] border border-[#C2A265]/15 rounded-xl items-center">
-                  <div className="w-14 h-14 rounded-lg bg-[#04180E] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
+                <div key={index} className="flex gap-3.5 p-3 sm:p-3.5 bg-[#0D1017] border border-[#C2A265]/15 rounded-xl items-center">
+                  <div className="w-14 h-14 rounded-lg bg-[#08090C] border border-[#C2A265]/20 flex-shrink-0 overflow-hidden">
                     <Image src={item.image} alt={item.name} width={56} height={56} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -223,7 +223,7 @@ export default function OrderDetailPage() {
         </div>
 
         <div className="space-y-4">
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
             <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-3">Shipping Address</h2>
             <address className="text-[#C4BDA8] not-italic space-y-1.5 text-xs sm:text-sm">
               <p className="font-medium text-ayur-ivory">{order.shippingAddress.firstName} {order.shippingAddress.lastName}</p>
@@ -243,7 +243,7 @@ export default function OrderDetailPage() {
             </address>
           </section>
 
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
             <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-3">Payment Details</h2>
             <dl className="space-y-2 text-xs sm:text-sm">
               <div className="flex justify-between">
@@ -261,7 +261,7 @@ export default function OrderDetailPage() {
             </dl>
           </section>
 
-          <section className="bg-[#061A10] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
+          <section className="bg-[#121622] border border-[#C2A265]/20 rounded-2xl p-4 sm:p-5 shadow-lg">
             <h2 className="font-heading text-base sm:text-lg font-medium text-ayur-ivory mb-2">Need Help?</h2>
             <p className="text-xs text-[#C4BDA8] mb-3.5">Contact us for any questions about your order.</p>
             <div className="flex gap-2.5">

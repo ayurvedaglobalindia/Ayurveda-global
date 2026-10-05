@@ -129,7 +129,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
       <div className="grid md:grid-cols-12 gap-6 lg:gap-8 items-start">
         {/* Left Column: Image Stage */}
         <div className="md:col-span-6 space-y-3">
-          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-[#13281C] via-[#0E1E14] to-[#0A160F] border border-[#C2A265]/30 shadow-xl flex items-center justify-center">
+          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-[#181D2A] via-[#10131B] to-[#0A0C11] border border-slate-700/60 shadow-xl flex items-center justify-center">
             <Image
               src={currentImage.src}
               alt={currentImage.alt || product.name}
@@ -139,7 +139,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
               priority
             />
             {product.ageRestricted && (
-              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-md text-[10px] font-bold text-[#E5A855] bg-[#0B150F]/90 border border-[#C2A265]/40 shadow-sm">
+              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-md text-[10px] font-bold text-[#E5A855] bg-[#08090C]/90 border border-slate-700 shadow-sm">
                 18+ Adult
               </span>
             )}
@@ -152,10 +152,10 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
                 <button
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
-                  className={`relative w-14 h-16 rounded-xl overflow-hidden border-2 transition-all bg-[#0B150F] shadow-sm ${
+                  className={`relative w-14 h-16 rounded-xl overflow-hidden border-2 transition-all bg-[#0C0E14] shadow-sm ${
                     selectedImageIndex === idx
-                      ? 'border-[#C2A265] ring-2 ring-[#C2A265]/25'
-                      : 'border-[#C2A265]/20 opacity-70 hover:opacity-100'
+                      ? 'border-emerald-400 ring-2 ring-emerald-500/25'
+                      : 'border-slate-800 opacity-70 hover:opacity-100 hover:border-slate-700'
                   }`}
                 >
                   <Image src={img.src} alt="" fill className="object-cover" sizes="56px" />
@@ -169,7 +169,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
         <div className="md:col-span-6 space-y-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-semibold text-ayur-gold bg-[#0A2E1E] border border-ayur-gold/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="text-[11px] font-semibold text-emerald-400 bg-[#18202C] border border-emerald-500/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                 {product.category === 'supplements' ? 'Herbal Supplement' : product.category === 'wellness' ? 'Power Combo' : 'Personal Care'}
               </span>
               <Rating rating={4.9} size="sm" showValue reviewsCount={1200} />
@@ -183,14 +183,14 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
           </div>
 
           {/* Price Box */}
-          <div className="p-3.5 rounded-2xl bg-[#0B150F] border border-ayur-gold/30 flex items-center justify-between">
+          <div className="p-3.5 rounded-2xl bg-[#0C0E14] border border-slate-800 flex items-center justify-between">
             <PriceDisplay
               price={product.price}
               compareAtPrice={product.compareAtPrice}
               size="lg"
             />
             {product.compareAtPrice && product.compareAtPrice > product.price && (
-              <span className="text-xs font-bold bg-ayur-gold text-[#0B150F] px-2.5 py-1 rounded-lg shadow-sm">
+              <span className="text-xs font-bold bg-ayur-gold text-[#08090C] px-2.5 py-1 rounded-lg shadow-sm">
                 SAVE {Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)}%
               </span>
             )}

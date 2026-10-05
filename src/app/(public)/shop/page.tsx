@@ -248,7 +248,7 @@ function ShopContent() {
         {/* Active Search / Filter Pill */}
         {filters.search && (
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="px-2.5 py-1 rounded-full bg-[#142A1D] border border-[#C2A265]/35 text-[#D4B678] text-xs font-medium flex items-center gap-1.5 shadow-sm">
+            <span className="px-2.5 py-1 rounded-full bg-[#18202C] border border-[#C2A265]/35 text-[#D4B678] text-xs font-medium flex items-center gap-1.5 shadow-sm">
               <Search className="w-3 h-3 text-[#C2A265]" />
               <span>&ldquo;{filters.search}&rdquo;</span>
               <button
@@ -273,7 +273,7 @@ function ShopContent() {
               value={filters.search}
               onChange={(e) => updateFilters({ search: e.target.value })}
               placeholder="Search by herb, formulation, stamina, spray, combo..."
-              className="w-full pl-10 pr-10 py-2.5 sm:py-3 bg-[#102016] border border-[#C2A265]/35 focus:border-[#C2A265] rounded-xl text-xs sm:text-sm text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-all shadow-inner"
+              className="w-full pl-10 pr-10 py-2.5 sm:py-3 bg-[#0D1017] border border-[#C2A265]/35 focus:border-[#C2A265] rounded-xl text-xs sm:text-sm text-[#FAF7EE] placeholder-[#8A8478] focus:outline-none focus:ring-1 focus:ring-[#C2A265] transition-all shadow-inner"
               aria-label="Search all catalog formulations"
             />
             {filters.search && (
@@ -310,8 +310,8 @@ function ShopContent() {
                 onClick={() => updateFilters({ search: isSelected ? '' : tag })}
                 className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all ${
                   isSelected
-                    ? 'bg-[#C2A265] text-[#0B150F] font-semibold shadow-sm'
-                    : 'bg-[#12241A] text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#183222] border border-[#C2A265]/20'
+                    ? 'bg-[#C2A265] text-[#08090C] font-semibold shadow-sm'
+                    : 'bg-[#18202C] text-[#C5BFB3] hover:text-[#FAF7EE] hover:bg-[#1E2636] border border-[#C2A265]/20'
                 }`}
               >
                 {tag}
@@ -350,7 +350,7 @@ function ShopContent() {
         <div className="flex-1 w-full min-w-0">
           
           {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#102016] border border-[#C2A265]/20 mb-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#121622] border border-[#C2A265]/20 mb-4">
             <div className="flex items-center gap-2.5">
               {/* Mobile Filter Button */}
               <div className="lg:hidden">
@@ -391,12 +391,12 @@ function ShopContent() {
             <div className="flex items-center gap-2.5 ml-auto">
               <ProductSort selectedSort={filters.sort} onSortChange={sort => updateFilters({ sort })} />
               
-              <div className="flex items-center gap-1 bg-[#0D1B12] border border-[#C2A265]/25 rounded-lg p-0.5">
+              <div className="flex items-center gap-1 bg-[#0D1017] border border-[#C2A265]/25 rounded-lg p-0.5">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={classNames(
                     'p-1.5 rounded transition-colors',
-                    viewMode === 'grid' ? 'bg-[#C2A265] text-[#0B150F]' : 'text-[#8A8478] hover:text-[#FAF7EE]'
+                    viewMode === 'grid' ? 'bg-[#C2A265] text-[#08090C]' : 'text-[#8A8478] hover:text-[#FAF7EE]'
                   )}
                   aria-label="Grid view"
                 >
@@ -406,7 +406,7 @@ function ShopContent() {
                   onClick={() => setViewMode('list')}
                   className={classNames(
                     'p-1.5 rounded transition-colors',
-                    viewMode === 'list' ? 'bg-[#C2A265] text-[#0B150F]' : 'text-[#8A8478] hover:text-[#FAF7EE]'
+                    viewMode === 'list' ? 'bg-[#C2A265] text-[#08090C]' : 'text-[#8A8478] hover:text-[#FAF7EE]'
                   )}
                   aria-label="List view"
                 >
@@ -420,8 +420,8 @@ function ShopContent() {
           {loading ? (
             <ProductGrid products={[]} loading={true} />
           ) : filteredProducts.length === 0 ? (
-            <div className="py-12 px-4 text-center rounded-2xl bg-[#102016] border border-[#C2A265]/20 space-y-3">
-              <div className="w-12 h-12 rounded-full bg-[#142A1D] border border-[#C2A265]/30 flex items-center justify-center mx-auto text-[#C2A265]">
+            <div className="py-12 px-4 text-center rounded-2xl bg-[#121622] border border-[#C2A265]/20 space-y-3">
+              <div className="w-12 h-12 rounded-full bg-[#18202C] border border-[#C2A265]/30 flex items-center justify-center mx-auto text-[#C2A265]">
                 <Search className="w-5 h-5" />
               </div>
               <h3 className="font-heading text-sm sm:text-base font-medium text-[#FAF7EE]">
@@ -432,7 +432,7 @@ function ShopContent() {
               </p>
               <button
                 onClick={handleClearFilters}
-                className="mt-2 px-4 py-2 rounded-xl bg-[#142A1D] hover:bg-[#183525] border border-[#C2A265]/40 text-[#FAF7EE] text-xs font-semibold transition-all inline-block"
+                className="mt-2 px-4 py-2 rounded-xl bg-[#18202C] hover:bg-[#1E2636] border border-[#C2A265]/40 text-[#FAF7EE] text-xs font-semibold transition-all inline-block"
               >
                 Browse All Products
               </button>
@@ -465,7 +465,7 @@ function ShopContent() {
 
 export default function ShopPage() {
   return (
-    <div className="bg-[#0B150F] min-h-screen text-[#F5EFE6]">
+    <div className="bg-[#08090C] min-h-screen text-[#F5EFE6]">
       <Suspense fallback={
         <div className="min-h-[50vh] flex items-center justify-center text-[#D4B678] text-xs">
           Loading catalog...
