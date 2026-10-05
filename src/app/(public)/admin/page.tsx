@@ -45,6 +45,7 @@ import {
   getAnalyticsSummary,
   downloadOrdersCSV,
   downloadAnalyticsCSV,
+  clearAllAnalyticsData,
   type AnalyticsSummary,
   type DateRange,
 } from '@/lib/analytics'
@@ -52,75 +53,6 @@ import { loginAdmin, isAdminAuthenticated, logoutAdmin, isLockedOut } from '@/li
 import { getAllProducts, getProductImage } from '@/lib/products/registry'
 import { useUserStore } from '@/store/userStore'
 import { buildWhatsAppUrl } from '@/store/whatsappStore'
-
-const fallbackMockOrders = [
-  {
-    id: 'ORD-20241215-ABC1',
-    orderNumber: 'ORD-20241215-ABC1',
-    createdAt: '2024-12-15T10:30:00Z',
-    customerName: 'Vikram Sharma',
-    customerPhone: '+91 98765 43210',
-    total: 149900,
-    status: 'delivered' as const,
-    paymentMethod: 'whatsapp' as const,
-    shippingAddress: {
-      firstName: 'Vikram',
-      lastName: 'Sharma',
-      addressLine1: 'Flat 402, Green Glen Layout',
-      city: 'Bengaluru',
-      state: 'Karnataka',
-      pincode: '560103',
-      phone: '+91 98765 43210',
-    },
-    items: [
-      { name: 'BODY Essential Nutrition', quantity: 1, price: 149900, image: '/images/products/body-essential-nutrition-thumb.jpg' },
-    ],
-  },
-  {
-    id: 'ORD-20241210-XYZ2',
-    orderNumber: 'ORD-20241210-XYZ2',
-    createdAt: '2024-12-10T14:20:00Z',
-    customerName: 'Amit Patel',
-    customerPhone: '+91 98765 12345',
-    total: 94800,
-    status: 'shipped' as const,
-    paymentMethod: 'cod' as const,
-    shippingAddress: {
-      firstName: 'Amit',
-      lastName: 'Patel',
-      addressLine1: 'B-12, Shanti Kunj',
-      city: 'Ahmedabad',
-      state: 'Gujarat',
-      pincode: '380009',
-      phone: '+91 98765 12345',
-    },
-    items: [
-      { name: 'STAYMAX+ Delay Spray', quantity: 1, price: 89900, image: '/images/products/staymax-delay-spray-thumb.jpg' },
-    ],
-  },
-  {
-    id: 'ORD-20241205-DEF3',
-    orderNumber: 'ORD-20241205-DEF3',
-    createdAt: '2024-12-05T09:15:00Z',
-    customerName: 'Rahul Verma',
-    customerPhone: '+91 98290 12345',
-    total: 219800,
-    status: 'processing' as const,
-    paymentMethod: 'whatsapp' as const,
-    shippingAddress: {
-      firstName: 'Rahul',
-      lastName: 'Verma',
-      addressLine1: '15/A, Civil Lines',
-      city: 'Jaipur',
-      state: 'Rajasthan',
-      pincode: '302006',
-      phone: '+91 98290 12345',
-    },
-    items: [
-      { name: 'BODY Essential Nutrition', quantity: 2, price: 149900, image: '/images/products/body-essential-nutrition-thumb.jpg' },
-    ],
-  },
-]
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -176,7 +108,7 @@ export default function AdminPage() {
   }, [])
 
   const loadDashboardData = (range: DateRange = dateRange) => {
-    // 1. Gather all client orders
+    // 1. Gather all real client orders
     let allOrders: any[] = [...(useUserStore.getState().recentOrders || [])]
     try {
       if (typeof window !== 'undefined') {
@@ -188,16 +120,22 @@ export default function AdminPage() {
     const uniqueOrders = allOrders.filter(
       (v, i, a) => a.findIndex(t => t.id === v.id || t.orderNumber === v.orderNumber) === i
     )
-    const combined = [
-      ...uniqueOrders,
-      ...fallbackMockOrders.filter(
-        fo => !uniqueOrders.some(uo => uo.id === fo.id || uo.orderNumber === fo.orderNumber)
-      ),
-    ]
-    setOrders(combined)
+    setOrders(uniqueOrders)
 
     // 2. Load analytics for selected range
     setAnalytics(getAnalyticsSummary(range))
+  }
+
+  const handleResetData = () => {
+    if (typeof window !== 'undefined') {
+      if (confirm('Are you sure you want to zero out all stored data and start fresh tracking? All existing test data will be reset to 0.')) {
+        clearAllAnalyticsData()
+        useUserStore.getState().clearOrders()
+        setOrders([])
+        setAnalytics(getAnalyticsSummary(dateRange))
+      }
+    }
+  }
   }
 
   const handleRangeChange = (range: DateRange) => {
@@ -394,6 +332,15 @@ export default function AdminPage() {
           </div>
 
           <div className="flex items-center gap-2.5">
+            <button
+              onClick={handleResetData}
+              className="text-xs text-amber-800 hover:text-amber-900 hover:bg-amber-100/60 px-2.5 py-1.5 rounded-lg border border-amber-300 bg-amber-50 inline-flex items-center gap-1.5 transition-colors"
+              title="Reset all test data and start fresh tracking series from zero"
+            >
+              <RefreshCw className="w-3 h-3 text-amber-800" />
+              <span>Reset Data (Zero Start)</span>
+            </button>
+
             <Link
               href="/"
               target="_blank"

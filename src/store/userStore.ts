@@ -14,6 +14,7 @@ interface UserStore {
   removeAddress: (addressId: string) => void
   setDefaultAddress: (addressId: string) => void
   addOrder: (order: any) => void
+  clearOrders: () => void
 }
 
 const initialUser: User | null = null
@@ -29,6 +30,10 @@ export const useUserStore = create<UserStore>()(
         set(state => ({
           recentOrders: [order, ...(state.recentOrders || [])].slice(0, 50),
         }))
+      },
+
+      clearOrders: () => {
+        set({ recentOrders: [] })
       },
 
       login: (user) => {

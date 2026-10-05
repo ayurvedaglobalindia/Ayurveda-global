@@ -437,3 +437,14 @@ export function downloadAnalyticsCSV(summary: AnalyticsSummary) {
   link.click()
   document.body.removeChild(link)
 }
+
+export function clearAllAnalyticsData(): void {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.removeItem(STORAGE_KEY)
+    localStorage.removeItem(SESSION_KEY)
+    localStorage.removeItem('ayur_orders')
+    localStorage.removeItem('ayur-veda-whatsapp-leads')
+  } catch {}
+}
+
