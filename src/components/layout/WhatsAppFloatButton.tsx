@@ -1,152 +1,241 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { MessageCircle, X, Zap, ShoppingBag } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { classNames } from '@/lib/utils/formatters'
-import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
-import { useUserStore } from '@/store/userStore'
-import { useUIStore } from '@/store/uiStore'
+import { useState, useEffect } from "react";
+import { MessageCircle, X, Sparkles, Mic, BrainCircuit } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { classNames } from "@/lib/utils/formatters";
+import {
+  useWhatsAppStore,
+  buildWhatsAppUrl,
+  buildProductEnquiryMessage,
+} from "@/store/whatsappStore";
+import { useUserStore } from "@/store/userStore";
 
 export function WhatsAppFloatButton() {
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [showTooltip, setShowTooltip] = useState(true)
-  const { trackLead } = useWhatsAppStore()
-  const { user } = useUserStore()
-  const { openModal } = useUIStore()
+  const [isOpen, setIsOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(true);
+  const { trackLead } = useWhatsAppStore();
+  const { user } = useUserStore();
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowTooltip(false), 5000)
-    return () => clearTimeout(timer)
-  }, [])
+    const timer = setTimeout(() => setShowTooltip(false), 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const handleWhatsAppClick = (source: 'float' | 'product' | 'checkout' | 'contact') => {
-
-    const primaryAddr = user?.addresses?.[0]
-    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
+  const handleConsult = (type: "general" | "expert") => {
+    const primaryAddr = user?.addresses?.[0];
+    const userCity = primaryAddr
+      ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(", ")
+      : "";
     const message = buildProductEnquiryMessage({
-      customerName: user?.name || '',
-      customerPhone: user?.phone || '',
+      customerName: user?.name || "",
+      customerPhone: user?.phone || "",
       customerCity: userCity,
-      productName: source === 'product' ? 'Product Enquiry' : 'Customer Support & Guidance',
+      productName: type === "expert" ? "Expert AI Vaidya Consult" : "General Enquiry",
       quantity: 1,
-      enquiry: `Hi Mageesh / Ayur Veda Global team! I would like to enquire about your products, recommended dosage, and Cash on Delivery.`,
-      source,
-    })
+      enquiry: type === "expert" 
+        ? "Pranam. I would like an expert Ayurvedic consultation." 
+        : "Hi, I have a general query about Ayurveda Global products.",
+      source: "float",
+    });
 
     trackLead({
-      source,
+      source: "float",
       customerName: user?.name,
       customerPhone: user?.phone,
-      productName: source === 'product' ? 'Product Enquiry' : undefined,
+      productName: "AI Vaidya Consult",
       quantity: 1,
-      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
-      userAgent: '',
-      referrer: '',
-    })
+      pageUrl: typeof window !== "undefined" ? window.location.href : "",
+      userAgent: "",
+      referrer: "",
+    });
 
-    window.open(buildWhatsAppUrl(message), '_blank')
-    setIsExpanded(false)
-  }
+    window.open(buildWhatsAppUrl(message), "_blank");
+    setIsOpen(false);
+  };
 
   return (
-    <div className="hidden md:block fixed bottom-6 right-6 z-[45]">
+    <div className="hidden md:block fixed bottom-6 right-6 z-[60]">
+      {/* Expanded Glassmorphic Chat/AI Modal */}
       <AnimatePresence>
-        {isExpanded && (
+        {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 15 }}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 15 }}
-            transition={{ duration: 0.2 }}
-            className="absolute bottom-16 right-0 w-64"
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="absolute bottom-20 right-0 w-[340px]"
           >
-            <div className="bg-[#FAF7F2] rounded-2xl shadow-xl border border-[#999999]/30 p-3.5 space-y-2">
-              <button
-                onClick={() => handleWhatsAppClick('float')}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#999999]/30 transition-colors text-left group"
-              >
-                <div className="w-9 h-9 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                  <MessageCircle className="w-5 h-5 text-[#4E5F52]" />
-                </div>
-                <div>
-                  <span className="font-semibold text-xs text-[#1C1D1F] block">General Enquiry</span>
-                  <span className="text-[11px] text-[#737373]">Chat with customer support</span>
-                </div>
-              </button>
+            <div className="relative overflow-hidden rounded-3xl bg-[#0a0f0d]/80 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(45,74,62,0.5)]">
+              {/* Astra Fluid Background inside card */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.5, 0.3],
+                }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-20 -right-20 w-40 h-40 bg-[#9E8047] rounded-full blur-[50px] -z-10 mix-blend-screen"
+              />
+              <motion.div
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.2, 0.4, 0.2],
+                }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute -bottom-20 -left-20 w-52 h-52 bg-[#2d4a3e] rounded-full blur-[60px] -z-10 mix-blend-screen"
+              />
 
-              <button
-                onClick={() => handleWhatsAppClick('contact')}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#999999]/30 transition-colors text-left group"
-              >
-                <div className="w-9 h-9 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                  <Zap className="w-5 h-5 text-[#4E5F52]" />
+              {/* Header */}
+              <div className="p-6 pb-4 border-b border-white/10">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-[#9E8047]" />
+                    <h3 className="font-heading text-lg text-white font-medium">Astra Vaidya</h3>
+                  </div>
+                  <button 
+                    onClick={() => setIsOpen(false)}
+                    className="p-1.5 rounded-full hover:bg-white/10 text-white/70 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
-                <div>
-                  <span className="font-semibold text-xs text-[#1C1D1F] block">Direct Consultation</span>
-                  <span className="text-[11px] text-[#737373]">Herbal dosage &amp; usage</span>
-                </div>
-              </button>
+                <p className="text-xs text-[#a3b3aa] font-sans font-light">
+                  Your intelligent Ayurvedic assistant. Powered by ancient wisdom & modern AI.
+                </p>
+              </div>
 
-              <button
-                onClick={() => handleWhatsAppClick('checkout')}
-                className="w-full flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFFFF] hover:bg-[#F5F1EB] border border-[#999999]/30 transition-colors text-left group"
-              >
-                <div className="w-9 h-9 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                  <ShoppingBag className="w-5 h-5 text-[#4E5F52]" />
+              {/* Actions */}
+              <div className="p-4 space-y-3">
+                <button
+                  onClick={() => handleConsult("expert")}
+                  className="group relative w-full overflow-hidden rounded-2xl bg-white/5 border border-white/10 p-4 flex items-center gap-4 hover:bg-white/10 transition-colors text-left"
+                >
+                  <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-[#2d4a3e] to-[#9E8047] flex items-center justify-center flex-shrink-0">
+                    <BrainCircuit className="w-5 h-5 text-white" />
+                    <motion.div
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="absolute inset-0 rounded-full border border-white/30"
+                    />
+                  </div>
+                  <div>
+                    <span className="font-semibold text-sm text-white block mb-0.5 group-hover:text-[#9E8047] transition-colors">
+                      AI Diagnostic Consult
+                    </span>
+                    <span className="text-[11px] text-[#8a9992] leading-tight block">
+                      Connect with our expert Vaidya panel for deep analysis.
+                    </span>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => handleConsult("general")}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
+                >
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-5 h-5 text-white/80" />
+                  </div>
+                  <div>
+                    <span className="font-semibold text-sm text-white block mb-0.5">
+                      General Support
+                    </span>
+                    <span className="text-[11px] text-[#8a9992] leading-tight block">
+                      Order updates & quick product questions.
+                    </span>
+                  </div>
+                </button>
+              </div>
+
+              {/* Bottom mic indicator */}
+              <div className="px-6 py-4 bg-black/20 flex items-center justify-between">
+                <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">
+                  Listening...
+                </span>
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3, 4].map((i) => (
+                    <motion.div
+                      key={i}
+                      animate={{ height: ["4px", "12px", "4px"] }}
+                      transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
+                      className="w-1 bg-[#9E8047] rounded-full"
+                    />
+                  ))}
                 </div>
-                <div>
-                  <span className="font-semibold text-xs text-[#1C1D1F] block">Quick Order / COD</span>
-                  <span className="text-[11px] text-[#737373]">Instant checkout support</span>
-                </div>
-              </button>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className={classNames(
-          'relative w-14 h-14 rounded-full bg-[#4E5F52] hover:bg-[#3D4B40] text-white flex items-center justify-center shadow-md transition-all duration-300 hover:scale-105 focus-visible-ring',
-          isExpanded && 'rotate-45'
-        )}
-        aria-label={isExpanded ? 'Close WhatsApp options' : 'Open WhatsApp chat'}
-        aria-expanded={isExpanded}
+      {/* Floating Glowing Orb Button */}
+      <motion.button
+        onClick={() => setIsOpen(!isOpen)}
+        className="relative group flex items-center justify-center w-16 h-16 rounded-full outline-none"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        <MessageCircle className="w-7 h-7 text-white" />
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              initial={{ opacity: 0, rotate: -45 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              exit={{ opacity: 0, rotate: 45 }}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              <X className="w-7 h-7 text-white" />
-            </motion.div>
+        {/* Outer glowing aura */}
+        <motion.div
+          animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className={classNames(
+            "absolute -inset-6 rounded-full blur-[20px] transition-opacity duration-700",
+            isOpen ? "opacity-100 bg-gradient-to-tr from-[#9E8047] via-[#2d4a3e] to-[#0a0f0d]" : "opacity-40 group-hover:opacity-70 bg-gradient-to-tr from-[#4E5F52] via-[#9E8047] to-[#2d4a3e]"
           )}
-        </AnimatePresence>
+        />
+        
+        {/* Inner fluid orb */}
+        <div className="relative w-full h-full rounded-full overflow-hidden shadow-[0_0_20px_rgba(45,74,62,0.8)] border border-white/30 bg-[#0a0f0d] flex items-center justify-center">
+           {/* Animated gradient blob */}
+           <motion.div
+              animate={{
+                x: ["0%", "30%", "-30%", "0%"],
+                y: ["0%", "30%", "-30%", "0%"],
+                scale: [1, 1.3, 1.1, 1],
+                rotate: 360
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -inset-10 bg-gradient-to-r from-[#9E8047] to-[#2d4a3e] opacity-90 blur-lg rounded-full mix-blend-screen"
+           />
+           <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" />
+           
+           <AnimatePresence mode="wait">
+             {isOpen ? (
+               <motion.div
+                 key="close"
+                 initial={{ opacity: 0, rotate: -90 }}
+                 animate={{ opacity: 1, rotate: 0 }}
+                 exit={{ opacity: 0, rotate: 90 }}
+                 className="relative z-10"
+               >
+                 <X className="w-7 h-7 text-white" />
+               </motion.div>
+             ) : (
+               <motion.div
+                 key="sparkles"
+                 initial={{ opacity: 0, scale: 0.5 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 exit={{ opacity: 0, scale: 0.5 }}
+                 className="relative z-10"
+               >
+                 <Sparkles className="w-7 h-7 text-white" />
+               </motion.div>
+             )}
+           </AnimatePresence>
+        </div>
+      </motion.button>
 
-        <motion.span
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0 }}
-          className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#9E8047] flex items-center justify-center shadow-xs"
-        >
-          <Zap className="w-2.5 h-2.5 text-white" />
-        </motion.span>
-      </button>
-
-      {showTooltip && !isExpanded && (
+      {/* Tooltip */}
+      {showTooltip && !isOpen && (
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
-          className="absolute bottom-16 right-0 bg-[#FFFFFF] text-[#1C1D1F] px-3.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap shadow-md border border-[#999999]/30"
+          className="absolute bottom-4 right-20 bg-[#0a0f0d]/90 backdrop-blur-md text-white/90 px-4 py-2 rounded-2xl text-xs font-medium whitespace-nowrap shadow-xl border border-white/10"
         >
-          Vaidya Consult
+          <span className="text-[#9E8047] mr-1">✦</span> Try AI Vaidya
         </motion.div>
       )}
     </div>
-  )
+  );
 }

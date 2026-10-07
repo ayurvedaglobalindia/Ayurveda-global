@@ -1,987 +1,587 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Heart, Share2, Truck, ShieldCheck, RotateCcw, Leaf, Check, X, Star, ThumbsUp, MessageSquarePlus, MessageCircle, ShoppingBag, Zap } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { classNames } from '@/lib/utils/formatters'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { Textarea } from '@/components/ui/Textarea'
-import { PriceDisplay } from '@/components/ui/PriceDisplay'
-import { QuantitySelector } from '@/components/ui/QuantitySelector'
-import { Tabs } from '@/components/ui/Tabs'
-import { ImageGallery } from '@/components/ui/ImageGallery'
-import type { Product, ProductVariant } from '@/types'
-import { getProductImage } from '@/lib/products/registry'
-import { useCartStore } from '@/store/cartStore'
-import { useWishlistStore } from '@/store/wishlistStore'
-import { useUserStore } from '@/store/userStore'
-import { useUIStore } from '@/store/uiStore'
-import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
-import { formatINR } from '@/lib/utils/formatters'
-import { trackEvent } from '@/lib/analytics'
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Star,
+  Plus,
+  Minus,
+  Truck,
+  ShieldCheck,
+  Leaf,
+  Banknote,
+  CheckCircle2,
+  ChevronDown,
+  Droplets,
+  Clock,
+  Sun,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { classNames } from "@/lib/utils/formatters";
+import { Button } from "@/components/ui/Button";
+import { ImageGallery } from "@/components/ui/ImageGallery";
+import type { Product, ProductVariant } from "@/types";
+import { useCartStore } from "@/store/cartStore";
+import { useUIStore } from "@/store/uiStore";
+import { formatINR } from "@/lib/utils/formatters";
 
-interface ProductDetailsProps {
-  product: Product
-  selectedVariant?: ProductVariant
-  onVariantChange?: (variant: ProductVariant) => void
-}
+export function ProductDetails({
+  product,
+  selectedVariant,
+  onVariantChange,
+}: {
+  product: Product;
+  selectedVariant?: ProductVariant;
+  onVariantChange?: (variant: ProductVariant) => void;
+}) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { addItem } = useCartStore();
+  const { openCartDrawer, showToast } = useUIStore();
 
-export function ProductDetails({ product, selectedVariant, onVariantChange }: ProductDetailsProps) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const { addItem, isInCart, getItemQuantity } = useCartStore()
-  const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
-  const { user, isAuthenticated } = useUserStore()
-  const { openModal, openCartDrawer, showToast, isAgeVerified } = useUIStore()
-  const { trackLead } = useWhatsAppStore()
+  const [quantity, setQuantity] = useState(1);
+  const [showStickyBar, setShowStickyBar] = useState(false);
+  const [selectedVariantId, setSelectedVariantId] = useState(
+    selectedVariant?.id || product.variants[0]?.id,
+  );
 
-  const [quantity, setQuantity] = useState(1)
-  const [showStickyBar, setShowStickyBar] = useState(false)
-  const [selectedVariantId, setSelectedVariantId] = useState(selectedVariant?.id || product.variants[0]?.id)
+  // Accordion state
+  const [openFaq, setOpenFaq] = useState<string | null>("overview");
 
-  const variantParam = searchParams?.get('variant')
+  const variantParam = searchParams?.get("variant");
 
-  // Auto-sync variant from URL parameter (?variant=120 or ?variant=deluxe)
   useEffect(() => {
     if (variantParam) {
       const match = product.variants.find(
-        v => v.id === variantParam || v.id.toLowerCase().includes(variantParam.toLowerCase())
-      )
+        (v) =>
+          v.id === variantParam ||
+          v.id.toLowerCase().includes(variantParam.toLowerCase()),
+      );
       if (match) {
-        setSelectedVariantId(match.id)
-        onVariantChange?.(match)
+        setSelectedVariantId(match.id);
+        onVariantChange?.(match);
       }
     }
-  }, [variantParam, product.variants, onVariantChange])
+  }, [variantParam, product.variants, onVariantChange]);
 
-  // Track scroll position to show sticky action bar on mobile
   useEffect(() => {
     const handleScroll = () => {
-      setShowStickyBar(window.scrollY > 450)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      setShowStickyBar(window.scrollY > 450);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  // Track product view analytics
-  useEffect(() => {
-    if (product?.id) {
-      trackEvent('product_view', { productId: product.id, productName: product.name })
-    }
-  }, [product?.id, product?.name])
-
-  const currentVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
-  const inCart = isInCart(product.id, selectedVariantId)
-  const inWishlist = isInWishlist(product.id, selectedVariantId)
-  const maxQuantity = currentVariant?.inventory || product.inventory.quantity
+  const currentVariant =
+    product.variants.find((v) => v.id === selectedVariantId) ||
+    product.variants[0];
+  const maxQuantity = currentVariant?.inventory || product.inventory.quantity;
 
   const handleAddToCart = () => {
-    if (product.ageRestricted && !isAgeVerified(product.id)) {
-      openModal('age-gate', {
-        productId: product.id,
-        productName: product.name,
-        onVerify: () => {
-          performAddToCart()
-        },
-      })
-      return
-    }
-
-    performAddToCart()
-  }
-
-  const performAddToCart = () => {
-    addItem(product, selectedVariantId, quantity)
-    trackEvent('add_to_cart', {
-      productId: product.id,
-      productName: product.name,
-      variantId: selectedVariantId,
-      quantity,
-      price: currentVariant?.price || product.price,
-    })
+    addItem(product, selectedVariantId, quantity);
     showToast({
-      type: 'success',
-      title: 'Added to Cart',
-      message: `${product.name} has been added to your selection.`,
-    })
-    openCartDrawer()
-  }
+      type: "success",
+      title: "Added to Cart",
+      message: `${product.name} has been added.`,
+    });
+    openCartDrawer();
+  };
 
   const handleBuyNow = () => {
-    if (product.ageRestricted && !isAgeVerified(product.id)) {
-      openModal('age-gate', {
-        productId: product.id,
-        productName: product.name,
-        onVerify: () => {
-          addItem(product, selectedVariantId, quantity)
-          router.push('/checkout')
-        },
-      })
-      return
-    }
+    addItem(product, selectedVariantId, quantity);
+    router.push("/checkout");
+  };
 
-    addItem(product, selectedVariantId, quantity)
-    router.push('/checkout')
-  }
+  const currentPrice = currentVariant?.price || product.price;
+  const comparePrice = currentVariant?.compareAtPrice || product.compareAtPrice;
+  const discountPct = comparePrice
+    ? Math.round(((comparePrice - currentPrice) / comparePrice) * 100)
+    : 0;
 
-  const handleWhatsAppClick = () => {
-    trackLead({
-      source: 'product',
-      productId: product.id,
-      productName: product.name,
-    })
-
-    const message = buildProductEnquiryMessage({
-      productName: product.name,
-      price: currentVariant?.price || product.price,
-      quantity,
-      enquiry: `Pranam. I would like confidential Ayurvedic guidance and ordering assistance for ${product.name} (${currentVariant?.name || 'Standard'}).`,
-      source: 'product',
-    })
-
-    window.open(buildWhatsAppUrl(message), '_blank')
-  }
-
-  const handleWishlistToggle = () => {
-    addToWishlist(product, selectedVariantId)
-    showToast({
-      type: 'success',
-      title: inWishlist ? 'Removed from Wishlist' : 'Saved to Wishlist',
-      message: `${product.name} ${inWishlist ? 'removed from' : 'added to'} your private wishlist.`,
-    })
-  }
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: product.name,
-        text: product.shortDescription,
-        url: window.location.href,
-      })
-    } else {
-      navigator.clipboard.writeText(window.location.href)
-      showToast({ type: 'success', title: 'Link copied', message: 'Product link copied to clipboard' })
-    }
-  }
-
-  const tabItems = [
+  const ingredients = [
     {
-      label: 'Description',
-      content: (
-        <div className="text-xs sm:text-sm text-[#555555] leading-relaxed font-sans space-y-3">
-          <p className="whitespace-pre-wrap">{product.description}</p>
-        </div>
-      ),
+      name: "Bhringraj",
+      english: "False Daisy",
+      benefit: "Promotes hair growth",
     },
     {
-      label: 'Ingredients',
-      content: (
-        <div className="space-y-2.5">
-          {product.ingredients.map((ingredient, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30"
-            >
-              <Check className="w-4 h-4 text-[#4E5F52] flex-shrink-0 mt-0.5" />
-              <span className="text-[#1C1D1F] text-xs sm:text-sm font-sans">{ingredient}</span>
-            </div>
-          ))}
-        </div>
-      ),
+      name: "Amla",
+      english: "Indian Gooseberry",
+      benefit: "Rich in Vitamin C",
+    },
+    { name: "Methi", english: "Fenugreek", benefit: "Prevents hair fall" },
+    {
+      name: "Neem",
+      english: "Indian Lilac",
+      benefit: "Anti-dandruff properties",
     },
     {
-      label: 'Usage & Regimen',
-      content: (
-        <div className="text-xs sm:text-sm text-[#555555] leading-relaxed font-sans space-y-3">
-          <p className="whitespace-pre-wrap">{product.usage}</p>
-        </div>
-      ),
+      name: "Giloy",
+      english: "Heart-leaved moonseed",
+      benefit: "Reduces stress",
     },
-    {
-      label: 'Quality & Safety',
-      content: (
-        <div className="space-y-2.5">
-          {product.warnings.map((warning, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FAF7F2] border border-[#999999]/30"
-            >
-              <ShieldCheck className="w-4 h-4 text-[#4E5F52] flex-shrink-0 mt-0.5" />
-              <span className="text-[#555555] text-xs sm:text-sm font-sans">{warning}</span>
-            </div>
-          ))}
-        </div>
-      ),
-    },
-    {
-      label: 'Verified Reviews',
-      content: (
-        <ProductReviewsSection
-          product={product}
-          showToast={showToast}
-        />
-      ),
-    },
-  ]
+    { name: "Karela", english: "Bitter Gourd", benefit: "Purifies scalp" },
+  ];
 
-  const trustBadges = [
-    { icon: Truck, label: 'Free Express Shipping', desc: 'Discreet unmarked parcels across India' },
-    { icon: ShieldCheck, label: 'AYUSH & GMP Certified', desc: 'Standardized pure botanical extracts' },
-    { icon: RotateCcw, label: '100% Purity Guarantee', desc: 'NABL third-party laboratory tested' },
-    { icon: Leaf, label: 'Pure Vegetarian Shells', desc: 'Zero animal gelatin, talc, or fillers' },
-  ]
+  const benefits = [
+    {
+      title: "Deep Root Nourishment",
+      icon: <Droplets className="w-6 h-6 text-[#1f3d2b]" />,
+    },
+    {
+      title: "Controls Breakage",
+      icon: <ShieldCheck className="w-6 h-6 text-[#1f3d2b]" />,
+    },
+    {
+      title: "Restores Natural Balance",
+      icon: <Leaf className="w-6 h-6 text-[#1f3d2b]" />,
+    },
+    {
+      title: "Zero Side Effects",
+      icon: <CheckCircle2 className="w-6 h-6 text-[#1f3d2b]" />,
+    },
+  ];
 
   return (
-    <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-      {/* Product Image Gallery */}
-      <div className="space-y-4">
-        <ImageGallery images={product.images} alt={product.name} />
-      </div>
-
-      {/* Product Info & Action Block */}
-      <div className="space-y-5">
-        
-        {/* Title & Category Line */}
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-[11px] font-mono tracking-[0.2em] text-[#737373] uppercase">
-              {product.category === 'supplements' ? 'Herbal Supplement' : product.category === 'personal-care' ? 'Topical Care' : 'Synergistic Kit'}
-            </span>
-            {product.ageRestricted && (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F5F1EB] border border-[#999999]/30 text-[#737373]">
-                18+ Adult
-              </span>
-            )}
+    <div className="bg-[#fafaf9] min-h-screen pb-24 md:pb-12">
+      {/* Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-start">
+          {/* Left Column: Image Gallery */}
+          <div className="space-y-4 sticky top-24">
+            <ImageGallery images={product.images} alt={product.name} />
           </div>
 
-          <div className="flex items-start justify-between gap-4">
-            <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-normal text-[#1C1D1F] leading-tight">
-              {product.name}
-            </h1>
-
-            <div className="flex items-center gap-1.5 flex-shrink-0">
-              <button
-                onClick={handleWishlistToggle}
-                className={classNames(
-                  'p-2.5 rounded-full border transition-colors',
-                  inWishlist
-                    ? 'bg-rose-50 text-rose-600 border-rose-200'
-                    : 'bg-[#FFFFFF] text-[#737373] border-[#999999]/30 hover:border-[#1C1D1F]'
-                )}
-                aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-              >
-                <Heart className={classNames('w-4 h-4', inWishlist && 'fill-current')} />
-              </button>
-              <button
-                onClick={handleShare}
-                className="p-2.5 rounded-full bg-[#FFFFFF] border border-[#999999]/30 text-[#737373] hover:border-[#1C1D1F] transition-colors"
-                aria-label="Share product"
-              >
-                <Share2 className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-          <p className="mt-1.5 text-xs sm:text-sm text-[#737373] font-sans">
-            {product.tagline}
-          </p>
-        </div>
-
-        {/* Price & Rating Reassurance */}
-        <div className="flex items-baseline gap-4 flex-wrap pt-1 border-t border-[#999999]/30">
-          <PriceDisplay
-            price={currentVariant?.price || product.price}
-            compareAtPrice={currentVariant?.compareAtPrice || product.compareAtPrice}
-            size="xl"
-          />
-          <div className="flex items-center gap-1.5 text-xs text-[#737373]">
-            <div className="flex text-[#9E8047]">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-current" />
-              ))}
-            </div>
-            <span>• Verified Patron Formulation</span>
-          </div>
-        </div>
-
-        {/* Short Purpose Description */}
-        <p className="text-xs sm:text-sm text-[#555555] leading-relaxed font-sans">
-          {product.shortDescription}
-        </p>
-
-        {/* Variant Selection (if multiple) */}
-        {product.variants.length > 1 && (
-          <div className="space-y-2 pt-2">
-            <label className="block text-xs font-mono uppercase tracking-wider text-[#737373]">
-              Select Package Size / Course
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {product.variants.map(variant => (
-                <button
-                  key={variant.id}
-                  onClick={() => {
-                    setSelectedVariantId(variant.id)
-                    onVariantChange?.(variant)
-                  }}
-                  className={classNames(
-                    'px-3.5 py-2 rounded-lg border text-xs transition-colors',
-                    selectedVariantId === variant.id
-                      ? 'border-[#1C1D1F] bg-[#1C1D1F] text-[#FAF7F2] font-medium'
-                      : 'border-[#999999]/30 bg-[#FFFFFF] text-[#555555] hover:border-[#1C1D1F]'
-                  )}
-                  disabled={variant.inventory === 0}
-                >
-                  {variant.name} — {formatINR(variant.price)}
-                  {variant.inventory === 0 && <span className="ml-1 text-red-500">(Out of stock)</span>}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Plain Packaging Reassurance */}
-        <div className="p-3 rounded-lg bg-[#F5F1EB] border border-[#999999]/30 flex items-center justify-between text-xs text-[#555555]">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#4E5F52]" />
-            <span className="text-[#1C1D1F] font-medium">Confidential Delivery:</span>
-            <span>Unmarked box, zero sensitive product labels</span>
-          </div>
-          <span className="text-[11px] font-mono text-[#4E5F52] hidden sm:inline">
-            Cash on Delivery Available
-          </span>
-        </div>
-
-        {/* Action Buttons: Quantity, Add to Cart, Buy Now (COD) */}
-        <div className="flex items-center gap-3 flex-wrap pt-2">
-          <QuantitySelector
-            value={quantity}
-            onChange={setQuantity}
-            min={1}
-            max={maxQuantity}
-            size="lg"
-          />
-
-          <Button
-            variant="outline"
-            onClick={handleAddToCart}
-            disabled={product.inventory.trackQuantity && maxQuantity === 0}
-            className="flex-1 min-w-[130px] py-3 rounded-full border-[#1C1D1F] text-[#1C1D1F] hover:bg-[#FAF7F2] font-medium text-xs tracking-wider uppercase inline-flex items-center justify-center gap-1.5"
-          >
-            <ShoppingBag className="w-4 h-4" />
-            <span>{product.inventory.trackQuantity && maxQuantity === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
-          </Button>
-
-          <Button
-            variant="primary"
-            onClick={handleBuyNow}
-            disabled={product.inventory.trackQuantity && maxQuantity === 0}
-            className="flex-1 min-w-[130px] py-3 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] font-medium text-xs tracking-wider uppercase shadow-sm inline-flex items-center justify-center gap-1.5"
-          >
-            <Zap className="w-4 h-4" />
-            <span>Buy Now (COD)</span>
-          </Button>
-        </div>
-
-        {/* Quick WhatsApp Guidance / Order Button */}
-        <button
-          onClick={handleWhatsAppClick}
-          className="w-full py-2.5 px-4 rounded-full bg-[#FFFFFF] border border-[#999999]/30 hover:border-[#1C1D1F] text-[#1C1D1F] font-medium text-xs tracking-wider uppercase transition-colors flex items-center justify-center gap-2"
-        >
-          <MessageCircle className="w-4 h-4 text-[#4E5F52]" />
-          <span>Quick WhatsApp Order / Dosage Enquiry</span>
-        </button>
-
-        {/* 4-Item Quality Guarantee Grid */}
-        <div className="grid grid-cols-2 gap-2.5 pt-4 border-t border-[#999999]/30">
-          {trustBadges.map((badge, index) => (
-            <div
-              key={index}
-              className="p-2.5 rounded-lg bg-[#FFFFFF] border border-[#999999]/30 flex items-start gap-2.5"
-            >
-              <div className="w-7 h-7 rounded bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52] flex-shrink-0">
-                <badge.icon className="w-3.5 h-3.5" />
-              </div>
-              <div className="min-w-0">
-                <p className="font-medium text-xs text-[#1C1D1F] truncate">{badge.label}</p>
-                <p className="text-[10px] text-[#737373] truncate font-sans">{badge.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-      </div>
-
-      {/* Tabs: Description, Ingredients, Usage, Quality, Verified Reviews */}
-      <div className="md:col-span-2 mt-8 pt-8 border-t border-[#999999]/30">
-        <Tabs items={tabItems} variant="pills" className="w-full" />
-      </div>
-
-      {/* Sticky Mobile Buy Now Bar */}
-      <AnimatePresence>
-        {showStickyBar && (
-          <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            className="md:hidden fixed bottom-[56px] left-0 right-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-t border-[#999999]/30 p-2.5 shadow-lg flex items-center justify-between gap-3"
-          >
-            <div className="flex items-center gap-2.5 min-w-0 flex-1">
-              <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-[#999999]/30 flex-shrink-0 bg-[#FFFFFF]">
-                <Image
-                  src={getProductImage(product, product.id, 'thumb').src}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-medium text-[#1C1D1F] truncate">{product.name}</p>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-medium text-[#1C1D1F]">{formatINR(currentVariant?.price || product.price)}</span>
-                  {currentVariant?.compareAtPrice && (
-                    <span className="text-[10px] text-[#999999] line-through">{formatINR(currentVariant.compareAtPrice)}</span>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <button
-                onClick={handleAddToCart}
-                disabled={product.inventory.trackQuantity && maxQuantity === 0}
-                className="text-xs px-3 py-1.5 rounded-full border border-[#1C1D1F] text-[#1C1D1F] font-medium"
-              >
-                Add
-              </button>
-              <button
-                onClick={handleBuyNow}
-                disabled={product.inventory.trackQuantity && maxQuantity === 0}
-                className="text-xs px-3.5 py-1.5 rounded-full bg-[#1C1D1F] text-[#FAF7F2] font-medium"
-              >
-                Buy Now
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
-interface ReviewItem {
-  id: string
-  name: string
-  location: string
-  rating: number
-  date: string
-  title: string
-  comment: string
-  verified: boolean
-  helpfulCount: number
-}
-
-function getInitialReviews(productId: string): ReviewItem[] {
-  if (productId.includes('staymax')) {
-    return [
-      {
-        id: 'rev-sm-1',
-        name: 'Amit M.',
-        location: 'Pune',
-        rating: 5,
-        date: 'Recent Order',
-        title: 'Effective without numbness',
-        comment: 'Absorbs within 10-15 minutes without eliminating natural sensation. The plant-based Aloe Vera vehicle is gentle on skin with zero burning. Completely discreet delivery.',
-        verified: true,
-        helpfulCount: 24,
-      },
-      {
-        id: 'rev-sm-2',
-        name: 'Alok P.',
-        location: 'Hyderabad',
-        rating: 5,
-        date: 'Recent Order',
-        title: 'Calibrated herbal formula',
-        comment: 'Pocket-friendly 30ml size with clean metered spray mechanism. Shipped in completely unmarked brown packaging with Cash on Delivery.',
-        verified: true,
-        helpfulCount: 19,
-      },
-      {
-        id: 'rev-sm-3',
-        name: 'Karan T.',
-        location: 'Mumbai',
-        rating: 5,
-        date: 'Recent Order',
-        title: 'Reliable and non-greasy',
-        comment: 'Much better than western synthetic sprays. No burning or stinging sensation, very easy to use and consistent results.',
-        verified: true,
-        helpfulCount: 15,
-      },
-    ]
-  }
-
-  if (productId.includes('hair') || productId.includes('regrow')) {
-    if (productId.includes('oil')) {
-      return [
-        {
-          id: 'rev-hro-1',
-          name: 'Pooja R.',
-          location: 'Chandigarh',
-          rating: 5,
-          date: 'Recent Order',
-          title: 'Non-sticky and deeply soothing for scalp',
-          comment: 'Traditional Kshir Pak oil preparation with real Bhringraj and Rosemary. It cools down scalp heat, reduces itching, and my hair shedding during washing reduced significantly within 3 weeks.',
-          verified: true,
-          helpfulCount: 36,
-        },
-        {
-          id: 'rev-hro-2',
-          name: 'Arjun K.',
-          location: 'Bengaluru',
-          rating: 5,
-          date: 'Recent Order',
-          title: 'Visible new baby hair growth',
-          comment: 'I use it 3 times a week with gentle 5-minute massage. Hair roots feel stronger, less breakage when combing, and no artificial chemical fragrance.',
-          verified: true,
-          helpfulCount: 28,
-        },
-        {
-          id: 'rev-hro-3',
-          name: 'Deepak M.',
-          location: 'Mumbai',
-          rating: 5,
-          date: 'Recent Order',
-          title: 'Pure Ayurvedic oil quality',
-          comment: 'Zero mineral oil or synthetic additives. Washes off cleanly with mild cleanser and leaves scalp revitalized.',
-          verified: true,
-          helpfulCount: 19,
-        },
-      ]
-    }
-
-    if (productId.includes('capsule')) {
-      return [
-        {
-          id: 'rev-hrc-1',
-          name: 'Meera S.',
-          location: 'Delhi',
-          rating: 5,
-          date: 'Recent Order',
-          title: 'Internal nourishment that actually works',
-          comment: 'Standardized Amla, Bhringraj and Ashwagandha in pure vegetarian capsules. My hair texture improved and brittle strands feel thicker after one month course.',
-          verified: true,
-          helpfulCount: 34,
-        },
-        {
-          id: 'rev-hrc-2',
-          name: 'Rohan B.',
-          location: 'Pune',
-          rating: 5,
-          date: 'Recent Order',
-          title: 'Reduced stress-related shedding',
-          comment: 'Work stress was causing intense hair fall. These capsules pacified my Pitta heat and within 4 weeks shedding stopped almost completely.',
-          verified: true,
-          helpfulCount: 27,
-        },
-        {
-          id: 'rev-hrc-3',
-          name: 'Sunita P.',
-          location: 'Indore',
-          rating: 5,
-          date: 'Recent Order',
-          title: 'Authentic botanical formulation',
-          comment: 'Easy to take twice daily after meals. Gentle on stomach with zero acidity or side effects. Highly recommended.',
-          verified: true,
-          helpfulCount: 21,
-        },
-      ]
-    }
-
-    return [
-      {
-        id: 'rev-hrk-1',
-        name: 'Siddharth M.',
-        location: 'Jaipur',
-        rating: 5,
-        date: 'Recent Order',
-        title: 'Complete inside-out hair therapy',
-        comment: 'The combination of dietary capsules and the Bhringraj scalp oil is unbeatable. Crown thinning stabilized within 30 days and hair feels noticeably denser.',
-        verified: true,
-        helpfulCount: 41,
-      },
-      {
-        id: 'rev-hrk-2',
-        name: 'Ananya G.',
-        location: 'Kolkata',
-        rating: 5,
-        date: 'Recent Order',
-        title: 'Proven clinical results with pure herbs',
-        comment: 'Ordered the 3-month course. Both products arrived in discrete unmarked packaging. Best Ayurvedic hair fall regimen I have used.',
-        verified: true,
-        helpfulCount: 32,
-      },
-      {
-        id: 'rev-hrk-3',
-        name: 'Manish T.',
-        location: 'Hyderabad',
-        rating: 5,
-        date: 'Recent Order',
-        title: 'Root strength and healthy shine restored',
-        comment: 'Capsules provide internal nutrition while the oil conditions the scalp. Worth every rupee for genuine Ayurvedic quality.',
-        verified: true,
-        helpfulCount: 23,
-      },
-    ]
-  }
-
-  if (productId.includes('combo')) {
-    return [
-      {
-        id: 'rev-cb-1',
-        name: 'Vikram S.',
-        location: 'Delhi',
-        rating: 5,
-        date: 'Recent Order',
-        title: 'Total inside-out synergy',
-        comment: 'The combo is the best approach. BODY Nutrition gave me sustained daily physical stamina within two weeks, and STAYMAX+ provides calm, dependable endurance without numbness.',
-        verified: true,
-        helpfulCount: 38,
-      },
-      {
-        id: 'rev-cb-2',
-        name: 'Gaurav N.',
-        location: 'Jaipur',
-        rating: 5,
-        date: 'Recent Order',
-        title: 'Natural confidence and vigor',
-        comment: 'Both products complement each other. Quality packaging, lab verified ingredients, and responsive WhatsApp support when I enquired about dosage.',
-        verified: true,
-        helpfulCount: 29,
-      },
-      {
-        id: 'rev-cb-3',
-        name: 'Neeraj V.',
-        location: 'Ahmedabad',
-        rating: 5,
-        date: 'Recent Order',
-        title: 'Authentic formulation',
-        comment: 'Delivered in discreet packaging within 48 hours. Genuine Ayurvedic composition that delivers on its promises.',
-        verified: true,
-        helpfulCount: 17,
-      },
-    ]
-  }
-
-  return [
-    {
-      id: 'rev-bn-1',
-      name: 'Vikram S.',
-      location: 'Delhi',
-      rating: 5,
-      date: 'Recent Order',
-      title: 'Sustained energy and zero fatigue',
-      comment: 'The 60 vegetarian capsules provide consistent vitality without caffeine crashes. I noticed deeper sleep and sustained alertness within 10 days. 100% authentic Ayurvedic herbs.',
-      verified: true,
-      helpfulCount: 42,
-    },
-    {
-      id: 'rev-bn-2',
-      name: 'Rajesh K.',
-      location: 'Bengaluru',
-      rating: 5,
-      date: 'Recent Order',
-      title: 'Remarkable stamina & workout recovery',
-      comment: 'The standardized Shilajit and Ashwagandha are top grade. Gym stamina increased and morning sluggishness is gone. Highly recommended.',
-      verified: true,
-      helpfulCount: 31,
-    },
-    {
-      id: 'rev-bn-3',
-      name: 'Harpreet S.',
-      location: 'Chandigarh',
-      rating: 5,
-      date: 'Recent Order',
-      title: 'Pure classical formulation',
-      comment: 'Tamper-proof bottle seal and genuine lab-tested quality. No artificial additives or digestive discomfort. Fast discreet delivery.',
-      verified: true,
-      helpfulCount: 22,
-    },
-  ]
-}
-
-function ProductReviewsSection({ product, showToast }: { product: Product; showToast: any }) {
-  const [reviews, setReviews] = useState<ReviewItem[]>(() => getInitialReviews(product.id))
-  const [showForm, setShowForm] = useState(false)
-  const [helpfulMap, setHelpfulMap] = useState<Record<string, boolean>>({})
-
-  // Form State
-  const [name, setName] = useState('')
-  const [location, setLocation] = useState('')
-  const [rating, setRating] = useState(5)
-  const [hoverRating, setHoverRating] = useState(0)
-  const [title, setTitle] = useState('')
-  const [comment, setComment] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleHelpful = (id: string) => {
-    if (helpfulMap[id]) return
-    setHelpfulMap(prev => ({ ...prev, [id]: true }))
-    setReviews(prev =>
-      prev.map(r => (r.id === id ? { ...r, helpfulCount: r.helpfulCount + 1 } : r))
-    )
-    showToast({ type: 'info', title: 'Feedback noted', message: 'Thank you for your vote!' })
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!name.trim() || !comment.trim()) {
-      showToast({ type: 'error', title: 'Missing details', message: 'Please provide your name and review message.' })
-      return
-    }
-
-    setIsSubmitting(true)
-    setTimeout(() => {
-      const newReview: ReviewItem = {
-        id: `rev-${Date.now()}`,
-        name: name.trim(),
-        location: location.trim() || 'Verified Buyer',
-        rating,
-        date: 'Just now',
-        title: title.trim() || 'Verified Customer Review',
-        comment: comment.trim(),
-        verified: true,
-        helpfulCount: 0,
-      }
-      setReviews(prev => [newReview, ...prev])
-      setName('')
-      setLocation('')
-      setTitle('')
-      setComment('')
-      setRating(5)
-      setShowForm(false)
-      setIsSubmitting(false)
-      showToast({
-        type: 'success',
-        title: 'Review submitted',
-        message: 'Thank you for your feedback! Your verified review is now recorded.',
-      })
-    }, 400)
-  }
-
-  return (
-    <div className="space-y-6 py-2">
-      {/* Summary Header */}
-      <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 grid grid-cols-1 md:grid-cols-3 gap-6 items-center shadow-xs">
-        <div className="text-center md:text-left space-y-1.5">
-          <div className="flex items-center justify-center md:justify-start gap-2.5">
-            <span className="font-heading text-3xl sm:text-4xl font-normal text-[#1C1D1F]">4.9</span>
-            <div>
-              <div className="flex text-[#9E8047]">
+          {/* Right Column: Info & Actions */}
+          <div className="space-y-6">
+            {/* Rating */}
+            <div className="flex items-center gap-2 text-sm text-[#1f3d2b] font-medium">
+              <div className="flex text-amber-500">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-current" />
                 ))}
               </div>
-              <p className="text-[11px] text-[#737373] mt-0.5">Verified Patron Reflections</p>
-            </div>
-          </div>
-          <p className="text-xs text-[#4E5F52] font-mono">
-            ✓ 100% Genuine Ayurvedic Buyers
-          </p>
-        </div>
-
-        {/* Rating Breakdown */}
-        <div className="space-y-1.5 text-xs text-[#737373]">
-          {[
-            { stars: '5 Star', pct: 92 },
-            { stars: '4 Star', pct: 8 },
-            { stars: '3 Star', pct: 0 },
-            { stars: '2 Star', pct: 0 },
-            { stars: '1 Star', pct: 0 },
-          ].map(row => (
-            <div key={row.stars} className="flex items-center gap-2">
-              <span className="w-12 text-right">{row.stars}</span>
-              <div className="flex-1 h-1.5 rounded-full bg-[#F5F1EB] overflow-hidden">
-                <div
-                  className="h-full bg-[#4E5F52] rounded-full"
-                  style={{ width: `${row.pct}%` }}
-                />
-              </div>
-              <span className="w-8 text-right font-mono text-[#1C1D1F]">{row.pct}%</span>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center md:text-right">
-          <Button
-            variant="outline"
-            onClick={() => setShowForm(!showForm)}
-            className="w-full md:w-auto px-5 py-2.5 rounded-full border-[#1C1D1F] text-[#1C1D1F] text-xs font-medium uppercase tracking-wider"
-          >
-            <MessageSquarePlus className="w-3.5 h-3.5 mr-1.5" />
-            {showForm ? 'Close Form' : 'Write a Review'}
-          </Button>
-        </div>
-      </div>
-
-      {/* Review Form Accordion */}
-      <AnimatePresence>
-        {showForm && (
-          <motion.form
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            onSubmit={handleSubmit}
-            className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#999999]/30 space-y-4 overflow-hidden shadow-xs"
-          >
-            <h3 className="font-heading text-base font-medium text-[#1C1D1F]">Share Your Experience</h3>
-            <p className="text-xs text-[#737373]">How has {product.name} contributed to your routine?</p>
-
-            <div className="space-y-1">
-              <label className="block text-xs font-mono uppercase tracking-wider text-[#737373]">
-                Your Rating
-              </label>
-              <div className="flex items-center gap-1.5">
-                {[1, 2, 3, 4, 5].map(star => (
-                  <button
-                    type="button"
-                    key={star}
-                    onClick={() => setRating(star)}
-                    onMouseEnter={() => setHoverRating(star)}
-                    onMouseLeave={() => setHoverRating(0)}
-                    className="p-1 text-[#999999] hover:text-[#9E8047] transition-colors focus:outline-none"
-                    aria-label={`Rate ${star} stars`}
-                  >
-                    <Star
-                      className={classNames(
-                        'w-5 h-5',
-                        (hoverRating || rating) >= star ? 'fill-current text-[#9E8047]' : 'text-[#999999]'
-                      )}
-                    />
-                  </button>
-                ))}
-                <span className="text-xs text-[#1C1D1F] font-mono ml-2">{rating} / 5</span>
-              </div>
+              <span className="text-[#1f3d2b]">4.9</span>
+              <span className="text-stone-500 font-normal">|</span>
+              <span className="text-[#1f3d2b]">1,420+ Verified Reviews</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Input
-                label="Your Name"
-                placeholder="e.g. Ramesh Patel"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                required
-              />
-              <Input
-                label="City / Region"
-                placeholder="e.g. Ahmedabad, Gujarat"
-                value={location}
-                onChange={e => setLocation(e.target.value)}
-              />
-            </div>
-
-            <Input
-              label="Review Headline"
-              placeholder="e.g. Noticeable stamina support in 10 days"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-
-            <Textarea
-              label="Detailed Review"
-              placeholder="Describe your dosage routine, effects observed, and packaging..."
-              value={comment}
-              onChange={e => setComment(e.target.value)}
-              required
-              rows={3}
-            />
-
-            <div className="flex items-center justify-end gap-3 pt-2">
-              <Button
-                variant="ghost"
-                type="button"
-                onClick={() => setShowForm(false)}
-                className="text-xs"
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="primary"
-                type="submit"
-                loading={isSubmitting}
-                className="px-5 py-2 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] text-xs font-medium uppercase tracking-wider"
-              >
-                Submit Review
-              </Button>
-            </div>
-          </motion.form>
-        )}
-      </AnimatePresence>
-
-      {/* Reviews List */}
-      <div className="space-y-3.5">
-        {reviews.map(item => (
-          <div
-            key={item.id}
-            className="p-5 rounded-xl bg-[#FFFFFF] border border-[#999999]/30 space-y-2.5 shadow-xs"
-          >
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-xs font-mono font-medium text-[#1C1D1F]">
-                  {item.name.slice(0, 2).toUpperCase()}
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-xs sm:text-sm text-[#1C1D1F]">{item.name}</span>
-                    {item.verified && (
-                      <span className="text-[10px] font-mono text-[#4E5F52] bg-[#F5F1EB] px-2 py-0.5 rounded-full border border-[#999999]/30">
-                        Verified Buyer
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[10px] text-[#737373]">{item.location} • {item.date}</p>
-                </div>
-              </div>
-
-              <div className="flex text-[#9E8047]">
-                {[...Array(item.rating)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                ))}
-              </div>
-            </div>
-
+            {/* Title */}
             <div>
-              <h4 className="font-medium text-xs sm:text-sm text-[#1C1D1F]">{item.title}</h4>
-              <p className="text-xs text-[#555555] leading-relaxed mt-1 italic font-serif">
-                &ldquo;{item.comment}&rdquo;
+              <h1 className="font-serif text-3xl sm:text-4xl font-semibold text-[#1f3d2b] leading-tight mb-2">
+                {product.name}
+              </h1>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#e7ede8] text-[#1f3d2b] rounded-full text-xs font-semibold uppercase tracking-wider">
+                <Leaf className="w-3.5 h-3.5" />
+                Formulated with 11 Raw Potent Herbs
+              </div>
+            </div>
+
+            {/* Price Block */}
+            <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm space-y-3">
+              <div className="flex items-end gap-3 flex-wrap">
+                <span className="text-3xl sm:text-4xl font-bold text-[#1f3d2b]">
+                  {formatINR(currentPrice)}
+                </span>
+                {comparePrice && comparePrice > currentPrice && (
+                  <>
+                    <span className="text-lg text-stone-400 line-through mb-1">
+                      {formatINR(comparePrice)}
+                    </span>
+                    <span className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded mb-1.5">
+                      {discountPct}% OFF
+                    </span>
+                  </>
+                )}
+              </div>
+              <p className="text-xs text-stone-500">
+                Inclusive of all taxes.{" "}
+                <span className="text-[#1f3d2b] font-medium">
+                  Free Shipping across India.
+                </span>
               </p>
             </div>
 
-            <div className="pt-2 border-t border-[#999999]/30 flex items-center justify-between text-xs">
-              <span className="text-[#737373] text-[11px]">
-                Product: <strong className="text-[#1C1D1F] font-normal">{product.name}</strong>
-              </span>
-              <button
-                type="button"
-                onClick={() => handleHelpful(item.id)}
-                disabled={helpfulMap[item.id]}
-                className={classNames(
-                  'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] transition-colors border',
-                  helpfulMap[item.id]
-                    ? 'text-[#4E5F52] bg-[#F5F1EB] border-[#4E5F52]/30 cursor-default'
-                    : 'text-[#737373] border-[#999999]/30 hover:text-[#1C1D1F] hover:border-[#1C1D1F]'
+            {/* Variant Selector */}
+            {product.variants.length > 0 && (
+              <div className="space-y-3">
+                <label className="block text-sm font-semibold text-[#1f3d2b]">
+                  Select Package
+                </label>
+                <div className="space-y-2">
+                  {product.variants.map((variant, index) => {
+                    const isSelected = selectedVariantId === variant.id;
+                    const vPrice = variant.price;
+                    const vCompare = variant.compareAtPrice || vPrice;
+                    const vDiscount =
+                      vCompare > vPrice
+                        ? Math.round(((vCompare - vPrice) / vCompare) * 100)
+                        : 0;
+
+                    let badge = "";
+                    if (index === 1)
+                      badge = `Save ${vDiscount}% - Most Popular`;
+                    if (index === 2) badge = "Best Value";
+
+                    return (
+                      <button
+                        key={variant.id}
+                        onClick={() => {
+                          setSelectedVariantId(variant.id);
+                          onVariantChange?.(variant);
+                        }}
+                        className={classNames(
+                          "relative w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all text-left",
+                          isSelected
+                            ? "border-[#1f3d2b] bg-[#e7ede8]/30"
+                            : "border-stone-200 bg-white hover:border-[#1f3d2b]/30",
+                        )}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={classNames(
+                              "w-5 h-5 rounded-full border-2 flex items-center justify-center",
+                              isSelected
+                                ? "border-[#1f3d2b]"
+                                : "border-stone-300",
+                            )}
+                          >
+                            {isSelected && (
+                              <div className="w-2.5 h-2.5 bg-[#1f3d2b] rounded-full" />
+                            )}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-[#1f3d2b]">
+                              {variant.name}
+                            </p>
+                            {badge && (
+                              <span className="inline-block mt-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">
+                                {badge}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-[#1f3d2b]">
+                            {formatINR(vPrice)}
+                          </p>
+                          {vCompare > vPrice && (
+                            <p className="text-xs text-stone-400 line-through">
+                              {formatINR(vCompare)}
+                            </p>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Quantity */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-[#1f3d2b]">
+                Quantity
+              </label>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center border-2 border-stone-200 rounded-lg bg-white overflow-hidden">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="p-3 text-stone-600 hover:bg-stone-50 transition-colors disabled:opacity-50"
+                    disabled={quantity <= 1}
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
+                  <span className="w-12 text-center font-semibold text-[#1f3d2b]">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setQuantity(Math.min(maxQuantity || 99, quantity + 1))
+                    }
+                    className="p-3 text-stone-600 hover:bg-stone-50 transition-colors disabled:opacity-50"
+                    disabled={quantity >= (maxQuantity || 99)}
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                </div>
+                {maxQuantity && maxQuantity < 10 && (
+                  <span className="text-xs text-red-600 font-medium">
+                    Only {maxQuantity} left in stock
+                  </span>
                 )}
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <Button
+                variant="primary"
+                onClick={handleBuyNow}
+                className="flex-1 bg-[#1f3d2b] hover:bg-[#152a1d] text-white py-4 rounded-xl text-base font-bold uppercase tracking-wider shadow-md"
               >
-                <ThumbsUp className="w-3 h-3" />
-                <span>Helpful ({item.helpfulCount})</span>
-              </button>
+                Buy Now (COD Available)
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleAddToCart}
+                className="sm:w-1/3 border-2 border-[#1f3d2b] text-[#1f3d2b] hover:bg-[#e7ede8] py-4 rounded-xl text-base font-bold uppercase tracking-wider"
+              >
+                Add to Cart
+              </Button>
+            </div>
+
+            {/* Trust Icons */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 border-t border-stone-200">
+              <div className="flex flex-col items-center justify-center p-2 text-center gap-1">
+                <Leaf className="w-6 h-6 text-[#1f3d2b]" />
+                <span className="text-[10px] font-semibold text-stone-600 leading-tight">
+                  100% Herbal
+                  <br />& Raw
+                </span>
+              </div>
+              <div className="flex flex-col items-center justify-center p-2 text-center gap-1">
+                <Truck className="w-6 h-6 text-[#1f3d2b]" />
+                <span className="text-[10px] font-semibold text-stone-600 leading-tight">
+                  Fast 2-3 Day
+                  <br />
+                  Delivery
+                </span>
+              </div>
+              <div className="flex flex-col items-center justify-center p-2 text-center gap-1">
+                <Banknote className="w-6 h-6 text-[#1f3d2b]" />
+                <span className="text-[10px] font-semibold text-stone-600 leading-tight">
+                  Cash on
+                  <br />
+                  Delivery
+                </span>
+              </div>
+              <div className="flex flex-col items-center justify-center p-2 text-center gap-1">
+                <ShieldCheck className="w-6 h-6 text-[#1f3d2b]" />
+                <span className="text-[10px] font-semibold text-stone-600 leading-tight">
+                  GMP & Ayush
+                  <br />
+                  Certified
+                </span>
+              </div>
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* --- Content Sections Below Hero --- */}
+        <div className="mt-16 sm:mt-24 space-y-16">
+          {/* Key Health Benefits */}
+          <section className="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200 shadow-sm">
+            <div className="text-center mb-8">
+              <h2 className="font-serif text-2xl sm:text-3xl text-[#1f3d2b] font-semibold">
+                Why Choose Ayurveda Global?
+              </h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {benefits.map((b, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col items-center text-center p-4 rounded-2xl bg-[#fafaf9] border border-stone-100 hover:border-[#e7ede8] transition-colors"
+                >
+                  <div className="w-12 h-12 bg-[#e7ede8] rounded-full flex items-center justify-center mb-3">
+                    {b.icon}
+                  </div>
+                  <h3 className="font-semibold text-[#1f3d2b]">{b.title}</h3>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Key Ingredients */}
+          <section className="py-8">
+            <div className="text-center mb-10">
+              <h2 className="font-serif text-2xl sm:text-3xl text-[#1f3d2b] font-semibold mb-3">
+                Power of 11 Pure Herbs
+              </h2>
+              <p className="text-stone-500 max-w-2xl mx-auto">
+                Carefully selected natural ingredients to provide maximum
+                efficacy and safety.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+              {ingredients.map((ing, i) => (
+                <div
+                  key={i}
+                  className="group flex flex-col items-center text-center p-4 bg-white rounded-2xl border border-stone-200 hover:border-[#1f3d2b] transition-all shadow-sm hover:shadow-md cursor-default"
+                >
+                  <div className="w-16 h-16 rounded-full bg-[#e7ede8] flex items-center justify-center mb-3 group-hover:bg-[#1f3d2b] transition-colors">
+                    <Leaf className="w-8 h-8 text-[#1f3d2b] group-hover:text-white transition-colors" />
+                  </div>
+                  <h4 className="font-bold text-[#1f3d2b]">{ing.name}</h4>
+                  <p className="text-[10px] text-stone-500 mb-1">
+                    ({ing.english})
+                  </p>
+                  <p className="text-xs text-stone-600 leading-tight">
+                    {ing.benefit}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* How to Use */}
+          <section className="bg-[#1f3d2b] text-white rounded-3xl p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
+
+            <div className="relative z-10 text-center mb-10">
+              <h2 className="font-serif text-2xl sm:text-3xl font-semibold mb-3">
+                How to Use / Dosage
+              </h2>
+              <p className="text-stone-300">Simple steps for best results.</p>
+            </div>
+
+            <div className="relative z-10 grid sm:grid-cols-3 gap-8">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                  <Droplets className="w-8 h-8 text-[#e7ede8]" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg mb-1">Step 1: Measure</h3>
+                  <p className="text-sm text-stone-300">
+                    Take 30ml juice or few drops of oil as required.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center space-y-4 relative">
+                <div className="hidden sm:block absolute top-8 left-0 w-full h-[1px] bg-white/20 -z-10" />
+                <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                  <CheckCircle2 className="w-8 h-8 text-[#e7ede8]" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg mb-1">
+                    Step 2: Apply / Consume
+                  </h3>
+                  <p className="text-sm text-stone-300">
+                    Mix with water if juice. Massage gently if oil.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                  <Sun className="w-8 h-8 text-[#e7ede8]" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg mb-1">
+                    Step 3: Best Timing
+                  </h3>
+                  <p className="text-sm text-stone-300">
+                    Empty stomach in morning or overnight application.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ Accordion */}
+          <section className="max-w-3xl mx-auto py-8">
+            <h2 className="font-serif text-2xl sm:text-3xl text-[#1f3d2b] font-semibold text-center mb-8">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-3">
+              {[
+                {
+                  id: "overview",
+                  title: "Product Overview",
+                  content:
+                    product.description ||
+                    "A highly potent ayurvedic formulation targeting root causes naturally.",
+                },
+                {
+                  id: "ingredients",
+                  title: "Complete Ingredients List",
+                  content:
+                    product.ingredients?.join(", ") ||
+                    "Bhringraj, Amla, Methi, Neem, Giloy, Karela, Aloe Vera, Ashwagandha, Brahmi, Jatamansi, Shikakai.",
+                },
+                {
+                  id: "doctor",
+                  title: "Doctor Advice & Safety",
+                  content:
+                    "Safe for regular use. Formulated in GMP-certified facilities under expert supervision. Pregnant women or individuals with specific conditions should consult a physician.",
+                },
+                {
+                  id: "shipping",
+                  title: "Shipping & Returns",
+                  content:
+                    "Free shipping across India on all prepaid and COD orders. Delivery within 2-5 working days. 7-day easy return policy for damaged or incorrect items.",
+                },
+              ].map((faq) => (
+                <div
+                  key={faq.id}
+                  className="bg-white border border-stone-200 rounded-xl overflow-hidden shadow-sm"
+                >
+                  <button
+                    onClick={() =>
+                      setOpenFaq(openFaq === faq.id ? null : faq.id)
+                    }
+                    className="w-full flex items-center justify-between p-5 text-left bg-white hover:bg-[#fafaf9] transition-colors"
+                  >
+                    <span className="font-semibold text-[#1f3d2b]">
+                      {faq.title}
+                    </span>
+                    <ChevronDown
+                      className={classNames(
+                        "w-5 h-5 text-stone-400 transition-transform duration-200",
+                        openFaq === faq.id ? "rotate-180" : "",
+                      )}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {openFaq === faq.id && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="p-5 pt-0 text-stone-600 text-sm leading-relaxed border-t border-stone-100">
+                          {faq.content}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
+
+      {/* Mobile Sticky CTA */}
+      <AnimatePresence>
+        {showStickyBar && (
+          <motion.div
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            exit={{ y: 100 }}
+            className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-stone-200 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] p-3 px-4 flex items-center justify-between gap-4"
+          >
+            <div className="flex flex-col">
+              <span className="text-xs text-stone-500 line-through leading-none mb-1">
+                {comparePrice && comparePrice > currentPrice
+                  ? formatINR(comparePrice)
+                  : ""}
+              </span>
+              <span className="font-bold text-xl text-[#1f3d2b] leading-none">
+                {formatINR(currentPrice)}
+              </span>
+            </div>
+            <Button
+              variant="primary"
+              onClick={handleBuyNow}
+              className="flex-1 bg-[#1f3d2b] hover:bg-[#152a1d] text-white py-3 rounded-lg text-sm font-bold uppercase tracking-wider shadow-sm"
+            >
+              Buy Now
+            </Button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-  )
+  );
 }

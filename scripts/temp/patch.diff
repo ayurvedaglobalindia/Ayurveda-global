@@ -1,0 +1,61 @@
+--- src/app/(public)/admin/page.tsx
++++ src/app/(public)/admin/page.tsx
+@@ -1,4 +1,5 @@
++import { getOrdersServer, updateOrderStatusServer } from "@/app/actions";
+ 'use client'
+ 
+ import React, { useState, useEffect } from 'react'
+@@ -109,21 +110,31 @@
+   }, [])
+ 
+   const loadDashboardData = (range: DateRange = dateRange) => {
+-    // 1. Gather all real client orders
+-    let allOrders: any[] = [...(useUserStore.getState().recentOrders || [])]
+-    try {
+-      if (typeof window !== 'undefined') {
+-        const local = JSON.parse(localStorage.getItem('ayur_orders') || '[]')
+-        allOrders = [...allOrders, ...local]
+-      }
+-    } catch {}
+-
+-    const uniqueOrders = allOrders.filter(
+-      (v, i, a) => a.findIndex(t => t.id === v.id || t.orderNumber === v.orderNumber) === i
+-    )
+-    setOrders(uniqueOrders)
+-
+     // 2. Load analytics for selected range
+     setAnalytics(getAnalyticsSummary(range))
++
++    // 1. Gather all real client orders
++    if (typeof window !== 'undefined') {
++      getOrdersServer().then(serverOrders => {
++        let allOrders: any[] = [...(useUserStore.getState().recentOrders || [])];
++        if (serverOrders && serverOrders.length > 0) {
++          allOrders = [...allOrders, ...serverOrders];
++        } else {
++          try {
++            const local = JSON.parse(localStorage.getItem('ayur_orders') || '[]');
++            allOrders = [...allOrders, ...local];
++          } catch {}
++        }
++        const uniqueOrders = allOrders.filter(
++          (v, i, a) => a.findIndex(t => t.id === v.id || t.orderNumber === v.orderNumber) === i
++        );
++        setOrders(uniqueOrders);
++      }).catch(() => {
++        try {
++          const local = JSON.parse(localStorage.getItem('ayur_orders') || '[]');
++          setOrders(local);
++        } catch {}
++      });
++    }
+   }
+ 
+   const handleResetData = () => {
+@@ -175,6 +186,7 @@
+     try {
+       if (typeof window !== 'undefined') {
+         localStorage.setItem('ayur_orders', JSON.stringify(updated.slice(0, 50)))
++        updateOrderStatusServer(orderId, newStatus).catch(console.error)
+       }
+     } catch {}

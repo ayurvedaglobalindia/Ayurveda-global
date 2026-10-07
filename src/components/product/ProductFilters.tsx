@@ -1,30 +1,30 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Filter, X } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { classNames } from '@/lib/utils/formatters'
-import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
-import { Accordion } from '@/components/ui/Accordion'
-import type { Category } from '@/types'
+import { useState } from "react";
+import { Filter, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { classNames } from "@/lib/utils/formatters";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Accordion } from "@/components/ui/Accordion";
+import type { Category } from "@/types";
 
 interface ProductFiltersProps {
-  categories: Category[]
-  selectedCategory?: string
-  onCategoryChange: (category: string | undefined) => void
-  priceRange: [number, number]
-  onPriceRangeChange: (range: [number, number]) => void
-  selectedTags: string[]
-  onTagsChange: (tags: string[]) => void
-  availableTags: string[]
-  inStockOnly: boolean
-  onInStockChange: (value: boolean) => void
-  sortBy: string
-  onSortChange: (sort: string) => void
-  hasActiveFilters: boolean
-  onClearFilters: () => void
-  isMobile?: boolean
+  categories: Category[];
+  selectedCategory?: string;
+  onCategoryChange: (category: string | undefined) => void;
+  priceRange: [number, number];
+  onPriceRangeChange: (range: [number, number]) => void;
+  selectedTags: string[];
+  onTagsChange: (tags: string[]) => void;
+  availableTags: string[];
+  inStockOnly: boolean;
+  onInStockChange: (value: boolean) => void;
+  sortBy: string;
+  onSortChange: (sort: string) => void;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
+  isMobile?: boolean;
 }
 
 export function ProductFilters({
@@ -44,18 +44,20 @@ export function ProductFilters({
   onClearFilters,
   isMobile = false,
 }: ProductFiltersProps) {
-  const [isOpen, setIsOpen] = useState(!isMobile)
-  const [priceMin, setPriceMin] = useState(priceRange[0])
-  const [priceMax, setPriceMax] = useState(priceRange[1])
+  const [isOpen, setIsOpen] = useState(!isMobile);
+  const [priceMin, setPriceMin] = useState(priceRange[0]);
+  const [priceMax, setPriceMax] = useState(priceRange[1]);
 
   const handlePriceApply = () => {
-    onPriceRangeChange([priceMin, priceMax])
-  }
+    onPriceRangeChange([priceMin, priceMax]);
+  };
 
   const filterContent = (
     <div className="space-y-5">
-      <div className="flex items-center justify-between pb-3 border-b border-[#999999]/30">
-        <h2 className="font-heading text-base font-medium text-[#1C1D1F]">Refine Catalog</h2>
+      <div className="flex items-center justify-between pb-3 border-b border-[#9E8047]/25">
+        <h2 className="font-heading text-base font-medium text-[#1C1D1F]">
+          Refine Catalog
+        </h2>
         {hasActiveFilters && (
           <button
             onClick={onClearFilters}
@@ -67,148 +69,180 @@ export function ProductFilters({
         )}
       </div>
 
-      <Accordion allowMultiple items={[
-        {
-          title: 'Categories',
-          content: (
-            <div className="space-y-2 text-xs">
-              <label className="flex items-center gap-2 cursor-pointer py-1">
-                <input
-                  type="radio"
-                  name="category"
-                  checked={!selectedCategory}
-                  onChange={() => onCategoryChange(undefined)}
-                  className="w-4 h-4 text-[#4E5F52] border-[#999999]/30 focus:ring-[#4E5F52]"
-                />
-                <span className="text-[#1C1D1F] font-medium">All Formulations</span>
-              </label>
-              {categories.map(category => (
-                <label key={category.id} className="flex items-center gap-2 cursor-pointer py-1">
+      <Accordion
+        allowMultiple
+        items={[
+          {
+            title: "Categories",
+            content: (
+              <div className="space-y-2 text-xs">
+                <label className="flex items-center gap-2 cursor-pointer py-1">
                   <input
                     type="radio"
                     name="category"
-                    checked={selectedCategory === category.slug}
-                    onChange={() => onCategoryChange(category.slug)}
-                    className="w-4 h-4 text-[#4E5F52] border-[#999999]/30 focus:ring-[#4E5F52]"
+                    checked={!selectedCategory}
+                    onChange={() => onCategoryChange(undefined)}
+                    className="w-4 h-4 text-[#4E5F52] border-[#9E8047]/25 focus:ring-[#4E5F52]"
                   />
-                  <span className="text-[#333333]">{category.name}</span>
-                  <span className="text-[#737373] text-[11px] font-mono">({category.productCount})</span>
-                </label>
-              ))}
-            </div>
-          ),
-          defaultOpen: true,
-        },
-        {
-          title: 'Price Range',
-          content: (
-            <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-2">
-                <Input
-                  type="number"
-                  label="Min (₹)"
-                  value={priceMin}
-                  onChange={e => setPriceMin(Math.max(0, parseInt(e.target.value) || 0))}
-                  placeholder="0"
-                />
-                <Input
-                  type="number"
-                  label="Max (₹)"
-                  value={priceMax}
-                  onChange={e => setPriceMax(Math.max(priceMin, parseInt(e.target.value) || priceMin))}
-                  placeholder="5000"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[11px] font-mono text-[#737373] block">
-                  ₹{priceMin.toLocaleString()} – ₹{priceMax.toLocaleString()}
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="500000"
-                  value={priceMin}
-                  onChange={e => setPriceMin(Math.min(priceMax, parseInt(e.target.value)))}
-                  className="w-full h-1.5 bg-[#999999]/20 rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
-                />
-                <input
-                  type="range"
-                  min="0"
-                  max="500000"
-                  value={priceMax}
-                  onChange={e => setPriceMax(Math.max(priceMin, parseInt(e.target.value)))}
-                  className="w-full h-1.5 bg-[#999999]/20 rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
-                />
-              </div>
-              <Button size="sm" variant="primary" onClick={handlePriceApply} className="w-full text-xs py-2 bg-[#1C1D1F] text-[#FAF7F2]">
-                Apply Filter
-              </Button>
-            </div>
-          ),
-          defaultOpen: true,
-        },
-        {
-          title: 'Therapeutic Indication',
-          content: (
-            <div className="flex flex-wrap gap-1.5">
-              {availableTags.map(tag => (
-                <label key={tag} className="cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={selectedTags.includes(tag)}
-                    onChange={e => {
-                      const newTags = e.target.checked
-                        ? [...selectedTags, tag]
-                        : selectedTags.filter(t => t !== tag)
-                      onTagsChange(newTags)
-                    }}
-                    className="sr-only peer"
-                  />
-                  <span className={classNames(
-                    'px-2.5 py-1 rounded-full text-[11px] font-sans border transition-colors inline-block',
-                    selectedTags.includes(tag)
-                      ? 'bg-[#1C1D1F] text-[#FAF7F2] border-[#1C1D1F] font-medium'
-                      : 'bg-[#FAF7F2] text-[#555555] border-[#999999]/30 hover:border-[#1C1D1F]'
-                  )}>
-                    {tag.replace(/-/g, ' ')}
+                  <span className="text-[#1C1D1F] font-medium">
+                    All Formulations
                   </span>
                 </label>
-              ))}
-            </div>
-          ),
-          defaultOpen: true,
-        },
-        {
-          title: 'Availability',
-          content: (
-            <label className="flex items-center gap-2.5 cursor-pointer py-1">
-              <input
-                type="checkbox"
-                checked={inStockOnly}
-                onChange={e => onInStockChange(e.target.checked)}
-                className="w-4 h-4 text-[#4E5F52] border-[#999999]/30 focus:ring-[#4E5F52] rounded"
-              />
-              <span className="text-xs text-[#1C1D1F]">In stock ready to dispatch</span>
-            </label>
-          ),
-        },
-      ]} />
+                {categories.map((category) => (
+                  <label
+                    key={category.id}
+                    className="flex items-center gap-2 cursor-pointer py-1"
+                  >
+                    <input
+                      type="radio"
+                      name="category"
+                      checked={selectedCategory === category.slug}
+                      onChange={() => onCategoryChange(category.slug)}
+                      className="w-4 h-4 text-[#4E5F52] border-[#9E8047]/25 focus:ring-[#4E5F52]"
+                    />
+                    <span className="text-[#333333]">{category.name}</span>
+                    <span className="text-[#737373] text-[11px] font-mono">
+                      ({category.productCount})
+                    </span>
+                  </label>
+                ))}
+              </div>
+            ),
+            defaultOpen: true,
+          },
+          {
+            title: "Price Range",
+            content: (
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <Input
+                    type="number"
+                    label="Min (₹)"
+                    value={priceMin}
+                    onChange={(e) =>
+                      setPriceMin(Math.max(0, parseInt(e.target.value) || 0))
+                    }
+                    placeholder="0"
+                  />
+                  <Input
+                    type="number"
+                    label="Max (₹)"
+                    value={priceMax}
+                    onChange={(e) =>
+                      setPriceMax(
+                        Math.max(
+                          priceMin,
+                          parseInt(e.target.value) || priceMin,
+                        ),
+                      )
+                    }
+                    placeholder="5000"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] font-mono text-[#737373] block">
+                    ₹{priceMin.toLocaleString()} – ₹{priceMax.toLocaleString()}
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="500000"
+                    value={priceMin}
+                    onChange={(e) =>
+                      setPriceMin(Math.min(priceMax, parseInt(e.target.value)))
+                    }
+                    className="w-full h-1.5 bg-[#999999]/20 rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="500000"
+                    value={priceMax}
+                    onChange={(e) =>
+                      setPriceMax(Math.max(priceMin, parseInt(e.target.value)))
+                    }
+                    className="w-full h-1.5 bg-[#999999]/20 rounded-lg appearance-none cursor-pointer accent-[#4E5F52]"
+                  />
+                </div>
+                <Button
+                  size="sm"
+                  variant="primary"
+                  onClick={handlePriceApply}
+                  className="w-full text-xs py-2 bg-[#1C1D1F] text-[#FAF7F2]"
+                >
+                  Apply Filter
+                </Button>
+              </div>
+            ),
+            defaultOpen: true,
+          },
+          {
+            title: "Therapeutic Indication",
+            content: (
+              <div className="flex flex-wrap gap-1.5">
+                {availableTags.map((tag) => (
+                  <label key={tag} className="cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectedTags.includes(tag)}
+                      onChange={(e) => {
+                        const newTags = e.target.checked
+                          ? [...selectedTags, tag]
+                          : selectedTags.filter((t) => t !== tag);
+                        onTagsChange(newTags);
+                      }}
+                      className="sr-only peer"
+                    />
+                    <span
+                      className={classNames(
+                        "px-2.5 py-1 rounded-full text-[11px] font-sans border transition-colors inline-block",
+                        selectedTags.includes(tag)
+                          ? "bg-[#1C1D1F] text-[#FAF7F2] border-[#1C1D1F] font-medium"
+                          : "bg-[#FAF7F2] text-[#555555] border-[#9E8047]/25 hover:border-[#1C1D1F]",
+                      )}
+                    >
+                      {tag.replace(/-/g, " ")}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            ),
+            defaultOpen: true,
+          },
+          {
+            title: "Availability",
+            content: (
+              <label className="flex items-center gap-2.5 cursor-pointer py-1">
+                <input
+                  type="checkbox"
+                  checked={inStockOnly}
+                  onChange={(e) => onInStockChange(e.target.checked)}
+                  className="w-4 h-4 text-[#4E5F52] border-[#9E8047]/25 focus:ring-[#4E5F52] rounded"
+                />
+                <span className="text-xs text-[#1C1D1F]">
+                  In stock ready to dispatch
+                </span>
+              </label>
+            ),
+          },
+        ]}
+      />
     </div>
-  )
+  );
 
   if (isMobile) {
     return (
       <>
         <Button
           variant="outline"
-          className="w-full sm:w-auto gap-2 border-[#999999]/30 text-[#1C1D1F] hover:bg-[#FFFFFF] text-xs py-2"
+          className="w-full sm:w-auto gap-2 border-[#9E8047]/25 text-[#1C1D1F] hover:bg-[#FFFFFF] text-xs py-2"
           onClick={() => setIsOpen(true)}
         >
           <Filter className="w-3.5 h-3.5 text-[#4E5F52]" />
           <span>Filters</span>
           {hasActiveFilters && (
             <span className="w-4 h-4 rounded-full bg-[#1C1D1F] text-[#FAF7F2] text-[10px] font-medium flex items-center justify-center">
-              {availableTags.filter(t => selectedTags.includes(t)).length +
+              {availableTags.filter((t) => selectedTags.includes(t)).length +
                 (selectedCategory ? 1 : 0) +
                 (inStockOnly ? 1 : 0) +
                 (priceRange[0] > 0 || priceRange[1] < 500000 ? 1 : 0)}
@@ -229,12 +263,14 @@ export function ProductFilters({
                 initial={{ x: -300 }}
                 animate={{ x: 0 }}
                 exit={{ x: -300 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-[#FAF7F2] border-r border-[#999999]/30 shadow-xl z-50 overflow-y-auto"
-                onClick={e => e.stopPropagation()}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed left-0 top-0 bottom-0 w-[300px] max-w-[90vw] bg-[#FAF7F2] border-r border-[#9E8047]/25 shadow-xl z-50 overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
               >
-                <div className="p-4 border-b border-[#999999]/30 flex items-center justify-between bg-[#FFFFFF]">
-                  <h2 className="font-heading text-base font-medium text-[#1C1D1F]">Filters</h2>
+                <div className="p-4 border-b border-[#9E8047]/25 flex items-center justify-between bg-[#FFFFFF]">
+                  <h2 className="font-heading text-base font-medium text-[#1C1D1F]">
+                    Filters
+                  </h2>
                   <button
                     onClick={() => setIsOpen(false)}
                     className="p-1.5 rounded-lg text-[#737373] hover:text-[#1C1D1F] transition-colors"
@@ -248,12 +284,12 @@ export function ProductFilters({
           )}
         </AnimatePresence>
       </>
-    )
+    );
   }
 
   return (
-    <div className="bg-[#FFFFFF] rounded-xl border border-[#999999]/30 p-5 shadow-xs">
+    <div className="bg-[#FFFFFF] rounded-xl border border-[#9E8047]/25 p-5 shadow-xs">
       {filterContent}
     </div>
-  )
+  );
 }

@@ -1,32 +1,39 @@
-'use client'
+"use client";
 
-import { SelectHTMLAttributes, forwardRef } from 'react'
-import { classNames } from '@/lib/utils/formatters'
-import { ChevronDown } from 'lucide-react'
+import { SelectHTMLAttributes, forwardRef } from "react";
+import { classNames } from "@/lib/utils/formatters";
+import { ChevronDown } from "lucide-react";
 
 interface SelectOption {
-  value: string
-  label: string
+  value: string;
+  label: string;
 }
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
-  label?: string
-  error?: string
-  hint?: string
-  options: SelectOption[]
-  placeholder?: string
+  label?: string;
+  error?: string;
+  hint?: string;
+  options: SelectOption[];
+  placeholder?: string;
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  ({ className, label, error, hint, options, placeholder, id, ...props }, ref) => {
-    const selectId = id || props.name
+  (
+    { className, label, error, hint, options, placeholder, id, ...props },
+    ref,
+  ) => {
+    const selectId = id || props.name;
 
     return (
       <div className="w-full">
         {label && (
           <label htmlFor={selectId} className="label">
             {label}
-            {props.required && <span className="text-[#9E8047] ml-1" aria-hidden="true">*</span>}
+            {props.required && (
+              <span className="text-[#9E8047] ml-1" aria-hidden="true">
+                *
+              </span>
+            )}
           </label>
         )}
         <div className="relative">
@@ -34,12 +41,18 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             id={selectId}
             className={classNames(
-              'input pr-10 appearance-none cursor-pointer bg-[#FFFFFF] text-[#1C1D1F] border border-[#999999]/30 rounded-xl',
-              error && 'border-rose-400 focus:ring-rose-400',
-              className
+              "input pr-10 appearance-none cursor-pointer bg-[#FFFFFF] text-[#1C1D1F] border border-[#9E8047]/25 rounded-xl",
+              error && "border-rose-400 focus:ring-rose-400",
+              className,
             )}
-            aria-invalid={error ? 'true' : 'false'}
-            aria-describedby={error ? `${selectId}-error` : hint ? `${selectId}-hint` : undefined}
+            aria-invalid={error ? "true" : "false"}
+            aria-describedby={
+              error
+                ? `${selectId}-error`
+                : hint
+                  ? `${selectId}-hint`
+                  : undefined
+            }
             {...props}
           >
             {placeholder && (
@@ -47,8 +60,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 {placeholder}
               </option>
             )}
-            {options.map(option => (
-              <option key={option.value} value={option.value} className="bg-[#FFFFFF] text-[#1C1D1F]">
+            {options.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+                className="bg-[#FFFFFF] text-[#1C1D1F]"
+              >
                 {option.label}
               </option>
             ))}
@@ -58,7 +75,11 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </div>
         </div>
         {error && (
-          <p id={`${selectId}-error`} className="mt-1 text-xs text-rose-600" role="alert">
+          <p
+            id={`${selectId}-error`}
+            className="mt-1 text-xs text-rose-600"
+            role="alert"
+          >
             {error}
           </p>
         )}
@@ -68,8 +89,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </p>
         )}
       </div>
-    )
-  }
-)
+    );
+  },
+);
 
-Select.displayName = 'Select'
+Select.displayName = "Select";

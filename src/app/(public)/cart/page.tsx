@@ -1,8 +1,7 @@
-'use client'
+"use client";
 
-import { CartPage } from '@/components/cart/CartPage'
-
+import { CartPage } from "@/components/cart/CartPage";
 
 export default function CartPageWrapper() {
-  return <CartPage />
+  return <CartPage />;
 }

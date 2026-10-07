@@ -1,198 +1,129 @@
-'use client'
+/* eslint-disable @next/next/no-img-element */
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import {
-  Menu,
-  Search,
-  ShoppingBag,
-  Heart,
-  Truck,
-} from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useCartStore } from '@/store/cartStore'
-import { useWishlistStore } from '@/store/wishlistStore'
-import { useUIStore } from '@/store/uiStore'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Menu, Search, ShoppingBag, User, Leaf } from "lucide-react";
+import { useCartStore } from "@/store/cartStore";
+import { useUIStore } from "@/store/uiStore";
 
 export function Header() {
-  const [isMounted, setIsMounted] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMounted, setIsMounted] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const { getItemCount } = useCartStore()
-  const { getItemCount: getWishlistCount } = useWishlistStore()
-  const {
-    openModal,
-    openCartDrawer,
-    openSearch,
-  } = useUIStore()
+  const { getItemCount } = useCartStore();
+  const { openModal, openCartDrawer, openSearch } = useUIStore();
 
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
+    setIsMounted(true);
+  }, []);
 
-  const cartCount = getItemCount()
-  const wishlistCount = getWishlistCount()
+  const cartCount = getItemCount();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header
-      className={`w-full transition-all duration-200 z-50 ${
+      className={`w-full transition-all duration-300 z-50 sticky top-0 ${
         isScrolled
-          ? 'bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#999999]/30 shadow-sm'
-          : 'bg-[#FAF7F2] border-b border-[#999999]/30'
+          ? "bg-[#E8ECE9]/90 backdrop-blur-md border-b border-[#2D4A3E]/10 shadow-sm"
+          : "bg-[#E8ECE9]"
       }`}
     >
-      <div className="container">
-        <div className="flex items-center justify-between h-14 sm:h-16 gap-4">
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="flex items-center justify-between h-12 sm:h-14 gap-4">
           {/* Brand Logo */}
           <Link
             href="/"
             className="flex items-center gap-2.5 flex-shrink-0 group py-1"
-            aria-label="Ayur Veda Global Home"
+            aria-label="Ayurveda Global Home"
           >
-            <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0">
-              <Image
-                src="/images/brand-logo.png"
-                alt="Ayur Veda Global"
-                width={32}
-                height={32}
-                className="object-contain"
-                priority
-              />
+            <div className="relative w-11 h-11 flex-shrink-0">
+               <img
+                  src="/images/brand-logo.png"
+                  alt="Ayurveda Global Logo"
+                  className="w-full h-full object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300"
+               />
             </div>
-            <div className="flex flex-col">
-              <span className="font-heading text-base sm:text-lg font-medium tracking-tight text-[#1C1D1F] transition-colors">
-                Ayur Veda Global
-              </span>
-              <span className="text-[9px] uppercase tracking-[0.16em] font-medium text-[#737373] -mt-0.5 font-sans">
-                Classical Apothecary
-              </span>
-            </div>
+            <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#1F332A] transition-colors">
+              Ayurveda Global
+            </span>
           </Link>
 
-          {/* Clean Desktop Navigation: Shop → Collections → About → FAQ → Contact */}
+          {/* Clean Desktop Navigation */}
           <nav
-            className="hidden md:flex items-center gap-6 text-sm font-medium text-[#1C1D1F]"
+            className="hidden md:flex items-center gap-8"
             aria-label="Main Navigation"
           >
-            <Link
-              href="/shop"
-              className="text-[#1C1D1F] hover:text-[#9E8047] transition-colors font-sans text-xs tracking-wider uppercase"
-            >
-              Shop
-            </Link>
-
-            <Link
-              href="/categories"
-              className="text-[#1C1D1F] hover:text-[#9E8047] transition-colors font-sans text-xs tracking-wider uppercase"
-            >
-              Collections
-            </Link>
-
-            <Link
-              href="/about"
-              className="text-[#1C1D1F] hover:text-[#9E8047] transition-colors font-sans text-xs tracking-wider uppercase"
-            >
-              About
-            </Link>
-
-            <Link
-              href="/faq"
-              className="text-[#1C1D1F] hover:text-[#9E8047] transition-colors font-sans text-xs tracking-wider uppercase"
-            >
-              FAQ
-            </Link>
-
-            <Link
-              href="/contact"
-              className="text-[#1C1D1F] hover:text-[#9E8047] transition-colors font-sans text-xs tracking-wider uppercase"
-            >
-              Contact
-            </Link>
+            {[
+              { label: "Products", href: "/shop" },
+              { label: "Our Story", href: "/about" },
+              { label: "Consultation", href: "/consultation" },
+              { label: "Wellness Blog", href: "/blog" },
+              { label: "Contact Us", href: "/contact" },
+            ].map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="text-[#3D5A49] hover:text-[#1F332A] transition-colors font-sans text-sm font-medium tracking-wide"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Right Side Controls */}
-          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            {/* Desktop Search Button Trigger */}
+          <div className="flex items-center gap-4 flex-shrink-0">
+            {/* Search */}
             <button
               type="button"
               onClick={() => openSearch()}
-              className="hidden md:flex items-center gap-2 w-44 lg:w-48 pl-3 pr-2 py-1.5 bg-[#FFFFFF] border border-[#999999]/35 hover:border-[#1C1D1F] rounded-full text-xs text-[#737373] hover:text-[#1C1D1F] transition-colors"
-              aria-label="Search formulations"
+              className="p-2 rounded-full text-[#2D4A3E] hover:bg-[#2D4A3E]/5 transition-colors"
+              aria-label="Search"
             >
-              <Search className="w-3.5 h-3.5 text-[#999999]" />
-              <span className="truncate">Search catalog...</span>
-              <kbd className="ml-auto hidden lg:inline-flex items-center text-[9px] font-mono text-[#737373] bg-[#FAF7F2] px-1.5 py-0.5 rounded border border-[#999999]/30">
-                ⌘K
-              </kbd>
+              <Search className="w-5 h-5 stroke-[1.5]" />
             </button>
 
-            {/* Mobile Search Button */}
-            <button
-              type="button"
-              onClick={() => openSearch()}
-              className="p-2 md:hidden rounded-lg text-[#1C1D1F] hover:text-[#9E8047] transition-colors"
-              aria-label="Search formulations"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-
-            {/* Wishlist */}
+            {/* User Account */}
             <Link
-              href="/wishlist"
-              className="relative p-2 rounded-lg text-[#1C1D1F] hover:text-[#9E8047] transition-colors"
-              aria-label={isMounted ? `Wishlist, ${wishlistCount} items` : 'Wishlist'}
+              href="/account"
+              className="hidden sm:block p-2 rounded-full text-[#2D4A3E] hover:bg-[#2D4A3E]/5 transition-colors"
+              aria-label="Account"
             >
-              <Heart className="w-4.5 h-4.5" />
-              {isMounted && wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#9E2A2B] text-[#FAF7F2] text-[9px] font-bold flex items-center justify-center">
-                  {wishlistCount > 99 ? '99+' : wishlistCount}
-                </span>
-              )}
+              <User className="w-5 h-5 stroke-[1.5]" />
             </Link>
 
             {/* Cart */}
             <button
               type="button"
               onClick={openCartDrawer}
-              className="relative p-2 rounded-lg text-[#1C1D1F] hover:text-[#9E8047] transition-colors"
-              aria-label={isMounted ? `Cart, ${cartCount} items` : 'Cart'}
+              className="relative p-2 rounded-full text-[#2D4A3E] hover:bg-[#2D4A3E]/5 transition-colors"
+              aria-label={isMounted ? `Cart, ${cartCount} items` : "Cart"}
             >
-              <ShoppingBag className="w-4.5 h-4.5" />
+              <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
               {isMounted && cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#1C1D1F] text-[#FAF7F2] text-[9px] font-bold flex items-center justify-center">
-                  {cartCount > 99 ? '99+' : cartCount}
+                <span className="absolute 0 right-0 w-4 h-4 rounded-full bg-[#2D4A3E] text-white text-[9px] font-bold flex items-center justify-center">
+                  {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
             </button>
 
-            {/* Track Order Direct Link (Frictionless, No Signup/Signin Required) */}
-            <Link
-              href="/track-order"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#1C1D1F] border border-[#999999]/30 hover:border-[#1C1D1F] hover:bg-[#F4EFEA] transition-colors"
-            >
-              <Truck className="w-3.5 h-3.5 text-[#4E5F52]" />
-              <span>Track Order</span>
-            </Link>
-
             {/* Mobile Menu Button */}
             <button
               type="button"
-              onClick={() => openModal('mobile-menu')}
-              className="md:hidden p-2 rounded-lg text-[#1C1D1F] hover:text-[#9E8047] transition-colors"
-              aria-label="Open mobile navigation"
+              onClick={() => openModal("mobile-menu")}
+              className="md:hidden p-2 rounded-full text-[#2D4A3E] hover:bg-[#2D4A3E]/5 transition-colors"
+              aria-label="Open menu"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-5 h-5 stroke-[1.5]" />
             </button>
           </div>
         </div>
       </div>
     </header>
-  )
+  );
 }

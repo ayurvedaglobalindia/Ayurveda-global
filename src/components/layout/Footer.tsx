@@ -1,178 +1,237 @@
-'use client'
+/* eslint-disable @next/next/no-img-element */
+"use client";
 
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Instagram, Facebook, Youtube } from 'lucide-react'
+import Link from "next/link";
+import {
+  Instagram,
+  Facebook,
+  Youtube,
+  MapPin,
+  Mail,
+  Phone,
+} from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-[#18191B] text-[#FAF7F2] border-t border-[#2C2D30] pt-12 pb-16 md:pb-12 text-xs font-sans">
-      <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 pb-10 border-b border-[#2C2D30]">
-          {/* Brand Column */}
-          <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5" aria-label="Ayur Veda Global Home">
-              <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0">
-                <Image
-                  src="/images/brand-logo.png"
-                  alt="Ayur Veda Global"
-                  width={30}
-                  height={30}
-                  className="object-contain"
-                />
+    <footer className="bg-[#1C1D1F] text-white pt-10 pb-8 border-t border-[#333333]">
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-5">
+          {/* Col 1: Brand & Social */}
+          <div className="space-y-6">
+            <Link href="/" className="inline-flex items-center gap-3 group">
+              <div className="relative w-24 h-24 flex-shrink-0 bg-white/5 rounded-full p-2 border border-white/10 group-hover:bg-white/10 transition-colors duration-300">
+                 <img
+                    src="/images/brand-logo.png"
+                    alt="Ayurveda Global Logo"
+                    className="w-full h-full object-contain filter brightness-110 drop-shadow-md"
+                 />
               </div>
-              <div className="flex flex-col">
-                <span className="font-heading text-base font-normal tracking-tight text-[#FAF7F2]">
-                  Ayur Veda Global
-                </span>
-                <span className="text-[8.5px] uppercase tracking-[0.2em] text-[#9E8047] -mt-0.5 font-sans">
-                  Classical Apothecary
-                </span>
-              </div>
+              <span className="font-serif text-3xl font-bold tracking-tight text-[#E8ECE9]">
+                Ayurveda Global
+              </span>
             </Link>
-
-            <p className="text-xs text-[#999999] max-w-sm leading-relaxed">
-              Classical Rasayana formulations engineered in compliance with AYUSH standards. Prepared with standardized Himalayan Shilajit, Ashwagandha, and Bhringraj — lab-certified for purity and delivered in 100% confidential unmarked parcels across India.
+            <p className="font-sans text-sm text-[#999999] font-light leading-relaxed max-w-xs">
+              Ancient botanical wisdom curated for modern vitality. 100%
+              natural, ethical, and clinically verified formulations.
             </p>
-
-            {/* Social Icons */}
-            <div className="flex items-center gap-3 pt-2">
-              {[
-                { icon: Instagram, href: 'https://www.instagram.com/ayurveda.global?stkn=MTFvZHQ2NnltZHlwcA==', label: 'Instagram' },
-                { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=61594780446401', label: 'Facebook' },
-                { icon: Youtube, href: 'https://youtube.com/@ayurvedaglobal?si=IDt-zzne1fhgLEJR', label: 'YouTube' },
-              ].map(social => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-full border border-[#999999]/30 flex items-center justify-center text-[#999999] hover:text-[#FAF7F2] hover:border-[#FAF7F2] transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-3.5 h-3.5" />
-                </a>
-              ))}
+            <div className="flex gap-4">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#333333] flex items-center justify-center hover:bg-[#E1306C] hover:text-white transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#333333] flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a
+                href="https://youtube.com/@ayurvedaglobal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#333333] flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition-colors"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-4 h-4" />
+              </a>
+              <a
+                href="https://wa.me/919123485451"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#333333] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-colors"
+                aria-label="WhatsApp"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
+              </a>
             </div>
           </div>
 
-          {/* Formulations Column */}
-          <div className="space-y-3">
-            <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#FAF7F2]">
-              Formulations
+          {/* Col 2: Quick Links */}
+          <div>
+            <h3 className="font-sans font-medium text-[#E8ECE9] tracking-wider uppercase text-xs mb-4">
+              Shop &amp; Explore
             </h3>
-            <ul className="space-y-2 text-[#999999]">
+            <ul className="space-y-3">
               <li>
-                <Link href="/shop" className="hover:text-[#FAF7F2] transition-colors">
-                  Shop All Products
+                <Link
+                  href="/shop"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  All Products
                 </Link>
               </li>
               <li>
-                <Link href="/product/body-essential-nutrition" className="hover:text-[#FAF7F2] transition-colors">
-                  BODY Essential Nutrition
+                <Link
+                  href="/categories/supplements"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  Herbal Supplements
                 </Link>
               </li>
               <li>
-                <Link href="/product/staymax-delay-spray" className="hover:text-[#FAF7F2] transition-colors">
-                  STAYMAX+ Delay Spray
+                <Link
+                  href="/categories/personal-care"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  Skin & Hair Care
                 </Link>
               </li>
               <li>
-                <Link href="/product/vitality-power-combo" className="hover:text-[#FAF7F2] transition-colors">
-                  Vitality &amp; Performance Combo
+                <Link
+                  href="/about"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  Our Story
                 </Link>
               </li>
               <li>
-                <Link href="/product/hair-regrow-kit" className="hover:text-[#FAF7F2] transition-colors">
-                  HAIR RE-GROW Complete Kit
+                <Link
+                  href="/blog"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  Wellness Blog
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Guidance Column */}
-          <div className="space-y-3">
-            <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#FAF7F2]">
-              Guidance &amp; Care
+          {/* Col 3: Help & Support */}
+          <div>
+            <h3 className="font-sans font-medium text-[#E8ECE9] tracking-wider uppercase text-xs mb-4">
+              Support
             </h3>
-            <ul className="space-y-2 text-[#999999]">
+            <ul className="space-y-3">
               <li>
-                <a
-                  href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20with%20an%20Ayurvedic%20doctor."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#FAF7F2] transition-colors"
+                <Link
+                  href="/consultation"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
                 >
-                  Doctor Consultation (WhatsApp)
+                  Vaidya Consultation
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/faq"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  FAQs
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/track-order"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  Track Order
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/legal/shipping"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  Shipping Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/legal/returns"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  Returns & Refunds
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Contact Details */}
+          <div>
+            <h3 className="font-sans font-medium text-[#E8ECE9] tracking-wider uppercase text-xs mb-4">
+              Contact Us
+            </h3>
+            <ul className="space-y-5">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-[#2D4A3E] flex-shrink-0 mt-0.5" />
+                <span className="text-sm text-[#999999] font-light leading-relaxed">
+                  Ayur Veda Global HQ,
+                  <br />
+                  Industrial Area, Phase 1,
+                  <br />
+                  New Delhi, 110020
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-[#2D4A3E] flex-shrink-0" />
+                <a
+                  href="mailto:ayurvedaglobalindia@gmail.com"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  ayurvedaglobalindia@gmail.com
                 </a>
               </li>
-              <li>
-                <Link href="/faq" className="hover:text-[#FAF7F2] transition-colors">
-                  Frequently Asked Questions
-                </Link>
-              </li>
-              <li>
-                <Link href="/track-order" className="hover:text-[#FAF7F2] transition-colors">
-                  Track Delivery
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-[#FAF7F2] transition-colors">
-                  Contact Concierge
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-[#FAF7F2] transition-colors">
-                  Ayurvedic Heritage &amp; Science
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Policies Column */}
-          <div className="space-y-3">
-            <h3 className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#FAF7F2]">
-              Assurances
-            </h3>
-            <ul className="space-y-2 text-[#999999]">
-              <li>
-                <Link href="/legal/shipping" className="hover:text-[#FAF7F2] transition-colors">
-                  Discreet Shipping Guarantee
-                </Link>
-              </li>
-              <li>
-                <Link href="/legal/privacy" className="hover:text-[#FAF7F2] transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/legal/terms" className="hover:text-[#FAF7F2] transition-colors">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="/legal/returns" className="hover:text-[#FAF7F2] transition-colors">
-                  Returns &amp; Refunds
-                </Link>
+              <li className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-[#2D4A3E] flex-shrink-0" />
+                <a
+                  href="tel:+919123485451"
+                  className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                >
+                  +91 91234 85451
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Regulatory Compliance & Disclaimer */}
-        <div className="py-6 border-b border-[#2C2D30] text-[11px] text-[#999999] leading-relaxed">
-          <p>
-            <strong className="text-[#FAF7F2] font-medium">AYUSH Compliance Notice:</strong> Formulations are classical and proprietary Ayurvedic dietary supplements and personal care products formulated under AYUSH and GMP standards. These statements have not been evaluated by regulatory bodies to diagnose, treat, cure, or prevent any acute disease. Results may vary depending on individual constitution (Prakriti), diet, and consistency. Consult an Ayurvedic physician for tailored guidance.
+        {/* Copyright */}
+        <div className="pt-8 border-t border-[#333333] flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-[#737373] font-light">
+            &copy; {new Date().getFullYear()} Ayurveda Global. All rights
+            reserved.
           </p>
-        </div>
-
-        {/* Sub-Footer */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#999999]">
-          <p>© {new Date().getFullYear()} Ayur Veda Global. All rights reserved. 100% Confidential Delivery Nationwide.</p>
-          <p className="font-mono text-[10px] text-[#737373]">ESTD. BHARAT • DISCREET ARCHIVAL DISPATCH</p>
+          <div className="flex items-center gap-4 text-xs text-[#737373] font-light">
+            <Link
+              href="/legal/privacy"
+              className="hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/legal/terms"
+              className="hover:text-white transition-colors"
+            >
+              Terms of Service
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

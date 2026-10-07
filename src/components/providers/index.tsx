@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import { ReactNode } from 'react'
-import { CartProvider } from './CartProvider'
-import { UIProvider } from './UIProvider'
+import { ReactNode } from "react";
+import { CartProvider } from "./CartProvider";
+import { UIProvider } from "./UIProvider";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <CartProvider>
       <UIProvider>{children}</UIProvider>
     </CartProvider>
-  )
+  );
 }

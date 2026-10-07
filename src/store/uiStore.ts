@@ -1,45 +1,46 @@
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 interface Toast {
-  id: string
-  type: 'success' | 'error' | 'info' | 'warning'
-  title: string
-  message?: string
-  duration?: number
+  id: string;
+  type: "success" | "error" | "info" | "warning";
+  title: string;
+  message?: string;
+  duration?: number;
 }
 
-export type ModalType = 'age-gate' | 'cart' | 'quick-view' | 'mobile-menu' | string
+export type ModalType =
+  "age-gate" | "cart" | "quick-view" | "mobile-menu" | string;
 
 interface Modal {
-  isOpen: boolean
-  type: ModalType | null
-  data?: unknown
+  isOpen: boolean;
+  type: ModalType | null;
+  data?: unknown;
 }
 
 interface UIStore {
-  toasts: Toast[]
-  modals: Record<string, Modal>
-  isCartDrawerOpen: boolean
-  isWishlistDrawerOpen: boolean
-  isMobileMenuOpen: boolean
-  isSearchOpen: boolean
-  ageVerifiedProducts: string[]
-  showToast: (toast: Omit<Toast, 'id'>) => void
-  dismissToast: (id: string) => void
-  openModal: (type: ModalType, data?: unknown) => void
-  closeModal: (type: ModalType) => void
-  openCartDrawer: () => void
-  closeCartDrawer: () => void
-  openWishlistDrawer: () => void
-  closeWishlistDrawer: () => void
-  toggleMobileMenu: () => void
-  closeMobileMenu: () => void
-  toggleSearch: () => void
-  openSearch: () => void
-  closeSearch: () => void
-  verifyAge: (productId: string) => void
-  isAgeVerified: (productId: string) => boolean
+  toasts: Toast[];
+  modals: Record<string, Modal>;
+  isCartDrawerOpen: boolean;
+  isWishlistDrawerOpen: boolean;
+  isMobileMenuOpen: boolean;
+  isSearchOpen: boolean;
+  ageVerifiedProducts: string[];
+  showToast: (toast: Omit<Toast, "id">) => void;
+  dismissToast: (id: string) => void;
+  openModal: (type: ModalType, data?: unknown) => void;
+  closeModal: (type: ModalType) => void;
+  openCartDrawer: () => void;
+  closeCartDrawer: () => void;
+  openWishlistDrawer: () => void;
+  closeWishlistDrawer: () => void;
+  toggleMobileMenu: () => void;
+  closeMobileMenu: () => void;
+  toggleSearch: () => void;
+  openSearch: () => void;
+  closeSearch: () => void;
+  verifyAge: (productId: string) => void;
+  isAgeVerified: (productId: string) => boolean;
 }
 
 export const useUIStore = create<UIStore>()(
@@ -54,42 +55,42 @@ export const useUIStore = create<UIStore>()(
       ageVerifiedProducts: [],
 
       showToast: (toast) => {
-        const id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-        const newToast = { ...toast, id }
-        set(state => ({ toasts: [...state.toasts, newToast] }))
+        const id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        const newToast = { ...toast, id };
+        set((state) => ({ toasts: [...state.toasts, newToast] }));
 
         if (toast.duration !== 0) {
           setTimeout(() => {
-            get().dismissToast(id)
-          }, toast.duration || 5000)
+            get().dismissToast(id);
+          }, toast.duration || 5000);
         }
       },
 
       dismissToast: (id) => {
-        set(state => ({ toasts: state.toasts.filter(t => t.id !== id) }))
+        set((state) => ({ toasts: state.toasts.filter((t) => t.id !== id) }));
       },
 
       openModal: (type, data) => {
-        if (type === 'cart') {
-          set({ isCartDrawerOpen: true })
-          return
+        if (type === "cart") {
+          set({ isCartDrawerOpen: true });
+          return;
         }
-        set(state => ({
+        set((state) => ({
           modals: {
             ...state.modals,
             [type]: { isOpen: true, type, data },
           },
-        }))
+        }));
       },
 
       closeModal: (type) => {
-        set(state => {
-          const newModals = { ...state.modals }
+        set((state) => {
+          const newModals = { ...state.modals };
           if (newModals[type]) {
-            newModals[type] = { ...newModals[type], isOpen: false }
+            newModals[type] = { ...newModals[type], isOpen: false };
           }
-          return { modals: newModals }
-        })
+          return { modals: newModals };
+        });
       },
 
       openCartDrawer: () => set({ isCartDrawerOpen: true }),
@@ -98,31 +99,33 @@ export const useUIStore = create<UIStore>()(
       openWishlistDrawer: () => set({ isWishlistDrawerOpen: true }),
       closeWishlistDrawer: () => set({ isWishlistDrawerOpen: false }),
 
-      toggleMobileMenu: () => set(state => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
+      toggleMobileMenu: () =>
+        set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
       closeMobileMenu: () => set({ isMobileMenuOpen: false }),
 
-      toggleSearch: () => set(state => ({ isSearchOpen: !state.isSearchOpen })),
+      toggleSearch: () =>
+        set((state) => ({ isSearchOpen: !state.isSearchOpen })),
       openSearch: () => set({ isSearchOpen: true }),
       closeSearch: () => set({ isSearchOpen: false }),
 
       verifyAge: (productId) => {
-        set(state => ({
+        set((state) => ({
           ageVerifiedProducts: state.ageVerifiedProducts.includes(productId)
             ? state.ageVerifiedProducts
             : [...state.ageVerifiedProducts, productId],
-        }))
+        }));
       },
 
       isAgeVerified: (productId) => {
-        return get().ageVerifiedProducts.includes(productId)
+        return get().ageVerifiedProducts.includes(productId);
       },
     }),
     {
-      name: 'ayur-veda-ui',
+      name: "ayur-veda-ui",
       storage: createJSONStorage(() => localStorage),
-      partialize: state => ({
+      partialize: (state) => ({
         ageVerifiedProducts: state.ageVerifiedProducts,
       }),
-    }
-  )
-)
+    },
+  ),
+);

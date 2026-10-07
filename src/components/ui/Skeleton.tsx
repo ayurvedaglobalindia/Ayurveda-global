@@ -1,26 +1,30 @@
-'use client'
+"use client";
 
-import { classNames } from '@/lib/utils/formatters'
+import { classNames } from "@/lib/utils/formatters";
 
 interface SkeletonProps {
-  className?: string
-  variant?: 'text' | 'circular' | 'rectangular' | 'card' | 'product'
+  className?: string;
+  variant?: "text" | "circular" | "rectangular" | "card" | "product";
 }
 
-export function Skeleton({ className, variant = 'text' }: SkeletonProps) {
-  const baseStyles = 'animate-pulse bg-[#999999]/20 border border-[#999999]/30 rounded'
+export function Skeleton({ className, variant = "text" }: SkeletonProps) {
+  const baseStyles =
+    "animate-pulse bg-[#999999]/20 border border-[#9E8047]/25 rounded";
 
   const variantStyles = {
-    text: 'h-4 w-full',
-    circular: 'h-10 w-10 rounded-full',
-    rectangular: 'h-20 w-full rounded-lg',
-    card: 'aspect-square rounded-xl',
-    product: 'aspect-square rounded-xl',
-  }
+    text: "h-4 w-full",
+    circular: "h-10 w-10 rounded-full",
+    rectangular: "h-20 w-full rounded-lg",
+    card: "aspect-square rounded-xl",
+    product: "aspect-square rounded-xl",
+  };
 
   return (
-    <div className={classNames(baseStyles, variantStyles[variant], className)} aria-hidden="true" />
-  )
+    <div
+      className={classNames(baseStyles, variantStyles[variant], className)}
+      aria-hidden="true"
+    />
+  );
 }
 
 export function ProductCardSkeleton() {
@@ -39,7 +43,7 @@ export function ProductCardSkeleton() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export function ProductDetailSkeleton() {
@@ -48,7 +52,7 @@ export function ProductDetailSkeleton() {
       <div className="space-y-4">
         <Skeleton variant="product" className="aspect-square" />
         <div className="grid grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map(i => (
+          {[1, 2, 3, 4].map((i) => (
             <Skeleton key={i} variant="product" className="aspect-square" />
           ))}
         </div>
@@ -70,12 +74,12 @@ export function ProductDetailSkeleton() {
         <Skeleton variant="rectangular" className="w-full h-12" />
       </div>
     </div>
-  )
+  );
 }
 
 export function CartItemSkeleton() {
   return (
-    <div className="flex gap-4 p-4 bg-[#FFFFFF] rounded-xl border border-[#999999]/30">
+    <div className="flex gap-4 p-4 bg-[#FFFFFF] rounded-xl border border-[#9E8047]/25">
       <Skeleton variant="product" className="w-20 h-20 flex-shrink-0" />
       <div className="flex-1 space-y-3">
         <Skeleton variant="text" className="w-3/4" />
@@ -87,7 +91,7 @@ export function CartItemSkeleton() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export function CheckoutStepSkeleton() {
@@ -95,21 +99,21 @@ export function CheckoutStepSkeleton() {
     <div className="space-y-6">
       <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-4">
-          {[1, 2, 3].map(i => (
+          {[1, 2, 3].map((i) => (
             <Skeleton key={i} variant="rectangular" className="w-full" />
           ))}
         </div>
         <div className="space-y-4">
-          {[1, 2, 3].map(i => (
+          {[1, 2, 3].map((i) => (
             <Skeleton key={i} variant="rectangular" className="w-full" />
           ))}
         </div>
       </div>
       <div className="space-y-4">
-        {[1, 2, 3, 4, 5].map(i => (
+        {[1, 2, 3, 4, 5].map((i) => (
           <Skeleton key={i} variant="rectangular" className="w-full" />
         ))}
       </div>
     </div>
-  )
+  );
 }

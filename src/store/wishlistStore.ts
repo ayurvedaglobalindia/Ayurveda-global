@@ -1,15 +1,19 @@
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
-import type { WishlistItem, Product } from '@/types'
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import type { WishlistItem, Product } from "@/types";
 
 interface WishlistStore {
-  items: WishlistItem[]
-  addItem: (product: Product, variantId?: string) => void
-  removeItem: (productId: string, variantId?: string) => void
-  clearWishlist: () => void
-  isInWishlist: (productId: string, variantId?: string) => boolean
-  moveToCart: (productId: string, variantId?: string, quantity?: number) => void
-  getItemCount: () => number
+  items: WishlistItem[];
+  addItem: (product: Product, variantId?: string) => void;
+  removeItem: (productId: string, variantId?: string) => void;
+  clearWishlist: () => void;
+  isInWishlist: (productId: string, variantId?: string) => boolean;
+  moveToCart: (
+    productId: string,
+    variantId?: string,
+    quantity?: number,
+  ) => void;
+  getItemCount: () => number;
 }
 
 export const useWishlistStore = create<WishlistStore>()(
@@ -18,12 +22,20 @@ export const useWishlistStore = create<WishlistStore>()(
       items: [],
 
       addItem: (product, variantId) => {
-        const variant = variantId ? product.variants.find(v => v.id === variantId) : product.variants[0]
-        const variantIdToUse = variant?.id || product.variants[0]?.id
+        const variant = variantId
+          ? product.variants.find((v) => v.id === variantId)
+          : product.variants[0];
+        const variantIdToUse = variant?.id || product.variants[0]?.id;
 
-        set(state => {
-          if (state.items.some(item => item.productId === product.id && item.variantId === variantIdToUse)) {
-            return state
+        set((state) => {
+          if (
+            state.items.some(
+              (item) =>
+                item.productId === product.id &&
+                item.variantId === variantIdToUse,
+            )
+          ) {
+            return state;
           }
 
           const newItem: WishlistItem = {
@@ -32,45 +44,47 @@ export const useWishlistStore = create<WishlistStore>()(
             variantId: variantIdToUse,
             product,
             addedAt: new Date().toISOString(),
-          }
-          return { items: [newItem, ...state.items] }
-        })
+          };
+          return { items: [newItem, ...state.items] };
+        });
       },
 
       removeItem: (productId, variantId) => {
-        set(state => ({
+        set((state) => ({
           items: state.items.filter(
-            item => !(item.productId === productId && item.variantId === variantId)
+            (item) =>
+              !(item.productId === productId && item.variantId === variantId),
           ),
-        }))
+        }));
       },
 
       clearWishlist: () => {
-        set({ items: [] })
+        set({ items: [] });
       },
 
       isInWishlist: (productId, variantId) => {
         return get().items.some(
-          item => item.productId === productId && item.variantId === variantId
-        )
+          (item) =>
+            item.productId === productId && item.variantId === variantId,
+        );
       },
 
       moveToCart: (productId, variantId, quantity = 1) => {
         const item = get().items.find(
-          i => i.productId === productId && i.variantId === variantId
-        )
+          (i) => i.productId === productId && i.variantId === variantId,
+        );
         if (item) {
-          get().removeItem(productId, variantId)
+          get().removeItem(productId, variantId);
         }
       },
 
       getItemCount: () => {
-        return get().items.length
+        return get().items.length;
       },
     }),
     {
-      name: 'ayur-veda-wishlist',
+      name: "ayur-veda-wishlist",
       storage: createJSONStorage(() => localStorage),
-    }
-  )
-)
+    },
+  ),
+);

@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { ReactNode } from 'react'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { AnnouncementBar } from '@/components/layout/AnnouncementBar'
-import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
+import { ReactNode } from "react";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
@@ -26,5 +26,5 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       {/* Footer */}
       <Footer />
     </div>
-  )
+  );
 }

@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { ReactNode, useEffect, useState } from 'react'
-import { X } from 'lucide-react'
-import { createPortal } from 'react-dom'
-import { motion, AnimatePresence } from 'framer-motion'
-import { classNames } from '@/lib/utils/formatters'
+import { ReactNode, useEffect, useState } from "react";
+import { X } from "lucide-react";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { classNames } from "@/lib/utils/formatters";
 
 interface ModalProps {
-  isOpen: boolean
-  onClose: () => void
-  title?: string
-  description?: string
-  children: ReactNode
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
-  closeOnOverlayClick?: boolean
-  showCloseButton?: boolean
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  description?: string;
+  children: ReactNode;
+  size?: "sm" | "md" | "lg" | "xl" | "full";
+  closeOnOverlayClick?: boolean;
+  showCloseButton?: boolean;
 }
 
 export function Modal({
@@ -23,50 +23,51 @@ export function Modal({
   title,
   description,
   children,
-  size = 'md',
+  size = "md",
   closeOnOverlayClick = true,
   showCloseButton = true,
 }: ModalProps) {
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen) return;
 
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
+      if (e.key === "Escape") onClose();
+    };
 
-    document.addEventListener('keydown', handleEscape)
+    document.addEventListener("keydown", handleEscape);
 
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-    const originalOverflow = document.body.style.overflow
-    const originalPaddingRight = document.body.style.paddingRight
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
 
-    document.body.style.overflow = 'hidden'
+    document.body.style.overflow = "hidden";
     if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = originalOverflow
-      document.body.style.paddingRight = originalPaddingRight
-    }
-  }, [isOpen, onClose])
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+    };
+  }, [isOpen, onClose]);
 
-  if (!mounted) return null
+  if (!mounted) return null;
 
   const sizeClasses = {
-    sm: 'max-w-md',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-    xl: 'max-w-4xl',
-    full: 'max-w-5xl',
-  }
+    sm: "max-w-md",
+    md: "max-w-lg",
+    lg: "max-w-2xl",
+    xl: "max-w-4xl",
+    full: "max-w-5xl",
+  };
 
   const modalContent = (
     <AnimatePresence>
@@ -80,30 +81,36 @@ export function Modal({
           onClick={closeOnOverlayClick ? onClose : undefined}
           role="dialog"
           aria-modal="true"
-          aria-labelledby={title ? 'modal-title' : undefined}
-          aria-describedby={description ? 'modal-description' : undefined}
+          aria-labelledby={title ? "modal-title" : undefined}
+          aria-describedby={description ? "modal-description" : undefined}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.96, y: 14 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 14 }}
-            transition={{ type: 'spring', damping: 26, stiffness: 320 }}
+            transition={{ type: "spring", damping: 26, stiffness: 320 }}
             className={classNames(
-              'relative w-full max-h-[calc(100vh-3rem)] sm:max-h-[calc(100vh-4rem)] flex flex-col bg-[#FAF7F2] rounded-2xl shadow-2xl border border-[#999999]/35 overflow-hidden my-auto text-[#1C1D1F]',
-              sizeClasses[size]
+              "relative w-full max-h-[calc(100vh-3rem)] sm:max-h-[calc(100vh-4rem)] flex flex-col bg-[#FAF7F2] rounded-2xl shadow-2xl border border-[#9E8047]/30 overflow-hidden my-auto text-[#1C1D1F]",
+              sizeClasses[size],
             )}
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
             {(title || showCloseButton) && (
-              <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-[#999999]/30 bg-[#FFFFFF] flex-shrink-0">
+              <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-[#9E8047]/25 bg-[#FFFFFF] flex-shrink-0">
                 <div className="min-w-0 pr-4">
                   {title && (
-                    <h2 id="modal-title" className="font-heading text-lg sm:text-xl font-normal text-[#1C1D1F] truncate">
+                    <h2
+                      id="modal-title"
+                      className="font-heading text-lg sm:text-xl font-normal text-[#1C1D1F] truncate"
+                    >
                       {title}
                     </h2>
                   )}
                   {description && (
-                    <p id="modal-description" className="mt-0.5 text-xs sm:text-sm text-[#737373] truncate">
+                    <p
+                      id="modal-description"
+                      className="mt-0.5 text-xs sm:text-sm text-[#737373] truncate"
+                    >
                       {description}
                     </p>
                   )}
@@ -126,7 +133,7 @@ export function Modal({
         </motion.div>
       )}
     </AnimatePresence>
-  )
+  );
 
-  return createPortal(modalContent, document.body)
+  return createPortal(modalContent, document.body);
 }

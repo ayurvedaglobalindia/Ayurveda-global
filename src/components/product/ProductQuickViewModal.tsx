@@ -1,128 +1,152 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { Sparkles, ShoppingBag, ArrowRight, ShieldCheck, Check, Heart, Leaf, Zap, MessageCircle, Truck } from 'lucide-react'
-import { Modal } from '@/components/ui/Modal'
-import { Button } from '@/components/ui/Button'
-import { PriceDisplay } from '@/components/ui/PriceDisplay'
-import { Rating } from '@/components/ui/Rating'
-import { QuantitySelector } from '@/components/ui/QuantitySelector'
-import { useCartStore } from '@/store/cartStore'
-import { useWishlistStore } from '@/store/wishlistStore'
-import { useUserStore } from '@/store/userStore'
-import { useUIStore } from '@/store/uiStore'
-import { useWhatsAppStore, buildWhatsAppUrl, buildProductEnquiryMessage } from '@/store/whatsappStore'
-import type { Product } from '@/types'
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  Sparkles,
+  ShoppingBag,
+  ArrowRight,
+  ShieldCheck,
+  Check,
+  Heart,
+  Leaf,
+  Zap,
+  MessageCircle,
+  Truck,
+} from "lucide-react";
+import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
+import { PriceDisplay } from "@/components/ui/PriceDisplay";
+import { Rating } from "@/components/ui/Rating";
+import { QuantitySelector } from "@/components/ui/QuantitySelector";
+import { useCartStore } from "@/store/cartStore";
+import { useWishlistStore } from "@/store/wishlistStore";
+import { useUserStore } from "@/store/userStore";
+import { useUIStore } from "@/store/uiStore";
+import {
+  useWhatsAppStore,
+  buildWhatsAppUrl,
+  buildProductEnquiryMessage,
+} from "@/store/whatsappStore";
+import type { Product } from "@/types";
 
 interface ProductQuickViewModalProps {
-  product: Product | null
-  isOpen: boolean
-  onClose: () => void
+  product: Product | null;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuickViewModalProps) {
-  const router = useRouter()
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-  const [quantity, setQuantity] = useState(1)
+export function ProductQuickViewModal({
+  product,
+  isOpen,
+  onClose,
+}: ProductQuickViewModalProps) {
+  const router = useRouter();
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
-  const { addItem } = useCartStore()
-  const { addItem: addToWishlist, isInWishlist } = useWishlistStore()
-  const { user, isAuthenticated } = useUserStore()
-  const { openModal, openCartDrawer, showToast, isAgeVerified } = useUIStore()
-  const { trackLead } = useWhatsAppStore()
+  const { addItem } = useCartStore();
+  const { addItem: addToWishlist, isInWishlist } = useWishlistStore();
+  const { user, isAuthenticated } = useUserStore();
+  const { openModal, openCartDrawer, showToast, isAgeVerified } = useUIStore();
+  const { trackLead } = useWhatsAppStore();
 
-  if (!product) return null
+  if (!product) return null;
 
-  const inWishlist = isInWishlist(product.id)
-  const currentImage = product.images[selectedImageIndex] || product.images[0]
+  const inWishlist = isInWishlist(product.id);
+  const currentImage = product.images[selectedImageIndex] || product.images[0];
 
   const handleAddToCart = () => {
     if (product.ageRestricted && !isAgeVerified(product.id)) {
-      onClose()
-      openModal('age-gate', {
+      onClose();
+      openModal("age-gate", {
         productId: product.id,
         productName: product.name,
         onVerify: () => {
-          addItem(product, undefined, quantity)
-          openCartDrawer()
+          addItem(product, undefined, quantity);
+          openCartDrawer();
           showToast({
-            type: 'success',
-            title: 'Added to Cart',
+            type: "success",
+            title: "Added to Cart",
             message: `${quantity}x ${product.name} added to cart`,
-          })
+          });
         },
-      })
-      return
+      });
+      return;
     }
 
-    addItem(product, undefined, quantity)
+    addItem(product, undefined, quantity);
     showToast({
-      type: 'success',
-      title: 'Added to Cart',
+      type: "success",
+      title: "Added to Cart",
       message: `${quantity}x ${product.name} added to cart`,
-    })
-    onClose()
-    openCartDrawer()
-  }
+    });
+    onClose();
+    openCartDrawer();
+  };
 
   const handleBuyNow = () => {
     if (product.ageRestricted && !isAgeVerified(product.id)) {
-      onClose()
-      openModal('age-gate', {
+      onClose();
+      openModal("age-gate", {
         productId: product.id,
         productName: product.name,
         onVerify: () => {
-          addItem(product, undefined, quantity)
-          router.push('/checkout')
+          addItem(product, undefined, quantity);
+          router.push("/checkout");
         },
-      })
-      return
+      });
+      return;
     }
 
-    addItem(product, undefined, quantity)
-    onClose()
-    router.push('/checkout')
-  }
+    addItem(product, undefined, quantity);
+    onClose();
+    router.push("/checkout");
+  };
 
   const handleWhatsAppOrder = () => {
-
-    const primaryAddr = user?.addresses?.[0]
-    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
+    const primaryAddr = user?.addresses?.[0];
+    const userCity = primaryAddr
+      ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(", ")
+      : "";
     const message = buildProductEnquiryMessage({
-      customerName: user?.name || '',
-      customerPhone: user?.phone || '',
+      customerName: user?.name || "",
+      customerPhone: user?.phone || "",
       customerCity: userCity,
       productName: product.name,
       quantity,
       price: product.price * quantity,
       enquiry: `Hi Ayur Veda Global team! I would like to order ${quantity}x ${product.name} with Cash on Delivery (COD). Please confirm dispatch & delivery timeline.`,
-      source: 'quick-view',
-    })
+      source: "quick-view",
+    });
     trackLead({
-      source: 'quick-view',
+      source: "quick-view",
       productId: product.id,
       productName: product.name,
       customerName: user?.name,
       customerPhone: user?.phone,
       quantity,
-      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
-      userAgent: '',
-      referrer: '',
-    })
-    window.open(buildWhatsAppUrl(message), '_blank')
-  }
+      pageUrl: typeof window !== "undefined" ? window.location.href : "",
+      userAgent: "",
+      referrer: "",
+    });
+    window.open(buildWhatsAppUrl(message), "_blank");
+  };
 
   const handleWishlistToggle = () => {
     if (inWishlist) {
-      showToast({ type: 'info', title: 'Removed from Wishlist' })
+      showToast({ type: "info", title: "Removed from Wishlist" });
     } else {
-      addToWishlist(product)
-      showToast({ type: 'success', title: 'Added to Wishlist', message: `${product.name} added to your wishlist` })
+      addToWishlist(product);
+      showToast({
+        type: "success",
+        title: "Added to Wishlist",
+        message: `${product.name} added to your wishlist`,
+      });
     }
-  }
+  };
 
   return (
     <Modal
@@ -135,7 +159,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
       <div className="grid md:grid-cols-12 gap-6 lg:gap-8 items-start">
         {/* Left Column: Image Stage */}
         <div className="md:col-span-6 space-y-3">
-          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#999999]/30 shadow-sm flex items-center justify-center">
+          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#9E8047]/25 shadow-sm flex items-center justify-center">
             <Image
               src={currentImage.src}
               alt={currentImage.alt || product.name}
@@ -145,7 +169,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
               priority
             />
             {product.ageRestricted && (
-              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full text-[10px] font-medium text-[#9E8047] bg-[#FFFFFF]/95 border border-[#999999]/30 shadow-xs">
+              <span className="absolute top-3 left-3 px-2 py-0.5 rounded-full text-[10px] font-medium text-[#9E8047] bg-[#FFFFFF]/95 border border-[#9E8047]/25 shadow-xs">
                 18+ Adult
               </span>
             )}
@@ -160,11 +184,17 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
                   onClick={() => setSelectedImageIndex(idx)}
                   className={`relative w-14 h-16 rounded-xl overflow-hidden border-2 transition-all bg-[#FAF7F2] shadow-xs ${
                     selectedImageIndex === idx
-                      ? 'border-[#4E5F52] ring-2 ring-[#4E5F52]/20'
-                      : 'border-[#999999]/30 opacity-70 hover:opacity-100'
+                      ? "border-[#4E5F52] ring-2 ring-[#4E5F52]/20"
+                      : "border-[#9E8047]/25 opacity-70 hover:opacity-100"
                   }`}
                 >
-                  <Image src={img.src} alt="" fill className="object-cover" sizes="56px" />
+                  <Image
+                    src={img.src}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="56px"
+                  />
                 </button>
               ))}
             </div>
@@ -172,11 +202,11 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
 
           {/* Purity & Logistics Micro-Pills */}
           <div className="grid grid-cols-2 gap-2 pt-1 text-[11px] text-[#737373]">
-            <div className="p-2 rounded-xl bg-[#FAF7F2] border border-[#999999]/30 flex items-center gap-1.5">
+            <div className="p-2 rounded-xl bg-[#FAF7F2] border border-[#9E8047]/25 flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
               <span>NABL Lab Tested</span>
             </div>
-            <div className="p-2 rounded-xl bg-[#FAF7F2] border border-[#999999]/30 flex items-center gap-1.5">
+            <div className="p-2 rounded-xl bg-[#FAF7F2] border border-[#9E8047]/25 flex items-center gap-1.5">
               <Truck className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
               <span>100% Discreet COD</span>
             </div>
@@ -188,7 +218,11 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
               <span className="text-[10.5px] font-semibold text-[#4E5F52] bg-[#FAF7F2] border border-[#4E5F52]/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider font-mono">
-                {product.category === 'supplements' ? 'Herbal Supplement' : product.category === 'wellness' ? 'Power Combo' : 'Personal Care'}
+                {product.category === "supplements"
+                  ? "Herbal Supplement"
+                  : product.category === "wellness"
+                    ? "Power Combo"
+                    : "Personal Care"}
               </span>
               <Rating rating={4.9} size="sm" showValue />
             </div>
@@ -201,17 +235,24 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
           </div>
 
           {/* Price Box */}
-          <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-between">
+          <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#9E8047]/25 flex items-center justify-between">
             <PriceDisplay
               price={product.price}
               compareAtPrice={product.compareAtPrice}
               size="lg"
             />
-            {product.compareAtPrice && product.compareAtPrice > product.price && (
-              <span className="text-xs font-semibold bg-[#FFFFFF] text-[#4E5F52] border border-[#4E5F52]/30 px-2.5 py-1 rounded-lg">
-                SAVE {Math.round(((product.compareAtPrice - product.price) / product.compareAtPrice) * 100)}%
-              </span>
-            )}
+            {product.compareAtPrice &&
+              product.compareAtPrice > product.price && (
+                <span className="text-xs font-semibold bg-[#FFFFFF] text-[#4E5F52] border border-[#4E5F52]/30 px-2.5 py-1 rounded-lg">
+                  SAVE{" "}
+                  {Math.round(
+                    ((product.compareAtPrice - product.price) /
+                      product.compareAtPrice) *
+                      100,
+                  )}
+                  %
+                </span>
+              )}
           </div>
 
           {/* Short Description */}
@@ -230,7 +271,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
                 {product.ingredients.slice(0, 4).map((ing, i) => (
                   <span
                     key={i}
-                    className="text-[11px] px-2 py-0.5 rounded-md bg-[#FAF7F2] border border-[#999999]/30 text-[#1C1D1F]"
+                    className="text-[11px] px-2 py-0.5 rounded-md bg-[#FAF7F2] border border-[#9E8047]/25 text-[#1C1D1F]"
                   >
                     {ing}
                   </span>
@@ -241,8 +282,10 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
 
           {/* Classical Usage Guidance */}
           {product.usage && (
-            <div className="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#999999]/30 text-xs text-[#555555]">
-              <span className="font-semibold text-[#1C1D1F] block text-[11px] mb-0.5">Dosage / How to Use:</span>
+            <div className="p-2.5 rounded-xl bg-[#FAF7F2] border border-[#9E8047]/25 text-xs text-[#555555]">
+              <span className="font-semibold text-[#1C1D1F] block text-[11px] mb-0.5">
+                Dosage / How to Use:
+              </span>
               <p className="text-[11.5px] leading-relaxed">{product.usage}</p>
             </div>
           )}
@@ -250,7 +293,9 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
           {/* Quantity and Actions */}
           <div className="space-y-2.5 pt-2">
             <div className="flex items-center gap-3">
-              <span className="text-xs font-medium text-[#1C1D1F]">Quantity:</span>
+              <span className="text-xs font-medium text-[#1C1D1F]">
+                Quantity:
+              </span>
               <QuantitySelector
                 value={quantity}
                 onChange={setQuantity}
@@ -288,7 +333,7 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
           </div>
 
           {/* Full Details Link & Wishlist */}
-          <div className="pt-3 border-t border-[#999999]/30 flex items-center justify-between">
+          <div className="pt-3 border-t border-[#9E8047]/25 flex items-center justify-between">
             <Link
               href={`/product/${product.slug}`}
               onClick={onClose}
@@ -301,15 +346,19 @@ export function ProductQuickViewModal({ product, isOpen, onClose }: ProductQuick
             <button
               onClick={handleWishlistToggle}
               className={`p-2 rounded-full border transition-colors ${
-                inWishlist ? 'border-red-400 bg-red-50 text-red-600' : 'border-[#999999]/30 text-[#737373] hover:text-red-500 hover:border-red-300'
+                inWishlist
+                  ? "border-red-400 bg-red-50 text-red-600"
+                  : "border-[#9E8047]/25 text-[#737373] hover:text-red-500 hover:border-red-300"
               }`}
               aria-label="Add to wishlist"
             >
-              <Heart className={`w-4 h-4 ${inWishlist ? 'fill-current' : ''}`} />
+              <Heart
+                className={`w-4 h-4 ${inWishlist ? "fill-current" : ""}`}
+              />
             </button>
           </div>
         </div>
       </div>
     </Modal>
-  )
+  );
 }

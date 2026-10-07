@@ -1,45 +1,51 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { Shield, Leaf } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import { Modal } from '@/components/ui/Modal'
-import { useUIStore } from '@/store/uiStore'
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Shield, Leaf } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui/Modal";
+import { useUIStore } from "@/store/uiStore";
 
 interface AgeVerificationGateProps {
-  productId: string
-  productName: string
-  isOpen: boolean
-  onClose?: () => void
-  onVerify?: () => void
+  productId: string;
+  productName: string;
+  isOpen: boolean;
+  onClose?: () => void;
+  onVerify?: () => void;
 }
 
-export function AgeVerificationGate({ productId, productName, isOpen, onClose, onVerify }: AgeVerificationGateProps) {
-  const router = useRouter()
-  const { isAgeVerified, verifyAge } = useUIStore()
-  const [showModal, setShowModal] = useState(false)
+export function AgeVerificationGate({
+  productId,
+  productName,
+  isOpen,
+  onClose,
+  onVerify,
+}: AgeVerificationGateProps) {
+  const router = useRouter();
+  const { isAgeVerified, verifyAge } = useUIStore();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    setShowModal(isOpen && !isAgeVerified(productId))
-  }, [isOpen, productId, isAgeVerified])
+    setShowModal(isOpen && !isAgeVerified(productId));
+  }, [isOpen, productId, isAgeVerified]);
 
   const handleVerify = () => {
-    verifyAge(productId)
-    setShowModal(false)
-    onVerify?.()
-  }
+    verifyAge(productId);
+    setShowModal(false);
+    onVerify?.();
+  };
 
   const handleDeny = () => {
-    setShowModal(false)
+    setShowModal(false);
     if (onClose) {
-      onClose()
+      onClose();
     } else {
-      router.push('/shop')
+      router.push("/shop");
     }
-  }
+  };
 
-  if (!showModal) return null
+  if (!showModal) return null;
 
   return (
     <Modal
@@ -52,7 +58,7 @@ export function AgeVerificationGate({ productId, productName, isOpen, onClose, o
       closeOnOverlayClick={false}
     >
       <div className="text-center space-y-4 pt-1">
-        <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full bg-[#FAF7F2] border border-[#999999]/30 flex items-center justify-center text-[#4E5F52] shadow-xs">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full bg-[#FAF7F2] border border-[#9E8047]/25 flex items-center justify-center text-[#4E5F52] shadow-xs">
           <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-[#4E5F52]" />
         </div>
 
@@ -64,19 +70,29 @@ export function AgeVerificationGate({ productId, productName, isOpen, onClose, o
             {productName}
           </h3>
           <p className="mt-1 text-xs text-[#737373] max-w-sm mx-auto leading-relaxed">
-            This formulation contains active Ayurvedic botanicals intended strictly for mature adults 18 years and older.
+            This formulation contains active Ayurvedic botanicals intended
+            strictly for mature adults 18 years and older.
           </p>
         </div>
 
-        <div className="bg-[#FFFFFF] border border-[#999999]/30 rounded-xl p-4 text-left shadow-xs">
+        <div className="bg-[#FFFFFF] border border-[#9E8047]/25 rounded-xl p-4 text-left shadow-xs">
           <p className="text-xs font-semibold text-[#1C1D1F] uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <Leaf className="w-3.5 h-3.5 text-[#4E5F52]" />
             Ayurvedic Compliance &amp; Protocol
           </p>
           <ul className="space-y-1.5 text-xs text-[#555555]">
-            <li className="flex items-center gap-2"><span className="text-[#4E5F52] font-bold">✓</span> 100% Ayurvedic herbal &amp; topical ingredients</li>
-            <li className="flex items-center gap-2"><span className="text-[#4E5F52] font-bold">✓</span> Strictly intended for individuals 18 years and older</li>
-            <li className="flex items-center gap-2"><span className="text-[#4E5F52] font-bold">✓</span> Discreet, tamper-evident unmarked packaging guaranteed</li>
+            <li className="flex items-center gap-2">
+              <span className="text-[#4E5F52] font-bold">✓</span> 100% Ayurvedic
+              herbal &amp; topical ingredients
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-[#4E5F52] font-bold">✓</span> Strictly
+              intended for individuals 18 years and older
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-[#4E5F52] font-bold">✓</span> Discreet,
+              tamper-evident unmarked packaging guaranteed
+            </li>
           </ul>
         </div>
 
@@ -100,5 +116,5 @@ export function AgeVerificationGate({ productId, productName, isOpen, onClose, o
         </div>
       </div>
     </Modal>
-  )
+  );
 }

@@ -1,52 +1,59 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Home, Search, Truck, ShoppingBag, HeartPulse } from 'lucide-react'
-import { useCartStore } from '@/store/cartStore'
-import { useUserStore } from '@/store/userStore'
-import { useUIStore } from '@/store/uiStore'
-import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from '@/store/whatsappStore'
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Home, Search, Truck, ShoppingBag, HeartPulse } from "lucide-react";
+import { useCartStore } from "@/store/cartStore";
+import { useUserStore } from "@/store/userStore";
+import { useUIStore } from "@/store/uiStore";
+import {
+  buildWhatsAppUrl,
+  buildVaidyaConsultationMessage,
+} from "@/store/whatsappStore";
 
 export function MobileBottomNav() {
-  const pathname = usePathname()
-  const [isMounted, setIsMounted] = useState(false)
-  const { getItemCount: getCartCount } = useCartStore()
-  const { user } = useUserStore()
-  const { openCartDrawer, openSearch, isSearchOpen } = useUIStore()
+  const pathname = usePathname();
+  const [isMounted, setIsMounted] = useState(false);
+  const { getItemCount: getCartCount } = useCartStore();
+  const { user } = useUserStore();
+  const { openCartDrawer, openSearch, isSearchOpen } = useUIStore();
 
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
+    setIsMounted(true);
+  }, []);
 
-  const cartCount = getCartCount()
+  const cartCount = getCartCount();
 
   const handleDoctorWhatsApp = () => {
-    const primaryAddr = user?.addresses?.[0]
-    const userCity = primaryAddr ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(', ') : ''
-    
+    const primaryAddr = user?.addresses?.[0];
+    const userCity = primaryAddr
+      ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(", ")
+      : "";
+
     const msg = buildVaidyaConsultationMessage({
-      patientName: user?.name || '',
-      patientPhone: user?.phone || '',
+      patientName: user?.name || "",
+      patientPhone: user?.phone || "",
       patientCity: userCity,
-      concern: 'Personalized Rasayana Regimen & Stamina Guidance',
-      source: 'bottom-nav',
-    })
-    window.open(buildWhatsAppUrl(msg), '_blank')
-  }
+      concern: "Personalized Rasayana Regimen & Stamina Guidance",
+      source: "bottom-nav",
+    });
+    window.open(buildWhatsAppUrl(msg), "_blank");
+  };
 
   return (
     <nav
       aria-label="Mobile Bottom Navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-t border-[#999999]/30 px-2 py-1.5 shadow-lg safe-area-pb"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-t border-[#9E8047]/25 px-2 py-1.5 shadow-lg safe-area-pb"
     >
       <div className="flex items-center justify-around max-w-md mx-auto">
         {/* 1. Home */}
         <Link
           href="/"
           className={`flex flex-col items-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
-            pathname === '/' ? 'text-[#1C1D1F] font-semibold' : 'text-[#737373] hover:text-[#1C1D1F]'
+            pathname === "/"
+              ? "text-[#1C1D1F] font-semibold"
+              : "text-[#737373] hover:text-[#1C1D1F]"
           }`}
           aria-label="Home"
         >
@@ -59,7 +66,9 @@ export function MobileBottomNav() {
           type="button"
           onClick={openSearch}
           className={`flex flex-col items-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
-            isSearchOpen ? 'text-[#1C1D1F] font-semibold' : 'text-[#737373] hover:text-[#1C1D1F]'
+            isSearchOpen
+              ? "text-[#1C1D1F] font-semibold"
+              : "text-[#737373] hover:text-[#1C1D1F]"
           }`}
           aria-label="Search Formulations"
         >
@@ -94,7 +103,7 @@ export function MobileBottomNav() {
             <ShoppingBag className="w-5 h-5" />
             {isMounted && cartCount > 0 && (
               <span className="absolute -top-1.5 -right-2 bg-[#4E5F52] text-[#FFFFFF] text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
-                {cartCount > 99 ? '99+' : cartCount}
+                {cartCount > 99 ? "99+" : cartCount}
               </span>
             )}
           </div>
@@ -105,7 +114,9 @@ export function MobileBottomNav() {
         <Link
           href="/track-order"
           className={`flex flex-col items-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
-            pathname === '/track-order' ? 'text-[#1C1D1F] font-semibold' : 'text-[#737373] hover:text-[#1C1D1F]'
+            pathname === "/track-order"
+              ? "text-[#1C1D1F] font-semibold"
+              : "text-[#737373] hover:text-[#1C1D1F]"
           }`}
           aria-label="Track Order Status"
         >
@@ -114,5 +125,5 @@ export function MobileBottomNav() {
         </Link>
       </div>
     </nav>
-  )
+  );
 }

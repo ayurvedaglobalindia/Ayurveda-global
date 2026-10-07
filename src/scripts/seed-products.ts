@@ -1,8 +1,8 @@
-import { db } from '@/lib/db'
-import { products } from '@/lib/products/registry'
-import bcrypt from 'bcryptjs'
+import { db } from "@/lib/db";
+import { products } from "@/lib/products/registry";
+import bcrypt from "bcryptjs";
 
-console.log('Seeding database...')
+console.log("Seeding database...");
 
 // Seed products
 const productStmt = db.prepare(`
@@ -17,7 +17,7 @@ const productStmt = db.prepare(`
     @ageRestricted, @imagesJson, @variantsJson, @ingredientsJson,
     @usage, @warningsJson, @tagsJson, @seoJson
   )
-`)
+`);
 
 const insertProducts = db.transaction((productList: typeof products) => {
   for (const product of productList) {
@@ -41,12 +41,12 @@ const insertProducts = db.transaction((productList: typeof products) => {
       warningsJson: JSON.stringify(product.warnings),
       tagsJson: JSON.stringify(product.tags),
       seoJson: JSON.stringify(product.seo),
-    })
+    });
   }
-})
+});
 
-insertProducts(products)
-console.log(`Seeded ${products.length} products successfully`)
+insertProducts(products);
+console.log(`Seeded ${products.length} products successfully`);
 
 // Seed coupons
 const couponStmt = db.prepare(`
@@ -59,57 +59,57 @@ const couponStmt = db.prepare(`
     @usageLimit, @usedCount, @expiresAt, @isActive,
     @applicableProductsJson, @applicableCategoriesJson
   )
-`)
+`);
 
 const coupons = [
   {
-    code: 'WELCOME10',
-    type: 'percentage',
+    code: "WELCOME10",
+    type: "percentage",
     value: 10,
     minOrderAmount: 50000,
     maxDiscountAmount: 200000,
     usageLimit: 100,
     usedCount: 0,
-    expiresAt: '2030-12-31 23:59:59',
+    expiresAt: "2030-12-31 23:59:59",
     isActive: 1,
     applicableProductsJson: JSON.stringify([]),
     applicableCategoriesJson: JSON.stringify([]),
   },
   {
-    code: 'FREESHIP',
-    type: 'free_shipping',
+    code: "FREESHIP",
+    type: "free_shipping",
     value: 0,
     minOrderAmount: 0,
     maxDiscountAmount: null,
     usageLimit: 500,
     usedCount: 0,
-    expiresAt: '2030-12-31 23:59:59',
+    expiresAt: "2030-12-31 23:59:59",
     isActive: 1,
     applicableProductsJson: JSON.stringify([]),
     applicableCategoriesJson: JSON.stringify([]),
   },
   {
-    code: 'AYURVEDA20',
-    type: 'percentage',
+    code: "AYURVEDA20",
+    type: "percentage",
     value: 20,
     minOrderAmount: 150000,
     maxDiscountAmount: 500000,
     usageLimit: 50,
     usedCount: 0,
-    expiresAt: '2030-12-31 23:59:59',
+    expiresAt: "2030-12-31 23:59:59",
     isActive: 1,
     applicableProductsJson: JSON.stringify([]),
     applicableCategoriesJson: JSON.stringify([]),
   },
-]
+];
 
 const insertCoupons = db.transaction((couponList: typeof coupons) => {
   for (const coupon of couponList) {
-    couponStmt.run(coupon)
+    couponStmt.run(coupon);
   }
-})
+});
 
-insertCoupons(coupons)
-console.log(`Seeded ${coupons.length} coupons successfully`)
+insertCoupons(coupons);
+console.log(`Seeded ${coupons.length} coupons successfully`);
 
-console.log('Database seeding completed!')
+console.log("Database seeding completed!");

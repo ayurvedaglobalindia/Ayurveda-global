@@ -1,92 +1,126 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { getAllProducts } from '@/lib/products/registry'
-import { ProductCard } from '@/components/product/ProductCard'
+import React, { useState, useEffect, useRef } from "react";
+import { ProductCard } from "../product/ProductCard";
+import { products } from "@/lib/products/registry";
+import { motion, useAnimation, useInView } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export function FeaturedProducts() {
-  const [activeCategory, setActiveCategory] = useState<'all' | 'supplements' | 'personal-care' | 'combos'>('all')
-  const allProducts = getAllProducts()
+  const [mounted, setMounted] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sliderRef, { once: true, margin: "-100px" });
 
-  const filteredProducts = allProducts.filter((p) => {
-    if (activeCategory === 'all') return true
-    if (activeCategory === 'supplements') return p.category === 'supplements'
-    if (activeCategory === 'personal-care') return p.category === 'personal-care'
-    if (activeCategory === 'combos') return p.category === 'wellness'
-    return true
-  })
+  useEffect(() => setMounted(true), []);
+
+  const allProducts = products.map((p) => ({ ...p, isNew: true }));
+
+  if (!mounted) return null;
+
+  const scrollLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -320, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: 320, behavior: "smooth" });
+    }
+  };
 
   return (
-    <section id="products" className="bg-[#FAF7F2] py-7 sm:py-9 lg:py-11 border-b border-[#999999]/30">
-      <div className="container">
+    <section className="bg-transparent py-16 overflow-hidden relative">
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-5 sm:mb-6 gap-3">
-          <div className="max-w-xl">
-            <span className="text-[10.5px] font-mono tracking-[0.2em] text-[#737373] uppercase block mb-1">
-              Formulary Catalog
-            </span>
-            <h2 className="font-heading text-xl sm:text-2xl lg:text-[28px] font-normal text-[#1C1D1F] tracking-tight">
-              Master Formulations
-            </h2>
-            <p className="text-xs text-[#555555] mt-1.5 font-sans leading-relaxed">
-              Prepared from standardized botanical extracts. Free from synthetic hormones, artificial numbness agents, or mineral oil fillers.
-            </p>
-          </div>
-
-          {/* Clean Category Filter Tabs */}
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {[
-              { id: 'all', label: 'All Formulations' },
-              { id: 'supplements', label: 'Supplements' },
-              { id: 'personal-care', label: 'Topical Care' },
-              { id: 'combos', label: 'Power Kits' },
-            ].map((tab) => (
-              <motion.button
-                whileTap={{ scale: 0.95 }}
-                key={tab.id}
-                onClick={() => setActiveCategory(tab.id as any)}
-                className={`px-3 py-1 rounded-full text-xs transition-colors ${
-                  activeCategory === tab.id
-                    ? 'bg-[#1C1D1F] text-[#FAF7F2] font-medium'
-                    : 'bg-[#FAF7F2] text-[#737373] hover:text-[#1C1D1F] border border-[#999999]/40'
-                }`}
-              >
-                {tab.label}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-
-        {/* Product Cards Grid: Real Images, Clear Purpose, Simple Price & Actions */}
-        <AnimatePresence mode="wait">
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10 gap-6">
           <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, type: "spring", bounce: 0.4 }}
           >
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1C1D1F] tracking-tight">
+              Apothecary Showcase
+            </h2>
+            <p className="font-sans text-[#737373] mt-2 max-w-md text-sm">
+              Explore our master-crafted Ayurvedic formulations, displayed in our signature gallery.
+            </p>
           </motion.div>
-        </AnimatePresence>
-
-        {/* Bottom Catalog Link */}
-        <div className="mt-7 sm:mt-9 text-center">
-          <Link
-            href="/shop"
-            className="inline-flex items-center justify-center px-5 py-2 rounded-full border border-[#1C1D1F] bg-[#FAF7F2] text-[#1C1D1F] hover:bg-[#1C1D1F] hover:text-[#FAF7F2] transition-colors text-xs font-medium uppercase tracking-wider shadow-xs"
+          
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="flex gap-3"
           >
-            View Complete Formulary Catalog
-          </Link>
+            <button
+              onClick={scrollLeft}
+              className="w-12 h-12 rounded-full border border-[#9E8047]/30 flex items-center justify-center text-[#2D4A3E] hover:bg-[#9E8047]/10 transition-colors backdrop-blur-md shadow-sm"
+              aria-label="Previous items"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={scrollRight}
+              className="w-12 h-12 rounded-full border border-[#9E8047]/30 flex items-center justify-center text-[#2D4A3E] hover:bg-[#9E8047]/10 transition-colors backdrop-blur-md shadow-sm"
+              aria-label="Next items"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </motion.div>
         </div>
 
+        {/* The Showcase Frame */}
+        <motion.div
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
+          className="relative bg-white/40 backdrop-blur-2xl rounded-[32px] border-2 border-[#9E8047]/20 shadow-[0_20px_60px_-15px_rgba(158,128,71,0.2)] p-4 sm:p-8 overflow-hidden group"
+        >
+          {/* Inner glass reflection effect */}
+          <div className="absolute inset-0 rounded-[32px] border border-white/60 pointer-events-none" />
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/20 to-transparent pointer-events-none rounded-t-[32px]" />
+
+          {/* Slider Container */}
+          <div
+            ref={sliderRef}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-6 sm:gap-8 pb-8 pt-4 px-4 sm:px-6 hide-scrollbar scroll-smooth relative z-10"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {allProducts.map((product, i) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, scale: 0.8, rotateY: 15 }}
+                animate={isInView ? { opacity: 1, scale: 1, rotateY: 0 } : {}}
+                transition={{
+                  duration: 0.8,
+                  delay: i * 0.15,
+                  type: "spring",
+                  bounce: 0.4,
+                }}
+                className="snap-center sm:snap-start shrink-0 w-[85vw] sm:w-[320px] lg:w-[340px] h-full"
+                whileHover={{ 
+                  y: -15, 
+                  scale: 1.02,
+                  transition: { type: "spring", bounce: 0.5 }
+                }}
+              >
+                <ProductCard product={product} />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
+
+      <style jsx global>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
-  )
+  );
 }

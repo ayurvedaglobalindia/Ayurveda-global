@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
-import { trackEvent } from '@/lib/analytics'
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { trackEvent } from "@/lib/analytics";
 
 export function AnalyticsTracker() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   useEffect(() => {
     if (pathname) {
-      trackEvent('page_view', { path: pathname })
+      trackEvent("page_view", { path: pathname });
     }
-  }, [pathname])
+  }, [pathname]);
 
-  return null
+  return null;
 }

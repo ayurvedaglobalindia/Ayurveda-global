@@ -1,7 +1,9 @@
-import type { Product, SEOData } from '@/types'
+import type { Product, SEOData } from "@/types";
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://ayurvedaglobal.com'
-export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Ayur Veda Global'
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://ayurvedaglobal.com";
+export const SITE_NAME =
+  process.env.NEXT_PUBLIC_SITE_NAME || "Ayur Veda Global";
 
 export function generateProductSEO(product: Product): SEOData {
   return {
@@ -9,143 +11,160 @@ export function generateProductSEO(product: Product): SEOData {
     description: product.seo.description,
     keywords: product.seo.keywords,
     ogImage: product.images[0]?.src,
-    ogType: 'product',
+    ogType: "product",
     structuredData: generateProductStructuredData(product),
-  }
+  };
 }
 
 export function generateProductStructuredData(product: Product) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
+    "@context": "https://schema.org",
+    "@type": "Product",
     name: product.name,
     description: product.description,
-    image: product.images.map(img => `${SITE_URL}${img.src}`),
+    image: product.images.map((img) => `${SITE_URL}${img.src}`),
     brand: {
-      '@type': 'Brand',
+      "@type": "Brand",
       name: SITE_NAME,
     },
     sku: product.variants[0]?.sku || product.id,
     offers: {
-      '@type': 'Offer',
+      "@type": "Offer",
       url: `${SITE_URL}/product/${product.slug}`,
-      priceCurrency: 'INR',
+      priceCurrency: "INR",
       price: (product.price / 100).toFixed(2),
-      priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      availability: product.inventory.quantity > 0
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/OutOfStock',
+      priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0],
+      availability:
+        product.inventory.quantity > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
       seller: {
-        '@type': 'Organization',
+        "@type": "Organization",
         name: SITE_NAME,
       },
     },
     aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: product.slug === 'staymax-delay-spray' ? '4.8' : product.slug === 'vitality-power-combo' ? '5.0' : '4.9',
-      reviewCount: product.slug === 'staymax-delay-spray' ? '96' : product.slug === 'vitality-power-combo' ? '218' : '142',
-      bestRating: '5',
-      worstRating: '1',
+      "@type": "AggregateRating",
+      ratingValue:
+        product.slug === "staymax-delay-spray"
+          ? "4.8"
+          : product.slug === "vitality-power-combo"
+            ? "5.0"
+            : "4.9",
+      reviewCount:
+        product.slug === "staymax-delay-spray"
+          ? "96"
+          : product.slug === "vitality-power-combo"
+            ? "218"
+            : "142",
+      bestRating: "5",
+      worstRating: "1",
     },
-  }
+  };
 }
 
 export function generateOrganizationStructuredData() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
+    "@context": "https://schema.org",
+    "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/images/brand-logo.png`,
     founder: {
-      '@type': 'Person',
-      name: 'Mageesh',
-      jobTitle: 'Owner',
-      telephone: '+91-9123485451',
+      "@type": "Person",
+      name: "Mageesh",
+      jobTitle: "Owner",
+      telephone: "+91-9123485451",
       image: `${SITE_URL}/images/team/mageesh.jpg`,
     },
     employee: [
       {
-        '@type': 'Person',
-        name: 'Umesh',
-        jobTitle: 'Manager',
-        telephone: '+91-9123485451',
-        email: 'umesh@ayurvedaglobal.com',
+        "@type": "Person",
+        name: "Umesh",
+        jobTitle: "Manager",
+        telephone: "+91-9123485451",
+        email: "umesh@ayurvedaglobal.com",
         image: `${SITE_URL}/images/team/umesh.jpg`,
       },
     ],
     sameAs: [
-      'https://www.instagram.com/ayurveda.global',
-      'https://www.facebook.com/profile.php?id=61594780446401',
-      'https://youtube.com/@ayurvedaglobal',
+      "https://www.instagram.com/ayurveda.global",
+      "https://www.facebook.com/profile.php?id=61594780446401",
+      "https://youtube.com/@ayurvedaglobal",
     ],
     contactPoint: {
-      '@type': 'ContactPoint',
-      telephone: '+91-9123485451',
-      contactType: 'customer service',
-      availableLanguage: ['English', 'Hindi'],
+      "@type": "ContactPoint",
+      telephone: "+91-9123485451",
+      contactType: "customer service",
+      availableLanguage: ["English", "Hindi"],
     },
-  }
+  };
 }
 
-export function generateBreadcrumbStructuredData(items: Array<{ name: string; url: string }>) {
+export function generateBreadcrumbStructuredData(
+  items: Array<{ name: string; url: string }>,
+) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
     itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: item.url.startsWith('http') ? item.url : `${SITE_URL}${item.url}`,
+      item: item.url.startsWith("http") ? item.url : `${SITE_URL}${item.url}`,
     })),
-  }
+  };
 }
 
-export function generateFAQStructuredData(faqs: Array<{ question: string; answer: string }>) {
+export function generateFAQStructuredData(
+  faqs: Array<{ question: string; answer: string }>,
+) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map(faq => ({
-      '@type': 'Question',
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
       name: faq.question,
       acceptedAnswer: {
-        '@type': 'Answer',
+        "@type": "Answer",
         text: faq.answer,
       },
     })),
-  }
+  };
 }
 
 export function generateWebsiteStructuredData() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
+    "@context": "https://schema.org",
+    "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
     potentialAction: {
-      '@type': 'SearchAction',
+      "@type": "SearchAction",
       target: {
-        '@type': 'EntryPoint',
+        "@type": "EntryPoint",
         urlTemplate: `${SITE_URL}/shop?q={search_term_string}`,
       },
-      'query-input': 'required name=search_term_string',
+      "query-input": "required name=search_term_string",
     },
-  }
+  };
 }
 
 export function generatePageSEO(
-    title: string,
-    description: string,
-    path: string,
-    ogImage?: string,
-    keywords: string[] = []
-  ): SEOData {
-    return {
-      title: `${title} | ${SITE_NAME}`,
-      description,
-      keywords: [...keywords, 'ayurvedic', 'wellness', 'natural', 'herbal'],
-      ogImage: ogImage || `${SITE_URL}/images/og-default.svg`,
-      ogType: 'website',
-      structuredData: generateWebsiteStructuredData(),
-    }
-  }
+  title: string,
+  description: string,
+  path: string,
+  ogImage?: string,
+  keywords: string[] = [],
+): SEOData {
+  return {
+    title: `${title} | ${SITE_NAME}`,
+    description,
+    keywords: [...keywords, "ayurvedic", "wellness", "natural", "herbal"],
+    ogImage: ogImage || `${SITE_URL}/images/og-default.svg`,
+    ogType: "website",
+    structuredData: generateWebsiteStructuredData(),
+  };
+}
