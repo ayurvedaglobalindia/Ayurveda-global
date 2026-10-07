@@ -9,12 +9,12 @@
   --font-dm-sans: "DM Sans", system-ui, sans-serif;
   --font-cormorant: "Cormorant Garamond", Georgia, serif;
 
-  --color-void: #faf7f2;
-  --color-obsidian: #eaeae8;
-  --color-charcoal: #e2e2e0;
-  --color-forest: #ebebe9;
-  --color-forest-deep: #faf7f2;
-  --color-forest-dark: #faf7f2;
+  --color-void: #fafaf9;
+  --color-obsidian: #e8ece9;
+  --color-charcoal: #1f3d2b;
+  --color-forest: #1f3d2b;
+  --color-forest-deep: #fafaf9;
+  --color-forest-dark: #fafaf9;
   --color-forest-light: #fbf9f5;
   --color-emerald-dark: #e4e7e5;
   --color-emerald-deep: #ecefe8;
@@ -30,6 +30,7 @@
   /* Muted Earthy Nature Green (Soft Sage / Olive, Zero Neon) */
   --color-herbal: #4e5f52;
   --color-herbal-soft: #586d5e;
+  --color-forest-accent: #1f3d2b;
   --color-herbal-glow: #445347;
   --color-herbal-light: #ebf1ec;
   --color-sage: #4e5f52;
@@ -95,8 +96,8 @@ html {
 
 body {
   font-family: var(--font-dm-sans);
-  background-color: #faf7f2;
-  color: #1c1d1f;
+  background-color: var(--color-void);
+  color: var(--color-charcoal);
   font-size: 14px;
   line-height: 1.5;
   overflow-x: hidden;

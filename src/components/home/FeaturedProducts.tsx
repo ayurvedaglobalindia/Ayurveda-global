@@ -41,10 +41,10 @@ export function FeaturedProducts() {
             viewport={{ once: true }}
             transition={{ duration: 1, type: "spring", bounce: 0.4 }}
           >
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1C1D1F] tracking-tight">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[var(--color-charcoal)] tracking-tight">
               Apothecary Showcase
             </h2>
-            <p className="font-sans text-[#737373] mt-2 max-w-md text-sm">
+            <p className="font-sans text-[var(--color-charcoal)] mt-2 max-w-md text-sm">
               Explore our master-crafted Ayurvedic formulations, displayed in our signature gallery.
             </p>
           </motion.div>
@@ -58,14 +58,14 @@ export function FeaturedProducts() {
           >
             <button
               onClick={scrollLeft}
-              className="w-12 h-12 rounded-full border border-[#9E8047]/30 flex items-center justify-center text-[#2D4A3E] hover:bg-[#9E8047]/10 transition-colors backdrop-blur-md shadow-sm"
+              className="w-12 h-12 rounded-full border border-[var(--color-forest-accent)]/30 flex items-center justify-center text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/10 transition-colors backdrop-blur-md shadow-sm"
               aria-label="Previous items"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={scrollRight}
-              className="w-12 h-12 rounded-full border border-[#9E8047]/30 flex items-center justify-center text-[#2D4A3E] hover:bg-[#9E8047]/10 transition-colors backdrop-blur-md shadow-sm"
+              className="w-12 h-12 rounded-full border border-[var(--color-forest-accent)]/30 flex items-center justify-center text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/10 transition-colors backdrop-blur-md shadow-sm"
               aria-label="Next items"
             >
               <ChevronRight className="w-5 h-5" />
@@ -79,7 +79,7 @@ export function FeaturedProducts() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
-          className="relative bg-white/40 backdrop-blur-2xl rounded-[32px] border-2 border-[#9E8047]/20 shadow-[0_20px_60px_-15px_rgba(158,128,71,0.2)] p-4 sm:p-8 overflow-hidden group"
+          className="relative bg-white/40 backdrop-blur-2xl rounded-[32px] border-2 border-[var(--color-forest-accent)]/20 shadow-[0_20px_60px_-15px_rgba(158,128,71,0.2)] p-4 sm:p-8 overflow-hidden group"
         >
           {/* Inner glass reflection effect */}
           <div className="absolute inset-0 rounded-[32px] border border-white/60 pointer-events-none" />

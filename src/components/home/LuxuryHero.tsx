@@ -38,13 +38,13 @@ export function LuxuryHero() {
             <motion.div variants={fadeUpVariant} className="flex flex-row items-center justify-center lg:justify-start gap-3 pt-2">
               <Link
                 href="/shop"
-                className="px-5 py-2.5 bg-[#2D4A3E] hover:bg-[#1F332A] text-white font-sans font-medium text-xs tracking-wide transition-colors rounded-sm text-center shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform duration-300"
+                className="px-5 py-2.5 bg-[var(--color-forest-accent)] hover:bg-[var(--color-charcoal)] text-white font-sans font-medium text-xs tracking-wide transition-colors rounded-sm text-center shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform duration-300"
               >
                 Shop Now
               </Link>
               <Link
                 href="/consultation"
-                className="px-5 py-2.5 bg-transparent border border-[#2D4A3E] text-[#2D4A3E] hover:bg-[#2D4A3E] hover:text-white font-sans font-medium text-xs tracking-wide transition-colors rounded-sm text-center hover:shadow-lg hover:-translate-y-0.5 transform duration-300"
+                className="px-5 py-2.5 bg-transparent border border-[var(--color-forest-accent)] text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)] hover:text-white font-sans font-medium text-xs tracking-wide transition-colors rounded-sm text-center hover:shadow-lg hover:-translate-y-0.5 transform duration-300"
               >
                 Consult an Expert
               </Link>

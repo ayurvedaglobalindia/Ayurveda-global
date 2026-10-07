@@ -230,7 +230,7 @@ export function ProductCard({
     return (
       <Link
         href={`/product/${product.slug}`}
-        className="flex gap-3.5 p-2.5 bg-[#FFFFFF] rounded-xl border border-[#9E8047]/30 hover:border-[#1C1D1F] transition-colors group"
+        className="flex gap-3.5 p-2.5 bg-[#FFFFFF] rounded-xl border border-[var(--color-forest-accent)]/30 hover:border-[var(--color-charcoal)] transition-colors group"
       >
         <div className="w-16 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-[#FAF7F2] relative">
           <Image
@@ -267,7 +267,7 @@ export function ProductCard({
       viewport={{ once: true, margin: "-20px" }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -4, transition: { duration: 0.22 } }}
-      className="h-full group relative rounded-2xl border border-[#9E8047]/30 bg-[#FFFFFF] hover:border-[#1C1D1F] transition-colors flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md w-full min-w-0"
+      className="h-full group relative rounded-2xl border border-[var(--color-forest-accent)]/30 bg-[var(--color-void)] hover:border-[var(--color-charcoal)] transition-colors flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-md w-full min-w-0"
     >
       {/* Product Image Stage */}
       <div className="relative w-full border-b border-[#9E8047]/20">
@@ -288,7 +288,7 @@ export function ProductCard({
           {/* Discreet courtesy badge if on sale */}
           {hasDiscount && (
             <div className="absolute top-3 left-3 z-10 pointer-events-none">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium tracking-wider text-[#1C1D1F] bg-[#FAF7F2]/95 border border-[#9E8047]/30 shadow-xs">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium tracking-wider text-[#1C1D1F] bg-[#FAF7F2]/95 border border-[var(--color-forest-accent)]/30 shadow-xs">
                 {discountPercentage}% Courtesy
               </span>
             </div>
@@ -299,7 +299,7 @@ export function ProductCard({
             <motion.button
               whileTap={{ scale: 0.92 }}
               onClick={handleQuickView}
-              className="w-8 h-8 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] backdrop-blur-sm flex items-center justify-center border border-[#9E8047]/30 text-[#737373] hover:text-[#1C1D1F] hover:border-[#1C1D1F] transition-colors shadow-xs"
+              className="w-8 h-8 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] backdrop-blur-sm flex items-center justify-center border border-[var(--color-forest-accent)]/30 text-[#737373] hover:text-[var(--color-charcoal)] hover:border-[var(--color-charcoal)] transition-colors shadow-xs"
               aria-label="Quick view formulation"
               title="Quick View"
             >
@@ -309,7 +309,7 @@ export function ProductCard({
             <motion.button
               whileTap={{ scale: 0.92 }}
               onClick={handleWishlistToggle}
-              className={`w-8 h-8 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] backdrop-blur-sm flex items-center justify-center border border-[#9E8047]/30 transition-colors shadow-xs ${
+              className={`w-8 h-8 rounded-full bg-[#FFFFFF]/90 hover:bg-[#FFFFFF] backdrop-blur-sm flex items-center justify-center border border-[var(--color-forest-accent)]/30 transition-colors shadow-xs ${
                 inWishlist
                   ? "text-red-500 border-red-200"
                   : "text-[#737373] hover:text-[#1C1D1F] hover:border-[#1C1D1F]"
@@ -331,7 +331,7 @@ export function ProductCard({
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3 bg-[#FFFFFF] min-w-0">
         <div className="space-y-1.5 min-w-0">
           {/* Nature Botanic Tag */}
-          <div className="inline-flex items-center gap-1.5 text-[10.5px] font-mono text-[#4E5F52] bg-[#FAF7F2] border border-[#9E8047]/25 px-2 py-0.5 rounded-full max-w-full">
+          <div className="inline-flex items-center gap-1.5 text-[10.5px] font-mono text-[#4E5F52] bg-[#FAF7F2] border border-[var(--color-forest-accent)]/25 px-2 py-0.5 rounded-full max-w-full">
             <Leaf className="w-3 h-3 text-[#4E5F52] flex-shrink-0" />
             <span className="truncate">{feature.pill}</span>
           </div>
@@ -374,7 +374,7 @@ export function ProductCard({
           {/* Action Buttons: Add to Cart + Buy Now */}
           <div className="grid grid-cols-1 gap-2 pt-1.5 border-t border-[#9E8047]/20">
             {inCart ? (
-              <div className="w-full flex items-center justify-between bg-[#EFF4F0] p-1.5 px-3 rounded-full border border-[#4E5F52]/30">
+              <div className="w-full flex items-center justify-between bg-[#EFF4F0] p-1.5 px-3 rounded-full border border-[var(--color-forest-accent)]/30">
                 <span className="text-xs font-medium text-[#4E5F52]">
                   In Cart ({cartQuantity})
                 </span>
@@ -395,7 +395,7 @@ export function ProductCard({
                     product?.inventory?.trackQuantity &&
                     product?.inventory?.quantity === 0
                   }
-                  className="flex-1 text-xs font-semibold py-2.5 px-2 rounded-xl border border-[#4E5F52] bg-[#FAF7F2] hover:bg-[#EFF4F0] text-[#4E5F52] transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
+                  className="flex-1 text-xs font-semibold py-2.5 px-2 rounded-xl border border-[var(--color-forest-accent)] bg-[var(--color-void)] hover:bg-[var(--color-mint-soft)] text-[var(--color-forest-accent)] transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   <ShoppingBag className="w-3.5 h-3.5" />
                   <span>Add to Cart</span>
@@ -407,7 +407,7 @@ export function ProductCard({
                     product?.inventory?.trackQuantity &&
                     product?.inventory?.quantity === 0
                   }
-                  className="flex-1 text-xs font-semibold py-2.5 px-2 rounded-xl bg-[#4E5F52] hover:bg-[#3D4D40] text-white transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
+                  className="flex-1 text-xs font-semibold py-2.5 px-2 rounded-xl bg-[var(--color-forest-accent)] hover:bg-[var(--color-charcoal)] text-white transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
                 >
                   <span>Buy Now</span>
                 </motion.button>

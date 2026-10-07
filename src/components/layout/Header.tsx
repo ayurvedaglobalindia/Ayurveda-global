@@ -30,8 +30,8 @@ export function Header() {
     <header
       className={`w-full transition-all duration-300 z-50 sticky top-0 ${
         isScrolled
-          ? "bg-[#E8ECE9]/90 backdrop-blur-md border-b border-[#2D4A3E]/10 shadow-sm"
-          : "bg-[#E8ECE9]"
+          ? "bg-[var(--color-void)]/90 backdrop-blur-md border-b border-[var(--color-forest-accent)]/10 shadow-sm"
+          : "bg-[var(--color-void)]"
       }`}
     >
       <div className="container mx-auto px-4 lg:px-8">
@@ -69,7 +69,7 @@ export function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-[#3D5A49] hover:text-[#1F332A] transition-colors font-sans text-sm font-medium tracking-wide"
+                className="text-[var(--color-forest-accent)] hover:text-[var(--color-charcoal)] transition-colors font-sans text-sm font-medium tracking-wide"
               >
                 {link.label}
               </Link>
@@ -82,7 +82,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => openSearch()}
-              className="p-2 rounded-full text-[#2D4A3E] hover:bg-[#2D4A3E]/5 transition-colors"
+              className="p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
               aria-label="Search"
             >
               <Search className="w-5 h-5 stroke-[1.5]" />
@@ -91,7 +91,7 @@ export function Header() {
             {/* User Account */}
             <Link
               href="/account"
-              className="hidden sm:block p-2 rounded-full text-[#2D4A3E] hover:bg-[#2D4A3E]/5 transition-colors"
+              className="hidden sm:block p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
               aria-label="Account"
             >
               <User className="w-5 h-5 stroke-[1.5]" />
@@ -101,7 +101,7 @@ export function Header() {
             <button
               type="button"
               onClick={openCartDrawer}
-              className="relative p-2 rounded-full text-[#2D4A3E] hover:bg-[#2D4A3E]/5 transition-colors"
+              className="relative p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
               aria-label={isMounted ? `Cart, ${cartCount} items` : "Cart"}
             >
               <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
@@ -116,7 +116,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => openModal("mobile-menu")}
-              className="md:hidden p-2 rounded-full text-[#2D4A3E] hover:bg-[#2D4A3E]/5 transition-colors"
+              className="md:hidden p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
               aria-label="Open menu"
             >
               <Menu className="w-5 h-5 stroke-[1.5]" />
