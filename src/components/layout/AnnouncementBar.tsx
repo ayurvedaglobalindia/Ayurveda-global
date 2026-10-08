@@ -43,9 +43,9 @@ const announcements = [
   },
   {
     id: 5,
-    text: "Complimentary Ayurvedic consultation via our Chief Vaidya WhatsApp Desk",
+    text: "Complimentary Ayurvedic consultation with certified BAMS Senior Vaidyas",
     badge: "Consultation",
-    href: "https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20a%20confidential%20Ayurvedic%20consultation.",
+    href: "/consultation",
   },
 ];
 

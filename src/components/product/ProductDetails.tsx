@@ -15,6 +15,7 @@ import {
   Droplets,
   Clock,
   Sun,
+  MessageCircle,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { classNames } from "@/lib/utils/formatters";
@@ -23,6 +24,12 @@ import { ImageGallery } from "@/components/ui/ImageGallery";
 import type { Product, ProductVariant } from "@/types";
 import { useCartStore } from "@/store/cartStore";
 import { useUIStore } from "@/store/uiStore";
+import { useUserStore } from "@/store/userStore";
+import {
+  useWhatsAppStore,
+  buildWhatsAppUrl,
+  buildProductEnquiryMessage,
+} from "@/store/whatsappStore";
 import { formatINR } from "@/lib/utils/formatters";
 
 export function ProductDetails({
@@ -90,6 +97,36 @@ export function ProductDetails({
   const handleBuyNow = () => {
     addItem(product, selectedVariantId, quantity);
     router.push("/checkout");
+  };
+
+  const { user } = useUserStore();
+  const { trackLead } = useWhatsAppStore();
+
+  const handleWhatsAppOrder = () => {
+    const primaryAddr = user?.addresses?.[0];
+    const userCity = primaryAddr
+      ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(", ")
+      : "";
+    const variantSuffix = currentVariant ? ` (${currentVariant.name})` : "";
+    const message = buildProductEnquiryMessage({
+      customerName: user?.name || "",
+      customerPhone: user?.phone || "",
+      customerCity: userCity,
+      productName: `${product.name}${variantSuffix}`,
+      quantity: quantity,
+      price: (currentVariant?.price || product.price) * quantity,
+      enquiry: `Hi Ayur Veda Global, I want to order ${quantity}x ${product.name}${variantSuffix} via Cash on Delivery (COD). Please confirm stock and delivery timeline.`,
+      source: "product-page",
+    });
+
+    trackLead({
+      source: "product-page",
+      productName: product.name,
+      quantity,
+      orderTotal: (currentVariant?.price || product.price) * quantity,
+    });
+
+    window.open(buildWhatsAppUrl(message), "_blank");
   };
 
   const currentPrice = currentVariant?.price || product.price;
@@ -314,21 +351,32 @@ export function ProductDetails({
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button
-                variant="primary"
-                onClick={handleBuyNow}
-                className="flex-1 bg-[#1f3d2b] hover:bg-[#152a1d] text-white py-4 rounded-xl text-base font-bold uppercase tracking-wider shadow-md"
+            <div className="flex flex-col gap-3 pt-2">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  variant="primary"
+                  onClick={handleBuyNow}
+                  className="flex-1 bg-[#1f3d2b] hover:bg-[#152a1d] text-white py-4 rounded-xl text-base font-bold uppercase tracking-wider shadow-md"
+                >
+                  Buy Now (COD Available)
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleAddToCart}
+                  className="sm:w-1/3 border-2 border-[#1f3d2b] text-[#1f3d2b] hover:bg-[#e7ede8] py-4 rounded-xl text-base font-bold uppercase tracking-wider"
+                >
+                  Add to Cart
+                </Button>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleWhatsAppOrder}
+                className="w-full flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white text-sm font-semibold tracking-wide transition-all shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
               >
-                Buy Now (COD Available)
-              </Button>
-              <Button
-                variant="outline"
-                onClick={handleAddToCart}
-                className="sm:w-1/3 border-2 border-[#1f3d2b] text-[#1f3d2b] hover:bg-[#e7ede8] py-4 rounded-xl text-base font-bold uppercase tracking-wider"
-              >
-                Add to Cart
-              </Button>
+                <MessageCircle className="w-5 h-5 fill-white text-[#25D366]" />
+                <span>Instant Order via WhatsApp (Cash on Delivery)</span>
+              </button>
             </div>
 
             {/* Trust Icons */}
