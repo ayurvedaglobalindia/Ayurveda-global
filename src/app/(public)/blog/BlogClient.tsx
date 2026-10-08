@@ -93,7 +93,7 @@ const blogPosts: BlogPost[] = [
     category: "Personal Care",
     readTime: "5 min read",
     date: "July 2024",
-    image: "/images/products/staymax-delay-spray-card.jpg",
+    image: "/images/products/vajikara-gold-vitality-oil-card.jpg",
     relatedProductSlug: "staymax-delay-spray",
     relatedProductName: "STAYMAX+ Delay Spray",
     content: [
