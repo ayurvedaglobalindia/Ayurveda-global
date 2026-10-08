@@ -14,8 +14,8 @@ const LOCKOUT_KEY = "ayur_admin_lockout_until";
 const SESSION_DURATION_MS = 2 * 60 * 60 * 1000; // 2 hours
 
 const AUTHORIZED_HASHES = new Set([
-  "adb2bfa9d66224b9465dc2e78196f5b71bbe53aec9afcce76c96489b8d3445d4", // sha256 of "AyurVeda@Admin2025"
-  "b383aa421ebd9038adb130a407cc2ef2882cbbc4a9af0d4f8861755a0077ff7a", // sha256 of "ayur2025"
+  "adb2bfa9d66224b9465dc2e78196f5b71bbe53aec9afcce76c96489b8d3445d4",
+  "b383aa421ebd9038adb130a407cc2ef2882cbbc4a9af0d4f8861755a0077ff7a",
 ]);
 
 async function sha256(message: string): Promise<string> {

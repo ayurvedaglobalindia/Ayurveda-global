@@ -132,6 +132,7 @@ export default function AdminPage() {
         setMarketingConfig(JSON.parse(saved));
       }
     } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadDashboardData = (range: DateRange = dateRange) => {

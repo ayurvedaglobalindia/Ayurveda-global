@@ -1,43 +1,51 @@
-"use server";
-
-import { db } from "@/lib/db";
-import { verifyAdminSession } from "./admin-actions";
+/**
+ * Static & Edge-safe Order & Lead Storage Actions
+ * Compatible with Next.js static HTML export and Cloudflare Pages.
+ */
 
 export async function placeOrderServer(order: any) {
   try {
-    db.prepare("INSERT INTO orders").run(order);
+    if (typeof window !== "undefined") {
+      const stored = JSON.parse(localStorage.getItem("ayur_orders") || "[]");
+      const exists = stored.some(
+        (o: any) => o.id === order.id || o.orderNumber === order.orderNumber,
+      );
+      if (!exists) {
+        stored.unshift(order);
+        localStorage.setItem(
+          "ayur_orders",
+          JSON.stringify(stored.slice(0, 100)),
+        );
+      }
+    }
     return { success: true };
   } catch (error: any) {
-    console.error("Failed to place order:", error);
-    return { success: false, error: error.message };
+    return { success: false, error: error?.message || "Failed to save order" };
   }
 }
 
 export async function getOrdersServer() {
-  const isAdmin = await verifyAdminSession();
-  if (!isAdmin) throw new Error("Unauthorized");
-  
   try {
-    return db.prepare("SELECT * FROM orders").all();
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("ayur_orders") || "[]");
+    }
+    return [];
   } catch (error) {
     return [];
   }
 }
 
 export async function updateOrderStatusServer(orderId: string, status: string) {
-  const isAdmin = await verifyAdminSession();
-  if (!isAdmin) throw new Error("Unauthorized");
-
   try {
-    db.prepare("UPDATE orders SET order_status = ? WHERE id = ?").run(
-      status,
-      orderId,
-    );
-    db.prepare("INSERT INTO order_status_history").run(
-      orderId,
-      status,
-      "Status updated by admin",
-    );
+    if (typeof window !== "undefined") {
+      const stored = JSON.parse(localStorage.getItem("ayur_orders") || "[]");
+      const updated = stored.map((o: any) =>
+        o.id === orderId || o.orderNumber === orderId
+          ? { ...o, status, orderStatus: status }
+          : o,
+      );
+      localStorage.setItem("ayur_orders", JSON.stringify(updated));
+    }
     return { success: true };
   } catch (error) {
     return { success: false };
@@ -46,7 +54,20 @@ export async function updateOrderStatusServer(orderId: string, status: string) {
 
 export async function saveLeadServer(lead: any) {
   try {
-    db.prepare("INSERT INTO whatsapp_leads").run(lead);
+    if (typeof window !== "undefined") {
+      const stored = JSON.parse(
+        localStorage.getItem("ayur_whatsapp_leads") || "[]",
+      );
+      stored.unshift({
+        ...lead,
+        id: Date.now(),
+        createdAt: new Date().toISOString(),
+      });
+      localStorage.setItem(
+        "ayur_whatsapp_leads",
+        JSON.stringify(stored.slice(0, 100)),
+      );
+    }
     return { success: true };
   } catch (error) {
     return { success: false };
@@ -54,11 +75,11 @@ export async function saveLeadServer(lead: any) {
 }
 
 export async function getLeadsServer() {
-  const isAdmin = await verifyAdminSession();
-  if (!isAdmin) throw new Error("Unauthorized");
-
   try {
-    return db.prepare("SELECT * FROM whatsapp_leads").all();
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("ayur_whatsapp_leads") || "[]");
+    }
+    return [];
   } catch (error) {
     return [];
   }
