@@ -165,7 +165,7 @@ export function SearchModal() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={closeSearch}
-            className="fixed inset-0 bg-black/40 backdrop-blur-xs -z-10"
+            className="fixed inset-0 bg-black/60 backdrop-blur-md -z-10"
             aria-hidden="true"
           />
 
@@ -177,7 +177,7 @@ export function SearchModal() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: -16 }}
               transition={{ type: "spring", damping: 28, stiffness: 350 }}
-              className="pointer-events-auto relative w-full max-w-2xl bg-[#FAF7F2] border border-[#9E8047]/25 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden text-[#1C1D1F] flex flex-col text-left my-auto sm:my-0"
+              className="pointer-events-auto relative w-full max-w-2xl bg-[#FAF7F2]/95 backdrop-blur-2xl border border-[#9E8047]/30 rounded-2xl sm:rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden text-[#1C1D1F] flex flex-col text-left my-auto sm:my-0"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Top Search Input Bar */}

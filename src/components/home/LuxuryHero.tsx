@@ -52,33 +52,39 @@ export function LuxuryHero() {
           </motion.div>
 
           {/* Right Column: Product Showcase */}
-          <div className="relative flex justify-center items-center lg:justify-end mt-8 lg:mt-0">
+          <div className="relative flex justify-center items-center lg:justify-end mt-6 lg:mt-0">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 1.2, type: "spring", bounce: 0.4 }}
-              className="relative w-full max-w-[280px] aspect-[4/5] bg-white rounded-sm border border-[#9E8047]/30 shadow-[0_15px_40px_rgba(45,74,62,0.15)] p-6 flex items-center justify-center group overflow-hidden"
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1, type: "spring", bounce: 0.3 }}
+              className="relative w-full max-w-[320px] sm:max-w-[340px] aspect-[4/5] bg-white/80 backdrop-blur-md rounded-2xl border border-[#9E8047]/30 shadow-[0_20px_50px_rgba(45,74,62,0.18)] p-4 sm:p-6 flex items-center justify-center group overflow-hidden"
             >
               {/* Animated Glow Behind Image */}
               <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(158,128,71,0.15)_0%,transparent_70%)]"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.35, 0.65, 0.35] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(158,128,71,0.2)_0%,transparent_70%)]"
               />
-              {/* Decorative circle */}
-              <div className="absolute top-6 right-6 w-20 h-20 bg-[#E8ECE9] rounded-full mix-blend-multiply opacity-50 blur-lg transition-transform duration-700 group-hover:scale-150 group-hover:opacity-70" />
+
+              {/* Floating Quality Stamp */}
+              <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider uppercase text-[#1F332A] bg-white/95 border border-[#1F332A]/20 shadow-xs">
+                  GMP Certified Purity
+                </span>
+              </div>
 
               <motion.div 
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-full h-full"
+                className="relative w-full h-full flex items-center justify-center"
               >
                 <Image
                   src="/images/products/vitality-power-combo-card.jpg"
-                  alt="Ayurveda Global Products"
+                  alt="Ayurveda Global Vitality Formulations"
                   fill
                   priority
-                  className="object-contain p-4 drop-shadow-xl scale-110 group-hover:scale-125 transition-transform duration-700 ease-out"
+                  className="object-contain p-3 drop-shadow-xl group-hover:scale-105 transition-transform duration-500 ease-out"
+                  sizes="(max-width: 768px) 280px, 340px"
                 />
               </motion.div>
             </motion.div>

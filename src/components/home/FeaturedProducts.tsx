@@ -11,11 +11,7 @@ export function FeaturedProducts() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sliderRef, { once: true, margin: "-100px" });
 
-  useEffect(() => setMounted(true), []);
-
   const allProducts = products.map((p) => ({ ...p, isNew: true }));
-
-  if (!mounted) return null;
 
   const scrollLeft = () => {
     if (sliderRef.current) {

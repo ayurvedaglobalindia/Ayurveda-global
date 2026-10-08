@@ -26,6 +26,12 @@ import {
   sendOTP,
   verifyOTP,
 } from "../lib/auth/otpService";
+import {
+  buildWhatsAppUrl,
+  buildOrderWhatsAppMessage,
+  buildProductEnquiryMessage,
+  buildVaidyaConsultationMessage,
+} from "../store/whatsappStore";
 
 let passed = 0;
 let failed = 0;
@@ -394,8 +400,101 @@ async function runAllTests() {
       throw new Error(`Total mismatch: ${retrieved.total_amount}`);
   });
 
-  // 7. Server Endpoints Health Check
-  console.log("\n🌐 7. Server Endpoints Health Check:");
+  // 7. WhatsApp Automation & Message Format Tests
+  console.log("\n💬 7. WhatsApp Automation & Message Format Tests:");
+  test("buildWhatsAppUrl generates valid link to official number", () => {
+    const url = buildWhatsAppUrl("Namaste Test");
+    if (!url.startsWith("https://wa.me/919123485451?text="))
+      throw new Error(`Invalid WhatsApp URL generated: ${url}`);
+    if (!url.includes("Namaste%20Test"))
+      throw new Error("Message text not properly URL encoded");
+  });
+
+  test("buildOrderWhatsAppMessage formats complete Indian order confirmation", () => {
+    const orderMsg = buildOrderWhatsAppMessage({
+      orderId: "AVG-TEST-101",
+      orderNumber: "AVG-TEST-101",
+      customerName: "Vikram Sharma",
+      customerPhone: "9876543210",
+      shippingAddress: {
+        firstName: "Vikram",
+        lastName: "Sharma",
+        addressLine1: "Flat 402, Lotus Towers",
+        city: "Mumbai",
+        state: "Maharashtra",
+        pincode: "400001",
+        phone: "9876543210",
+      },
+      items: [
+        {
+          productName: "BODY Essential Nutrition",
+          quantity: 2,
+          price: 149900,
+          total: 299800,
+        },
+      ],
+      subtotal: 299800,
+      shipping: 0,
+      discount: 20000,
+      total: 279800,
+      paymentMethod: "cod",
+    });
+
+    if (!orderMsg.includes("AYURVEDA GLOBAL — ORDER CONFIRMATION"))
+      throw new Error("Order title header missing");
+    if (!orderMsg.includes("AVG-TEST-101"))
+      throw new Error("Order ID missing from message");
+    if (!orderMsg.includes("Vikram Sharma"))
+      throw new Error("Customer name missing from message");
+    if (!orderMsg.includes("400001"))
+      throw new Error("Pincode missing from delivery address");
+    if (!orderMsg.includes("₹2,798"))
+      throw new Error("Final payable total formatted incorrectly");
+  });
+
+  test("buildProductEnquiryMessage formats formulation details and inquiry", () => {
+    const enquiry = buildProductEnquiryMessage({
+      customerName: "Amit Verma",
+      customerPhone: "9876543210",
+      customerCity: "Jaipur, Rajasthan",
+      productName: "STAYMAX+ Delay Spray",
+      quantity: 1,
+      price: 89900,
+      enquiry: "How many days does it take to deliver to Jaipur with COD?",
+    });
+
+    if (!enquiry.includes("AYURVEDA GLOBAL — PRODUCT ENQUIRY"))
+      throw new Error("Enquiry header missing");
+    if (!enquiry.includes("STAYMAX+ Delay Spray"))
+      throw new Error("Product name missing");
+    if (!enquiry.includes("Jaipur, Rajasthan"))
+      throw new Error("Location missing");
+    if (!enquiry.includes("₹899"))
+      throw new Error("Product price formatting missing");
+  });
+
+  test("buildVaidyaConsultationMessage formats confidential BAMS doctor request", () => {
+    const consult = buildVaidyaConsultationMessage({
+      patientName: "Rajesh Patil",
+      patientPhone: "9123456789",
+      patientCity: "Pune, Maharashtra",
+      patientAge: "35",
+      concern: "Hair Loss & Stamina Improvement",
+      enquiry: "Need advice on whether to take oil or capsules first.",
+    });
+
+    if (!consult.includes("SENIOR VAIDYA CONSULTATION"))
+      throw new Error("Vaidya consult header missing");
+    if (!consult.includes("Rajesh Patil"))
+      throw new Error("Patient name missing");
+    if (!consult.includes("Hair Loss & Stamina Improvement"))
+      throw new Error("Health concern missing");
+    if (!consult.includes("Pune, Maharashtra"))
+      throw new Error("City missing");
+  });
+
+  // 8. Server Endpoints Health Check
+  console.log("\n🌐 8. Server Endpoints Health Check:");
   const routes = [
     "/",
     "/shop",

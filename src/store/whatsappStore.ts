@@ -204,15 +204,19 @@ Contact: ${data.shippingAddress.phone || customerPhone || "Via WhatsApp"}`
     : `📍 *DELIVERY ADDRESS:*
 • Address to be confirmed via WhatsApp chat (COD Available across India)`;
 
-  return `📦 *NEW ORDER:* ${data.orderNumber || data.orderId || "AVG-DIRECT"}
-👤 *Name:* ${customerName}${phoneStr}
+  return `🌿 *AYURVEDA GLOBAL — ORDER CONFIRMATION*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 *Order ID:* ${data.orderNumber || data.orderId || "AVG-DIRECT"}
+👤 *Customer:* ${customerName}${phoneStr}
 ${addressBlock}
 
-🛍️ *Items:*
-${itemsList}
+🛍️ *Formulations Ordered:*
+${itemsList}${discountStr}
 
-💰 *Total:* ₹${formatPaiseToINR(data.total)} (${paymentLabel})
-Please confirm delivery.`;
+💰 *Total Payable:* ₹${formatPaiseToINR(data.total)}
+💳 *Payment Mode:* ${paymentLabel}${notesStr}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+_Namaste! Please confirm my order dispatch and tracking details._`;
 }
 
 export interface ProductEnquiryData {
@@ -252,29 +256,33 @@ export function buildProductEnquiryMessage(data: ProductEnquiryData): string {
     }
   }
 
-  const customerDisplay = name || "Customer Patron";
+  const customerDisplay = name || "Patron";
   const contactLines: string[] = [];
   if (name) contactLines.push(`• *Name:* ${name}`);
   if (phone) contactLines.push(`• *Phone:* ${phone}`);
-  if (email) contactLines.push(`• *Email:* ${email}`);
   if (city) contactLines.push(`• *Location:* ${city}`);
 
   const customerBlock =
     contactLines.length > 0
-      ? `👤 *CUSTOMER DETAILS:*\n${contactLines.join("\n")}`
-      : `👤 *CUSTOMER:* ${customerDisplay}`;
+      ? contactLines.join("\n")
+      : `• *Customer:* ${customerDisplay}`;
 
   const qty = data.quantity || 1;
   const priceLine = data.price
     ? `\n• *Price:* ₹${formatPaiseToINR(data.price)}`
     : "";
 
-  return `📦 *PRODUCT ENQUIRY*
-${customerBlock}
-🛍️ *Product:* ${data.productName} (x${qty})
-💬 *Query:* ${data.enquiry}
+  return `🌿 *AYURVEDA GLOBAL — PRODUCT ENQUIRY*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🛍️ *Formulation:* ${data.productName} (x${qty})${priceLine}
 
-Please reply.`;
+👤 *Customer Details:*
+${customerBlock}
+
+💬 *Query:*
+${data.enquiry}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+_Namaste! Please share product details, usage routine, and Cash on Delivery dispatch timeline._`;
 }
 
 export interface VaidyaConsultationData {
@@ -316,24 +324,28 @@ export function buildVaidyaConsultationMessage(
   const contactLines: string[] = [];
   if (name) contactLines.push(`• *Patient Name:* ${name}`);
   if (phone) contactLines.push(`• *Contact Number:* ${phone}`);
-  if (city) contactLines.push(`• *City / Region:* ${city}`);
+  if (city) contactLines.push(`• *City/Region:* ${city}`);
   if (data.patientAge) contactLines.push(`• *Age:* ${data.patientAge}`);
 
   const patientBlock =
     contactLines.length > 0
-      ? `👤 *PATIENT / CUSTOMER DETAILS:*\n${contactLines.join("\n")}`
-      : `👤 *PATIENT:* ${patientDisplay} (Details via WhatsApp)`;
+      ? contactLines.join("\n")
+      : `• *Patient:* ${patientDisplay}`;
 
   const concern =
     data.concern || "Classical Rasayana Regimen & Lifestyle Protocol";
   const note =
     data.enquiry ||
-    `Pranam Vaidya Ji. I would like confidential Ayurvedic guidance regarding: "${concern}". Please recommend the right herbal formulations, dosage, and dietary routine.`;
+    `Pranam Vaidya Ji. I would like confidential Ayurvedic guidance regarding "${concern}". Please recommend the right herbal formulations, dosage, and dietary routine.`;
 
-  return `🩺 *VAIDYA CONSULT*
+  return `🌿 *AYURVEDA GLOBAL — SENIOR VAIDYA CONSULTATION*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👤 *Patient Details:*
 ${patientBlock}
-🩺 *Concern:* ${concern}
-💬 *Note:* ${note}
 
-Please reply.`;
+🩺 *Health Concern:* ${concern}
+💬 *Specific Query:*
+"${note}"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+_Pranam! I would like personalized guidance from a certified BAMS Ayurvedic practitioner._`;
 }

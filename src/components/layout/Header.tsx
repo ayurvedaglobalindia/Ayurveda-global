@@ -76,13 +76,33 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Right Side Controls */}
-          <div className="flex items-center gap-4 flex-shrink-0">
-            {/* Search */}
+          {/* Attached Transparent Search Pill */}
+          <div className="hidden lg:flex items-center flex-1 max-w-[240px] xl:max-w-xs mx-3">
             <button
               type="button"
               onClick={() => openSearch()}
-              className="p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
+              className="w-full flex items-center justify-between px-3.5 py-1.5 rounded-full bg-white/50 hover:bg-white/80 border border-[#2D4A3E]/25 hover:border-[#2D4A3E]/50 text-[#555555] text-xs transition-all backdrop-blur-md shadow-2xs group"
+              aria-label="Search formulations"
+            >
+              <div className="flex items-center gap-2">
+                <Search className="w-3.5 h-3.5 text-[#2D4A3E] group-hover:scale-110 transition-transform" />
+                <span className="font-sans text-xs text-[#737373] group-hover:text-[#1C1D1F]">
+                  Search formulations...
+                </span>
+              </div>
+              <kbd className="text-[10px] font-mono bg-white/80 text-[#737373] px-1.5 py-0.5 rounded-sm border border-gray-200">
+                ⌘K
+              </kbd>
+            </button>
+          </div>
+
+          {/* Right Side Controls */}
+          <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+            {/* Search (Icon on small screens) */}
+            <button
+              type="button"
+              onClick={() => openSearch()}
+              className="lg:hidden p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
               aria-label="Search"
             >
               <Search className="w-5 h-5 stroke-[1.5]" />

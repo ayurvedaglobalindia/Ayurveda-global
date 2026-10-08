@@ -46,13 +46,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
           src={currentImage.src}
           alt={currentImage.alt || alt}
           fill
-          className={classNames(
-            "transition-transform duration-500 group-hover:scale-105",
-            currentImage.src.includes("-card") ||
-              currentImage.src.includes("-detail")
-              ? "object-cover"
-              : "object-contain p-2",
-          )}
+          className="object-contain p-3 sm:p-5 transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 450px"
           priority={selectedIndex === 0}
         />

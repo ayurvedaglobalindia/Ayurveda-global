@@ -9,6 +9,9 @@ import {
   MessageSquare,
   Send,
   CheckCircle2,
+  Instagram,
+  Facebook,
+  Youtube,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -395,6 +398,51 @@ export default function ContactPage() {
                   <br />
                   Pan-India express courier delivery across 19,000+ pin codes.
                 </p>
+              </div>
+
+              {/* Official Social Channels */}
+              <div className="p-6 rounded-2xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs">
+                <h3 className="font-heading text-sm font-medium text-[#1C1D1F] mb-3">
+                  Official Community &amp; Social Channels
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <a
+                    href="https://www.instagram.com/ayurveda.global"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] hover:bg-[#F4EFEA] border border-gray-200 text-xs text-[#1C1D1F] transition-colors"
+                  >
+                    <Instagram className="w-4 h-4 text-[#E1306C]" />
+                    <span className="truncate">Instagram</span>
+                  </a>
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61594780446401"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] hover:bg-[#F4EFEA] border border-gray-200 text-xs text-[#1C1D1F] transition-colors"
+                  >
+                    <Facebook className="w-4 h-4 text-[#1877F2]" />
+                    <span className="truncate">Facebook</span>
+                  </a>
+                  <a
+                    href="https://youtube.com/@ayurvedaglobal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] hover:bg-[#F4EFEA] border border-gray-200 text-xs text-[#1C1D1F] transition-colors"
+                  >
+                    <Youtube className="w-4 h-4 text-[#FF0000]" />
+                    <span className="truncate">YouTube</span>
+                  </a>
+                  <a
+                    href="https://wa.me/919123485451"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] hover:bg-[#F4EFEA] border border-gray-200 text-xs text-[#1C1D1F] transition-colors"
+                  >
+                    <MessageSquare className="w-4 h-4 text-[#25D366]" />
+                    <span className="truncate">WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>

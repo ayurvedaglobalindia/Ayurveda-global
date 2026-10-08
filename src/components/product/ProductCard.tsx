@@ -60,6 +60,7 @@ export function ProductCard({
     product.id,
     variant === "compact" ? "thumb" : "card",
   );
+  const [imageError, setImageError] = useState(false);
   const hasDiscount =
     product.compareAtPrice && product.compareAtPrice > product.price;
   const discountPercentage = hasDiscount
@@ -277,12 +278,20 @@ export function ProductCard({
           aria-label={`View ${product.name}`}
         >
           <Image
-            src={primaryImage.src}
+            src={
+              imageError
+                ? "/images/products/body-essential-nutrition-card.jpg"
+                : primaryImage.src
+            }
             alt={primaryImage.alt}
             fill
-            priority={product.id === "vitality-power-combo"}
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            priority={
+              product.id === "vitality-power-combo" ||
+              product.id === "body-essential-nutrition"
+            }
+            className="object-contain p-3 sm:p-4 transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            onError={() => setImageError(true)}
           />
 
           {/* Discreet courtesy badge if on sale */}

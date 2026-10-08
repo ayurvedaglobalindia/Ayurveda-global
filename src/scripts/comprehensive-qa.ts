@@ -58,6 +58,8 @@ async function runQA() {
     "product/vitality-power-combo",
     "about",
     "contact",
+    "consultation",
+    "blog",
     "faq",
     "track-order",
     "account",
