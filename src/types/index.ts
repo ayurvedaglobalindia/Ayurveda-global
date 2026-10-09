@@ -150,7 +150,11 @@ export interface WhatsAppLeadEvent {
   id?: number;
   source:
     | "float"
+    | "float-concierge"
+    | "float-order"
     | "product"
+    | "product-page"
+    | "product-enquiry"
     | "checkout"
     | "checkout_whatsapp"
     | "contact"
