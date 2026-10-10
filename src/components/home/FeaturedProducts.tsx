@@ -10,22 +10,22 @@ import { ArrowUpRight, Leaf, Sparkles, ShieldCheck } from "lucide-react";
 
 export function FeaturedProducts() {
   return (
-    <section className="bg-white py-8 sm:py-14 lg:py-20 border-b border-[#D4AF37]/20 relative overflow-hidden">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="bg-white py-4 sm:py-8 lg:py-12 border-b border-[#D4AF37]/20 relative overflow-hidden">
+      <div className="container mx-auto px-0 sm:px-4 lg:px-8">
         {/* Header Section */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-10 gap-3 sm:gap-4 pb-3 sm:pb-5 border-b border-[#D4AF37]/15">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-3 sm:mb-8 gap-2.5 sm:gap-4 pb-2.5 sm:pb-4 border-b border-[#D4AF37]/15 px-3.5 sm:px-0">
           <div className="max-w-2xl">
             {/* Clean E-commerce Eyebrow */}
-            <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
-              <span className="w-5 h-px bg-[#D4AF37]" />
-              <span className="text-[10px] sm:text-[11px] font-sans font-bold uppercase tracking-[0.2em] text-[#D4AF37] flex items-center gap-1.5">
+            <div className="flex items-center gap-2 mb-1 sm:mb-1.5">
+              <span className="w-4 sm:w-5 h-px bg-[#D4AF37]" />
+              <span className="text-[10px] sm:text-[10.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#D4AF37] flex items-center gap-1.5">
                 <Sparkles className="w-3 h-3 text-[#D4AF37]" />
                 Standardized Botanical Formulations
               </span>
             </div>
 
             {/* Editorial Best Sellers Title */}
-            <h2 className="font-editorial text-2xl sm:text-4xl lg:text-[42px] font-normal text-[#081C15] tracking-tight leading-[1.15]">
+            <h2 className="font-editorial text-xl sm:text-3xl lg:text-[38px] font-normal text-[#081C15] tracking-tight leading-[1.15]">
               The Apothecary{" "}
               <span className="italic font-normal text-gold-shimmer">
                 Best Sellers
@@ -33,7 +33,7 @@ export function FeaturedProducts() {
             </h2>
 
             {/* Clean D2C Description */}
-            <p className="font-sans text-[12px] sm:text-[14px] text-[#555555] mt-1 sm:mt-2 leading-relaxed">
+            <p className="font-sans text-[11.5px] sm:text-[13px] text-[#555555] mt-0.5 sm:mt-1.5 leading-relaxed">
               Classical Ayurvedic remedies powered by cold-extracted herbs, third-party verified for bio-potency and zero synthetic adulterants.
             </p>
           </div>
@@ -50,7 +50,7 @@ export function FeaturedProducts() {
           </div>
         </div>
 
-        {/* Bento Grid with Uniform Height Alignment */}
+        {/* Bento Grid: 2-column mobile grid (grid-cols-2 gap-3.5 px-3.5) with Uniform Height Alignment */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -64,7 +64,7 @@ export function FeaturedProducts() {
               },
             },
           }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6 px-0 items-stretch"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 px-3.5 sm:px-0 items-stretch"
         >
           {products.map((product) => (
             <motion.div

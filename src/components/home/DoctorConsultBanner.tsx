@@ -13,7 +13,7 @@ export function DoctorConsultBanner() {
   };
 
   return (
-    <section className="py-8 sm:py-14 lg:py-20 bg-[#FAF7F2] border-b border-[#9E8047]/20 overflow-hidden">
+    <section className="py-5 sm:py-10 lg:py-14 bg-[#FAF7F2] border-b border-[#9E8047]/20 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="bg-[#1F3D2B] rounded-2xl sm:rounded-3xl overflow-hidden border border-[#9E8047]/30 text-white shadow-xl grid lg:grid-cols-12 items-stretch">
           {/* Left Column: Editorial Consultation Copy */}

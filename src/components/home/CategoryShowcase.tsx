@@ -42,7 +42,7 @@ export function CategoryShowcase() {
   ];
 
   return (
-    <section className="py-8 sm:py-14 lg:py-20 bg-white border-b border-[#9E8047]/20 overflow-hidden">
+    <section className="py-5 sm:py-10 lg:py-14 bg-white border-b border-[#9E8047]/20 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-5 sm:mb-10 gap-3 sm:gap-4 pb-3 sm:pb-0 border-b sm:border-b-0 border-[#9E8047]/15">
           <div>

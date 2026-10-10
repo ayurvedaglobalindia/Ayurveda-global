@@ -91,7 +91,7 @@ export function AyurvedaPhilosophySection() {
   const CurrentIcon = current.icon;
 
   return (
-    <section className="py-8 sm:py-14 lg:py-20 bg-[#EFF4F0]/50 border-y border-[#9E8047]/20 overflow-hidden">
+    <section className="py-5 sm:py-10 lg:py-14 bg-[#EFF4F0]/50 border-y border-[#9E8047]/20 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Heading */}
         <div className="max-w-3xl mx-auto text-center mb-6 sm:mb-12">

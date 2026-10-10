@@ -33,7 +33,7 @@ export function HomeFAQ() {
   ];
 
   return (
-    <section className="py-8 sm:py-14 lg:py-20 bg-[#FAF7F2] overflow-hidden border-b border-[#9E8047]/20">
+    <section className="py-5 sm:py-10 lg:py-14 bg-[#FAF7F2] overflow-hidden border-b border-[#9E8047]/20">
       <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
         <div className="text-center mb-6 sm:mb-12">
           <div className="flex items-center justify-center gap-2 mb-1.5 sm:mb-2">

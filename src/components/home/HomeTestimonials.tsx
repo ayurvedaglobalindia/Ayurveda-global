@@ -36,7 +36,7 @@ export function HomeTestimonials() {
   ];
 
   return (
-    <section className="py-8 sm:py-14 lg:py-20 bg-white border-b border-[#9E8047]/20 overflow-hidden">
+    <section className="py-5 sm:py-10 lg:py-14 bg-white border-b border-[#9E8047]/20 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-12">
           <div className="flex items-center justify-center gap-2 mb-1.5 sm:mb-2">

@@ -37,7 +37,7 @@ export function HomeTrustBar({ className = "" }: HomeTrustBarProps) {
   ];
 
   return (
-    <section className={`bg-[#FAF7F2] border-t border-[#9E8047]/20 py-8 sm:py-12 lg:py-14 overflow-hidden ${className}`}>
+    <section className={`bg-[#FAF7F2] border-t border-[#9E8047]/20 py-4 sm:py-8 lg:py-10 overflow-hidden ${className}`}>
       <div className="container mx-auto px-4 lg:px-8">
         {/* Editorial Eyebrow */}
         <div className="flex items-center justify-center gap-2.5 sm:gap-3 mb-5 sm:mb-8 text-center">

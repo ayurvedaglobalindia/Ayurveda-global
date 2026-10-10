@@ -4,20 +4,20 @@ import React from "react";
 
 export function AnnouncementBar() {
   const marqueeItems = [
-    "Free Express Delivery across India",
-    "100% Discreet Packaging",
-    "Extra 5% Off on Prepaid / Partial COD",
-    "AYUSH & GMP Certified Formulations",
-    "Free Doctor Consultation on WhatsApp",
+    "✨ 100% NABL Lab Certified & AYUSH Approved",
+    "🌿 Free Doctor Consultation on WhatsApp",
+    "🚚 Free Express Delivery across India",
+    "💎 Extra 5% Off on Prepaid / Instant UPI",
+    "🔒 100% Discreet Tamper-Evident Packaging",
   ];
 
   return (
-    <div className="w-full bg-[#192D21] text-[#FAF7F2] overflow-hidden border-b border-[#9E8047]/20 py-1.5 sm:py-2 select-none relative z-50">
-      <div className="flex w-max animate-marquee items-center gap-6 text-[10.5px] sm:text-xs font-sans tracking-wide">
+    <div className="w-full bg-[#071A12] text-[#FDFBF7] overflow-hidden border-b border-[#D4AF37]/25 py-1.5 select-none relative z-50">
+      <div className="flex w-max animate-marquee items-center gap-8 text-[10.5px] sm:text-xs font-sans tracking-wide">
         {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, idx) => (
           <div key={idx} className="flex items-center gap-3 shrink-0">
-            <span className="text-[#D4AF37] text-xs">✦</span>
-            <span className="font-medium">{item}</span>
+            <span className="text-[#D4AF37] text-xs font-bold">✦</span>
+            <span className="font-medium text-[#FDFBF7]/95">{item}</span>
           </div>
         ))}
       </div>

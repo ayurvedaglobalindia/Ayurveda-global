@@ -10,9 +10,9 @@
   --font-cormorant: "Cormorant Garamond", Georgia, serif;
   --font-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
 
-  /* World-Class Ultra-Luxury Ayurvedic Palette */
-  --color-obsidian-green: #081C15;
-  --color-royal-forest: #1B4332;
+  /* Enterprise Luxury Ayurvedic Palette (Ayuvya, Krishna's, IMC) */
+  --color-obsidian-green: #071A12;
+  --color-royal-forest: #0E3924;
   --color-champagne-gold: #D4AF37;
   --color-luminous-emerald: #10B981;
   --color-pure-ivory: #FDFBF7;
@@ -698,6 +698,12 @@ select {
   }
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes spinRing {
   to {
     transform: rotate(360deg);
@@ -760,8 +766,16 @@ select {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
 }
 
+.glass-panel {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(14, 57, 36, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(7, 26, 18, 0.08);
+}
+
 .apple-glass-dark {
-  background: rgba(8, 28, 21, 0.85);
+  background: rgba(7, 26, 18, 0.88);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(212, 175, 55, 0.25);

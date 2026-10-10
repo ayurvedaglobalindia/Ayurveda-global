@@ -9,12 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Ultra-Luxury Apple-grade Ayurvedic Palette
-        'obsidian-green': '#081C15',
-        'royal-forest': '#1B4332',
+        // Enterprise Luxury Ayurvedic Palette (Ayuvya, Krishna's & IMC)
+        'obsidian-green': '#071A12',
+        'forest-obsidian': '#071A12',
+        'royal-forest': '#0E3924',
+        'heritage-herbal': '#0E3924',
         'champagne-gold': '#D4AF37',
         'luminous-emerald': '#10B981',
+        'electric-emerald': '#10B981',
         'pure-ivory': '#FDFBF7',
+        'ayurvedic-ivory': '#FDFBF7',
 
         // Authentic Ayurvedic Apothecary Palette — Warm Ivory/Off-White, Deep Charcoal, #999999 Neutral Gray, Muted Earthy Sage & Antique Gold
         ayur: {

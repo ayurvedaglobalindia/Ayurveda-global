@@ -45,12 +45,12 @@ export function MobileBottomNav() {
 
   return (
     <>
-      {/* iOS Floating Island Bottom Navigation Dock */}
+      {/* iOS Floating Island Bottom Navigation Dock (12px elevation) */}
       <nav
         aria-label="Mobile Floating Navigation Dock"
-        className="md:hidden fixed bottom-4 left-3 right-3 max-w-md mx-auto z-40 rounded-full backdrop-blur-2xl bg-white/90 dark:bg-stone-950/90 border border-white/40 shadow-[0_12px_40px_rgba(8,28,21,0.18)] px-2 py-1 transition-all"
+        className="md:hidden fixed bottom-[12px] left-3.5 right-3.5 max-w-md mx-auto z-40 rounded-full backdrop-blur-2xl bg-white/90 dark:bg-stone-950/90 border border-white/40 shadow-[0_12px_40px_rgba(8,28,21,0.18)] px-2.5 transition-all"
         style={{
-          marginBottom: "max(env(safe-area-inset-bottom), 0px)",
+          paddingBottom: "max(env(safe-area-inset-bottom), 10px)",
         }}
       >
         <div className="flex items-center justify-around h-[56px] relative">
@@ -59,8 +59,8 @@ export function MobileBottomNav() {
             href="/"
             className={`flex flex-col items-center justify-center gap-0.5 text-[10px] transition-colors py-1 px-2.5 rounded-full ${
               pathname === "/"
-                ? "text-[#081C15] font-bold"
-                : "text-[#737373] hover:text-[#081C15]"
+                ? "text-[#071A12] font-bold"
+                : "text-[#737373] hover:text-[#071A12]"
             }`}
             aria-label="Home"
           >
@@ -74,8 +74,8 @@ export function MobileBottomNav() {
             onClick={openSearch}
             className={`flex flex-col items-center justify-center gap-0.5 text-[10px] transition-colors py-1 px-2.5 rounded-full ${
               isSearchOpen
-                ? "text-[#081C15] font-bold"
-                : "text-[#737373] hover:text-[#081C15]"
+                ? "text-[#071A12] font-bold"
+                : "text-[#737373] hover:text-[#071A12]"
             }`}
             aria-label="Search Formulations"
           >
@@ -83,15 +83,15 @@ export function MobileBottomNav() {
             <span className="leading-none">Search</span>
           </button>
 
-          {/* 3. Center Elevated Button: 58px Sphere with Razor-Sharp Neon Emerald Radar Ring */}
+          {/* 3. Center Elevated Button: 58px Sphere with Razor-Sharp Rotating Neon Radar Ring */}
           <button
             type="button"
             onClick={() => setIsConciergeOpen(true)}
-            className="flex flex-col items-center -translate-y-[20px] text-[#1B4332] group relative z-50 focus:outline-none"
-            aria-label="Open Vaidya Concierge"
+            className="flex flex-col items-center -translate-y-[20px] text-[#0E3924] group relative z-50 focus:outline-none"
+            aria-label="Open Vaidya Consult"
           >
             <div className="relative w-[58px] h-[58px] rounded-full bg-white flex items-center justify-center shadow-xl group-hover:scale-105 active:scale-95 transition-transform">
-              {/* Razor-Sharp 3s Rotating Conic Emerald Radar Ring */}
+              {/* Seamless Rotating Neon Border: 2.5s linear infinite */}
               <span
                 className="absolute inset-0 rounded-full pointer-events-none"
                 style={{
@@ -99,7 +99,7 @@ export function MobileBottomNav() {
                   background:
                     "linear-gradient(#fff, #fff) padding-box, conic-gradient(from 0deg, #10B981, #34D399, transparent 60%, #10B981) border-box",
                   boxShadow: "0 0 16px rgba(16, 185, 129, 0.55)",
-                  animation: "spinRing 3s linear infinite",
+                  animation: "spin 2.5s linear infinite",
                 }}
                 aria-hidden="true"
               />
@@ -107,14 +107,14 @@ export function MobileBottomNav() {
               {/* Minimalist Vaidya Heart & Pulse Icon */}
               <img
                 src="/images/vaidya-icon.svg"
-                alt="Vaidya Concierge"
+                alt="Vaidya Consult"
                 className="w-8 h-8 object-contain relative z-10 drop-shadow-2xs"
               />
             </div>
 
-            {/* Label Strictly Inside Floating Dock Baseline */}
-            <span className="text-[9.5px] font-bold text-[#081C15] mt-[3px] tracking-tight leading-none">
-              Vaidya
+            {/* Solid White Background Label to Prevent Text Bleed-Through */}
+            <span className="text-[10px] font-semibold text-[#071A12] mt-[3px] px-1.5 py-0.5 rounded-full bg-white/95 shadow-2xs tracking-tight leading-none whitespace-nowrap">
+              Vaidya Consult
             </span>
           </button>
 
