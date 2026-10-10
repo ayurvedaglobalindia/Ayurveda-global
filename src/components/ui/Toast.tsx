@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from "lucide-react";
+import { X, CheckCircle, AlertCircle, Info, AlertTriangle, ShoppingBag } from "lucide-react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { classNames } from "@/lib/utils/formatters";
 import { useUIStore } from "@/store/uiStore";
 
 export function Toaster() {
-  const { toasts, dismissToast } = useUIStore();
+  const { toasts, dismissToast, openCartDrawer } = useUIStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -18,58 +17,73 @@ export function Toaster() {
   if (!mounted) return null;
 
   const toastIcons = {
-    success: <CheckCircle className="w-4 h-4 text-[#4E5F52]" />,
-    error: <AlertCircle className="w-4 h-4 text-rose-600" />,
-    info: <Info className="w-4 h-4 text-[#4E5F52]" />,
-    warning: <AlertTriangle className="w-4 h-4 text-[#9E8047]" />,
-  };
-
-  const toastStyles = {
-    success: "bg-[#FFFFFF] border-[#4E5F52]/40 shadow-lg",
-    error: "bg-[#FFFFFF] border-rose-200 shadow-lg",
-    info: "bg-[#FFFFFF] border-[#9E8047]/25 shadow-lg",
-    warning: "bg-[#FFFFFF] border-[#9E8047]/40 shadow-lg",
+    success: <CheckCircle className="w-4 h-4 text-[#10B981]" />,
+    error: <AlertCircle className="w-4 h-4 text-rose-500" />,
+    info: <Info className="w-4 h-4 text-[#D4AF37]" />,
+    warning: <AlertTriangle className="w-4 h-4 text-amber-400" />,
   };
 
   const toastContent = (
-    <AnimatePresence>
-      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 w-full max-w-sm sm:max-w-md">
-        {toasts.map((toast) => (
-          <motion.div
-            key={toast.id}
-            initial={{ opacity: 0, x: 50, y: 15 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            exit={{ opacity: 0, x: 50, y: 15 }}
-            transition={{ type: "spring", damping: 25, stiffness: 220 }}
-            className={classNames(
-              "flex items-start gap-3 p-3.5 rounded-xl border",
-              toastStyles[toast.type],
-            )}
-            role="alert"
-            aria-live="polite"
-          >
-            <div className="flex-shrink-0 mt-0.5">{toastIcons[toast.type]}</div>
-            <div className="flex-1 min-w-0">
-              <p className="font-heading font-medium text-[#1C1D1F] text-xs sm:text-sm">
-                {toast.title}
-              </p>
-              {toast.message && (
-                <p className="mt-0.5 text-xs text-[#555555] leading-relaxed">
-                  {toast.message}
-                </p>
-              )}
-            </div>
-            <button
-              onClick={() => dismissToast(toast.id)}
-              className="flex-shrink-0 p-1 rounded-lg text-[#999999] hover:text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors"
-              aria-label="Dismiss"
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] flex flex-col items-center gap-2 w-full max-w-md px-4 pointer-events-none">
+      <AnimatePresence>
+        {toasts.map((toast) => {
+          const isCartToast = toast.title.toLowerCase().includes("cart") || toast.title.toLowerCase().includes("bag");
+
+          return (
+            <motion.div
+              key={toast.id}
+              initial={{ opacity: 0, y: -45, scale: 0.88 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -25, scale: 0.92 }}
+              transition={{ type: "spring", damping: 22, stiffness: 320 }}
+              className="pointer-events-auto flex items-center justify-between gap-3 px-4 py-2.5 rounded-full bg-[#081C15]/95 backdrop-blur-2xl border border-[#D4AF37]/40 shadow-[0_12px_36px_rgba(0,0,0,0.5)] text-white w-full sm:w-auto sm:min-w-[320px]"
+              role="alert"
+              aria-live="polite"
             >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </motion.div>
-        ))}
-      </div>
-    </AnimatePresence>
+              {/* Dynamic Island Pulse Icon */}
+              <div className="flex items-center gap-2.5 flex-1 min-w-0">
+                <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 border border-white/15">
+                  {toastIcons[toast.type]}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-sans font-bold text-xs text-white leading-tight truncate">
+                    {toast.title}
+                  </p>
+                  {toast.message && (
+                    <p className="text-[10px] text-[#FDFBF7]/75 font-sans truncate mt-0.5">
+                      {toast.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Action Button: View Cart or Dismiss */}
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                {isCartToast && (
+                  <button
+                    onClick={() => {
+                      dismissToast(toast.id);
+                      openCartDrawer();
+                    }}
+                    className="px-2.5 py-1 rounded-full bg-[#D4AF37] hover:bg-[#E5C358] text-[#081C15] text-[10px] font-sans font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-1"
+                  >
+                    <ShoppingBag className="w-2.5 h-2.5" />
+                    <span>Bag</span>
+                  </button>
+                )}
+                <button
+                  onClick={() => dismissToast(toast.id)}
+                  className="w-6 h-6 rounded-full hover:bg-white/15 flex items-center justify-center text-white/60 hover:text-white transition-colors"
+                  aria-label="Dismiss"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
+    </div>
   );
 
   if (typeof window === "undefined") return null;

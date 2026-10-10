@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,8 +6,16 @@
 
 :root {
   --font-playfair: "Playfair Display", Georgia, serif;
-  --font-dm-sans: "DM Sans", system-ui, sans-serif;
+  --font-dm-sans: "Plus Jakarta Sans", "DM Sans", system-ui, sans-serif;
   --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
+
+  /* World-Class Ultra-Luxury Ayurvedic Palette */
+  --color-obsidian-green: #081C15;
+  --color-royal-forest: #1B4332;
+  --color-champagne-gold: #D4AF37;
+  --color-luminous-emerald: #10B981;
+  --color-pure-ivory: #FDFBF7;
 
   --color-void: #fafaf9;
   --color-obsidian: #e8ece9;
@@ -694,6 +702,70 @@ select {
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes radarSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heartPop {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.35);
+  }
+  60% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmerGold {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.text-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    #D4AF37 0%,
+    #FFF4D0 30%,
+    #D4AF37 60%,
+    #AA8010 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmerGold 4s linear infinite;
+}
+
+.apple-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+}
+
+.apple-glass-dark {
+  background: rgba(8, 28, 21, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
 }
 
 @keyframes pulseGlow {

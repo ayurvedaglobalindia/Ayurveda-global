@@ -9,6 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Ultra-Luxury Apple-grade Ayurvedic Palette
+        'obsidian-green': '#081C15',
+        'royal-forest': '#1B4332',
+        'champagne-gold': '#D4AF37',
+        'luminous-emerald': '#10B981',
+        'pure-ivory': '#FDFBF7',
+
         // Authentic Ayurvedic Apothecary Palette — Warm Ivory/Off-White, Deep Charcoal, #999999 Neutral Gray, Muted Earthy Sage & Antique Gold
         ayur: {
           black: '#1C1D1F',
@@ -73,8 +80,10 @@ const config: Config = {
       },
       fontFamily: {
         heading: ['var(--font-playfair)', 'Georgia', 'serif'],
-        body: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        body: ['var(--font-jakarta)', 'var(--font-dm-sans)', 'system-ui', 'sans-serif'],
         accent: ['var(--font-cormorant)', 'Georgia', 'serif'],
+        editorial: ['var(--font-cormorant)', 'var(--font-playfair)', 'Georgia', 'serif'],
+        sans: ['var(--font-jakarta)', 'var(--font-dm-sans)', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
         'wood-grain': "url('/images/textures/wood-grain.svg')",

@@ -10,7 +10,7 @@
       "category": "supplements",
       "price": 149900,
       "compare_at_price": 199900,
-      "inventory_quantity": 232,
+      "inventory_quantity": 230,
       "track_inventory": 1,
       "age_restricted": 0,
       "images_json": "[{\"src\":\"/images/products/body-essential-nutrition-card.jpg\",\"alt\":\"BODY Essential Nutrition\",\"isPrimary\":true}]",
@@ -1227,6 +1227,66 @@
       "whatsapp_message_sent": 0,
       "created_at": "2026-10-10T13:45:52.391Z",
       "updated_at": "2026-10-10T13:45:52.391Z"
+    },
+    {
+      "id": "TEST-ORD-1791640672987",
+      "order_number": "TEST-ORD-1791640672987",
+      "customer_name": "Test User",
+      "customer_phone": "9876543210",
+      "customer_email": "test@example.com",
+      "shipping_address_json": "{\"addressLine1\":\"123 Test Street\",\"city\":\"Mumbai\",\"state\":\"Maharashtra\",\"pincode\":\"400001\"}",
+      "billing_address_json": "{\"addressLine1\":\"123 Test Street\",\"city\":\"Mumbai\",\"state\":\"Maharashtra\",\"pincode\":\"400001\"}",
+      "items_json": "[{\"name\":\"BODY Essential Nutrition\",\"quantity\":1,\"price\":149900}]",
+      "subtotal": 149900,
+      "shipping_cost": 0,
+      "tax_amount": 0,
+      "discount_amount": 0,
+      "total_amount": 149900,
+      "payment_method": "cod",
+      "payment_status": "pending",
+      "order_status": "confirmed",
+      "coupon_code": null,
+      "notes": "Test order notes",
+      "whatsapp_message_sent": 0,
+      "created_at": "2026-10-10T13:57:52.999Z",
+      "updated_at": "2026-10-10T13:57:52.999Z"
+    },
+    {
+      "id": "REPO-ORD-1791640673141",
+      "order_number": "REPO-ORD-1791640673141",
+      "customer_name": "Aarav Mehra",
+      "customer_phone": "9876543210",
+      "customer_email": "aarav@example.com",
+      "subtotal": 149900,
+      "shipping_cost": 0,
+      "tax_amount": 0,
+      "discount_amount": 0,
+      "payment_method": "cod",
+      "payment_status": "pending",
+      "order_status": "processing",
+      "coupon_code": null,
+      "notes": null,
+      "whatsapp_message_sent": 0,
+      "created_at": "2026-10-10T13:57:53.155Z",
+      "updated_at": "2026-10-10T13:57:53.256Z"
+    },
+    {
+      "id": "ORD-1791640673452",
+      "order_number": "AVG-534386",
+      "customer_name": "Devansh Singhania",
+      "customer_phone": "9876500000",
+      "subtotal": 299800,
+      "shipping_cost": 0,
+      "tax_amount": 0,
+      "discount_amount": 0,
+      "payment_method": "cod",
+      "payment_status": "pending",
+      "order_status": "confirmed",
+      "coupon_code": null,
+      "notes": null,
+      "whatsapp_message_sent": 0,
+      "created_at": "2026-10-10T13:57:53.472Z",
+      "updated_at": "2026-10-10T13:57:53.472Z"
     }
   ],
   "orderStatusHistory": [
@@ -1418,6 +1478,27 @@
       "status": "confirmed",
       "note": "Order recorded in AVG SQL Engine",
       "created_at": "2026-10-10T13:45:52.401Z"
+    },
+    {
+      "id": 1791640673179,
+      "order_id": "REPO-ORD-1791640673141",
+      "status": "confirmed",
+      "note": "Order recorded in AVG SQL Engine",
+      "created_at": "2026-10-10T13:57:53.179Z"
+    },
+    {
+      "id": 1791640673298,
+      "order_id": "REPO-ORD-1791640673141",
+      "status": "processing",
+      "note": "Verified by Vaidya team",
+      "created_at": "2026-10-10T13:57:53.298Z"
+    },
+    {
+      "id": 1791640673499,
+      "order_id": "ORD-1791640673452",
+      "status": "confirmed",
+      "note": "Order recorded in AVG SQL Engine",
+      "created_at": "2026-10-10T13:57:53.499Z"
     }
   ],
   "coupons": [
@@ -1744,6 +1825,36 @@
       "user_agent": "WebClient",
       "referrer": "/consultation",
       "created_at": "2026-10-10T13:45:52.466Z"
+    },
+    {
+      "id": 1791640673363,
+      "source": "vaidya_consult_nav",
+      "product_id": null,
+      "product_name": null,
+      "customer_name": "Priya Sharma",
+      "customer_phone": "9812345678",
+      "customer_email": null,
+      "quantity": 1,
+      "order_total": null,
+      "message_preview": "Seeking consultation for dosha balancing",
+      "user_agent": "",
+      "referrer": "",
+      "created_at": "2026-10-10T13:57:53.363Z"
+    },
+    {
+      "id": 1791640673571,
+      "source": "vaidya_consult_nav",
+      "product_id": null,
+      "product_name": null,
+      "customer_name": "Meera Kapoor",
+      "customer_phone": "9820011223",
+      "customer_email": null,
+      "quantity": 1,
+      "order_total": null,
+      "message_preview": "[Dosha: Pitta] Patient: Meera Kapoor (9820011223) - Symptoms: Acid reflux, skin heat rashes, disturbed sleep",
+      "user_agent": "WebClient",
+      "referrer": "/consultation",
+      "created_at": "2026-10-10T13:57:53.572Z"
     }
   ]
 }
