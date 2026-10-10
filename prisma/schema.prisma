@@ -1,0 +1,174 @@
+// ==============================================================================
+// AYUR VEDA GLOBAL (AVG) - PRISMA SCHEMA
+// Dialect: PostgreSQL (compatible with SQLite / MySQL by changing provider)
+// ==============================================================================
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ------------------------------------------------------------------------------
+// 1. Users & Authentication
+// ------------------------------------------------------------------------------
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  VAIDYA
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  phoneNumber   String         @unique @map("phone_number")
+  email         String?        @unique
+  role          UserRole       @default(CUSTOMER)
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+
+  orders        Order[]
+  consultations Consultation[]
+  reviews       Review[]
+
+  @@map("users")
+}
+
+// ------------------------------------------------------------------------------
+// 2. Products & Inventory
+// ------------------------------------------------------------------------------
+model Product {
+  id              String       @id @default(uuid())
+  title           String
+  slug            String       @unique
+  shortDesc       String       @map("short_desc")
+  detailedDesc    String       @map("detailed_desc")
+  price           Int          // In Indian Paise (e.g. 149900 = ₹1,499.00)
+  discountedPrice Int?         @map("discounted_price") // Paise
+  stockCount      Int          @default(0) @map("stock_count")
+  sku             String       @unique
+  category        String       // 'supplements', 'wellness', 'personal-care'
+  imageUrl        String       @map("image_url")
+  isFeatured      Boolean      @default(false) @map("is_featured")
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime     @updatedAt @map("updated_at")
+
+  orderItems      OrderItem[]
+  reviews         Review[]
+
+  @@index([category])
+  @@index([slug])
+  @@map("products")
+}
+
+// ------------------------------------------------------------------------------
+// 3. Dosha & Doctor Consultations (Vaidya Consult)
+// ------------------------------------------------------------------------------
+enum ConsultationStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model Consultation {
+  id                String             @id @default(uuid())
+  userId            String?            @map("user_id")
+  patientName       String             @map("patient_name")
+  phoneNumber       String             @map("phone_number")
+  doshaType         String?            @map("dosha_type") // 'Vata', 'Pitta', 'Kapha', 'Tridosha'
+  symptoms          String
+  bookingStatus     ConsultationStatus @default(PENDING) @map("booking_status")
+  doctorNotes       String?            @map("doctor_notes")
+  consultationDate  DateTime?          @map("consultation_date")
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+
+  user              User?              @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([phoneNumber])
+  @@index([bookingStatus])
+  @@map("consultations")
+}
+
+// ------------------------------------------------------------------------------
+// 4. Orders & Order Items
+// ------------------------------------------------------------------------------
+enum PaymentMode {
+  COD
+  PREPAID
+  WHATSAPP
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum ShippingStatus {
+  PENDING
+  DISPATCHED
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id               String         @id @default(uuid())
+  orderReferenceId String         @unique @map("order_reference_id") // e.g. AVG-476972
+  userId           String?        @map("user_id")
+  totalAmount      Int            @map("total_amount") // In Paise
+  paymentMode      PaymentMode    @default(COD) @map("payment_mode")
+  paymentStatus    PaymentStatus  @default(PENDING) @map("payment_status")
+  shippingStatus   ShippingStatus @default(PENDING) @map("shipping_status")
+  trackingNumber   String?        @map("tracking_number")
+  shippingAddress  Json           @map("shipping_address") // Structured JSON (line1, city, state, pincode)
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
+
+  user             User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  orderItems       OrderItem[]
+
+  @@index([orderReferenceId])
+  @@index([shippingStatus])
+  @@map("orders")
+}
+
+model OrderItem {
+  id         String   @id @default(uuid())
+  orderId    String   @map("order_id")
+  productId  String   @map("product_id")
+  quantity   Int
+  unitPrice  Int      @map("unit_price") // In Paise
+
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
+}
+
+// ------------------------------------------------------------------------------
+// 5. Reviews & Ratings
+// ------------------------------------------------------------------------------
+model Review {
+  id              String   @id @default(uuid())
+  productId       String   @map("product_id")
+  userId          String?  @map("user_id")
+  customerName    String   @map("customer_name")
+  rating          Int      // 1 to 5 stars
+  reviewText      String   @map("review_text")
+  isVerifiedBuyer Boolean  @default(true) @map("is_verified_buyer")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  product         Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([productId])
+  @@map("reviews")
+}

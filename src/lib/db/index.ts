@@ -492,3 +492,7 @@ export function getDb() {
 export function initializeDatabase() {}
 
 initializeDatabase();
+
+// Production Repositories & Type Exports
+export * from "./schema/types";
+export * from "./schema/repositories";

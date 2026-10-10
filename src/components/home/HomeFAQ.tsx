@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, HelpCircle, ArrowRight } from "lucide-react";
 
+import { motion, AnimatePresence } from "framer-motion";
+
 export function HomeFAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -31,53 +33,70 @@ export function HomeFAQ() {
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-[#FAF7F2]">
+    <section className="py-8 sm:py-14 lg:py-20 bg-[#FAF7F2] overflow-hidden border-b border-[#9E8047]/20">
       <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-        <div className="text-center mb-12">
-          <span className="text-xs font-mono uppercase tracking-wider text-[#9E8047] block mb-2">
-            Clear Answers
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#1C1D1F] tracking-tight mb-3">
-            Frequently Asked Questions
+        <div className="text-center mb-6 sm:mb-12">
+          <div className="flex items-center justify-center gap-2 mb-1.5 sm:mb-2">
+            <span className="w-4 sm:w-5 h-px bg-[#9E8047]" />
+            <span className="text-[10px] sm:text-[10.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#8C703D]">
+              Clinical Purity &amp; Logistics
+            </span>
+            <span className="w-4 sm:w-5 h-px bg-[#9E8047]" />
+          </div>
+          <h2 className="font-heading text-2xl sm:text-4xl text-[#1C1D1F] tracking-tight mb-2 sm:mb-3">
+            Frequently Asked <span className="italic font-normal text-[#8C703D]">Questions</span>
           </h2>
-          <p className="text-sm text-[#737373]">
-            Common queries about our herbal remedies, quality checks, and discrete doorstep logistics.
+          <p className="text-[11.5px] sm:text-sm text-[#737373]">
+            Essential answers regarding our botanical sourcing, lab verification, discrete packaging, and doorstep logistics.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-2.5 sm:space-y-4">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div
+              <motion.div
                 key={idx}
-                className="bg-white rounded-2xl border border-[#9E8047]/20 overflow-hidden shadow-2xs transition-all"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10px" }}
+                transition={{ duration: 0.35, delay: idx * 0.05 }}
+                className="bg-white rounded-2xl border border-[#9E8047]/20 overflow-hidden shadow-2xs transition-all hover:border-[#1F3D2B]/30"
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 focus:outline-hidden"
+                  className="w-full p-3.5 sm:p-5 lg:p-6 text-left flex items-center justify-between gap-3 sm:gap-4 focus:outline-hidden"
                 >
-                  <span className="font-serif text-base sm:text-lg text-[#1C1D1F]">
+                  <span className="font-serif text-sm sm:text-base lg:text-lg text-[#1C1D1F] leading-snug">
                     {faq.q}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-[#9E8047] transition-transform duration-300 flex-shrink-0 ${
-                      isOpen ? "rotate-180" : ""
+                    className={`w-4 h-4 sm:w-5 sm:h-5 text-[#9E8047] transition-transform duration-300 flex-shrink-0 ${
+                      isOpen ? "rotate-180 text-[#1F3D2B]" : ""
                     }`}
                   />
                 </button>
-                {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-0 text-xs sm:text-sm text-[#555555] leading-relaxed border-t border-gray-100 mt-2 pt-4">
-                    {faq.a}
-                  </div>
-                )}
-              </div>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: "easeInOut" }}
+                    >
+                      <div className="px-3.5 sm:px-5 lg:px-6 pb-4 sm:pb-5 text-[11.5px] sm:text-sm text-[#555555] leading-relaxed border-t border-[#9E8047]/10 pt-3 sm:pt-4">
+                        {faq.a}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 sm:mt-8 text-center">
           <Link
             href="/faq"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2D4A3E] hover:underline"

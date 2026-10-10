@@ -7,7 +7,7 @@ export const categories: Category[] = [
     slug: "supplements",
     description:
       "Daily stamina, physical strength & holistic Ayurvedic revitalization",
-    image: "/images/categories/supplements.svg",
+    image: "/images/categories/supplements.webp",
     productCount: 2,
   },
   {
@@ -15,7 +15,7 @@ export const categories: Category[] = [
     name: "Personal Care & Vitality",
     slug: "personal-care",
     description: "Topical endurance, scalp rejuvenation & intimate wellness",
-    image: "/images/categories/personal-care.svg",
+    image: "/images/categories/personal-care.webp",
     productCount: 2,
   },
   {
@@ -24,7 +24,7 @@ export const categories: Category[] = [
     slug: "wellness",
     description:
       "Inside-out synergistic vitality & hair revitalization kits for maximum efficacy",
-    image: "/images/categories/wellness.svg",
+    image: "/images/categories/wellness.webp",
     productCount: 2,
   },
 ];

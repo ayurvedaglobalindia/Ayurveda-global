@@ -259,7 +259,7 @@ export function CheckoutForm() {
         setTestOtpCode(null);
         showToast({
           type: "success",
-          title: "Mobile Number Verified ✓",
+          title: "Mobile Number Verified",
           message: "Your phone number has been verified for this order.",
         });
       } else {
@@ -765,9 +765,12 @@ export function CheckoutForm() {
                       </span>
                     </p>
                   ) : (
-                    <p className="text-[9.5px] text-[#4E5F52] mt-1">
-                      ✓ Order updates &amp; live parcel tracking enabled for
-                      this verified number
+                    <p className="text-[9.5px] text-[#4E5F52] mt-1 flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-[#4E5F52] flex-shrink-0" />
+                      <span>
+                        Order updates &amp; live parcel tracking enabled for
+                        this verified number
+                      </span>
                     </p>
                   )}
                 </div>

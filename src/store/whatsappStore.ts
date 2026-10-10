@@ -285,6 +285,9 @@ ${data.enquiry}
 _Namaste! Please share product details, usage routine, and Cash on Delivery dispatch timeline._`;
 }
 
+export const DEFAULT_VAIDYA_CONSULTATION_MESSAGE =
+  "Namaste Ayurveda Global 🙏 I would like to consult a Vaidya regarding my health concerns and personalized Ayurvedic guidance. Please assist me.";
+
 export interface VaidyaConsultationData {
   patientName?: string;
   patientPhone?: string;
@@ -296,56 +299,32 @@ export interface VaidyaConsultationData {
 }
 
 export function buildVaidyaConsultationMessage(
-  data: VaidyaConsultationData,
+  data?: VaidyaConsultationData,
 ): string {
-  let name = (data.patientName && data.patientName.trim()) || "";
-  let phone = (data.patientPhone && data.patientPhone.trim()) || "";
-  let city = (data.patientCity && data.patientCity.trim()) || "";
-
-  if (typeof window !== "undefined") {
-    try {
-      const user = useUserStore.getState().user;
-      if (user) {
-        if (!name && user.name) name = user.name;
-        if (!phone && user.phone) phone = user.phone;
-        if (!city && user.addresses?.[0]) {
-          const addr = user.addresses[0];
-          city = [addr.city, addr.state, addr.pincode]
-            .filter(Boolean)
-            .join(", ");
-        }
-      }
-    } catch {
-      // fallback
-    }
+  if (!data) {
+    return DEFAULT_VAIDYA_CONSULTATION_MESSAGE;
   }
 
-  const patientDisplay = name || "Patron";
-  const contactLines: string[] = [];
-  if (name) contactLines.push(`• *Patient Name:* ${name}`);
-  if (phone) contactLines.push(`• *Contact Number:* ${phone}`);
-  if (city) contactLines.push(`• *City/Region:* ${city}`);
-  if (data.patientAge) contactLines.push(`• *Age:* ${data.patientAge}`);
+  const concern = data.concern?.trim();
+  const enquiry = data.enquiry?.trim();
 
-  const patientBlock =
-    contactLines.length > 0
-      ? contactLines.join("\n")
-      : `• *Patient:* ${patientDisplay}`;
+  // If a specific health concern is indicated, keep it compact and relevant
+  if (concern && !enquiry) {
+    return `Namaste Ayurveda Global 🙏 I would like to consult a Vaidya regarding ${concern} and personalized Ayurvedic guidance. Please assist me.`;
+  }
 
-  const concern =
-    data.concern || "Classical Rasayana Regimen & Lifestyle Protocol";
-  const note =
-    data.enquiry ||
-    `Pranam Vaidya Ji. I would like confidential Ayurvedic guidance regarding "${concern}". Please recommend the right herbal formulations, dosage, and dietary routine.`;
+  // If a specific query was provided by the user
+  if (enquiry && enquiry !== DEFAULT_VAIDYA_CONSULTATION_MESSAGE) {
+    if (
+      enquiry.toLowerCase().startsWith("namaste") ||
+      enquiry.toLowerCase().startsWith("pranam") ||
+      enquiry.toLowerCase().startsWith("hello") ||
+      enquiry.toLowerCase().startsWith("hi")
+    ) {
+      return enquiry;
+    }
+    return `Namaste Ayurveda Global 🙏 ${enquiry}`;
+  }
 
-  return `🌿 *AYURVEDA GLOBAL — SENIOR VAIDYA CONSULTATION*
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-👤 *Patient Details:*
-${patientBlock}
-
-🩺 *Health Concern:* ${concern}
-💬 *Specific Query:*
-"${note}"
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-_Pranam! I would like personalized guidance from a certified BAMS Ayurvedic practitioner._`;
+  return DEFAULT_VAIDYA_CONSULTATION_MESSAGE;
 }

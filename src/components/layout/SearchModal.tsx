@@ -20,6 +20,7 @@ import {
 import { useUIStore } from "@/store/uiStore";
 import { getAllProducts, getProductImage } from "@/lib/products/registry";
 import { formatINR } from "@/lib/utils/formatters";
+import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from "@/store/whatsappStore";
 import type { Product } from "@/types";
 
 const POPULAR_SEARCHES = [
@@ -153,7 +154,7 @@ export function SearchModal() {
     <AnimatePresence>
       {isSearchOpen && (
         <div
-          className="fixed inset-0 z-[999] overflow-y-auto overscroll-contain"
+          className="fixed inset-0 z-[999] overflow-y-auto overscroll-contain flex flex-col"
           role="dialog"
           aria-modal="true"
           aria-label="Search apothecary formulations"
@@ -165,35 +166,40 @@ export function SearchModal() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={closeSearch}
-            className="fixed inset-0 bg-black/60 backdrop-blur-md -z-10"
+            className="fixed inset-0 bg-black/40 backdrop-blur-xs -z-10"
             aria-hidden="true"
           />
 
-          {/* Centering wrapper with pointer-events isolation */}
-          <div className="flex min-h-full items-start justify-center p-3 sm:p-6 pt-14 sm:pt-20 text-center pointer-events-none">
-            {/* Search Dialog Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: -16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: -16 }}
-              transition={{ type: "spring", damping: 28, stiffness: 350 }}
-              className="pointer-events-auto relative w-full max-w-2xl bg-[#FAF7F2]/95 backdrop-blur-2xl border border-[#9E8047]/30 rounded-2xl sm:rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden text-[#1C1D1F] flex flex-col text-left my-auto sm:my-0"
-              onClick={(e) => e.stopPropagation()}
+          {/* iOS-Inspired Search Bar Overlay: Flush with top edge, edge-to-edge, 16px side padding, frosted glass */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ type: "spring", damping: 28, stiffness: 350 }}
+            className="w-full flex flex-col shadow-lg overflow-hidden border-b border-black/[0.08]"
+            style={{
+              backgroundColor: "rgba(250, 247, 242, 0.88)",
+              backdropFilter: "blur(15px)",
+              WebkitBackdropFilter: "blur(15px)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Search Input Bar: Flush with top edge, edge-to-edge, 16px side padding */}
+            <form
+              onSubmit={handleFormSubmit}
+              className="w-full px-4 pt-3 pb-3 sm:pt-4 sm:pb-3.5 safe-area-pt border-b border-black/[0.04]"
             >
-              {/* Top Search Input Bar */}
-              <form
-                onSubmit={handleFormSubmit}
-                className="relative border-b border-[#9E8047]/25 bg-[#FFFFFF]"
-              >
-                <div className="flex items-center px-4 sm:px-6 py-3.5 sm:py-4 gap-3">
-                  <Search className="w-5 h-5 text-[#4E5F52] flex-shrink-0" />
+              <div className="container mx-auto px-0 max-w-3xl flex items-center gap-3">
+                {/* Search Input Capsule */}
+                <div className="flex-1 flex items-center px-3.5 py-2.5 rounded-full bg-black/[0.05] border-0 text-[#1C1D1F] transition-all focus-within:bg-white focus-within:shadow-xs">
+                  <Search className="w-4 h-4 text-[#4E5F52] flex-shrink-0 mr-2.5" />
                   <input
                     ref={inputRef}
                     type="search"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search formulations, herbs (e.g. Ashwagandha, Bhringraj, Delay Spray)..."
-                    className="w-full bg-transparent text-sm sm:text-base text-[#1C1D1F] placeholder-[#999999] focus:outline-none caret-[#4E5F52]"
+                    placeholder="Search formulations, herbs (e.g. Ashwagandha, Bhringraj)..."
+                    className="w-full bg-transparent text-sm text-[#1C1D1F] placeholder-[#8E8E93] focus:outline-none"
                     autoComplete="off"
                     spellCheck="false"
                   />
@@ -204,28 +210,28 @@ export function SearchModal() {
                         setQuery("");
                         inputRef.current?.focus();
                       }}
-                      className="p-1 rounded-full text-[#737373] hover:text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors"
+                      className="p-1 rounded-full text-[#8E8E93] hover:text-[#1C1D1F] transition-colors"
                       aria-label="Clear search query"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-3.5 h-3.5" />
                     </button>
                   )}
-                  <button
-                    type="button"
-                    onClick={closeSearch}
-                    className="p-1.5 rounded-xl text-[#737373] hover:text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors flex items-center gap-1"
-                    aria-label="Close search modal"
-                  >
-                    <span className="hidden sm:inline text-[10px] font-mono uppercase bg-[#FAF7F2] border border-[#9E8047]/25 px-1.5 py-0.5 rounded text-[#737373]">
-                      ESC
-                    </span>
-                    <X className="w-5 h-5 sm:hidden" />
-                  </button>
                 </div>
-              </form>
 
-              {/* Results & Suggestions Scrollable Area */}
-              <div className="max-h-[65vh] overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-5">
+                {/* iOS Style Cancel Action Button */}
+                <button
+                  type="button"
+                  onClick={closeSearch}
+                  className="text-xs sm:text-sm font-medium text-[#1F3D2B] hover:text-[#8C703D] transition-colors flex-shrink-0 px-1 py-1"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+
+            {/* Results & Suggestions Scrollable Area: Edge-to-edge with 16px container padding */}
+            <div className="w-full max-h-[75vh] overflow-y-auto overscroll-contain px-4 py-3 sm:py-5">
+              <div className="container mx-auto px-0 max-w-3xl space-y-4">
                 {query.trim() ? (
                   /* LIVE QUERY RESULTS */
                   <div className="space-y-3">
@@ -347,10 +353,10 @@ export function SearchModal() {
                   </div>
                 ) : (
                   /* DEFAULT STATE: POPULAR SUGGESTIONS & CATEGORIES */
-                  <div className="space-y-5">
+                  <div className="space-y-4">
                     {/* Popular Botanical Searches */}
                     <div>
-                      <div className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-wider text-[#1C1D1F] mb-2.5">
+                      <div className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-wider text-[#1C1D1F] mb-2">
                         <Sparkles className="w-3.5 h-3.5 text-[#9E8047]" />
                         <span>Popular Botanical Searches</span>
                       </div>
@@ -370,10 +376,10 @@ export function SearchModal() {
 
                     {/* Explore Categories */}
                     <div>
-                      <div className="text-xs uppercase font-bold tracking-wider text-[#737373] mb-2.5">
+                      <div className="text-xs uppercase font-bold tracking-wider text-[#737373] mb-2">
                         Apothecary Categories
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         {QUICK_CATEGORIES.map((cat) => (
                           <Link
                             key={cat.label}
@@ -389,7 +395,7 @@ export function SearchModal() {
                     </div>
 
                     {/* Doctor Consultation Prompt */}
-                    <div className="p-3.5 rounded-2xl bg-[#FFFFFF] border border-[#9E8047]/25 flex items-center justify-between gap-3">
+                    <div className="p-3 rounded-2xl bg-[#FFFFFF] border border-[#9E8047]/25 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex items-center justify-center text-[#4E5F52] flex-shrink-0">
                           <HeartPulse className="w-4 h-4" />
@@ -404,7 +410,7 @@ export function SearchModal() {
                         </div>
                       </div>
                       <a
-                        href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20would%20like%20to%20consult%20an%20Ayurvedic%20doctor."
+                        href={buildWhatsAppUrl(buildVaidyaConsultationMessage())}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={closeSearch}
@@ -416,30 +422,30 @@ export function SearchModal() {
                   </div>
                 )}
               </div>
+            </div>
 
-              {/* Bottom Keyboard Hint Bar */}
-              <div className="px-4 sm:px-6 py-2.5 border-t border-[#9E8047]/25 bg-[#FFFFFF] flex items-center justify-between text-[11px] text-[#737373]">
-                <div className="flex items-center gap-3">
-                  <span className="flex items-center gap-1">
-                    <CornerDownLeft className="w-3 h-3 text-[#4E5F52]" />
-                    <span>
-                      Press{" "}
-                      <kbd className="font-mono text-[#1C1D1F] bg-[#FAF7F2] border border-[#9E8047]/25 px-1 py-0.5 rounded text-[10px]">
-                        Enter
-                      </kbd>{" "}
-                      to search
-                    </span>
+            {/* Bottom Keyboard Hint Bar (Desktop only) */}
+            <div className="hidden sm:flex px-4 sm:px-6 py-2.5 border-t border-black/[0.06] bg-black/[0.02] items-center justify-between text-[11px] text-[#737373]">
+              <div className="flex items-center gap-3">
+                <span className="flex items-center gap-1">
+                  <CornerDownLeft className="w-3 h-3 text-[#4E5F52]" />
+                  <span>
+                    Press{" "}
+                    <kbd className="font-mono text-[#1C1D1F] bg-[#FAF7F2] border border-[#9E8047]/25 px-1 py-0.5 rounded text-[10px]">
+                      Enter
+                    </kbd>{" "}
+                    to search
                   </span>
-                  <span className="hidden sm:inline text-[#999999]">•</span>
-                  <span className="hidden sm:inline">Esc to dismiss</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[#4E5F52] font-medium">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>100% Classical Actives</span>
-                </div>
+                </span>
+                <span className="text-[#999999]">•</span>
+                <span>Esc to dismiss</span>
               </div>
-            </motion.div>
-          </div>
+              <div className="flex items-center gap-1.5 text-[#4E5F52] font-medium">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>100% Classical Actives</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       )}
     </AnimatePresence>

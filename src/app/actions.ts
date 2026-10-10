@@ -1,10 +1,17 @@
-/**
- * Static & Edge-safe Order & Lead Storage Actions
- * Compatible with Next.js static HTML export and Cloudflare Pages.
- */
+import { OrderRepository, LeadRepository } from "@/lib/db";
 
 export async function placeOrderServer(order: any) {
   try {
+    // 1. Persist in SQL Database / Backend if running in Node or Server context
+    if (typeof window === "undefined") {
+      try {
+        OrderRepository.create(order);
+      } catch (err) {
+        console.error("SQL persistence error in placeOrderServer:", err);
+      }
+    }
+
+    // 2. Client-side local cache fallback
     if (typeof window !== "undefined") {
       const stored = JSON.parse(localStorage.getItem("ayur_orders") || "[]");
       const exists = stored.some(
@@ -26,6 +33,11 @@ export async function placeOrderServer(order: any) {
 
 export async function getOrdersServer() {
   try {
+    if (typeof window === "undefined") {
+      try {
+        return OrderRepository.getAll(100);
+      } catch (e) {}
+    }
     if (typeof window !== "undefined") {
       return JSON.parse(localStorage.getItem("ayur_orders") || "[]");
     }
@@ -37,6 +49,11 @@ export async function getOrdersServer() {
 
 export async function updateOrderStatusServer(orderId: string, status: string) {
   try {
+    if (typeof window === "undefined") {
+      try {
+        OrderRepository.updateStatus(orderId, status);
+      } catch (e) {}
+    }
     if (typeof window !== "undefined") {
       const stored = JSON.parse(localStorage.getItem("ayur_orders") || "[]");
       const updated = stored.map((o: any) =>
@@ -54,6 +71,11 @@ export async function updateOrderStatusServer(orderId: string, status: string) {
 
 export async function saveLeadServer(lead: any) {
   try {
+    if (typeof window === "undefined") {
+      try {
+        LeadRepository.create(lead);
+      } catch (e) {}
+    }
     if (typeof window !== "undefined") {
       const stored = JSON.parse(
         localStorage.getItem("ayur_whatsapp_leads") || "[]",

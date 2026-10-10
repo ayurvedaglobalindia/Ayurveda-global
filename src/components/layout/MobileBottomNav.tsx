@@ -26,31 +26,24 @@ export function MobileBottomNav() {
   const cartCount = getCartCount();
 
   const handleDoctorWhatsApp = () => {
-    const primaryAddr = user?.addresses?.[0];
-    const userCity = primaryAddr
-      ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(", ")
-      : "";
-
-    const msg = buildVaidyaConsultationMessage({
-      patientName: user?.name || "",
-      patientPhone: user?.phone || "",
-      patientCity: userCity,
-      concern: "Personalized Rasayana Regimen & Stamina Guidance",
-      source: "bottom-nav",
-    });
+    const msg = buildVaidyaConsultationMessage();
     window.open(buildWhatsAppUrl(msg), "_blank");
   };
 
   return (
     <nav
       aria-label="Mobile Bottom Navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-t border-[#9E8047]/25 px-2 py-1.5 shadow-lg safe-area-pb"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl border-t border-stone-200/50 px-2 shadow-lg"
+      style={{
+        height: "calc(68px + env(safe-area-inset-bottom, 8px))",
+        paddingBottom: "env(safe-area-inset-bottom, 8px)",
+      }}
     >
-      <div className="flex items-center justify-around max-w-md mx-auto">
+      <div className="flex items-center justify-around max-w-md mx-auto h-[68px]">
         {/* 1. Home */}
         <Link
           href="/"
-          className={`flex flex-col items-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
+          className={`flex flex-col items-center justify-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
             pathname === "/"
               ? "text-[#1C1D1F] font-semibold"
               : "text-[#737373] hover:text-[#1C1D1F]"
@@ -65,7 +58,7 @@ export function MobileBottomNav() {
         <button
           type="button"
           onClick={openSearch}
-          className={`flex flex-col items-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
+          className={`flex flex-col items-center justify-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
             isSearchOpen
               ? "text-[#1C1D1F] font-semibold"
               : "text-[#737373] hover:text-[#1C1D1F]"
@@ -76,18 +69,34 @@ export function MobileBottomNav() {
           <span>Search</span>
         </button>
 
-        {/* 3. Center Action: Vaidya Consult */}
+        {/* 3. Center Action: Elevated Vaidya Consult with Seamless Rotating Neon Ring */}
         <button
           type="button"
           onClick={handleDoctorWhatsApp}
-          className="flex flex-col items-center gap-0.5 text-[10px] text-[#4E5F52] hover:text-[#3D4B40] transition-colors -mt-4 group"
+          className="flex flex-col items-center -translate-y-[18px] text-[#4E5F52] hover:text-[#3D4B40] transition-colors group relative z-50 focus:outline-none"
           aria-label="Consult Chief Vaidya on WhatsApp"
         >
-          <div className="relative w-12 h-12 rounded-full bg-[#FFFFFF] border-2 border-[#4E5F52]/50 flex items-center justify-center shadow-md text-[#4E5F52] group-hover:scale-105 transition-transform">
-            <span className="absolute inset-0 rounded-full bg-[#4E5F52]/10 animate-ping opacity-75 pointer-events-none" />
-            <HeartPulse className="w-5 h-5 text-[#4E5F52] animate-pulse relative z-10" />
+          <div className="relative w-[56px] h-[56px] rounded-full bg-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+            {/* Seamless Rotating Neon Ring */}
+            <span
+              className="absolute inset-0 rounded-full pointer-events-none animate-spin-ring"
+              style={{
+                border: "2px solid transparent",
+                background:
+                  "linear-gradient(#fff, #fff) padding-box, conic-gradient(from 0deg, #22c55e, #10b981, transparent 65%, #22c55e) border-box",
+                boxShadow: "0 0 10px rgba(34, 197, 94, 0.6)",
+                animation: "spinRing 2.5s linear infinite",
+              }}
+              aria-hidden="true"
+            />
+            {/* Minimalist Vaidya Consult Heart & ECG Icon */}
+            <img
+              src="/images/vaidya-icon.svg"
+              alt="Vaidya Consult"
+              className="w-8 h-8 object-contain relative z-10 drop-shadow-2xs"
+            />
           </div>
-          <span className="text-[9.5px] font-semibold text-[#4E5F52] mt-0.5 tracking-wide">
+          <span className="text-[10px] font-semibold text-[#1F3D2B] mt-[4px] tracking-wide leading-none">
             Vaidya Consult
           </span>
         </button>
@@ -96,7 +105,7 @@ export function MobileBottomNav() {
         <button
           type="button"
           onClick={openCartDrawer}
-          className="flex flex-col items-center gap-0.5 text-[10px] relative text-[#737373] hover:text-[#1C1D1F] transition-colors py-1 px-2"
+          className="flex flex-col items-center justify-center gap-0.5 text-[10px] relative text-[#737373] hover:text-[#1C1D1F] transition-colors py-1 px-2"
           aria-label="Open Shopping Cart"
         >
           <div className="relative">
@@ -113,7 +122,7 @@ export function MobileBottomNav() {
         {/* 5. Track Order */}
         <Link
           href="/track-order"
-          className={`flex flex-col items-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
+          className={`flex flex-col items-center justify-center gap-0.5 text-[10px] transition-colors py-1 px-2 ${
             pathname === "/track-order"
               ? "text-[#1C1D1F] font-semibold"
               : "text-[#737373] hover:text-[#1C1D1F]"

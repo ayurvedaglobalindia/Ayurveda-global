@@ -2,70 +2,96 @@
 
 import React from "react";
 import Link from "next/link";
-import { MessageCircle, HeartPulse, CheckCircle2, Shield, ArrowRight } from "lucide-react";
-import { buildWhatsAppUrl } from "@/store/whatsappStore";
+import Image from "next/image";
+import { MessageCircle, HeartPulse, CheckCircle2, Shield, ArrowRight, Award } from "lucide-react";
+import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from "@/store/whatsappStore";
 
 export function DoctorConsultBanner() {
   const handleDirectWhatsApp = () => {
-    const msg = `🌿 *AYURVEDA GLOBAL — FREE DOCTOR CONSULTATION*
-Hello Doctor, I would like to consult with a certified Ayurvedic Vaidya regarding personalized formulation recommendations.`;
+    const msg = buildVaidyaConsultationMessage();
     window.open(buildWhatsAppUrl(msg), "_blank");
   };
 
   return (
-    <section className="py-12 sm:py-16 bg-[#FAF7F2]">
+    <section className="py-8 sm:py-14 lg:py-20 bg-[#FAF7F2] border-b border-[#9E8047]/20 overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="bg-gradient-to-br from-[#2D4A3E] via-[#233B31] to-[#172620] rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
-          {/* Subtle Decorative Elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#9E8047]/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-[#2D4A3E]/40 rounded-full blur-2xl pointer-events-none" />
+        <div className="bg-[#1F3D2B] rounded-2xl sm:rounded-3xl overflow-hidden border border-[#9E8047]/30 text-white shadow-xl grid lg:grid-cols-12 items-stretch">
+          {/* Left Column: Editorial Consultation Copy */}
+          <div className="lg:col-span-7 p-4 sm:p-8 lg:p-12 flex flex-col justify-between space-y-4 sm:space-y-6">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="inline-flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/10 border border-white/20 text-[#FAF7F2] text-xs font-sans font-medium tracking-[0.16em] backdrop-blur-xs">
+                <img src="/images/vaidya-icon.svg" alt="Vaidya Icon" className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain" />
+                <span className="uppercase text-[9.5px] sm:text-[11px] font-semibold text-[#D4AF37]">Private Vaidya Concierge</span>
+              </div>
 
-          <div className="relative z-10 max-w-3xl">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#9E8047]/30 border border-[#9E8047]/40 text-[#E8ECE9] text-xs font-mono uppercase tracking-wider mb-4">
-              <HeartPulse className="w-3.5 h-3.5 text-[#D4AF37]" />
-              Free Vaidya Guidance
-            </span>
+              <h2 className="font-heading text-xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-[#FAF7F2] leading-tight">
+                Tailored Dosha Evaluation &amp; <span className="italic font-normal text-[#D4AF37]">Physician Guidance</span>
+              </h2>
 
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4 leading-tight">
-              Unsure Which Formulation Is Right For You?
-            </h2>
+              <p className="text-[11.5px] sm:text-sm text-[#FAF7F2]/85 font-light leading-relaxed max-w-xl">
+                Consult directly with accredited BAMS Ayurvedic doctors on WhatsApp. Receive personalized advice on dosha balancing, herb synergy, and lifestyle regimens at zero consultation fee.
+              </p>
 
-            <p className="text-sm sm:text-base text-[#E8ECE9]/90 font-light leading-relaxed mb-8 max-w-2xl">
-              Connect with our certified BAMS Ayurvedic physicians on WhatsApp. Get answers to dosage questions, discuss private health concerns, and receive tailored lifestyle advice at zero cost.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-8 text-xs font-mono text-[#E8ECE9]/80">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#9E8047]" />
-                100% Confidential WhatsApp Chat
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Shield className="w-4 h-4 text-[#9E8047]" />
-                Zero Consultation Charges
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#9E8047]" />
-                BAMS Certified Ayurvedic Doctors
-              </span>
+              {/* Visually Distinct Trust Cards: Clean 2x2 Grid on Mobile & Desktop */}
+              <div className="grid grid-cols-2 gap-2 pt-1 text-[10px] sm:text-xs font-mono text-[#FAF7F2]">
+                <div className="flex items-center gap-1.5 sm:gap-2.5 p-2 rounded-xl bg-white/5 border border-white/10">
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4AF37] flex-shrink-0" />
+                  <span className="leading-tight">100% Confidential Chat</span>
+                </div>
+                <div className="flex items-center gap-1.5 sm:gap-2.5 p-2 rounded-xl bg-white/5 border border-white/10">
+                  <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4AF37] flex-shrink-0" />
+                  <span className="leading-tight">Zero Consultation Fee</span>
+                </div>
+                <div className="flex items-center gap-1.5 sm:gap-2.5 p-2 rounded-xl bg-white/5 border border-white/10">
+                  <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4AF37] flex-shrink-0" />
+                  <span className="leading-tight">BAMS Certified Vaidyas</span>
+                </div>
+                <div className="flex items-center gap-1.5 sm:gap-2.5 p-2 rounded-xl bg-white/5 border border-white/10">
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4AF37] flex-shrink-0" />
+                  <span className="leading-tight">Free Follow-up Advice</span>
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 pt-1">
               <button
                 type="button"
                 onClick={handleDirectWhatsApp}
-                className="px-6 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-2 shadow-lg transition-transform hover:-translate-y-0.5"
+                className="px-5 py-3 sm:py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-2 shadow-md transition-all hover:-translate-y-0.5"
               >
-                <MessageCircle className="w-5 h-5 fill-white text-[#25D366]" />
+                <MessageCircle className="w-4 h-4 fill-white text-[#25D366]" />
                 <span>Chat with Doctor on WhatsApp</span>
               </button>
 
               <Link
                 href="/consultation"
-                className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white text-xs sm:text-sm font-medium tracking-wide flex items-center justify-center gap-2 transition-colors text-center"
+                className="px-5 py-3 sm:py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-[#FAF7F2] text-xs sm:text-sm font-medium tracking-wide flex items-center justify-center gap-2 transition-colors text-center"
               >
                 <span>Book Detailed Consultation</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
+            </div>
+          </div>
+
+          {/* Right Column: Authentic Editorial Photo */}
+          <div className="lg:col-span-5 relative min-h-[160px] sm:min-h-[280px] lg:min-h-full border-t lg:border-t-0 lg:border-l border-white/10">
+            <Image
+              src="/images/editorial/doctor-consultation.webp"
+              alt="Authentic Ayurvedic doctor and clinic consultation setting"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 400px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1F3D2B]/80 via-transparent to-transparent pointer-events-none lg:bg-gradient-to-l lg:from-transparent lg:to-[#1F3D2B]/30" />
+
+            <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 p-2.5 sm:p-3 rounded-xl bg-[#1C1D1F]/80 backdrop-blur-xs border border-white/15 text-white">
+              <span className="text-[9.5px] sm:text-[10px] font-mono uppercase tracking-widest text-[#D4AF37] block">
+                Nadi Pariksha &amp; Dosha Balancing
+              </span>
+              <p className="text-[10.5px] sm:text-[11px] text-[#FAF7F2]/90 mt-0.5 leading-snug">
+                Experienced Ayurvedic practitioners adhering to classical Charaka &amp; Sushruta principles.
+              </p>
             </div>
           </div>
         </div>

@@ -18,9 +18,9 @@ const categoryIcons = {
 };
 
 const categoryImages: Record<string, string> = {
-  supplements: "/images/products/body-essential-nutrition-card.jpg",
-  "personal-care": "/images/products/staymax-delay-spray-card.jpg",
-  wellness: "/images/products/vitality-power-combo-card.jpg",
+  supplements: "/images/categories/supplements.webp",
+  "personal-care": "/images/categories/personal-care.webp",
+  wellness: "/images/categories/wellness.webp",
 };
 
 export default function CategoriesPage() {

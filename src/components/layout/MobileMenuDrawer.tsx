@@ -22,6 +22,7 @@ import {
   HeartPulse,
 } from "lucide-react";
 import { useUIStore } from "@/store/uiStore";
+import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from "@/store/whatsappStore";
 
 interface MobileMenuDrawerProps {
   isOpen: boolean;
@@ -247,7 +248,7 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
               {/* Drawer Footer */}
               <div className="p-4 border-t border-[#9E8047]/25 bg-[#FAF7F2] space-y-2">
                 <a
-                  href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20an%20enquiry%20about%20ordering."
+                  href={buildWhatsAppUrl(buildVaidyaConsultationMessage())}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-2.5 px-4 rounded-full bg-[#1C1D1F] text-[#FAF7F2] hover:bg-[#333333] font-medium text-xs flex items-center justify-center gap-2 transition-colors uppercase tracking-wider"

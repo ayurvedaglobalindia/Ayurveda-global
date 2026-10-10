@@ -184,8 +184,12 @@ export default function CategoryPageClient() {
           <div className="space-y-6">
             <ProductGrid
               products={paginatedProducts}
-              columns={{ base: 1, sm: 2, md: 3, lg: 3 }}
-              variant={viewMode === "list" ? "compact" : "default"}
+              columns={
+                viewMode === "list"
+                  ? { base: 1, sm: 1, md: 1, lg: 1 }
+                  : { base: 1, sm: 2, md: 3, lg: 3 }
+              }
+              variant={viewMode === "list" ? "list" : "default"}
             />
             {totalPages > 1 && (
               <Pagination

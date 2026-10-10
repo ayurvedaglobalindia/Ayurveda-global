@@ -16,7 +16,7 @@ interface ProductGridProps {
     lg?: number;
     xl?: number;
   };
-  variant?: "default" | "compact" | "featured";
+  variant?: "default" | "compact" | "featured" | "list";
   showQuickActions?: boolean;
   loading?: boolean;
   emptyMessage?: string;
@@ -32,7 +32,10 @@ export function ProductGrid({
   emptyMessage = "No products found",
   emptyAction,
 }: ProductGridProps) {
-  const columns = { base: 1, sm: 2, md: 2, lg: 3, xl: 3, ...customColumns };
+  const isList = variant === "list";
+  const columns = isList
+    ? { base: 1, sm: 1, md: 1, lg: 1, xl: 1, ...customColumns }
+    : { base: 1, sm: 2, md: 2, lg: 3, xl: 3, ...customColumns };
 
   const getColClass = (cols: number) => {
     switch (cols) {

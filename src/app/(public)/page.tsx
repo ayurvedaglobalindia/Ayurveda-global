@@ -4,16 +4,16 @@ import {
   generateOrganizationStructuredData,
 } from "@/lib/seo";
 
-// Redesigned & Complete Home Page Components
+// D2C Premium Home Page Components
 import { LuxuryHero } from "@/components/home/LuxuryHero";
-import { HomeTrustBar } from "@/components/home/HomeTrustBar";
+import { ConcernsScroller } from "@/components/home/ConcernsScroller";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
-import { HomeAllProducts } from "@/components/home/HomeAllProducts";
 import { CategoryShowcase } from "@/components/home/CategoryShowcase";
 import { AyurvedaPhilosophySection } from "@/components/home/AyurvedaPhilosophySection";
 import { DoctorConsultBanner } from "@/components/home/DoctorConsultBanner";
 import { HomeTestimonials } from "@/components/home/HomeTestimonials";
 import { HomeFAQ } from "@/components/home/HomeFAQ";
+import { HomeTrustBar } from "@/components/home/HomeTrustBar";
 
 export const metadata: Metadata = {
   title: "Ayurveda Global | Ancient Ayurvedic Wisdom, Modern Wellness",
@@ -43,29 +43,29 @@ export default function HomePage() {
       {/* 1. Luxury Hero Banner */}
       <LuxuryHero />
 
-      {/* 2. Trust Pillars & Clinical Certifications */}
-      <HomeTrustBar />
+      {/* 2. Shop By Health Concern Circular Scroller */}
+      <ConcernsScroller />
 
-      {/* 3. Featured Products Slider (Apothecary Showcase) */}
+      {/* 3. Best Sellers Carousel */}
       <FeaturedProducts />
 
-      {/* 4. Complete Products Grid with Category Tabs (ALL Products on Home) */}
-      <HomeAllProducts />
-
-      {/* 5. Targeted Collections Showcase */}
+      {/* 3. Shop by Category */}
       <CategoryShowcase />
 
-      {/* 6. Ayurvedic Heritage & The 3 Doshas Interactive Science */}
+      {/* 4. Ayurvedic Science & Dosha Heritage */}
       <AyurvedaPhilosophySection />
 
-      {/* 7. Free Doctor Consultation WhatsApp Banner */}
+      {/* 5. Free Doctor Consultation WhatsApp Banner */}
       <DoctorConsultBanner />
 
-      {/* 8. Verified Patron Reviews & Testimonials */}
+      {/* 6. Customer Reviews & Testimonials */}
       <HomeTestimonials />
 
-      {/* 9. Interactive Home FAQ Accordion */}
+      {/* 7. Frequently Asked Questions */}
       <HomeFAQ />
+
+      {/* 8. Closing Trust Badges Strip (Right Above Footer) */}
+      <HomeTrustBar />
     </>
   );
 }

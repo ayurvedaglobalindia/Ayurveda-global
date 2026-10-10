@@ -35,20 +35,7 @@ export function WhatsAppFloatButton() {
   }, []);
 
   const handleVaidyaConsult = () => {
-    const primaryAddr = user?.addresses?.[0];
-    const userCity = primaryAddr
-      ? [primaryAddr.city, primaryAddr.state].filter(Boolean).join(", ")
-      : "";
-
-    const message = buildVaidyaConsultationMessage({
-      patientName: user?.name || "",
-      patientPhone: user?.phone || "",
-      patientCity: userCity,
-      concern: "Personalized Rasayana Regimen & Stamina Guidance",
-      enquiry:
-        "Pranam Vaidya Ji. I would like personalized guidance regarding Ayurvedic formulation dosage, diet, and root-cause revitalization.",
-      source: "float-concierge",
-    });
+    const message = buildVaidyaConsultationMessage();
 
     trackLead({
       source: "float-concierge",

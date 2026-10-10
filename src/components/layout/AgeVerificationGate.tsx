@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Shield, Leaf } from "lucide-react";
+import { Shield, Leaf, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { useUIStore } from "@/store/uiStore";
@@ -82,16 +82,16 @@ export function AgeVerificationGate({
           </p>
           <ul className="space-y-1.5 text-xs text-[#555555]">
             <li className="flex items-center gap-2">
-              <span className="text-[#4E5F52] font-bold">✓</span> 100% Ayurvedic
-              herbal &amp; topical ingredients
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
+              <span>100% Ayurvedic herbal &amp; topical ingredients</span>
             </li>
             <li className="flex items-center gap-2">
-              <span className="text-[#4E5F52] font-bold">✓</span> Strictly
-              intended for individuals 18 years and older
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
+              <span>Strictly intended for individuals 18 years and older</span>
             </li>
             <li className="flex items-center gap-2">
-              <span className="text-[#4E5F52] font-bold">✓</span> Discreet,
-              tamper-evident unmarked packaging guaranteed
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#4E5F52] flex-shrink-0" />
+              <span>Discreet, tamper-evident unmarked packaging guaranteed</span>
             </li>
           </ul>
         </div>

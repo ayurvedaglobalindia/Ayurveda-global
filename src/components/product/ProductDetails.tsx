@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import {
   Star,
   Plus,
@@ -135,30 +136,124 @@ export function ProductDetails({
     ? Math.round(((comparePrice - currentPrice) / comparePrice) * 100)
     : 0;
 
-  const ingredients = [
-    {
-      name: "Bhringraj",
-      english: "False Daisy",
-      benefit: "Promotes hair growth",
-    },
-    {
-      name: "Amla",
-      english: "Indian Gooseberry",
-      benefit: "Rich in Vitamin C",
-    },
-    { name: "Methi", english: "Fenugreek", benefit: "Prevents hair fall" },
-    {
-      name: "Neem",
-      english: "Indian Lilac",
-      benefit: "Anti-dandruff properties",
-    },
-    {
-      name: "Giloy",
-      english: "Heart-leaved moonseed",
-      benefit: "Reduces stress",
-    },
-    { name: "Karela", english: "Bitter Gourd", benefit: "Purifies scalp" },
-  ];
+  const PRODUCT_INGREDIENTS: Record<
+    string,
+    Array<{ name: string; english: string; benefit: string; image: string }>
+  > = {
+    "body-essential-nutrition": [
+      {
+        name: "Ashwagandha",
+        english: "Withania somnifera",
+        benefit: "Sustained cellular stamina & stress adaptation",
+        image: "/images/botanicals/ashwagandha.webp",
+      },
+      {
+        name: "Himalayan Shilajit",
+        english: "Mineral Pitch",
+        benefit: "Fulvic acid for ATP cellular endurance",
+        image: "/images/botanicals/shilajit.webp",
+      },
+      {
+        name: "Safed Musli",
+        english: "Chlorophytum borivilianum",
+        benefit: "Muscle tissue rejuvenation & inner vigor",
+        image: "/images/botanicals/gokshura.webp",
+      },
+      {
+        name: "Gokshura",
+        english: "Tribulus terrestris",
+        benefit: "Natural testosterone & reproductive vitality",
+        image: "/images/botanicals/gokshura.webp",
+      },
+      {
+        name: "Amla",
+        english: "Phyllanthus emblica",
+        benefit: "Antioxidant cellular defense & digestion",
+        image: "/images/botanicals/amla.webp",
+      },
+    ],
+    "staymax-delay-spray": [
+      {
+        name: "Herbal Extract",
+        english: "Syzygium aromaticum",
+        benefit: "Gentle nerve soothing without total numbness",
+        image: "/images/botanicals/mortar-pestle.webp",
+      },
+      {
+        name: "Aloe Vera",
+        english: "Aloe barbadensis",
+        benefit: "Deep dermal soothing & frictionless glide",
+        image: "/images/botanicals/tulsi.webp",
+      },
+      {
+        name: "Vitamin E",
+        english: "Tocopherol",
+        benefit: "Cellular hydration & skin barrier protection",
+        image: "/images/botanicals/amla.webp",
+      },
+    ],
+    "vitality-power-combo": [
+      {
+        name: "Ashwagandha",
+        english: "Withania somnifera",
+        benefit: "Inside-out physical power & vigor",
+        image: "/images/botanicals/ashwagandha.webp",
+      },
+      {
+        name: "Himalayan Shilajit",
+        english: "Mineral Pitch",
+        benefit: "Cellular rejuvenation & physical endurance",
+        image: "/images/botanicals/shilajit.webp",
+      },
+      {
+        name: "Gokshura & Musli",
+        english: "Synergistic Tonic",
+        benefit: "Deep reproductive tissue revitalization",
+        image: "/images/botanicals/gokshura.webp",
+      },
+      {
+        name: "Herbal Delay Extract",
+        english: "Topical Taila",
+        benefit: "Instant external performance & control",
+        image: "/images/botanicals/mortar-pestle.webp",
+      },
+    ],
+    "hair-regrow-kit": [
+      {
+        name: "Bhringraj",
+        english: "Eclipta prostrata",
+        benefit: "Activates dormant hair follicles",
+        image: "/images/botanicals/bhringraj.webp",
+      },
+      {
+        name: "Amla",
+        english: "Phyllanthus emblica",
+        benefit: "Rich natural Vitamin C, halts hair fall",
+        image: "/images/botanicals/amla.webp",
+      },
+      {
+        name: "Neem",
+        english: "Azadirachta indica",
+        benefit: "Clears scalp micro-inflammation & dandruff",
+        image: "/images/botanicals/neem.webp",
+      },
+      {
+        name: "Turmeric",
+        english: "Curcuma longa",
+        benefit: "Scalp circulation & follicle defense",
+        image: "/images/botanicals/turmeric.webp",
+      },
+      {
+        name: "Tulsi",
+        english: "Ocimum tenuiflorum",
+        benefit: "Purifies scalp sebum & cooling action",
+        image: "/images/botanicals/tulsi.webp",
+      },
+    ],
+  };
+
+  const ingredients =
+    PRODUCT_INGREDIENTS[product.id] || PRODUCT_INGREDIENTS["hair-regrow-kit"];
 
   const benefits = [
     {
@@ -208,9 +303,9 @@ export function ProductDetails({
               <h1 className="font-serif text-3xl sm:text-4xl font-semibold text-[#1f3d2b] leading-tight mb-2">
                 {product.name}
               </h1>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#e7ede8] text-[#1f3d2b] rounded-full text-xs font-semibold uppercase tracking-wider">
-                <Leaf className="w-3.5 h-3.5" />
-                Formulated with 11 Raw Potent Herbs
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FAF7F2] border border-[#9E8047]/30 text-[#1f3d2b] rounded-full text-xs font-mono font-semibold uppercase tracking-wider">
+                <Leaf className="w-3.5 h-3.5 text-[#4E5F52]" />
+                Standardized Botanical Formulation
               </div>
             </div>
 
@@ -443,25 +538,30 @@ export function ProductDetails({
           {/* Key Ingredients */}
           <section className="py-8">
             <div className="text-center mb-10">
-              <h2 className="font-serif text-2xl sm:text-3xl text-[#1f3d2b] font-semibold mb-3">
-                Power of 11 Pure Herbs
+              <h2 className="font-serif text-2xl sm:text-3xl text-[#1f3d2b] font-semibold mb-2">
+                Key Standardized Botanicals
               </h2>
-              <p className="text-stone-500 max-w-2xl mx-auto">
-                Carefully selected natural ingredients to provide maximum
-                efficacy and safety.
+              <p className="text-stone-500 max-w-2xl mx-auto text-xs sm:text-sm">
+                Authentic, lab-tested herbal extracts engineered for maximum biological potency and tissue assimilation.
               </p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 justify-center">
               {ingredients.map((ing, i) => (
                 <div
                   key={i}
-                  className="group flex flex-col items-center text-center p-4 bg-white rounded-2xl border border-stone-200 hover:border-[#1f3d2b] transition-all shadow-sm hover:shadow-md cursor-default"
+                  className="group flex flex-col items-center text-center p-4 bg-white rounded-2xl border border-stone-200 hover:border-[#9E8047]/60 transition-all shadow-xs hover:shadow-md"
                 >
-                  <div className="w-16 h-16 rounded-full bg-[#e7ede8] flex items-center justify-center mb-3 group-hover:bg-[#1f3d2b] transition-colors">
-                    <Leaf className="w-8 h-8 text-[#1f3d2b] group-hover:text-white transition-colors" />
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden mb-3 border-2 border-[#9E8047]/30 shadow-2xs group-hover:scale-105 transition-transform bg-[#FAF7F2]">
+                    <Image
+                      src={ing.image}
+                      alt={ing.name}
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
                   </div>
-                  <h4 className="font-bold text-[#1f3d2b]">{ing.name}</h4>
-                  <p className="text-[10px] text-stone-500 mb-1">
+                  <h4 className="font-bold text-[#1f3d2b] text-sm">{ing.name}</h4>
+                  <p className="text-[10px] text-stone-500 italic mb-1 font-mono">
                     ({ing.english})
                   </p>
                   <p className="text-xs text-stone-600 leading-tight">

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Trash2, ArrowLeft, ShoppingBag, Sparkles } from "lucide-react";
+import { Trash2, ArrowLeft, ShoppingBag, Sparkles, Lock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { QuantitySelector } from "@/components/ui/QuantitySelector";
@@ -238,8 +238,9 @@ export function CartPage() {
                   Proceed to Checkout ({formatINR(total)})
                 </Button>
               </Link>
-              <p className="text-center text-[10.5px] text-[#737373] mt-3">
-                🔒 100% Confidential packaging • Cash on Delivery available
+              <p className="text-center text-[10.5px] text-[#737373] mt-3 inline-flex items-center justify-center gap-1 w-full">
+                <Lock className="w-3 h-3 text-[#4E5F52]" />
+                <span>100% Confidential packaging • Cash on Delivery available</span>
               </p>
             </div>
           </motion.div>

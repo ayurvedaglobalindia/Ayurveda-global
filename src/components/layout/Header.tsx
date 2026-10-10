@@ -30,48 +30,56 @@ export function Header() {
     <header
       className={`w-full transition-all duration-300 z-50 sticky top-0 ${
         isScrolled
-          ? "bg-[var(--color-void)]/90 backdrop-blur-md border-b border-[var(--color-forest-accent)]/10 shadow-sm"
-          : "bg-[var(--color-void)]"
+          ? "bg-[#FAF7F2]/88 backdrop-blur-[15px] border-b border-[#9E8047]/25 shadow-xs"
+          : "bg-[#FAF7F2]/95 backdrop-blur-[15px] border-b border-[#9E8047]/15"
       }`}
+      style={{ WebkitBackdropFilter: "blur(15px)" }}
     >
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-12 sm:h-14 gap-4">
-          {/* Brand Logo */}
+        <div className="flex items-center justify-between py-3 sm:py-3.5 gap-3 sm:gap-4 min-h-[58px] sm:min-h-[64px]">
+          {/* Official Luxury Brand Lockup */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 flex-shrink-0 group py-1"
+            className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 group py-0.5"
             aria-label="Ayurveda Global Home"
           >
-            <div className="relative w-11 h-11 flex-shrink-0">
+            {/* Logo Emblem: Scaled to 38px-40px (h-9.5 w-9.5 / sm:h-10 sm:w-10) with subtle depth shadow */}
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0 rounded-full p-0.5 bg-white/80 border border-[#9E8047]/30 shadow-[0_2px_8px_rgba(31,51,42,0.12)] group-hover:shadow-[0_4px_12px_rgba(31,51,42,0.2)] transition-shadow">
                <img
                   src="/images/brand-logo.png"
-                  alt="Ayurveda Global Logo"
-                  className="w-full h-full object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300"
+                  alt="Ayurveda Global Emblem"
+                  className="w-full h-full object-contain drop-shadow-xs group-hover:scale-105 transition-transform duration-300"
                />
             </div>
-            <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#1F332A] transition-colors">
-              Ayurveda Global
-            </span>
+            <div className="min-w-0 flex flex-col justify-center">
+              <span className="font-serif text-lg sm:text-xl lg:text-2xl font-bold tracking-tight text-[#0f3822] transition-colors whitespace-nowrap block leading-tight">
+                Ayurveda Global
+              </span>
+              <span className="text-[8px] sm:text-[9.5px] uppercase tracking-[0.24em] text-[#8C703D] font-sans font-semibold whitespace-nowrap leading-none mt-0.5">
+                Classical Apothecary
+              </span>
+            </div>
           </Link>
 
-          {/* Clean Desktop Navigation */}
+          {/* Clean Editorial Desktop Navigation */}
           <nav
-            className="hidden md:flex items-center gap-8"
+            className="hidden md:flex items-center gap-7 lg:gap-8"
             aria-label="Main Navigation"
           >
             {[
-              { label: "Products", href: "/shop" },
-              { label: "Our Story", href: "/about" },
-              { label: "Consultation", href: "/consultation" },
-              { label: "Wellness Blog", href: "/blog" },
-              { label: "Contact Us", href: "/contact" },
+              { label: "Formulations", href: "/shop" },
+              { label: "Heritage", href: "/about" },
+              { label: "Vaidya Consult", href: "/consultation" },
+              { label: "Journal", href: "/blog" },
+              { label: "Contact", href: "/contact" },
             ].map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-[var(--color-forest-accent)] hover:text-[var(--color-charcoal)] transition-colors font-sans text-sm font-medium tracking-wide"
+                className="text-[#1F332A] hover:text-[#8C703D] transition-colors font-sans text-xs uppercase tracking-[0.14em] font-medium relative group/nav py-1"
               >
-                {link.label}
+                <span>{link.label}</span>
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-[#8C703D] transition-all duration-300 group-hover/nav:w-full" />
               </Link>
             ))}
           </nav>
@@ -97,12 +105,12 @@ export function Header() {
           </div>
 
           {/* Right Side Controls */}
-          <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
             {/* Search (Icon on small screens) */}
             <button
               type="button"
               onClick={() => openSearch()}
-              className="lg:hidden p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
+              className="lg:hidden p-1.5 sm:p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
               aria-label="Search"
             >
               <Search className="w-5 h-5 stroke-[1.5]" />
@@ -111,7 +119,7 @@ export function Header() {
             {/* User Account */}
             <Link
               href="/account"
-              className="hidden sm:block p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
+              className="p-1.5 sm:p-2 rounded-full text-[#1F332A] hover:bg-[#1F332A]/5 transition-colors"
               aria-label="Account"
             >
               <User className="w-5 h-5 stroke-[1.5]" />
@@ -121,12 +129,12 @@ export function Header() {
             <button
               type="button"
               onClick={openCartDrawer}
-              className="relative p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
+              className="relative p-1.5 sm:p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
               aria-label={isMounted ? `Cart, ${cartCount} items` : "Cart"}
             >
               <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
               {isMounted && cartCount > 0 && (
-                <span className="absolute 0 right-0 w-4 h-4 rounded-full bg-[#2D4A3E] text-white text-[9px] font-bold flex items-center justify-center">
+                <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-[#2D4A3E] text-white text-[9px] font-bold flex items-center justify-center shadow-xs">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
@@ -136,7 +144,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => openModal("mobile-menu")}
-              className="md:hidden p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
+              className="md:hidden p-1.5 sm:p-2 rounded-full text-[var(--color-forest-accent)] hover:bg-[var(--color-forest-accent)]/5 transition-colors"
               aria-label="Open menu"
             >
               <Menu className="w-5 h-5 stroke-[1.5]" />

@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { Search, ChevronDown, MessageSquare, X } from "lucide-react";
 import { Accordion } from "@/components/ui/Accordion";
+import { buildWhatsAppUrl } from "@/store/whatsappStore";
 
 interface FAQCategory {
   category: string;
@@ -160,7 +161,7 @@ export function FAQClient({ faqs }: FAQClientProps) {
             Contact Desk
           </a>
           <a
-            href="https://wa.me/919123485451?text=Hi%20Ayur%20Veda%20Global%2C%20I%20have%20a%20question%20regarding%20your%20products."
+            href={buildWhatsAppUrl("Namaste Ayurveda Global 🙏 I have a question regarding your products. Please assist me.")}
             target="_blank"
             rel="noopener noreferrer"
             className="px-5 py-2.5 rounded-full bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] text-xs font-medium uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 shadow-xs"

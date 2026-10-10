@@ -400,6 +400,126 @@ async function runAllTests() {
       throw new Error(`Total mismatch: ${retrieved.total_amount}`);
   });
 
+  test("OrderRepository, ProductRepository, and LeadRepository SQL integration", async () => {
+    const { OrderRepository, ProductRepository, LeadRepository, CouponRepository } = await import("@/lib/db");
+
+    // 1. Test Product Repository
+    const allProducts = ProductRepository.getAll();
+    if (!Array.isArray(allProducts) || allProducts.length === 0) {
+      throw new Error("ProductRepository.getAll failed to return products");
+    }
+    const shilajit = ProductRepository.getBySlug("body-essential-nutrition");
+    if (!shilajit || shilajit.slug !== "body-essential-nutrition") {
+      throw new Error("ProductRepository.getBySlug failed");
+    }
+
+    // 2. Test Order Repository Creation & Query
+    const repoOrderNum = `REPO-ORD-${Date.now()}`;
+    const orderRes = OrderRepository.create({
+      id: repoOrderNum,
+      orderNumber: repoOrderNum,
+      customerName: "Aarav Mehra",
+      customerPhone: "9876543210",
+      customerEmail: "aarav@example.com",
+      shippingAddress: {
+        firstName: "Aarav",
+        lastName: "Mehra",
+        addressLine1: "B-202 Green Acres",
+        city: "Bengaluru",
+        state: "Karnataka",
+        pincode: "560001",
+        phone: "9876543210",
+        country: "India",
+      },
+      items: [
+        { productId: "body-essential-nutrition", quantity: 1, price: 149900 }
+      ],
+      total: 149900,
+      paymentMethod: "cod",
+      orderStatus: "confirmed",
+    });
+
+    if (!orderRes.success) throw new Error("OrderRepository.create failed");
+
+    const fetchedOrder = OrderRepository.getByOrderNumber(repoOrderNum);
+    if (!fetchedOrder || fetchedOrder.customer_name !== "Aarav Mehra") {
+      throw new Error("OrderRepository.getByOrderNumber failed");
+    }
+
+    // 3. Test Order Status Update
+    const updated = OrderRepository.updateStatus(repoOrderNum, "processing", "Verified by Vaidya team");
+    if (!updated) throw new Error("OrderRepository.updateStatus failed");
+
+    const statusHistory = OrderRepository.getStatusHistory(repoOrderNum);
+    if (statusHistory.length < 2) {
+      throw new Error("Order status history not recorded correctly");
+    }
+
+    // 4. Test Lead Repository
+    const leadRes = LeadRepository.create({
+      source: "vaidya_consult_nav",
+      customerName: "Priya Sharma",
+      customerPhone: "9812345678",
+      messagePreview: "Seeking consultation for dosha balancing",
+    });
+    if (!leadRes.success) throw new Error("LeadRepository.create failed");
+
+    // 5. Test Coupon Repository
+    const coupon = CouponRepository.getByCode("WELCOME10");
+    if (!coupon || coupon.value !== 10) {
+      throw new Error("CouponRepository.getByCode failed for WELCOME10");
+    }
+  });
+
+  test("Database Services & Endpoints (Products, Orders with AVG-ID, Vaidya Consult)", async () => {
+    const { getActiveProductsAndCategories, createOrderWithTracking, bookVaidyaConsultation } = await import("@/lib/db/services");
+
+    // 1. Fetch active products & categories
+    const productsRes = await getActiveProductsAndCategories();
+    if (!productsRes.success || productsRes.products.length === 0) {
+      throw new Error("getActiveProductsAndCategories failed");
+    }
+    if (productsRes.categories.length === 0) {
+      throw new Error("Categories missing in response");
+    }
+
+    // 2. Create order with AVG reference ID (e.g. AVG-476972)
+    const orderRes = await createOrderWithTracking({
+      customerName: "Devansh Singhania",
+      customerPhone: "9876500000",
+      shippingAddress: {
+        firstName: "Devansh",
+        lastName: "Singhania",
+        addressLine1: "10, Marine Drive",
+        city: "Mumbai",
+        state: "Maharashtra",
+        pincode: "400020",
+        phone: "9876500000",
+      },
+      items: [
+        { productId: "prod-body-nutrition", quantity: 2, unitPrice: 149900 },
+      ],
+      paymentMode: "COD",
+    });
+
+    if (!orderRes.success) throw new Error("createOrderWithTracking failed");
+    if (!orderRes.orderReferenceId?.startsWith("AVG-")) {
+      throw new Error(`Invalid order reference ID generated: ${orderRes.orderReferenceId}`);
+    }
+
+    // 3. Book Vaidya Doctor consultation
+    const consultRes = await bookVaidyaConsultation({
+      patientName: "Meera Kapoor",
+      phoneNumber: "9820011223",
+      doshaType: "Pitta",
+      symptoms: "Acid reflux, skin heat rashes, disturbed sleep",
+    });
+
+    if (!consultRes.success || consultRes.bookingStatus !== "confirmed") {
+      throw new Error("bookVaidyaConsultation failed");
+    }
+  });
+
   // 7. WhatsApp Automation & Message Format Tests
   console.log("\n💬 7. WhatsApp Automation & Message Format Tests:");
   test("buildWhatsAppUrl generates valid link to official number", () => {
@@ -473,24 +593,29 @@ async function runAllTests() {
       throw new Error("Product price formatting missing");
   });
 
-  test("buildVaidyaConsultationMessage formats confidential BAMS doctor request", () => {
-    const consult = buildVaidyaConsultationMessage({
-      patientName: "Rajesh Patil",
-      patientPhone: "9123456789",
-      patientCity: "Pune, Maharashtra",
-      patientAge: "35",
-      concern: "Hair Loss & Stamina Improvement",
-      enquiry: "Need advice on whether to take oil or capsules first.",
-    });
+  test("buildVaidyaConsultationMessage formats short, professional Vaidya consultation message", () => {
+    const defaultMsg = buildVaidyaConsultationMessage();
+    if (defaultMsg !== "Namaste Ayurveda Global 🙏 I would like to consult a Vaidya regarding my health concerns and personalized Ayurvedic guidance. Please assist me.") {
+      throw new Error("Default Vaidya consultation message does not match required format");
+    }
 
-    if (!consult.includes("SENIOR VAIDYA CONSULTATION"))
-      throw new Error("Vaidya consult header missing");
-    if (!consult.includes("Rajesh Patil"))
-      throw new Error("Patient name missing");
-    if (!consult.includes("Hair Loss & Stamina Improvement"))
-      throw new Error("Health concern missing");
-    if (!consult.includes("Pune, Maharashtra"))
-      throw new Error("City missing");
+    const customConsult = buildVaidyaConsultationMessage({
+      concern: "Hair Loss & Stamina Improvement",
+    });
+    if (!customConsult.includes("Hair Loss & Stamina Improvement")) {
+      throw new Error("Health concern missing in consultation message");
+    }
+    if (!customConsult.includes("Namaste Ayurveda Global 🙏")) {
+      throw new Error("Brand greeting missing");
+    }
+
+    const consultUrl = buildWhatsAppUrl(defaultMsg);
+    if (!consultUrl.startsWith("https://wa.me/919123485451?text=")) {
+      throw new Error("Consultation WhatsApp URL malformed");
+    }
+    if (!consultUrl.includes("%F0%9F%99%8F")) {
+      throw new Error("Emoji not properly URL-encoded");
+    }
   });
 
   // 8. Server Endpoints Health Check

@@ -13,8 +13,8 @@ import {
 
 export function Footer() {
   return (
-    <footer className="bg-[#1C1D1F] text-white pt-10 pb-8 border-t border-[var(--color-forest-accent)]">
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+    <footer className="bg-[#1C1D1F] text-white pt-10 pb-24 md:pb-8 border-t border-[#9E8047]/20 overflow-hidden">
+      <div className="container mx-auto px-4 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-5">
           {/* Col 1: Brand & Social */}
           <div className="space-y-6">

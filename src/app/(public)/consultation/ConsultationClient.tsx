@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useUIStore } from "@/store/uiStore";
 import { useUserStore } from "@/store/userStore";
-import { buildWhatsAppUrl } from "@/store/whatsappStore";
+import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from "@/store/whatsappStore";
 
 const consultationCategories = [
   {
@@ -86,18 +86,14 @@ export default function ConsultationClient() {
 
     const selectedCategoryTitle =
       consultationCategories.find((c) => c.id === selectedConcern)?.title ||
-      "Ayurvedic Wellness";
+      "my health concerns";
 
-    const msg = `🌿 *AYURVEDA GLOBAL — DOCTOR CONSULTATION REQUEST*
-----------------------------------------
-*Patient Name:* ${patientName}
-*Phone Number:* ${patientPhone}
-*City/State:* ${patientCity || "India"}
-*Preferred Language:* ${preferredLanguage}
-*Health Focus Area:* ${selectedCategoryTitle}
-${additionalNotes ? `*Specific Concerns:* ${additionalNotes}` : ""}
-----------------------------------------
-_Please connect me with a certified Ayurvedic Vaidya for a private consultation._`;
+    const msg = buildVaidyaConsultationMessage({
+      concern: selectedCategoryTitle,
+      enquiry: additionalNotes?.trim()
+        ? `I would like to consult a Vaidya regarding ${selectedCategoryTitle} (${additionalNotes.trim()}) and personalized Ayurvedic guidance. Please assist me.`
+        : undefined,
+    });
 
     const whatsappUrl = buildWhatsAppUrl(msg);
     setSubmitted(true);

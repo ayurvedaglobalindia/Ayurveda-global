@@ -60,3 +60,6 @@ keep_tunnel.sh
 # temp assets
 public/images/*-backup.png
 public/images/*-transparent.png
+
+# agent config
+.agents/
