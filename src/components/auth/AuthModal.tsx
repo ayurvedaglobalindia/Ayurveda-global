@@ -110,7 +110,7 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
     }
   };
 
-  const handleSendOtp = async (e: React.FormEvent) => {
+  const handleDirectSignIn = (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
 
@@ -132,36 +132,19 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
       return;
     }
 
-    setLoading(true);
-    try {
-      const result = await sendOTP(cleanPhone, name.trim());
-      setLoading(false);
+    const userObj: User = {
+      id: `usr-${cleanPhone}`,
+      name: name.trim() || "Ayurvedic Patron",
+      email: email.trim() || `${cleanPhone}@ayurvedaglobal.com`,
+      phone: cleanPhone,
+      addresses: [],
+      orders: [],
+      wishlist: [],
+      createdAt: new Date().toISOString(),
+      isPhoneVerified: true,
+    };
 
-      if (!result.success) {
-        setErrors({ phone: result.message });
-        return;
-      }
-
-      setStep("otp");
-      setResendCooldown(30);
-      if (result.simulatedOtp) {
-        setLiveTestCode(result.simulatedOtp);
-        setWhatsappFallbackUrl(
-          getWhatsAppVerifyUrl(cleanPhone, result.simulatedOtp),
-        );
-      }
-
-      showToast({
-        type: "info",
-        title: "OTP Dispatched",
-        message: result.message,
-      });
-    } catch {
-      setLoading(false);
-      setErrors({
-        phone: "Failed to dispatch verification code. Please retry.",
-      });
-    }
+    completeAuthAndAction(userObj);
   };
 
   const handleResendOtp = async () => {
@@ -248,19 +231,15 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
         </div>
 
         <span className="text-[10px] font-semibold text-[#4E5F52] uppercase tracking-wider block mb-0.5">
-          Mobile Number Verification
+          Account Access
         </span>
         <h2 className="font-heading text-lg sm:text-xl font-normal text-[#1C1D1F]">
-          {step === "input"
-            ? activeTab === "login"
-              ? "Customer Sign In"
-              : "Join Ayurveda Global"
-            : "Enter 6-Digit OTP"}
+          {activeTab === "login" ? "Customer Sign In" : "Join Ayurveda Global"}
         </h2>
         <p className="text-xs text-[#737373] mt-1 max-w-xs mx-auto leading-relaxed">
           {pendingItem?.product
-            ? `Please verify your name & mobile number to proceed with ${pendingItem.product.name}.`
-            : "Authentic Ayurvedic orders require a verified 10-digit mobile number for dispatch."}
+            ? `Enter your name & mobile number to proceed with ${pendingItem.product.name}.`
+            : "Enter your 10-digit mobile number for order delivery & tracking."}
         </p>
 
         {/* Pending Product Pill */}
@@ -322,7 +301,7 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
       )}
 
       {step === "input" ? (
-        <form onSubmit={handleSendOtp} className="space-y-3">
+        <form onSubmit={handleDirectSignIn} className="space-y-3">
           {/* Full Name Field (Always collected for courier delivery) */}
           <div>
             <label className="block text-[11px] font-medium text-[#737373] mb-1 uppercase tracking-wider">
@@ -372,7 +351,7 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
               <p className="text-rose-500 text-[10px] mt-1">{errors.phone}</p>
             )}
             <p className="text-[10px] text-[#737373] mt-1">
-              We will send a 6-digit SMS verification code to this number.
+              Used for order updates and confidential delivery dispatch.
             </p>
           </div>
 
@@ -401,13 +380,13 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
             loading={loading}
             className="w-full font-semibold py-2.5 text-xs mt-3 rounded-full"
           >
-            <span>Send 6-Digit OTP</span>
+            <span>Continue</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
           </Button>
 
           <div className="flex items-center justify-center gap-1.5 text-[10.5px] text-[#737373] pt-1">
             <ShieldCheck className="w-3.5 h-3.5 text-[#4E5F52]" />
-            <span>100% Secure &amp; Confidential Verification</span>
+            <span>100% Secure &amp; Confidential</span>
           </div>
         </form>
       ) : (

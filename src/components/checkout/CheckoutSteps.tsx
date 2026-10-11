@@ -24,7 +24,6 @@ import {
   MessageCircle,
   HelpCircle,
   Sparkles,
-  KeyRound,
   AlertCircle,
 } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
@@ -45,13 +44,7 @@ import {
 } from "@/lib/utils/formatters";
 import { validateCoupon } from "@/lib/coupons";
 import { getProductImage } from "@/lib/products/registry";
-import {
-  sendOTP,
-  verifyOTP,
-  normalizeIndianPhone,
-  isPhoneAlreadyVerified,
-  getWhatsAppVerifyUrl,
-} from "@/lib/auth/otpService";
+import { normalizeIndianPhone } from "@/lib/auth/otpService";
 import type { Order } from "@/types";
 
 const INDIAN_STATES = [
@@ -127,18 +120,9 @@ export function CheckoutForm() {
   const [couponLoading, setCouponLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Mobile OTP Verification State
   const { user } = useUserStore();
-  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpInput, setOtpInput] = useState("");
-  const [otpError, setOtpError] = useState<string | null>(null);
-  const [otpLoading, setOtpLoading] = useState(false);
-  const [resendCooldown, setResendCooldown] = useState(0);
-  const [testOtpCode, setTestOtpCode] = useState<string | null>(null);
-  const [whatsappVerifyUrl, setWhatsappVerifyUrl] = useState("");
 
-  // Pre-fill user data & check verified phone status
+  // Pre-fill user data
   useEffect(() => {
     if (user?.phone) {
       setFormData((prev) => ({
@@ -150,9 +134,6 @@ export function CheckoutForm() {
           (user.name ? user.name.split(" ").slice(1).join(" ") : ""),
         email: prev.email || user.email || "",
       }));
-      if (user.isPhoneVerified || isPhoneAlreadyVerified(user.phone)) {
-        setIsPhoneVerified(true);
-      }
     }
   }, [user]);
 
@@ -165,110 +146,10 @@ export function CheckoutForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Resend Countdown Timer
-  useEffect(() => {
-    if (resendCooldown <= 0) return;
-    const timer = setInterval(
-      () => setResendCooldown((prev) => prev - 1),
-      1000,
-    );
-    return () => clearInterval(timer);
-  }, [resendCooldown]);
-
   const handlePhoneInputChange = (val: string) => {
     const digits = val.replace(/\D/g, "").slice(0, 10);
     setFormData((prev) => ({ ...prev, phone: digits }));
     if (errors.phone) setErrors((prev) => ({ ...prev, phone: "" }));
-
-    if (isPhoneAlreadyVerified(digits)) {
-      setIsPhoneVerified(true);
-      setOtpSent(false);
-      setOtpError(null);
-    } else {
-      setIsPhoneVerified(false);
-      setOtpSent(false);
-      setOtpInput("");
-      setTestOtpCode(null);
-    }
-  };
-
-  const handleSendCheckoutOtp = async () => {
-    const {
-      isValid,
-      phone: cleanPhone,
-      error,
-    } = normalizeIndianPhone(formData.phone);
-    if (!isValid) {
-      setErrors((prev) => ({
-        ...prev,
-        phone: error || "Please enter a valid 10-digit mobile number",
-      }));
-      const el = document.getElementById("field-phone");
-      if (el) el.focus();
-      return;
-    }
-
-    setOtpLoading(true);
-    setOtpError(null);
-    try {
-      const res = await sendOTP(cleanPhone, formData.firstName.trim());
-      setOtpLoading(false);
-      if (res.success) {
-        setOtpSent(true);
-        setResendCooldown(30);
-        if (res.simulatedOtp) {
-          setTestOtpCode(res.simulatedOtp);
-          setWhatsappVerifyUrl(
-            getWhatsAppVerifyUrl(cleanPhone, res.simulatedOtp),
-          );
-        }
-        showToast({
-          type: "info",
-          title: "OTP Dispatched",
-          message: res.message,
-        });
-      } else {
-        setOtpError(res.message);
-      }
-    } catch {
-      setOtpLoading(false);
-      setOtpError(
-        "Failed to send verification code. Please check your network.",
-      );
-    }
-  };
-
-  const handleVerifyCheckoutOtp = async () => {
-    const { isValid, phone: cleanPhone } = normalizeIndianPhone(formData.phone);
-    if (!isValid) return;
-
-    if (otpInput.trim().length !== 6) {
-      setOtpError("Please enter all 6 digits of the OTP.");
-      return;
-    }
-
-    setOtpLoading(true);
-    setOtpError(null);
-    try {
-      const res = await verifyOTP(cleanPhone, otpInput.trim());
-      setOtpLoading(false);
-      if (res.success) {
-        setIsPhoneVerified(true);
-        setOtpSent(false);
-        setOtpError(null);
-        setTestOtpCode(null);
-        showToast({
-          type: "success",
-          title: "Mobile Number Verified",
-          message: "Your phone number has been verified for this order.",
-        });
-      } else {
-        setOtpError(res.message);
-      }
-    } catch {
-      setOtpLoading(false);
-      setOtpError("Verification failed. Please retry.");
-    }
   };
 
   const subtotal = getSubtotal();
@@ -615,12 +496,6 @@ export function CheckoutForm() {
                       Mobile Number (+91){" "}
                       <span className="text-[#9E8047]">*</span>
                     </label>
-                    {isPhoneVerified && (
-                      <span className="text-[10px] font-bold text-[#4E5F52] flex items-center gap-1 bg-[#EFF4F0] px-2 py-0.5 rounded border border-[#4E5F52]/30">
-                        <CheckCircle2 className="w-3 h-3" />
-                        <span>OTP Verified</span>
-                      </span>
-                    )}
                   </div>
                   <div className="relative flex items-center">
                     <span className="absolute left-3 text-xs font-semibold text-[#737373] pointer-events-none">
@@ -630,146 +505,28 @@ export function CheckoutForm() {
                       id="field-phone"
                       type="tel"
                       maxLength={10}
-                      disabled={isPhoneVerified}
                       value={formData.phone}
                       onChange={(e) => handlePhoneInputChange(e.target.value)}
                       placeholder="98765 43210"
-                      className={`w-full pl-11 pr-20 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
-                        isPhoneVerified
-                          ? "border-[#4E5F52]/50 bg-[#EFF4F0] text-[#4E5F52] font-semibold"
-                          : errors.phone
-                            ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/20"
-                            : "border-[#9E8047]/25 focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20"
+                      className={`w-full pl-11 pr-3 py-2 rounded-xl bg-[#FAF7F2] border text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none transition-all ${
+                        errors.phone
+                          ? "border-red-500 focus:border-red-500 ring-1 ring-red-500/20"
+                          : "border-[#9E8047]/25 focus:border-[#4E5F52] focus:ring-1 focus:ring-[#4E5F52]/20"
                       }`}
                     />
-                    {isPhoneVerified ? (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setIsPhoneVerified(false);
-                          setOtpSent(false);
-                        }}
-                        className="absolute right-2 px-2 py-1 text-[10px] text-[#9E8047] hover:text-[#1C1D1F] transition-colors"
-                      >
-                        Change
-                      </button>
-                    ) : (
-                      formData.phone.length === 10 &&
-                      !otpSent && (
-                        <button
-                          type="button"
-                          onClick={handleSendCheckoutOtp}
-                          disabled={otpLoading}
-                          className="absolute right-1.5 px-2.5 py-1 rounded-lg bg-[#1C1D1F] hover:bg-[#333333] text-[#FAF7F2] text-[10px] font-medium transition-all shadow-sm"
-                        >
-                          {otpLoading ? "..." : "Send OTP"}
-                        </button>
-                      )
-                    )}
                   </div>
-
-                  {/* Inline OTP Verification Box when OTP is sent */}
-                  {!isPhoneVerified && otpSent && (
-                    <div className="mt-2.5 p-3 rounded-xl bg-[#FAF7F2] border border-[#9E8047]/25 space-y-2.5 shadow-sm">
-                      <div className="flex items-center justify-between text-xs text-[#1C1D1F]">
-                        <span className="flex items-center gap-1.5 font-semibold text-[11px]">
-                          <KeyRound className="w-3.5 h-3.5 text-[#4E5F52]" />
-                          <span>Enter 6-Digit OTP</span>
-                        </span>
-                        <button
-                          type="button"
-                          onClick={handleSendCheckoutOtp}
-                          disabled={resendCooldown > 0 || otpLoading}
-                          className={`text-[10px] font-medium ${
-                            resendCooldown > 0
-                              ? "text-gray-400"
-                              : "text-[#4E5F52] hover:underline"
-                          }`}
-                        >
-                          {resendCooldown > 0
-                            ? `Resend (${resendCooldown}s)`
-                            : "Resend OTP"}
-                        </button>
-                      </div>
-
-                      {testOtpCode && (
-                        <div className="p-1.5 rounded-lg bg-[#F7F3EB] border border-[#9E8047]/30 text-center">
-                          <span className="text-[10px] text-[#9E8047]">
-                            Verification Code:{" "}
-                            <strong className="font-mono text-[#1C1D1F] text-xs tracking-wider">
-                              {testOtpCode}
-                            </strong>
-                          </span>
-                        </div>
-                      )}
-
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          maxLength={6}
-                          value={otpInput}
-                          onChange={(e) => {
-                            const val = e.target.value
-                              .replace(/\D/g, "")
-                              .slice(0, 6);
-                            setOtpInput(val);
-                            if (otpError) setOtpError(null);
-                          }}
-                          placeholder="••••••"
-                          className="flex-1 px-3 py-1.5 rounded-lg bg-[#FFFFFF] border border-[#9E8047]/25 text-center font-mono text-sm tracking-[0.3em] text-[#1C1D1F] focus:outline-none focus:border-[#4E5F52]"
-                        />
-                        <button
-                          type="button"
-                          onClick={handleVerifyCheckoutOtp}
-                          disabled={otpLoading || otpInput.trim().length !== 6}
-                          className="px-3.5 py-1.5 rounded-lg bg-[#4E5F52] hover:bg-[#3D4B40] text-white text-xs font-medium transition-all disabled:opacity-50"
-                        >
-                          {otpLoading ? "..." : "Verify"}
-                        </button>
-                      </div>
-
-                      {otpError && (
-                        <p className="text-[10px] text-red-500 flex items-center gap-1">
-                          <AlertCircle className="w-3 h-3 flex-shrink-0" />
-                          <span>{otpError}</span>
-                        </p>
-                      )}
-
-                      {whatsappVerifyUrl && (
-                        <div className="pt-1 text-center border-t border-[#9E8047]/25">
-                          <a
-                            href={whatsappVerifyUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[10px] text-[#4E5F52] hover:underline inline-flex items-center gap-1"
-                          >
-                            <MessageCircle className="w-3.5 h-3.5" />
-                            <span>Verify instantly via WhatsApp Desk</span>
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  )}
 
                   {/* Status helper text */}
                   {errors.phone ? (
                     <p className="text-[10px] text-red-500 mt-1">
                       {errors.phone}
                     </p>
-                  ) : !isPhoneVerified ? (
+                  ) : (
                     <p className="text-[9.5px] text-[#737373] mt-1 flex items-center gap-1">
                       <MessageCircle className="w-3 h-3 text-[#4E5F52]" />
                       <span>
                         Order confirmation &amp; live parcel tracking will be
                         sent to this WhatsApp number
-                      </span>
-                    </p>
-                  ) : (
-                    <p className="text-[9.5px] text-[#4E5F52] mt-1 flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3 text-[#4E5F52] flex-shrink-0" />
-                      <span>
-                        Order updates &amp; live parcel tracking enabled for
-                        this verified number
                       </span>
                     </p>
                   )}

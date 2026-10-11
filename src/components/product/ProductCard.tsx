@@ -10,6 +10,7 @@ import {
   Eye,
   Sparkles,
   Shield,
+  ShieldCheck,
   CheckCircle2,
   Plus,
   Minus,
@@ -260,7 +261,7 @@ export function ProductCard({
       whileHover={{ y: -4, transition: { duration: 0.22 } }}
       className="h-full group relative rounded-2xl border border-[#0E3924]/15 bg-white hover:border-[#0E3924]/40 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-[0_4px_20px_rgba(7,26,18,0.06)] hover:shadow-[0_10px_32px_rgba(7,26,18,0.12)] w-full min-w-0"
     >
-      {/* 1:1 Aspect Ratio Image Frame with Subtle Zoom Physics */}
+      {/* 1:1 Aspect Ratio Image Canvas with Subtle Luxury Zoom */}
       <div className="relative w-full aspect-square border-b border-[#0E3924]/10 bg-[#FAF7F2] overflow-hidden group/img">
         <Link
           href={`/product/${product.slug}`}
@@ -285,22 +286,21 @@ export function ProductCard({
           />
         </Link>
 
-        {/* Floating Frosted Discount Pill: "31% OFF" */}
+        {/* Clean Editorial Discount Pill */}
         {hasDiscount && (
           <div className="absolute top-2 left-2 z-10 pointer-events-none">
-            <span className="backdrop-blur-md bg-emerald-900/85 text-white border border-emerald-600/40 text-[9.5px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1">
-              <Sparkles className="w-2.5 h-2.5 text-[#D4AF37]" />
-              <span>{discountPercentage}% OFF</span>
+            <span className="bg-[#0E3924] text-[#FDFBF7] text-[9px] sm:text-[10px] font-sans font-semibold px-2 py-0.5 rounded-full shadow-xs tracking-wider uppercase border border-[#D4AF37]/30">
+              {discountPercentage}% OFF
             </span>
           </div>
         )}
 
-        {/* Top-Right Quick-View Eye & Wishlist Heart Button */}
-        <div className="absolute top-2 right-2 z-10 flex items-center gap-1 sm:gap-1.5">
+        {/* Top-Right Quick-View & Wishlist Actions */}
+        <div className="absolute top-2 right-2 z-10 flex items-center gap-1">
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={handleQuickView}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/85 hover:bg-white backdrop-blur-md flex items-center justify-center border border-[#0E3924]/15 text-[#555555] hover:text-[#071A12] transition-all shadow-xs"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center border border-[#0E3924]/15 text-[#555555] hover:text-[#071A12] transition-colors shadow-xs"
             aria-label="Quick view"
             title="Quick View"
           >
@@ -310,7 +310,7 @@ export function ProductCard({
           <motion.button
             whileTap={{ scale: 0.88 }}
             onClick={handleWishlistToggle}
-            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/85 hover:bg-white backdrop-blur-md flex items-center justify-center border border-[#0E3924]/15 transition-all shadow-xs ${
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center border border-[#0E3924]/15 transition-colors shadow-xs ${
               inWishlist
                 ? "text-rose-600 border-rose-300"
                 : "text-[#555555] hover:text-[#071A12]"
@@ -324,47 +324,42 @@ export function ProductCard({
           </motion.button>
         </div>
 
-        {/* NABL Lab Tested Micro Verification Tag */}
-        <div className="absolute bottom-1.5 left-2 right-2 z-10 pointer-events-none flex justify-center">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/90 backdrop-blur-md border border-[#0E3924]/15 text-[8px] sm:text-[9px] font-sans font-semibold text-[#0E3924] shadow-2xs">
-            <Shield className="w-2.5 h-2.5 text-[#10B981]" />
-            <span>NABL Lab Tested • 100% Organic</span>
+        {/* Verified Lab Standard Micro Tag */}
+        <div className="absolute bottom-2 left-2 right-2 z-10 pointer-events-none flex justify-center">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/95 border border-[#0E3924]/15 text-[8px] sm:text-[9px] font-sans font-medium text-[#0E3924] shadow-2xs">
+            <ShieldCheck className="w-2.5 h-2.5 text-[#10B981]" />
+            <span>NABL Certified • 100% Shuddha</span>
           </span>
         </div>
       </div>
 
-      {/* Card Content Stage */}
-      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2 bg-white min-w-0">
+      {/* Card Body */}
+      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2.5 bg-white min-w-0">
         <div className="space-y-1.5 min-w-0">
-          {/* Clinical Specs Row (IMC & Krishna Style): "FOR: ..." | "WITH: ..." */}
-          <div className="space-y-0.5 text-[8.5px] sm:text-[9.5px] font-mono leading-tight bg-[#FAF7F2] p-1.5 rounded-lg border border-[#D4AF37]/25">
-            <div className="truncate text-[#0E3924] font-semibold">
-              <span className="text-[#D4AF37] font-bold">FOR:</span> {clinical.forText}
-            </div>
-            <div className="truncate text-[#555555]">
-              <span className="text-[#0E3924] font-bold">WITH:</span> {clinical.withText}
-            </div>
+          {/* Clinical Therapeutic Keynote */}
+          <div className="text-[9px] sm:text-[10px] font-mono leading-tight bg-[#FAF7F2] px-2 py-1.5 rounded-lg border border-[#D4AF37]/25 truncate">
+            <span className="text-[#0E3924] font-semibold">{clinical.forText}</span>
+            <span className="text-[#9E8047] mx-1">•</span>
+            <span className="text-[#666666]">{clinical.withText}</span>
           </div>
 
-          {/* Product Title (Strictly aligned 2 lines) */}
-          <h3 className="font-editorial font-medium text-xs sm:text-base text-[#071A12] line-clamp-2 min-h-[2.1rem] sm:min-h-[2.75rem] group-hover:text-[#D4AF37] transition-colors break-words whitespace-normal leading-snug">
+          {/* Product Title (2 Lines Max, Fixed Height to Align Across Grid) */}
+          <h3 className="font-editorial text-xs sm:text-[15px] text-[#071A12] line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] group-hover:text-[#0E3924] transition-colors break-words whitespace-normal leading-snug">
             <Link href={`/product/${product.slug}`}>{product.name}</Link>
           </h3>
         </div>
 
-        {/* Pricing Block with Bold Discounted Price + Strikethrough MRP */}
-        <div className="mt-auto pt-1 space-y-1.5">
-          {/* Rating */}
-          <div className="flex items-center justify-between">
-            <Rating rating={4.8} reviewsCount={124} size="sm" />
-            {product?.inventory?.quantity && product?.inventory?.quantity < 10 && (
-              <span className="text-[8.5px] text-amber-700 font-medium bg-amber-50 px-1 py-0.5 rounded border border-amber-200">
-                Low stock
-              </span>
-            )}
+        {/* Price & Rating Section */}
+        <div className="mt-auto pt-1 space-y-2">
+          {/* Rating Row */}
+          <div className="flex items-center justify-between text-xs">
+            <Rating rating={4.9} reviewsCount={128} size="sm" />
+            <span className="text-[9px] font-mono uppercase text-[#0E3924] tracking-wider font-semibold">
+              Ayurvedic
+            </span>
           </div>
 
-          {/* Price display with Strike-through MRP & Savings Tag */}
+          {/* Price Row with Clean Strikethrough & Savings Tag */}
           <div className="flex items-baseline justify-between pt-0.5">
             <PriceDisplay
               price={product.price}
@@ -372,19 +367,19 @@ export function ProductCard({
               size="sm"
             />
             {hasDiscount && (
-              <span className="text-[9.5px] sm:text-[10px] font-sans font-bold text-[#10B981] bg-emerald-50 px-1.5 py-0.5 rounded">
-                SAVE {discountPercentage}%
+              <span className="text-[9px] sm:text-[10px] font-sans font-semibold text-[#0E3924] bg-[#FAF7F2] border border-[#0E3924]/20 px-1.5 py-0.5 rounded">
+                SAVE ₹{Math.round(((product.compareAtPrice! - product.price) / 100))}
               </span>
             )}
           </div>
 
-          {/* Sticky Bottom Full-Width "ADD TO CART" CTA */}
+          {/* Clean Editorial Add to Cart CTA */}
           <div className="pt-1.5 border-t border-[#0E3924]/10">
             {inCart ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="w-full flex items-center justify-between bg-[#EBF1EC] p-1 px-1.5 sm:px-2 rounded-xl border border-[#10B981]/40"
+                className="w-full flex items-center justify-between bg-[#FAF7F2] p-1 px-1.5 sm:px-2 rounded-xl border border-[#0E3924]/20"
               >
                 <div className="flex items-center gap-1">
                   <motion.button
@@ -395,7 +390,7 @@ export function ProductCard({
                   >
                     <Minus className="w-3 h-3 text-[#0E3924]" />
                   </motion.button>
-                  <span className="text-[11px] font-bold text-[#071A12] px-1.5 min-w-[18px] text-center">
+                  <span className="text-[11px] font-bold text-[#071A12] px-1.5 min-w-[18px] text-center font-sans">
                     {cartQuantity}
                   </span>
                   <motion.button
@@ -411,31 +406,31 @@ export function ProductCard({
                 <motion.button
                   whileTap={{ scale: 0.92 }}
                   onClick={() => openCartDrawer()}
-                  className="text-[10px] font-bold py-1 px-2 sm:px-2.5 bg-[#0E3924] text-white rounded-lg hover:bg-[#071A12] transition-colors inline-flex items-center gap-1 shadow-2xs"
+                  className="text-[10px] font-semibold py-1 px-2.5 bg-[#0E3924] text-white rounded-lg hover:bg-[#071A12] transition-colors inline-flex items-center gap-1 shadow-2xs"
                 >
                   <ShoppingBag className="w-2.5 h-2.5 text-[#D4AF37]" />
-                  <span>Bag</span>
+                  <span>View Bag</span>
                 </motion.button>
               </motion.div>
             ) : (
               <motion.button
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={handleAddToCart}
                 disabled={
                   product?.inventory?.trackQuantity &&
                   product?.inventory?.quantity === 0
                 }
-                className="w-full text-[11px] sm:text-xs font-semibold py-2 sm:py-2.5 px-3 rounded-xl bg-[#0E3924] text-white hover:bg-[#071A12] transition-all duration-200 inline-flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap active:scale-95 group/btn"
+                className="w-full text-[11px] sm:text-xs font-sans font-semibold py-2.5 px-3 rounded-xl bg-[#0E3924] text-white hover:bg-[#071A12] transition-colors inline-flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap active:scale-95 group/btn"
               >
                 {justAdded ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-[#10B981]" />
-                    <span className="text-[#10B981]">Added ✓</span>
+                    <Check className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span className="text-white">Added to Bag</span>
                   </>
                 ) : (
                   <>
                     <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] group-hover/btn:scale-110 transition-transform" />
-                    <span>ADD TO CART</span>
+                    <span>ADD TO BAG</span>
                   </>
                 )}
               </motion.button>

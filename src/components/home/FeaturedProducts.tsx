@@ -13,28 +13,27 @@ export function FeaturedProducts() {
     <section className="bg-white py-4 sm:py-8 lg:py-12 border-b border-[#D4AF37]/20 relative overflow-hidden">
       <div className="container mx-auto px-0 sm:px-4 lg:px-8">
         {/* Header Section */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-3 sm:mb-8 gap-2.5 sm:gap-4 pb-2.5 sm:pb-4 border-b border-[#D4AF37]/15 px-3.5 sm:px-0">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-8 gap-2.5 sm:gap-4 pb-3 sm:pb-4 border-b border-[#D4AF37]/20 px-3.5 sm:px-0">
           <div className="max-w-2xl">
             {/* Clean E-commerce Eyebrow */}
             <div className="flex items-center gap-2 mb-1 sm:mb-1.5">
               <span className="w-4 sm:w-5 h-px bg-[#D4AF37]" />
-              <span className="text-[10px] sm:text-[10.5px] font-sans font-bold uppercase tracking-[0.2em] text-[#D4AF37] flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-[#D4AF37]" />
+              <span className="text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.2em] text-[#0E3924] flex items-center gap-1.5">
                 Standardized Botanical Formulations
               </span>
             </div>
 
             {/* Editorial Best Sellers Title */}
-            <h2 className="font-editorial text-xl sm:text-3xl lg:text-[38px] font-normal text-[#081C15] tracking-tight leading-[1.15]">
+            <h2 className="font-editorial text-2xl sm:text-3xl lg:text-[38px] font-normal text-[#071A12] tracking-tight leading-[1.18]">
               The Apothecary{" "}
-              <span className="italic font-normal text-gold-shimmer">
+              <span className="italic font-normal text-[#8C703D]">
                 Best Sellers
               </span>
             </h2>
 
             {/* Clean D2C Description */}
-            <p className="font-sans text-[11.5px] sm:text-[13px] text-[#555555] mt-0.5 sm:mt-1.5 leading-relaxed">
-              Classical Ayurvedic remedies powered by cold-extracted herbs, third-party verified for bio-potency and zero synthetic adulterants.
+            <p className="font-sans text-[12px] sm:text-[13.5px] text-[#555555] mt-1 sm:mt-1.5 leading-relaxed">
+              Classical Ayurvedic remedies powered by standardized cold extracts, third-party verified for bio-potency and zero synthetic adulterants.
             </p>
           </div>
 
@@ -104,14 +103,14 @@ export function FeaturedProducts() {
                   <Leaf className="w-3 h-3 text-[#10B981]" />
                   <span>100% PURE HARVEST</span>
                 </span>
-                <h3 className="font-editorial text-xl sm:text-3xl lg:text-4xl font-normal text-white leading-tight">
+                <h3 className="font-editorial text-2xl sm:text-3xl lg:text-4xl font-normal text-white leading-tight">
                   Hand-Harvested{" "}
-                  <span className="italic text-gold-shimmer">
+                  <span className="italic text-[#D4AF37]">
                     Himalayan Botanicals
                   </span>
                 </h3>
-                <p className="text-[12px] sm:text-xs text-[#FDFBF7]/85 line-clamp-2 leading-relaxed">
-                  Wild-sourced Ashwagandha, gold-grade Shilajit resin, and cold-pressed taila oils. No synthetic adulterants.
+                <p className="text-[12.5px] sm:text-sm text-[#FDFBF7]/90 max-w-md leading-relaxed font-sans">
+                  Wild-sourced Ashwagandha, gold-grade Himalayan Shilajit, and cold-pressed medicinal taila oils. Zero synthetic adulterants.
                 </p>
                 <div className="pt-1.5">
                   <Link

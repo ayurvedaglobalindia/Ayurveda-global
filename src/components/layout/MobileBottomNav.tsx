@@ -45,19 +45,19 @@ export function MobileBottomNav() {
 
   return (
     <>
-      {/* iOS Floating Island Bottom Navigation Dock (12px elevation) */}
+      {/* Sleek, Compact iOS Floating Island Bottom Navigation Dock (10px float margin, 52px max height) */}
       <nav
         aria-label="Mobile Floating Navigation Dock"
-        className="md:hidden fixed bottom-[12px] left-3.5 right-3.5 max-w-md mx-auto z-40 rounded-full backdrop-blur-2xl bg-white/90 dark:bg-stone-950/90 border border-white/40 shadow-[0_12px_40px_rgba(8,28,21,0.18)] px-2.5 transition-all"
+        className="md:hidden fixed bottom-[10px] inset-x-4 max-w-sm mx-auto z-40 rounded-full backdrop-blur-xl bg-white/95 dark:bg-stone-950/95 border border-stone-200/70 shadow-lg px-3 py-1.5 transition-all"
         style={{
-          paddingBottom: "max(env(safe-area-inset-bottom), 10px)",
+          paddingBottom: "max(env(safe-area-inset-bottom), 6px)",
         }}
       >
-        <div className="flex items-center justify-around h-[56px] relative">
+        <div className="flex items-center justify-around h-[48px] relative">
           {/* 1. Home */}
           <Link
             href="/"
-            className={`flex flex-col items-center justify-center gap-0.5 text-[10px] transition-colors py-1 px-2.5 rounded-full ${
+            className={`flex flex-col items-center justify-center gap-0.5 text-[9px] transition-colors py-1 px-2 rounded-full ${
               pathname === "/"
                 ? "text-[#071A12] font-bold"
                 : "text-[#737373] hover:text-[#071A12]"
@@ -72,7 +72,7 @@ export function MobileBottomNav() {
           <button
             type="button"
             onClick={openSearch}
-            className={`flex flex-col items-center justify-center gap-0.5 text-[10px] transition-colors py-1 px-2.5 rounded-full ${
+            className={`flex flex-col items-center justify-center gap-0.5 text-[9px] transition-colors py-1 px-2 rounded-full ${
               isSearchOpen
                 ? "text-[#071A12] font-bold"
                 : "text-[#737373] hover:text-[#071A12]"
@@ -83,37 +83,71 @@ export function MobileBottomNav() {
             <span className="leading-none">Search</span>
           </button>
 
-          {/* 3. Center Elevated Button: 58px Sphere with Razor-Sharp Rotating Neon Radar Ring */}
+          {/* 3. Compact Elevated Center Button: 44px Diameter with Smooth Seamless SVG Neon Radar Ring */}
           <button
             type="button"
             onClick={() => setIsConciergeOpen(true)}
-            className="flex flex-col items-center -translate-y-[20px] text-[#0E3924] group relative z-50 focus:outline-none"
+            className="flex flex-col items-center -translate-y-[12px] text-[#0E3924] group relative z-50 focus:outline-none"
             aria-label="Open Vaidya Consult"
           >
-            <div className="relative w-[58px] h-[58px] rounded-full bg-white flex items-center justify-center shadow-xl group-hover:scale-105 active:scale-95 transition-transform">
-              {/* Seamless Rotating Neon Border: 2.5s linear infinite */}
-              <span
-                className="absolute inset-0 rounded-full pointer-events-none"
-                style={{
-                  border: "2.5px solid transparent",
-                  background:
-                    "linear-gradient(#fff, #fff) padding-box, conic-gradient(from 0deg, #10B981, #34D399, transparent 60%, #10B981) border-box",
-                  boxShadow: "0 0 16px rgba(16, 185, 129, 0.55)",
-                  animation: "spin 2.5s linear infinite",
-                }}
-                aria-hidden="true"
-              />
+            <div className="relative w-[44px] h-[44px] flex items-center justify-center group-hover:scale-105 active:scale-95 transition-transform">
+              {/* Outer Smooth Rotating SVG Radar Track */}
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none animate-spin"
+                style={{ animationDuration: "3s" }}
+                viewBox="0 0 44 44"
+                fill="none"
+              >
+                <circle
+                  cx="22"
+                  cy="22"
+                  r="20.5"
+                  stroke="rgba(16, 185, 129, 0.15)"
+                  strokeWidth="1.5"
+                />
+                <circle
+                  cx="22"
+                  cy="22"
+                  r="20.5"
+                  stroke="url(#vaidya-radar-gradient)"
+                  strokeWidth="1.5"
+                  strokeDasharray="45 85"
+                  strokeLinecap="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="vaidya-radar-gradient"
+                    x1="0"
+                    y1="0"
+                    x2="44"
+                    y2="44"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#10B981" />
+                    <stop offset="0.6" stopColor="#34D399" />
+                    <stop offset="1" stopColor="#10B981" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+              </svg>
 
-              {/* Minimalist Vaidya Heart & Pulse Icon */}
-              <img
-                src="/images/vaidya-icon.svg"
-                alt="Vaidya Consult"
-                className="w-8 h-8 object-contain relative z-10 drop-shadow-2xs"
-              />
+              {/* Solid White Center Sphere with Subtle Emerald Glow */}
+              <div
+                className="relative w-[38px] h-[38px] rounded-full bg-white flex items-center justify-center shadow-md border border-[#10B981]/25"
+                style={{
+                  boxShadow: "0 0 10px rgba(16, 185, 129, 0.25)",
+                }}
+              >
+                {/* Minimalist Vaidya Heart & Pulse Icon */}
+                <img
+                  src="/images/vaidya-icon.svg"
+                  alt="Vaidya Consult"
+                  className="w-5 h-5 object-contain"
+                />
+              </div>
             </div>
 
-            {/* Solid White Background Label to Prevent Text Bleed-Through */}
-            <span className="text-[10px] font-semibold text-[#071A12] mt-[3px] px-1.5 py-0.5 rounded-full bg-white/95 shadow-2xs tracking-tight leading-none whitespace-nowrap">
+            {/* Compact Label with 2px Margin and Solid White Background */}
+            <span className="text-[9px] font-semibold text-[#071A12] mt-[2px] px-1 py-0.5 rounded-full bg-white/95 shadow-2xs tracking-tight leading-none whitespace-nowrap">
               Vaidya Consult
             </span>
           </button>
@@ -122,13 +156,13 @@ export function MobileBottomNav() {
           <button
             type="button"
             onClick={openCartDrawer}
-            className="flex flex-col items-center justify-center gap-0.5 text-[10px] relative text-[#737373] hover:text-[#081C15] transition-colors py-1 px-2.5 rounded-full"
+            className="flex flex-col items-center justify-center gap-0.5 text-[9px] relative text-[#737373] hover:text-[#081C15] transition-colors py-1 px-2 rounded-full"
             aria-label="Open Shopping Bag"
           >
             <div className="relative">
               <ShoppingBag className="w-5 h-5" />
               {isMounted && cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-2 bg-[#1B4332] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute -top-1.5 -right-2 bg-[#1B4332] text-white text-[8.5px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-xs">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
@@ -139,7 +173,7 @@ export function MobileBottomNav() {
           {/* 5. Track Order */}
           <Link
             href="/track-order"
-            className={`flex flex-col items-center justify-center gap-0.5 text-[10px] transition-colors py-1 px-2.5 rounded-full ${
+            className={`flex flex-col items-center justify-center gap-0.5 text-[9px] transition-colors py-1 px-2 rounded-full ${
               pathname === "/track-order"
                 ? "text-[#081C15] font-bold"
                 : "text-[#737373] hover:text-[#081C15]"

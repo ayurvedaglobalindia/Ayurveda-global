@@ -79,11 +79,11 @@ export function ConcernsScroller() {
       <div className="container mx-auto px-4 lg:px-8 mb-2.5">
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-[9.5px] font-sans font-bold uppercase tracking-[0.22em] text-[#D4AF37] block">
-              Ayuvya Trend • Targeted Ayurvedic Care
+            <span className="text-[9.5px] font-sans font-semibold uppercase tracking-[0.22em] text-[#8C703D] block">
+              Targeted Ayurvedic Protocols
             </span>
             <h3 className="font-editorial text-lg sm:text-2xl text-[#071A12] font-normal leading-tight">
-              Shop By <span className="italic text-[#0E3924] font-medium">Health Concern</span>
+              Shop By <span className="italic text-[#8C703D] font-normal">Health Concern</span>
             </h3>
           </div>
           <Link
