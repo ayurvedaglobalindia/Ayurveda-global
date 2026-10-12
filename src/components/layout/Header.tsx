@@ -144,6 +144,15 @@ export function Header() {
               ) : null}
             </button>
 
+            {/* User Account (Desktop / Tablet only) */}
+            <Link
+              href="/account"
+              className="hidden sm:flex p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
+              aria-label="Account"
+            >
+              <User className="w-5 h-5 stroke-[1.5]" />
+            </Link>
+
             {/* Direct Telephone Support (Chief Vaidya Desk) */}
             <a
               href={OFFICIAL_PHONE_TEL}
@@ -154,15 +163,6 @@ export function Header() {
               <Phone className="w-3.5 h-3.5 fill-current" />
               <span>{OFFICIAL_PHONE}</span>
             </a>
-
-            {/* User Account (Desktop / Tablet only to save space on mobile) */}
-            <Link
-              href="/account"
-              className="hidden sm:flex p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
-              aria-label="Account"
-            >
-              <User className="w-5 h-5 stroke-[1.5]" />
-            </Link>
 
             {/* Cart Count Pill */}
             <button
