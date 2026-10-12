@@ -117,13 +117,13 @@ export function Header() {
             </button>
           </div>
 
-          {/* Right Side Controls: Search, Account, Wishlist, Cart Count Pill */}
+          {/* Right Side Controls: Search, Wishlist, Account, Chief Vaidya Desk, Cart Count Pill */}
           <div className="flex items-center gap-1 sm:gap-2.5 flex-shrink-0">
-            {/* Search (Icon on small screens) - hide on ultra small screens since search is in hero and bottom dock */}
+            {/* Search (Icon on small screens) - CSS media query only */}
             <button
               type="button"
               onClick={() => openSearch()}
-              className="hidden sm:flex lg:hidden p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
+              className="flex lg:hidden p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Search"
             >
               <Search className="w-5 h-5 stroke-[1.5]" />
@@ -144,7 +144,7 @@ export function Header() {
               ) : null}
             </button>
 
-            {/* User Account (Desktop / Tablet only) */}
+            {/* User Account Link - CSS media query only */}
             <Link
               href="/account"
               className="hidden sm:flex p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
@@ -153,7 +153,7 @@ export function Header() {
               <User className="w-5 h-5 stroke-[1.5]" />
             </Link>
 
-            {/* Direct Telephone Support (Chief Vaidya Desk) */}
+            {/* Direct Telephone Support (Chief Vaidya Desk) - CSS media query only */}
             <a
               href={OFFICIAL_PHONE_TEL}
               className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1B4332]/10 hover:bg-[#1B4332]/15 text-[#1B4332] text-xs font-mono font-medium border border-[#1B4332]/20 transition-all hover:scale-105"
