@@ -36,6 +36,7 @@ export function Header() {
 
   return (
     <header
+      suppressHydrationWarning
       className={`w-full transition-all duration-300 z-50 sticky top-0 ${
         isScrolled
           ? "bg-[#FDFBF7]/90 backdrop-blur-xl border-b border-[#0E3924]/15 shadow-sm"
