@@ -43,7 +43,7 @@ export function MobileBottomNav() {
     setIsMounted(true);
   }, []);
 
-  const cartCount = getCartCount();
+  const cartCount = isMounted ? getCartCount() : 0;
 
   const handleDoctorWhatsApp = () => {
     const msg = buildVaidyaConsultationMessage();

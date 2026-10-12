@@ -194,7 +194,15 @@ export default function ConsultationClient() {
     });
 
     if (typeof window !== "undefined") {
-      window.open(whatsappUrl, "_blank");
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        );
+      if (isMobile) {
+        window.location.href = whatsappUrl;
+      } else {
+        window.open(whatsappUrl, "_blank");
+      }
     }
   };
 
@@ -477,10 +485,14 @@ export default function ConsultationClient() {
                     <label className="block text-xs text-[#737373] mb-1 font-medium">
                       Direct Telephone Line
                     </label>
-                    <div className="flex items-center gap-2 p-2 rounded-md bg-stone-50 border border-stone-200 text-xs text-[#1C1D1F]">
+                    <a
+                      href={OFFICIAL_PHONE_TEL}
+                      className="flex items-center gap-2 p-2 rounded-md bg-stone-50 hover:bg-stone-100 border border-stone-200 text-xs text-[#1C1D1F] transition-colors"
+                      title={`${CHIEF_VAIDYA_DESK_TITLE}: ${OFFICIAL_PHONE}`}
+                    >
                       <Phone className="w-3.5 h-3.5 text-[#1B4332]" />
-                      <span>{OFFICIAL_PHONE}</span>
-                    </div>
+                      <span className="font-mono">{OFFICIAL_PHONE}</span>
+                    </a>
                   </div>
                 </div>
               </div>

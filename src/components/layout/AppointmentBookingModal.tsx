@@ -122,7 +122,15 @@ export function AppointmentBookingModal({
     });
 
     if (typeof window !== "undefined") {
-      window.open(url, "_blank");
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        );
+      if (isMobile) {
+        window.location.href = url;
+      } else {
+        window.open(url, "_blank");
+      }
     }
   };
 

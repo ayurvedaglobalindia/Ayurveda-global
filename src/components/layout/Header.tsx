@@ -25,8 +25,8 @@ export function Header() {
     setIsMounted(true);
   }, []);
 
-  const cartCount = getCartCount();
-  const wishlistCount = getWishlistCount();
+  const cartCount = isMounted ? getCartCount() : 0;
+  const wishlistCount = isMounted ? getWishlistCount() : 0;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
