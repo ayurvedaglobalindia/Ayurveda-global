@@ -15,13 +15,15 @@ import {
 } from "lucide-react";
 import { useWishlistStore } from "@/store/wishlistStore";
 import { useUserStore } from "@/store/userStore";
+import { useUIStore } from "@/store/uiStore";
 import { formatINR } from "@/lib/utils/formatters";
 
 export default function AccountPage() {
   const [isMounted, setIsMounted] = useState(false);
   const [orders, setOrders] = useState<any[]>([]);
   const { items: wishlistItems } = useWishlistStore();
-  const { user } = useUserStore();
+  const { user, logout } = useUserStore();
+  const { openModal } = useUIStore();
 
   useEffect(() => {
     setIsMounted(true);
@@ -64,14 +66,85 @@ export default function AccountPage() {
             </div>
           </div>
 
-          <Link
-            href="/track-order"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#4E5F52] bg-[#EFF4F0] text-[#4E5F52] text-xs font-medium uppercase tracking-wider hover:bg-[#4E5F52] hover:text-white transition-all self-start sm:self-center shadow-xs"
-          >
-            <Truck className="w-3.5 h-3.5" />
-            <span>Track Any Parcel</span>
-          </Link>
+          <div className="flex items-center gap-2 self-start sm:self-center">
+            {isMounted && user ? (
+              <button
+                type="button"
+                onClick={() => logout()}
+                className="px-3.5 py-1.5 rounded-full border border-rose-300 bg-rose-50/50 text-rose-700 text-xs font-medium hover:bg-rose-100 transition-colors"
+              >
+                Sign Out
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => openModal("auth")}
+                className="px-4 py-2 rounded-full bg-[#1C1D1F] text-[#FAF7F2] hover:bg-[#333333] text-xs font-medium uppercase tracking-wider transition-colors shadow-xs"
+              >
+                Sign In / OTP
+              </button>
+            )}
+
+            <Link
+              href="/track-order"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#4E5F52] bg-[#EFF4F0] text-[#4E5F52] text-xs font-medium uppercase tracking-wider hover:bg-[#4E5F52] hover:text-white transition-all shadow-xs"
+            >
+              <Truck className="w-3.5 h-3.5" />
+              <span>Track Parcel</span>
+            </Link>
+          </div>
         </div>
+
+        {/* Authentication State Banner */}
+        {isMounted && !user && (
+          <div className="p-4 rounded-2xl bg-[#FFFFFF] border border-[#9E8047]/25 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30">
+                  Firebase Phone Auth
+                </span>
+                <span className="text-xs font-semibold text-[#1C1D1F]">
+                  Guest Patron Session
+                </span>
+              </div>
+              <p className="text-xs text-[#737373]">
+                Sign in with your 10-digit mobile number to sync order history and unlock 1-click checkout.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => openModal("auth")}
+              className="px-4 py-2 rounded-full bg-[#4E5F52] text-white hover:bg-[#3D4D40] text-xs font-medium transition-colors self-start sm:self-center shadow-xs"
+            >
+              Verify Mobile OTP
+            </button>
+          </div>
+        )}
+
+        {isMounted && user && (
+          <div className="p-4 rounded-2xl bg-[#EFF4F0] border border-[#4E5F52]/30 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#4E5F52] text-white">
+                  Verified Patron
+                </span>
+                <span className="text-xs font-semibold text-[#1C1D1F]">
+                  +91 {user.phone}
+                </span>
+              </div>
+              <p className="text-xs text-[#555555]">
+                Welcome, {user.name}. Your mobile number is authenticated via Firebase Phone Auth.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => logout()}
+              className="text-xs text-rose-600 hover:underline font-medium self-start sm:self-center"
+            >
+              Sign out from device
+            </button>
+          </div>
+        )}
 
         {/* Quick Navigation Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-6">

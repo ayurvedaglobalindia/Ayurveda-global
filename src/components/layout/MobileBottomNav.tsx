@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Home,
@@ -48,9 +49,9 @@ export function MobileBottomNav() {
       {/* Sleek, Compact iOS Floating Island Bottom Navigation Dock (10px float margin, 52px max height) */}
       <nav
         aria-label="Mobile Floating Navigation Dock"
-        className="md:hidden fixed bottom-[10px] inset-x-4 max-w-sm mx-auto z-40 rounded-full backdrop-blur-xl bg-white/95 dark:bg-stone-950/95 border border-stone-200/70 shadow-lg px-3 py-1.5 transition-all"
+        className="md:hidden fixed inset-x-3 sm:inset-x-4 max-w-sm mx-auto z-40 rounded-full backdrop-blur-xl bg-white/95 dark:bg-stone-950/95 border border-stone-200/80 shadow-lg px-2.5 sm:px-3 py-1.5 transition-all"
         style={{
-          paddingBottom: "max(env(safe-area-inset-bottom), 6px)",
+          bottom: "max(10px, calc(6px + env(safe-area-inset-bottom, 0px)))",
         }}
       >
         <div className="flex items-center justify-around h-[48px] relative">
@@ -138,9 +139,11 @@ export function MobileBottomNav() {
                 }}
               >
                 {/* Minimalist Vaidya Heart & Pulse Icon */}
-                <img
+                <Image
                   src="/images/vaidya-icon.svg"
                   alt="Vaidya Consult"
+                  width={20}
+                  height={20}
                   className="w-5 h-5 object-contain"
                 />
               </div>

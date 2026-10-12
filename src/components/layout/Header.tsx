@@ -109,11 +109,11 @@ export function Header() {
 
           {/* Right Side Controls: Search, Account, Wishlist, Cart Count Pill */}
           <div className="flex items-center gap-1 sm:gap-2.5 flex-shrink-0">
-            {/* Search (Icon on small screens) */}
+            {/* Search (Icon on small screens) - hide on ultra small screens since search is in hero and bottom dock */}
             <button
               type="button"
               onClick={() => openSearch()}
-              className="lg:hidden p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
+              className="hidden sm:flex lg:hidden p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Search"
             >
               <Search className="w-5 h-5 stroke-[1.5]" />
@@ -134,10 +134,10 @@ export function Header() {
               )}
             </button>
 
-            {/* User Account */}
+            {/* User Account (Desktop / Tablet only to save space on mobile) */}
             <Link
               href="/account"
-              className="p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
+              className="hidden sm:flex p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Account"
             >
               <User className="w-5 h-5 stroke-[1.5]" />

@@ -17,9 +17,11 @@ import {
   Truck,
   Leaf,
   Check,
+  Star,
 } from "lucide-react";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { Rating } from "@/components/ui/Rating";
+import { formatINR } from "@/lib/utils/formatters";
 import type { Product } from "@/types";
 import { getProductImage } from "@/lib/products/registry";
 import { useCartStore } from "@/store/cartStore";
@@ -173,6 +175,24 @@ export function ProductCard({
 
   // Clinical specs row (IMC & Krishna Style): "FOR: ..." | "WITH: ..."
   const getClinicalSpecs = () => {
+    if (product.id === "himalayan-shilajit-resin") {
+      return {
+        forText: "Endurance & Cellular Stamina",
+        withText: "75%+ Fulvic Acid & 84+ Minerals",
+      };
+    }
+    if (product.id === "ashwagandha-root-extract") {
+      return {
+        forText: "Cortisol Relief & Muscular Recovery",
+        withText: "KSM-66 Full-Spectrum Withanolides",
+      };
+    }
+    if (product.id === "vajikara-gold-vitality-oil") {
+      return {
+        forText: "Microcirculation & Tissue Vigour",
+        withText: "Swarna Bhasma & Classical Kesar",
+      };
+    }
     if (product.id === "body-essential-nutrition") {
       return {
         forText: "Muscle Vitality & Stamina",
@@ -251,18 +271,100 @@ export function ProductCard({
     );
   }
 
+  // Variant: List Layout (Horizontal on Desktop/Mobile)
+  if (variant === "list") {
+    return (
+      <motion.article
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-20px" }}
+        transition={{ duration: 0.35 }}
+        className="group relative rounded-2xl border border-[#0E3924]/15 bg-white hover:border-[#0E3924]/35 transition-all p-3 sm:p-4 flex flex-col sm:flex-row items-center gap-4 shadow-2xs hover:shadow-md w-full"
+      >
+        <div className="relative w-28 h-32 sm:w-36 sm:h-40 bg-[#FAF7F2] rounded-xl overflow-hidden flex-shrink-0 border border-[#0E3924]/10">
+          <Link href={`/product/${product.slug}`} className="block relative w-full h-full">
+            <Image
+              src={imageError ? "/images/products/body-essential-nutrition-card.jpg" : primaryImage.src}
+              alt={primaryImage.alt}
+              fill
+              sizes="(max-width: 640px) 112px, 144px"
+              className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
+              onError={() => setImageError(true)}
+            />
+          </Link>
+        </div>
+
+        <div className="flex-1 min-w-0 flex flex-col justify-between w-full h-full space-y-2">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-[#0E3924]/6 text-[#0E3924] border border-[#0E3924]/10">
+                {product.category}
+              </span>
+              <div className="flex items-center gap-1 text-[11px] font-semibold text-[#0E3924]">
+                <Star className="w-3 h-3 fill-[#D4AF37] text-[#D4AF37]" />
+                <span>{product.rating || 4.9}</span>
+              </div>
+            </div>
+
+            <h3 className="font-editorial text-base sm:text-lg text-[#071A12] font-medium leading-snug">
+              <Link href={`/product/${product.slug}`} className="hover:text-[#0E3924] transition-colors">
+                {product.name}
+              </Link>
+            </h3>
+
+            <p className="text-xs text-[#555555] line-clamp-2 font-editorial">
+              {product.shortDescription || product.description}
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between gap-3 pt-2 border-t border-[#0E3924]/10 flex-wrap">
+            <div className="flex items-baseline gap-2">
+              <span className="font-sans text-base font-bold text-[#071A12]">
+                {formatINR(product.price)}
+              </span>
+              {hasDiscount && (
+                <span className="text-xs text-stone-400 line-through">
+                  {formatINR(product.compareAtPrice!)}
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleWishlistToggle}
+                className="p-2 rounded-xl border border-stone-200 text-stone-600 hover:text-rose-600 transition-colors"
+                aria-label="Wishlist"
+              >
+                <Heart className={`w-4 h-4 ${inWishlist ? "fill-rose-500 text-rose-500" : ""}`} />
+              </button>
+
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className="px-4 py-2 bg-[#0E3924] text-white rounded-xl text-xs font-semibold hover:bg-[#071A12] transition-colors inline-flex items-center gap-1.5 shadow-xs"
+              >
+                <ShoppingBag className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <span>{justAdded ? "Added!" : "Add to Bag"}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.article>
+    );
+  }
+
   // Clinical Bento Product Card (2-Column Grid on Mobile)
   return (
     <motion.article
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-20px" }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -4, transition: { duration: 0.22 } }}
-      className="h-full group relative rounded-2xl border border-[#0E3924]/15 bg-white hover:border-[#0E3924]/40 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-[0_4px_20px_rgba(7,26,18,0.06)] hover:shadow-[0_10px_32px_rgba(7,26,18,0.12)] w-full min-w-0"
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className="h-full group relative rounded-2xl border border-[#0E3924]/15 bg-white hover:border-[#0E3924]/40 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-[0_2px_12px_rgba(7,26,18,0.04)] hover:shadow-[0_8px_24px_rgba(7,26,18,0.1)] w-full min-w-0"
     >
-      {/* 1:1 Aspect Ratio Image Canvas with Subtle Luxury Zoom */}
-      <div className="relative w-full aspect-square border-b border-[#0E3924]/10 bg-[#FAF7F2] overflow-hidden group/img">
+      {/* 4:5 Portrait Ratio Image Canvas Matching Botanical Studio Imagery */}
+      <div className="relative w-full aspect-[4/5] bg-[#FAF7F2] overflow-hidden group/img border-b border-[#0E3924]/10">
         <Link
           href={`/product/${product.slug}`}
           className="block relative w-full h-full"
@@ -276,151 +378,152 @@ export function ProductCard({
             }
             alt={primaryImage.alt}
             fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             priority={
               product.id === "vitality-power-combo" ||
               product.id === "body-essential-nutrition"
             }
-            className="object-contain p-3 sm:p-5 transition-transform duration-500 ease-out group-hover:scale-105 group-hover/img:scale-105"
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-contain transition-transform duration-500 ease-out group-hover:scale-105 group-hover/img:scale-105"
             onError={() => setImageError(true)}
           />
         </Link>
 
-        {/* Clean Editorial Discount Pill */}
+        {/* Top Header Discount Badge */}
         {hasDiscount && (
           <div className="absolute top-2 left-2 z-10 pointer-events-none">
-            <span className="bg-[#0E3924] text-[#FDFBF7] text-[9px] sm:text-[10px] font-sans font-semibold px-2 py-0.5 rounded-full shadow-xs tracking-wider uppercase border border-[#D4AF37]/30">
+            <span className="bg-[#0E3924] text-[#FDFBF7] text-[8.5px] sm:text-[9.5px] font-sans font-bold px-2 py-0.5 rounded-full shadow-xs tracking-wider uppercase border border-[#D4AF37]/35">
               {discountPercentage}% OFF
             </span>
           </div>
         )}
 
-        {/* Top-Right Quick-View & Wishlist Actions */}
+        {/* Top-Right: Discreet Quick Action Buttons (No text overlay) */}
         <div className="absolute top-2 right-2 z-10 flex items-center gap-1">
-          <motion.button
-            whileTap={{ scale: 0.9 }}
+          {/* Quick View Button */}
+          <button
+            type="button"
             onClick={handleQuickView}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center border border-[#0E3924]/15 text-[#555555] hover:text-[#071A12] transition-colors shadow-xs"
-            aria-label="Quick view"
-            title="Quick View"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white text-[#071A12] hover:text-[#0E3924] flex items-center justify-center border border-stone-200/90 shadow-2xs transition-all active:scale-95"
+            aria-label={`Quick preview for ${product.name}`}
+            title="Quick Preview"
           >
             <Eye className="w-3.5 h-3.5" />
-          </motion.button>
+          </button>
 
-          <motion.button
-            whileTap={{ scale: 0.88 }}
+          {/* Wishlist Button */}
+          <button
+            type="button"
             onClick={handleWishlistToggle}
-            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center border border-[#0E3924]/15 transition-colors shadow-xs ${
-              inWishlist
-                ? "text-rose-600 border-rose-300"
-                : "text-[#555555] hover:text-[#071A12]"
-            } ${isHeartPopping ? "animate-[heartPop_0.45s_ease-in-out]" : ""}`}
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center border border-stone-200/90 shadow-2xs transition-all active:scale-95 ${
+              inWishlist ? "text-rose-500" : "text-[#071A12] hover:text-rose-500"
+            }`}
             aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
             title={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
           >
             <Heart
-              className={`w-3.5 h-3.5 ${inWishlist ? "fill-current text-rose-600" : ""}`}
+              className={`w-3.5 h-3.5 ${inWishlist ? "fill-rose-500 text-rose-500" : ""}`}
             />
-          </motion.button>
-        </div>
-
-        {/* Verified Lab Standard Micro Tag */}
-        <div className="absolute bottom-2 left-2 right-2 z-10 pointer-events-none flex justify-center">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/95 border border-[#0E3924]/15 text-[8px] sm:text-[9px] font-sans font-medium text-[#0E3924] shadow-2xs">
-            <ShieldCheck className="w-2.5 h-2.5 text-[#10B981]" />
-            <span>NABL Certified • 100% Shuddha</span>
-          </span>
+          </button>
         </div>
       </div>
 
-      {/* Card Body */}
-      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2.5 bg-white min-w-0">
-        <div className="space-y-1.5 min-w-0">
-          {/* Clinical Therapeutic Keynote */}
-          <div className="text-[9px] sm:text-[10px] font-mono leading-tight bg-[#FAF7F2] px-2 py-1.5 rounded-lg border border-[#D4AF37]/25 truncate">
-            <span className="text-[#0E3924] font-semibold">{clinical.forText}</span>
+      {/* Card Body - Perfectly Balanced Spacing & Natural Benefit Typography */}
+      <div className="p-2.5 sm:p-3.5 flex-1 flex flex-col justify-between space-y-2 bg-white min-w-0">
+        <div className="space-y-1 min-w-0">
+          {/* Natural Benefit Highlight Text */}
+          <p className="text-[10px] sm:text-[11px] text-[#0E3924] font-medium line-clamp-1 leading-normal tracking-wide">
+            <span>{clinical.forText}</span>
             <span className="text-[#9E8047] mx-1">•</span>
-            <span className="text-[#666666]">{clinical.withText}</span>
-          </div>
+            <span className="text-[#666666] font-normal">{clinical.withText}</span>
+          </p>
 
-          {/* Product Title (2 Lines Max, Fixed Height to Align Across Grid) */}
-          <h3 className="font-editorial text-xs sm:text-[15px] text-[#071A12] line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] group-hover:text-[#0E3924] transition-colors break-words whitespace-normal leading-snug">
-            <Link href={`/product/${product.slug}`}>{product.name}</Link>
+          {/* Product Title (2 Lines Max with Natural Wrapping) */}
+          <h3 className="font-editorial text-[13px] sm:text-[15px] font-normal text-[#071A12] line-clamp-2 min-h-[2.4rem] sm:min-h-[2.8rem] group-hover:text-[#0E3924] transition-colors leading-snug break-words">
+            <Link href={`/product/${product.slug}`} className="hover:underline">
+              {product.name}
+            </Link>
           </h3>
         </div>
 
-        {/* Price & Rating Section */}
+        {/* Rating, Pricing & CTA Section */}
         <div className="mt-auto pt-1 space-y-2">
-          {/* Rating Row */}
-          <div className="flex items-center justify-between text-xs">
-            <Rating rating={4.9} reviewsCount={128} size="sm" />
-            <span className="text-[9px] font-mono uppercase text-[#0E3924] tracking-wider font-semibold">
-              Ayurvedic
+          {/* Compact Non-Clipping Rating Row */}
+          <div className="flex items-center justify-between text-xs pt-0.5 min-w-0">
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#0E3924]/6 text-[#0E3924] text-[10px] sm:text-[10.5px] font-semibold shrink-0">
+              <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-[#D4AF37] text-[#D4AF37]" />
+              <span>{product.rating || 4.9}</span>
+              <span className="text-[9px] sm:text-[9.5px] text-stone-400 font-normal">
+                ({product.reviewCount || 128})
+              </span>
+            </span>
+            <span className="text-[8px] sm:text-[9px] font-sans uppercase text-[#0E3924] tracking-wider font-semibold px-1.5 py-0.5 rounded-full bg-[#0E3924]/6 border border-[#0E3924]/10 shrink-0">
+              {product.category === "supplements" ? "Rasayana" : product.category === "wellness" ? "Vajikara" : "Taila"}
             </span>
           </div>
 
-          {/* Price Row with Clean Strikethrough & Savings Tag */}
-          <div className="flex items-baseline justify-between pt-0.5">
-            <PriceDisplay
-              price={product.price}
-              compareAtPrice={product.compareAtPrice}
-              size="sm"
-            />
+          {/* Price Row */}
+          <div className="flex items-center justify-between gap-1.5 pt-0.5 flex-wrap">
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-sans text-[13.5px] sm:text-[15px] font-bold text-[#071A12] tracking-tight">
+                {formatINR(product.price)}
+              </span>
+              {hasDiscount && (
+                <span className="text-[10.5px] sm:text-xs text-stone-400 line-through font-normal">
+                  {formatINR(product.compareAtPrice!)}
+                </span>
+              )}
+            </div>
             {hasDiscount && (
-              <span className="text-[9px] sm:text-[10px] font-sans font-semibold text-[#0E3924] bg-[#FAF7F2] border border-[#0E3924]/20 px-1.5 py-0.5 rounded">
-                SAVE ₹{Math.round(((product.compareAtPrice! - product.price) / 100))}
+              <span className="text-[8.5px] sm:text-[9px] font-sans font-semibold text-[#0E3924] bg-[#0E3924]/8 border border-[#0E3924]/15 px-1.5 py-0.5 rounded-full shrink-0 tracking-tight">
+                Save ₹{Math.round((product.compareAtPrice! - product.price) / 100)}
               </span>
             )}
           </div>
 
-          {/* Clean Editorial Add to Cart CTA */}
-          <div className="pt-1.5 border-t border-[#0E3924]/10">
+          {/* Add to Bag CTA and View Link */}
+          <div className="pt-2 border-t border-[#0E3924]/10 space-y-1.5">
             {inCart ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="w-full flex items-center justify-between bg-[#FAF7F2] p-1 px-1.5 sm:px-2 rounded-xl border border-[#0E3924]/20"
-              >
+              <div className="w-full flex items-center justify-between bg-[#FAF7F2] p-1 px-1.5 sm:px-2 rounded-xl border border-[#0E3924]/20">
                 <div className="flex items-center gap-1">
-                  <motion.button
-                    whileTap={{ scale: 0.85 }}
+                  <button
+                    type="button"
                     onClick={handleDecrement}
-                    className="w-6 h-6 rounded-lg bg-white text-[#071A12] flex items-center justify-center border border-stone-200 shadow-2xs hover:bg-stone-50"
+                    className="w-6 h-6 rounded-lg bg-white text-[#071A12] flex items-center justify-center border border-stone-200 shadow-2xs hover:bg-stone-50 active:scale-95 transition-all"
                     aria-label="Decrease quantity"
                   >
                     <Minus className="w-3 h-3 text-[#0E3924]" />
-                  </motion.button>
+                  </button>
                   <span className="text-[11px] font-bold text-[#071A12] px-1.5 min-w-[18px] text-center font-sans">
                     {cartQuantity}
                   </span>
-                  <motion.button
-                    whileTap={{ scale: 0.85 }}
+                  <button
+                    type="button"
                     onClick={handleIncrement}
-                    className="w-6 h-6 rounded-lg bg-white text-[#071A12] flex items-center justify-center border border-stone-200 shadow-2xs hover:bg-stone-50"
+                    className="w-6 h-6 rounded-lg bg-white text-[#071A12] flex items-center justify-center border border-stone-200 shadow-2xs hover:bg-stone-50 active:scale-95 transition-all"
                     aria-label="Increase quantity"
                   >
                     <Plus className="w-3 h-3 text-[#0E3924]" />
-                  </motion.button>
+                  </button>
                 </div>
 
-                <motion.button
-                  whileTap={{ scale: 0.92 }}
+                <button
+                  type="button"
                   onClick={() => openCartDrawer()}
-                  className="text-[10px] font-semibold py-1 px-2.5 bg-[#0E3924] text-white rounded-lg hover:bg-[#071A12] transition-colors inline-flex items-center gap-1 shadow-2xs"
+                  className="text-[10px] font-semibold py-1 px-2.5 bg-[#0E3924] text-white rounded-lg hover:bg-[#071A12] transition-colors inline-flex items-center gap-1 shadow-2xs active:scale-95"
                 >
                   <ShoppingBag className="w-2.5 h-2.5 text-[#D4AF37]" />
                   <span>View Bag</span>
-                </motion.button>
-              </motion.div>
+                </button>
+              </div>
             ) : (
-              <motion.button
-                whileTap={{ scale: 0.96 }}
+              <button
+                type="button"
                 onClick={handleAddToCart}
                 disabled={
                   product?.inventory?.trackQuantity &&
                   product?.inventory?.quantity === 0
                 }
-                className="w-full text-[11px] sm:text-xs font-sans font-semibold py-2.5 px-3 rounded-xl bg-[#0E3924] text-white hover:bg-[#071A12] transition-colors inline-flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap active:scale-95 group/btn"
+                className="w-full text-xs font-sans font-bold py-2.5 sm:py-3 px-3 rounded-xl bg-[#0E3924] text-white hover:bg-[#071A12] transition-all inline-flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap active:scale-95 group/btn"
               >
                 {justAdded ? (
                   <>
@@ -429,12 +532,23 @@ export function ProductCard({
                   </>
                 ) : (
                   <>
-                    <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D4AF37] group-hover/btn:scale-110 transition-transform" />
+                    <ShoppingBag className="w-3.5 h-3.5 text-[#D4AF37] group-hover/btn:scale-110 transition-transform" />
                     <span>ADD TO BAG</span>
                   </>
                 )}
-              </motion.button>
+              </button>
             )}
+
+            {/* Accessible View Details text link */}
+            <div className="text-center">
+              <Link
+                href={`/product/${product.slug}`}
+                className="text-[10px] sm:text-[11px] text-[#737373] hover:text-[#0E3924] font-sans font-medium transition-colors hover:underline inline-flex items-center gap-0.5"
+              >
+                <span>View Details</span>
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

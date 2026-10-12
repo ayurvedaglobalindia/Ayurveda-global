@@ -41,7 +41,7 @@ export function HomeTestimonials() {
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-12">
           <div className="flex items-center justify-center gap-2 mb-1.5 sm:mb-2">
             <span className="w-4 sm:w-5 h-px bg-[#9E8047]" />
-            <span className="text-[10px] sm:text-[10.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#8C703D]">
+            <span className="text-[10px] sm:text-[10.5px] font-editorial font-semibold uppercase tracking-[0.2em] text-[#8C703D]">
               Verified Patron Experiences
             </span>
             <span className="w-4 sm:w-5 h-px bg-[#9E8047]" />

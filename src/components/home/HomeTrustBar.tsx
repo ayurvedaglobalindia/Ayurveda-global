@@ -42,7 +42,7 @@ export function HomeTrustBar({ className = "" }: HomeTrustBarProps) {
         {/* Editorial Eyebrow */}
         <div className="flex items-center justify-center gap-2.5 sm:gap-3 mb-5 sm:mb-8 text-center">
           <span className="w-6 sm:w-12 h-px bg-[#9E8047]/30" />
-          <span className="text-[9.5px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.2em] sm:tracking-[0.22em] text-[#8C703D]">
+          <span className="text-[9.5px] sm:text-[11px] font-editorial font-semibold uppercase tracking-[0.2em] sm:tracking-[0.22em] text-[#8C703D]">
             The Ayur Veda Global Clinical Standard
           </span>
           <span className="w-6 sm:w-12 h-px bg-[#9E8047]/30" />
@@ -74,7 +74,7 @@ export function HomeTrustBar({ className = "" }: HomeTrustBarProps) {
                   <h4 className="font-heading text-xs sm:text-base font-medium text-[#1C1D1F] leading-snug">
                     {item.title}
                   </h4>
-                  <p className="font-sans text-[10.5px] sm:text-xs text-[#666666] mt-1 leading-snug sm:leading-relaxed">
+                  <p className="font-editorial text-[10.5px] sm:text-xs text-[#666666] mt-1 leading-snug sm:leading-relaxed">
                     {item.desc}
                   </p>
                 </div>

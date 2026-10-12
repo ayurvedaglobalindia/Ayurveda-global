@@ -357,6 +357,23 @@ export default function OrderDetailPage() {
               <span>{config.label}</span>
             </span>
           </div>
+
+          {(order.trackingNumber || order.awbNumber) && (
+            <div className="mt-3 p-3 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+              <div className="flex items-center gap-2">
+                <Truck className="w-4 h-4 text-[#4E5F52]" />
+                <span className="text-[#1C1D1F]">
+                  Courier Tracking (AWB): <strong className="font-mono">{order.trackingNumber || order.awbNumber}</strong>
+                </span>
+              </div>
+              <Link
+                href={`/track-order?order=${order.orderNumber || order.id}`}
+                className="text-[11px] font-semibold text-[#4E5F52] hover:underline"
+              >
+                View Live Dispatch Route &rarr;
+              </Link>
+            </div>
+          )}
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">

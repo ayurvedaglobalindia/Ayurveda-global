@@ -241,6 +241,15 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                       <span>Order History</span>
                       <ChevronRight className="w-3.5 h-3.5 text-[#999999]" />
                     </Link>
+
+                    <Link
+                      href="/account"
+                      onClick={onClose}
+                      className="flex items-center justify-between p-2 rounded-lg hover:bg-[#F4EFEA] text-xs text-[#1C1D1F] transition-colors"
+                    >
+                      <span>Patron Account &amp; OTP Access</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-[#999999]" />
+                    </Link>
                   </div>
                 </div>
               </div>

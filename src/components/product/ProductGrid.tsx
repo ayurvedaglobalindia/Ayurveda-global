@@ -35,7 +35,7 @@ export function ProductGrid({
   const isList = variant === "list";
   const columns = isList
     ? { base: 1, sm: 1, md: 1, lg: 1, xl: 1, ...customColumns }
-    : { base: 1, sm: 2, md: 2, lg: 3, xl: 3, ...customColumns };
+    : { base: 2, sm: 2, md: 3, lg: 3, xl: 3, ...customColumns };
 
   const getColClass = (cols: number) => {
     switch (cols) {

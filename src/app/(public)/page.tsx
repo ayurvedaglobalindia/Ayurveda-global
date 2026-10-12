@@ -10,6 +10,7 @@ import { ConcernsScroller } from "@/components/home/ConcernsScroller";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
 import { CategoryShowcase } from "@/components/home/CategoryShowcase";
 import { AyurvedaPhilosophySection } from "@/components/home/AyurvedaPhilosophySection";
+import { HomeAllProducts } from "@/components/home/HomeAllProducts";
 import { DoctorConsultBanner } from "@/components/home/DoctorConsultBanner";
 import { HomeTestimonials } from "@/components/home/HomeTestimonials";
 import { HomeFAQ } from "@/components/home/HomeFAQ";
@@ -49,13 +50,16 @@ export default function HomePage() {
       {/* 3. Best Sellers Carousel */}
       <FeaturedProducts />
 
-      {/* 3. Shop by Category */}
+      {/* 4. Shop by Category */}
       <CategoryShowcase />
 
-      {/* 4. Ayurvedic Science & Dosha Heritage */}
+      {/* 5. Ayurvedic Science & Dosha Heritage */}
       <AyurvedaPhilosophySection />
 
-      {/* 5. Free Doctor Consultation WhatsApp Banner */}
+      {/* 6. Complete Botanical Pharmacopeia & All Products Showcase */}
+      <HomeAllProducts />
+
+      {/* 7. Free Doctor Consultation WhatsApp Banner */}
       <DoctorConsultBanner />
 
       {/* 6. Customer Reviews & Testimonials */}

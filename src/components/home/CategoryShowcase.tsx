@@ -48,7 +48,7 @@ export function CategoryShowcase() {
           <div>
             <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
               <span className="w-4 sm:w-5 h-px bg-[#9E8047]" />
-              <span className="text-[10px] sm:text-[10.5px] font-sans font-semibold uppercase tracking-[0.2em] text-[#8C703D]">
+              <span className="text-[10px] sm:text-[10.5px] font-editorial font-semibold uppercase tracking-[0.2em] text-[#8C703D]">
                 Curated Therapeutic Regimens
               </span>
             </div>
@@ -61,7 +61,7 @@ export function CategoryShowcase() {
           </div>
           <Link
             href="/shop"
-            className="inline-flex items-center gap-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-[#1F3D2B] hover:text-[#8C703D] transition-colors pb-0.5 border-b border-[#1F3D2B]/30 hover:border-[#8C703D] flex-shrink-0"
+            className="inline-flex items-center gap-1.5 text-xs font-editorial font-semibold uppercase tracking-wider text-[#1F3D2B] hover:text-[#8C703D] transition-colors pb-0.5 border-b border-[#1F3D2B]/30 hover:border-[#8C703D] flex-shrink-0"
           >
             <span>Browse All Collections</span>
             <ArrowRight className="w-3.5 h-3.5" />

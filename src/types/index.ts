@@ -39,6 +39,9 @@ export interface Product {
     description: string;
     keywords: string[];
   };
+  rating?: number;
+  reviewCount?: number;
+  featured?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -120,7 +123,7 @@ export interface Order {
   discount?: number;
   total: number;
   paymentMethod: "whatsapp" | "cod" | string;
-  paymentStatus?: "pending" | "confirmed" | "failed" | "refunded";
+  paymentStatus?: "pending" | "confirmed" | "paid" | "failed" | "refunded";
   orderStatus?:
     "confirmed" | "processing" | "shipped" | "delivered" | "cancelled";
   status?:
@@ -128,6 +131,8 @@ export interface Order {
   couponCode?: string;
   notes?: string;
   whatsappMessageSent?: boolean;
+  trackingNumber?: string;
+  carrierName?: string;
   createdAt: string;
   updatedAt?: string;
 }

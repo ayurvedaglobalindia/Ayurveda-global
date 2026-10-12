@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { getOrdersServer, updateOrderStatusServer } from "@/app/actions";
+import { getOrdersServer, updateOrderStatusServer, getLeadsServer } from "@/app/actions";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -40,6 +40,8 @@ import {
   Layers,
   Save,
   Check,
+  Users,
+  UserCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { formatINR, formatDate } from "@/lib/utils/formatters";
@@ -70,12 +72,15 @@ export default function AdminPage() {
 
   // Navigation Tabs
   const [activeTab, setActiveTab] = useState<
-    "analytics" | "orders" | "products" | "coupons" | "marketing" | "settings"
+    "analytics" | "orders" | "products" | "customers" | "coupons" | "marketing" | "settings"
   >("analytics");
   const [dateRange, setDateRange] = useState<DateRange>("all");
 
   // Dashboard Data
   const [orders, setOrders] = useState<any[]>([]);
+  const [leads, setLeads] = useState<any[]>([]);
+  const [stockOverrides, setStockOverrides] = useState<Record<string, number>>({});
+  const [trackingNumberInput, setTrackingNumberInput] = useState("");
   const [analytics, setAnalytics] = useState<AnalyticsSummary | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -172,6 +177,61 @@ export default function AdminPage() {
             setOrders(local);
           } catch {}
         });
+    }
+
+    // 3. Gather customer leads & stock overrides
+    if (typeof window !== "undefined") {
+      getLeadsServer().then((serverLeads) => {
+        let allLeads: any[] = serverLeads || [];
+        try {
+          const local = JSON.parse(
+            localStorage.getItem("ayur_whatsapp_leads") || "[]",
+          );
+          allLeads = [...allLeads, ...local];
+        } catch {}
+        const uniqueLeads = allLeads.filter(
+          (v, i, a) =>
+            a.findIndex(
+              (t) =>
+                (t.customerPhone && t.customerPhone === v.customerPhone) ||
+                (t.id && t.id === v.id),
+            ) === i,
+        );
+        setLeads(uniqueLeads);
+      }).catch(() => {});
+
+      try {
+        const savedStock = JSON.parse(
+          localStorage.getItem("ayur_stock_overrides") || "{}",
+        );
+        setStockOverrides(savedStock);
+      } catch {}
+    }
+  };
+
+  const handleStockUpdate = (productId: string, newQty: number) => {
+    const updated = { ...stockOverrides, [productId]: Math.max(0, newQty) };
+    setStockOverrides(updated);
+    try {
+      localStorage.setItem("ayur_stock_overrides", JSON.stringify(updated));
+    } catch {}
+  };
+
+  const handleUpdateTracking = (orderId: string, awb: string) => {
+    const updated = orders.map((o) =>
+      o.id === orderId || o.orderNumber === orderId
+        ? { ...o, trackingNumber: awb, awbNumber: awb, status: "shipped" }
+        : o,
+    );
+    setOrders(updated);
+    try {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("ayur_orders", JSON.stringify(updated.slice(0, 50)));
+        updateOrderStatusServer(orderId, "shipped").catch(console.error);
+      }
+    } catch {}
+    if (selectedOrder && (selectedOrder.id === orderId || selectedOrder.orderNumber === orderId)) {
+      setSelectedOrder({ ...selectedOrder, trackingNumber: awb, awbNumber: awb, status: "shipped" });
     }
   };
 
@@ -447,8 +507,13 @@ export default function AdminPage() {
             { id: "orders", label: `Orders (${orders.length})`, icon: Package },
             {
               id: "products",
-              label: `Product Performance (${products.length})`,
+              label: `Inventory & SKUs (${products.length})`,
               icon: Layers,
+            },
+            {
+              id: "customers",
+              label: `Customers & Leads (${leads.length + orders.length})`,
+              icon: Users,
             },
             {
               id: "coupons",
@@ -981,7 +1046,8 @@ export default function AdminPage() {
                       <th className="py-3 px-4">Cart Adds</th>
                       <th className="py-3 px-4">Units Sold</th>
                       <th className="py-3 px-4">Gross Revenue</th>
-                      <th className="py-3 px-4 text-right">Status</th>
+                      <th className="py-3 px-4">Live Stock</th>
+                      <th className="py-3 px-4 text-right">Action / Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#999999]/20">
@@ -1035,14 +1101,170 @@ export default function AdminPage() {
                           <td className="py-3 px-4 font-mono font-semibold text-[#1C1D1F]">
                             {formatINR(rev)}
                           </td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-1.5 font-mono">
+                              <span className="font-semibold text-[#1C1D1F]">
+                                {stockOverrides[p.id] !== undefined
+                                  ? stockOverrides[p.id]
+                                  : p.inventory?.quantity || 100}
+                              </span>
+                              <span className="text-[10px] text-[#737373]">units</span>
+                            </div>
+                          </td>
                           <td className="py-3 px-4 text-right">
-                            <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30">
-                              Active
-                            </span>
+                            <div className="flex items-center justify-end gap-1.5">
+                              <input
+                                type="number"
+                                min="0"
+                                max="9999"
+                                defaultValue={
+                                  stockOverrides[p.id] !== undefined
+                                    ? stockOverrides[p.id]
+                                    : p.inventory?.quantity || 100
+                                }
+                                onBlur={(e) =>
+                                  handleStockUpdate(p.id, parseInt(e.target.value) || 0)
+                                }
+                                className="w-16 px-1.5 py-0.5 rounded bg-[#FAF7F2] border border-[#9E8047]/25 text-xs text-center font-mono focus:outline-none focus:border-[#4E5F52]"
+                                title="Edit live stock"
+                              />
+                              <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30">
+                                In Stock
+                              </span>
+                            </div>
                           </td>
                         </tr>
                       );
                     })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB: CUSTOMER MANAGEMENT & LEADS */}
+        {activeTab === "customers" && (
+          <div className="space-y-4">
+            <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h2 className="font-heading text-sm font-semibold text-[#1C1D1F]">
+                  Patrons &amp; Verified Leads Ledger
+                </h2>
+                <p className="text-xs text-[#737373]">
+                  Direct patrons from WhatsApp enquiries, completed checkouts, and consultation requests
+                </p>
+              </div>
+              <span className="text-xs font-mono text-[#4E5F52] bg-[#EFF4F0] px-3 py-1 rounded-full border border-[#4E5F52]/30">
+                {leads.length + orders.length} Registered Contacts
+              </span>
+            </div>
+
+            <div className="bg-[#FFFFFF] border border-[#9E8047]/25 rounded-2xl overflow-hidden shadow-xs">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#FAF7F2] border-b border-[#9E8047]/25 text-[#737373] uppercase font-mono text-[10px]">
+                    <tr>
+                      <th className="py-3 px-4">Contact / Name</th>
+                      <th className="py-3 px-4">Phone Number</th>
+                      <th className="py-3 px-4">Source / Type</th>
+                      <th className="py-3 px-4">Interest / Formulation</th>
+                      <th className="py-3 px-4">Date</th>
+                      <th className="py-3 px-4 text-right">WhatsApp Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#999999]/20">
+                    {/* Combine Orders Customers + Direct Leads */}
+                    {orders.map((o) => {
+                      const name =
+                        o.customerName ||
+                        `${o.shippingAddress?.firstName || ""} ${o.shippingAddress?.lastName || ""}`.trim() ||
+                        "Patron";
+                      const phone = o.shippingAddress?.phone || o.customerPhone || "";
+                      return (
+                        <tr key={`ord-${o.id}`} className="hover:bg-[#FAF7F2]/50 transition-colors">
+                          <td className="py-3 px-4 font-medium text-[#1C1D1F]">
+                            {name}
+                          </td>
+                          <td className="py-3 px-4 font-mono text-[#737373]">
+                            {phone}
+                          </td>
+                          <td className="py-3 px-4">
+                            <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-[#EFF4F0] text-[#4E5F52] border border-[#4E5F52]/30">
+                              Order #{o.orderNumber || o.id}
+                            </span>
+                          </td>
+                          <td className="py-3 px-4 text-[#737373] truncate max-w-xs">
+                            {(o.items || []).map((i: any) => i.name || i.productName).join(", ") || "Ayurvedic Regimen"}
+                          </td>
+                          <td className="py-3 px-4 text-[#737373]">
+                            {o.createdAt ? new Date(o.createdAt).toLocaleDateString("en-IN") : "Recent"}
+                          </td>
+                          <td className="py-3 px-4 text-right">
+                            {phone && (
+                              <a
+                                href={buildWhatsAppUrl(
+                                  `Namaste ${name}! Thank you for choosing Ayur Veda Global. How can our Vaidya team assist your wellness today? 🌿`,
+                                  phone,
+                                )}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-2.5 py-1 rounded-lg bg-[#4E5F52] hover:bg-[#3D4D40] text-white text-[11px] font-medium inline-flex items-center gap-1 transition-colors"
+                              >
+                                <MessageCircle className="w-3 h-3" />
+                                <span>Connect</span>
+                              </a>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+
+                    {leads.map((l, idx) => (
+                      <tr key={`lead-${l.id || idx}`} className="hover:bg-[#FAF7F2]/50 transition-colors">
+                        <td className="py-3 px-4 font-medium text-[#1C1D1F]">
+                          {l.customerName || "Enquiry Patron"}
+                        </td>
+                        <td className="py-3 px-4 font-mono text-[#737373]">
+                          {l.customerPhone || "—"}
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+                            {l.source || "WhatsApp Lead"}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-[#737373] truncate max-w-xs">
+                          {l.productName || "General Consultation"}
+                        </td>
+                        <td className="py-3 px-4 text-[#737373]">
+                          {l.createdAt ? new Date(l.createdAt).toLocaleDateString("en-IN") : "Recent"}
+                        </td>
+                        <td className="py-3 px-4 text-right">
+                          {l.customerPhone && (
+                            <a
+                              href={buildWhatsAppUrl(
+                                `Namaste ${l.customerName || "Patron"}! Regarding your enquiry for ${l.productName || "Ayurveda Global Formulations"} — our senior Vaidya is available to answer any questions! 🌿`,
+                                l.customerPhone,
+                              )}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2.5 py-1 rounded-lg bg-[#4E5F52] hover:bg-[#3D4D40] text-white text-[11px] font-medium inline-flex items-center gap-1 transition-colors"
+                            >
+                              <MessageCircle className="w-3 h-3" />
+                              <span>Connect</span>
+                            </a>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+
+                    {orders.length === 0 && leads.length === 0 && (
+                      <tr>
+                        <td colSpan={6} className="py-8 text-center text-xs text-[#737373]">
+                          No customer records or leads logged yet.
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -1396,6 +1618,40 @@ export default function AdminPage() {
                       </span>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Tracking AWB Number and Dispatch Control */}
+              <div className="p-3 rounded-xl bg-[#FAF7F2] space-y-2 border border-[#9E8047]/20">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase text-[#737373] flex items-center gap-1">
+                    <Truck className="w-3.5 h-3.5 text-[#4E5F52]" />
+                    Carrier Tracking (AWB)
+                  </span>
+                  <span className="text-[10px] font-mono text-[#4E5F52]">
+                    {selectedOrder.trackingNumber || selectedOrder.awbNumber || "Not Assigned"}
+                  </span>
+                </div>
+                <div className="flex gap-1.5">
+                  <input
+                    type="text"
+                    placeholder="Enter BlueDart / Delhivery AWB..."
+                    defaultValue={selectedOrder.trackingNumber || selectedOrder.awbNumber || ""}
+                    id="modal-awb-input"
+                    className="flex-1 px-2.5 py-1.5 rounded-lg bg-white border border-[#9E8047]/25 text-xs text-[#1C1D1F] font-mono focus:outline-none focus:border-[#4E5F52]"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const el = document.getElementById("modal-awb-input") as HTMLInputElement;
+                      if (el && el.value.trim()) {
+                        handleUpdateTracking(selectedOrder.id || selectedOrder.orderNumber, el.value.trim());
+                      }
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#4E5F52] hover:bg-[#3D4D40] text-white text-xs font-medium"
+                  >
+                    Assign &amp; Ship
+                  </button>
                 </div>
               </div>
 

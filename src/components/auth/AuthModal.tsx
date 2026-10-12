@@ -28,6 +28,11 @@ import {
   normalizeIndianPhone,
   getWhatsAppVerifyUrl,
 } from "@/lib/auth/otpService";
+import {
+  sendFirebasePhoneOtp,
+  verifyFirebasePhoneOtp,
+  isFirebaseConfigured,
+} from "@/lib/auth/firebaseAuth";
 import type { Product, User } from "@/types";
 
 export interface AuthModalProps {
@@ -53,10 +58,10 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"input" | "otp">("input");
+  const [otpMethod, setOtpMethod] = useState<"firebase" | "sms">("firebase");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
-  const [liveTestCode, setLiveTestCode] = useState<string | null>(null);
   const [whatsappFallbackUrl, setWhatsappFallbackUrl] = useState("");
 
   // Resend Countdown Timer
@@ -74,7 +79,6 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
       setStep("input");
       setOtp("");
       setErrors({});
-      setLiveTestCode(null);
     }
   }, [isOpen]);
 
@@ -110,7 +114,7 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
     }
   };
 
-  const handleDirectSignIn = (e: React.FormEvent) => {
+  const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
 
@@ -132,19 +136,54 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
       return;
     }
 
-    const userObj: User = {
-      id: `usr-${cleanPhone}`,
-      name: name.trim() || "Ayurvedic Patron",
-      email: email.trim() || `${cleanPhone}@ayurvedaglobal.com`,
-      phone: cleanPhone,
-      addresses: [],
-      orders: [],
-      wishlist: [],
-      createdAt: new Date().toISOString(),
-      isPhoneVerified: true,
-    };
+    setLoading(true);
 
-    completeAuthAndAction(userObj);
+    // 1. Try Firebase Phone Authentication if configured
+    if (isFirebaseConfigured()) {
+      try {
+        const fbResult = await sendFirebasePhoneOtp(cleanPhone, "recaptcha-container");
+        if (fbResult.success) {
+          setLoading(false);
+          setOtpMethod("firebase");
+          setStep("otp");
+          setResendCooldown(30);
+          showToast({
+            type: "info",
+            title: "Firebase SMS OTP Dispatched",
+            message: `A 6-digit verification code was sent to +91 ${cleanPhone}.`,
+          });
+          return;
+        } else {
+          console.warn("Firebase Phone Auth fallback triggered:", fbResult.message);
+        }
+      } catch (fbErr: any) {
+        console.warn("Firebase Phone Auth error, falling back to SMS gateway:", fbErr);
+      }
+    }
+
+    // 2. Gateway / Simulated OTP Fallback (2Factor / Fast2SMS / Local)
+    try {
+      const smsResult = await sendOTP(cleanPhone, name.trim());
+      setLoading(false);
+      setOtpMethod("sms");
+      setStep("otp");
+      setResendCooldown(30);
+
+      if (smsResult.simulatedOtp) {
+        setWhatsappFallbackUrl(
+          getWhatsAppVerifyUrl(cleanPhone, smsResult.simulatedOtp),
+        );
+      }
+
+      showToast({
+        type: "info",
+        title: "SMS Code Dispatched",
+        message: `Verification code sent to +91 ${cleanPhone}. Please check your phone.`,
+      });
+    } catch {
+      setLoading(false);
+      setErrors({ phone: "Could not send verification code. Please check your network and retry." });
+    }
   };
 
   const handleResendOtp = async () => {
@@ -154,13 +193,29 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
 
     setLoading(true);
     setErrors({});
+
+    if (otpMethod === "firebase" && isFirebaseConfigured()) {
+      try {
+        const fbResult = await sendFirebasePhoneOtp(cleanPhone, "recaptcha-container");
+        setLoading(false);
+        if (fbResult.success) {
+          setResendCooldown(30);
+          showToast({
+            type: "info",
+            title: "New Firebase OTP Sent",
+            message: `A new 6-digit code was sent to +91 ${cleanPhone}.`,
+          });
+          return;
+        }
+      } catch {}
+    }
+
     try {
       const result = await sendOTP(cleanPhone, name.trim());
       setLoading(false);
       if (result.success) {
         setResendCooldown(30);
         if (result.simulatedOtp) {
-          setLiveTestCode(result.simulatedOtp);
           setWhatsappFallbackUrl(
             getWhatsAppVerifyUrl(cleanPhone, result.simulatedOtp),
           );
@@ -168,7 +223,7 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
         showToast({
           type: "info",
           title: "New OTP Sent",
-          message: result.message,
+          message: `New code sent to +91 ${cleanPhone}.`,
         });
       } else {
         setErrors({ otp: result.message });
@@ -195,6 +250,55 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
     }
 
     setLoading(true);
+
+    // 1. Verify via Firebase if in Firebase session
+    if (otpMethod === "firebase") {
+      try {
+        const fbVerify = await verifyFirebasePhoneOtp(otp.trim());
+        if (fbVerify.success) {
+          setLoading(false);
+          const userObj: User = {
+            id: fbVerify.user?.uid || `usr-${cleanPhone}`,
+            name: name.trim() || "Ayurvedic Patron",
+            email: email.trim() || `${cleanPhone}@ayurvedaglobal.com`,
+            phone: cleanPhone,
+            addresses: [],
+            orders: [],
+            wishlist: [],
+            createdAt: new Date().toISOString(),
+            isPhoneVerified: true,
+          };
+          completeAuthAndAction(userObj);
+          return;
+        } else {
+          // If Firebase failed, check if simulated/gateway OTP matches
+          const fallbackVerify = await verifyOTP(cleanPhone, otp.trim());
+          if (fallbackVerify.success) {
+            setLoading(false);
+            const userObj: User = {
+              id: `usr-${cleanPhone}`,
+              name: name.trim() || "Ayurvedic Patron",
+              email: email.trim() || `${cleanPhone}@ayurvedaglobal.com`,
+              phone: cleanPhone,
+              addresses: [],
+              orders: [],
+              wishlist: [],
+              createdAt: new Date().toISOString(),
+              isPhoneVerified: true,
+            };
+            completeAuthAndAction(userObj);
+            return;
+          }
+          setLoading(false);
+          setErrors({ otp: fbVerify.message });
+          return;
+        }
+      } catch (err: any) {
+        console.error("Firebase verify error:", err);
+      }
+    }
+
+    // 2. Verify via Gateway / Simulated OTP
     try {
       const result = await verifyOTP(cleanPhone, otp);
       setLoading(false);
@@ -301,7 +405,7 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
       )}
 
       {step === "input" ? (
-        <form onSubmit={handleDirectSignIn} className="space-y-3">
+        <form onSubmit={handleSendOtp} className="space-y-3">
           {/* Full Name Field (Always collected for courier delivery) */}
           <div>
             <label className="block text-[11px] font-medium text-[#737373] mb-1 uppercase tracking-wider">
@@ -373,6 +477,9 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
             </div>
           )}
 
+          {/* Firebase Invisible reCAPTCHA Container */}
+          <div id="recaptcha-container" className="my-1 flex justify-center" />
+
           <Button
             type="submit"
             variant="primary"
@@ -380,13 +487,13 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
             loading={loading}
             className="w-full font-semibold py-2.5 text-xs mt-3 rounded-full"
           >
-            <span>Continue</span>
+            <span>Get 6-Digit OTP</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
           </Button>
 
           <div className="flex items-center justify-center gap-1.5 text-[10.5px] text-[#737373] pt-1">
             <ShieldCheck className="w-3.5 h-3.5 text-[#4E5F52]" />
-            <span>100% Secure &amp; Confidential</span>
+            <span>Firebase Secured Mobile Authentication</span>
           </div>
         </form>
       ) : (
@@ -409,21 +516,19 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
             </button>
           </div>
 
-          {/* Live Dispatch Indicator Banner */}
-          {liveTestCode && (
-            <div className="p-2.5 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/30 text-[#4E5F52] text-center space-y-1">
-              <span className="text-[10px] font-semibold uppercase tracking-wider block text-[#4E5F52]">
-                SMS Gateway Dispatch Code
+          {/* SMS Dispatch Confirmation Notice (Zero code shown on screen) */}
+          <div className="p-3 rounded-xl bg-[#EFF4F0] border border-[#4E5F52]/25 text-center space-y-1">
+            <div className="flex items-center justify-center gap-1.5 text-[#4E5F52]">
+              <ShieldCheck className="w-4 h-4 text-[#4E5F52]" />
+              <span className="text-[11px] font-semibold uppercase tracking-wider">
+                SMS Dispatched to Phone
               </span>
-              <span className="font-mono text-base font-bold tracking-widest text-[#1C1D1F] bg-[#FFFFFF] px-3 py-1 rounded border border-[#4E5F52]/30 inline-block">
-                {liveTestCode}
-              </span>
-              <p className="text-[10px] text-[#555555]">
-                Auto-generated verification code (Live SMS Gateways: 2Factor.in
-                / Fast2SMS).
-              </p>
             </div>
-          )}
+            <p className="text-[11px] text-[#555555]">
+              A 6-digit verification code has been dispatched via SMS to{" "}
+              <strong className="font-mono text-[#1C1D1F]">+91 {phone}</strong>. Please check your phone&apos;s SMS inbox.
+            </p>
+          </div>
 
           {/* 6-Digit OTP Input */}
           <div>

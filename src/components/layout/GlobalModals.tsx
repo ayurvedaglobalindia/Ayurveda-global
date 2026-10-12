@@ -7,6 +7,7 @@ import { AgeVerificationGate } from "@/components/layout/AgeVerificationGate";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { MobileMenuDrawer } from "@/components/layout/MobileMenuDrawer";
 import { SearchModal } from "@/components/layout/SearchModal";
+import { AuthModal } from "@/components/auth/AuthModal";
 import type { Product } from "@/types";
 
 export function GlobalModals() {
@@ -16,6 +17,7 @@ export function GlobalModals() {
   const ageGateModal = modals["age-gate"];
   const cartModal = modals["cart"];
   const mobileMenuModal = modals["mobile-menu"];
+  const authModal = modals["auth"];
 
   useEffect(() => {
     if (cartModal?.isOpen) {
@@ -69,6 +71,15 @@ export function GlobalModals() {
 
       {/* Global Luxury Apothecary Search Modal */}
       <SearchModal />
+
+      {/* Global Firebase Phone Auth / Sign In Modal */}
+      {authModal?.isOpen && (
+        <AuthModal
+          isOpen={true}
+          onClose={() => closeModal("auth")}
+          pendingItem={(authModal.data as any)?.pendingItem || null}
+        />
+      )}
     </>
   );
 }

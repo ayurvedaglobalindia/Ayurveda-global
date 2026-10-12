@@ -19,8 +19,8 @@ export function DoctorConsultBanner() {
           {/* Left Column: Editorial Consultation Copy */}
           <div className="lg:col-span-7 p-4 sm:p-8 lg:p-12 flex flex-col justify-between space-y-4 sm:space-y-6">
             <div className="space-y-3 sm:space-y-4">
-              <div className="inline-flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/10 border border-white/20 text-[#FAF7F2] text-xs font-sans font-medium tracking-[0.16em] backdrop-blur-xs">
-                <img src="/images/vaidya-icon.svg" alt="Vaidya Icon" className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain" />
+              <div className="inline-flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/10 border border-white/20 text-[#FAF7F2] text-xs font-editorial font-medium tracking-[0.16em] backdrop-blur-xs">
+                <Image src="/images/vaidya-icon.svg" alt="Vaidya Icon" width={16} height={16} className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain" />
                 <span className="uppercase text-[9.5px] sm:text-[11px] font-semibold text-[#D4AF37]">Private Vaidya Concierge</span>
               </div>
 

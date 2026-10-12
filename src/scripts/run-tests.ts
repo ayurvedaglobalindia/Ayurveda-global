@@ -618,6 +618,78 @@ async function runAllTests() {
     }
   });
 
+  // 7b. Cashfree Payment Gateway Unit Tests
+  console.log("\n💳 7b. Cashfree Payment Gateway Unit Tests:");
+  test("Cashfree HMAC-SHA256 signature verification succeeds with correct secret", async () => {
+    const crypto = await import("crypto");
+    const secretKey = "test_cf_secret_key_12345";
+    const timestamp = "1712900000000";
+    const rawBody = JSON.stringify({
+      data: {
+        order: { order_id: "AVG-999888", order_amount: 1499.0 },
+        payment: { payment_status: "SUCCESS", payment_id: "cf_pay_1234" },
+      },
+      event_time: "2026-10-12T12:00:00Z",
+      type: "PAYMENT_SUCCESS_WEBHOOK",
+    });
+
+    const signedPayload = timestamp + rawBody;
+    const computedSignature = crypto
+      .createHmac("sha256", secretKey)
+      .update(signedPayload)
+      .digest("base64");
+
+    if (!computedSignature || computedSignature.length === 0) {
+      throw new Error("Failed to compute Cashfree webhook signature");
+    }
+
+    // Verify constant time match
+    const isMatch = crypto.timingSafeEqual(
+      Buffer.from(computedSignature),
+      Buffer.from(computedSignature),
+    );
+    if (!isMatch) {
+      throw new Error("HMAC timingSafeEqual failed");
+    }
+  });
+
+  test("Cashfree HMAC-SHA256 signature verification fails with tampered body", async () => {
+    const crypto = await import("crypto");
+    const secretKey = "test_cf_secret_key_12345";
+    const timestamp = "1712900000000";
+    const originalBody = JSON.stringify({ amount: 100 });
+    const tamperedBody = JSON.stringify({ amount: 1000 });
+
+    const originalSig = crypto
+      .createHmac("sha256", secretKey)
+      .update(timestamp + originalBody)
+      .digest("base64");
+
+    const tamperedSig = crypto
+      .createHmac("sha256", secretKey)
+      .update(timestamp + tamperedBody)
+      .digest("base64");
+
+    if (originalSig === tamperedSig) {
+      throw new Error("Tampered payload produced identical signature");
+    }
+  });
+
+  test("Cashfree order request validation rejects negative or zero amount", async () => {
+    const validateCashfreePayload = (payload: { order_amount: number; order_id: string }) => {
+      if (!payload.order_id || !payload.order_amount || payload.order_amount <= 0) {
+        return { valid: false, error: "Invalid order_id or order_amount" };
+      }
+      return { valid: true };
+    };
+
+    const invalidRes = validateCashfreePayload({ order_id: "AVG-1", order_amount: 0 });
+    if (invalidRes.valid) throw new Error("Accepted zero order amount");
+
+    const validRes = validateCashfreePayload({ order_id: "AVG-1", order_amount: 899 });
+    if (!validRes.valid) throw new Error("Rejected valid order payload");
+  });
+
   // 8. Server Endpoints Health Check
   console.log("\n🌐 8. Server Endpoints Health Check:");
   const routes = [

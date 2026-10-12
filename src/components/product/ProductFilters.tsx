@@ -14,6 +14,10 @@ export interface FilterTagOption {
 
 export const CURATED_FILTER_TAGS: FilterTagOption[] = [
   { id: "stamina", label: "Energy & Stamina", tag: "stamina" },
+  { id: "shilajit", label: "Pure Shilajit", tag: "shilajit" },
+  { id: "ashwagandha", label: "KSM-66 Ashwagandha", tag: "ashwagandha" },
+  { id: "stress-relief", label: "Stress & Sleep", tag: "stress-relief" },
+  { id: "vitality", label: "Classical Vajikara", tag: "vitality" },
   { id: "immunity", label: "Immunity & Rasayana", tag: "immunity" },
   { id: "mens-wellness", label: "Men's Vitality", tag: "mens-wellness" },
   { id: "delay-spray", label: "Delay & Performance", tag: "delay-spray" },
@@ -90,13 +94,13 @@ export function ProductFilters({
       {/* Category Section */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-mono uppercase tracking-wider text-[#1C1D1F] font-semibold">
+          <h3 className="text-xs font-sans uppercase tracking-wider text-[#071A12] font-bold">
             Formulation Category
           </h3>
           {selectedCategory && (
             <button
               onClick={() => onCategoryChange(undefined)}
-              className="text-[11px] text-[#4E5F52] hover:underline"
+              className="text-[11px] text-[#0E3924] font-medium hover:underline cursor-pointer"
             >
               Reset
             </button>
@@ -107,22 +111,22 @@ export function ProductFilters({
             type="button"
             onClick={() => onCategoryChange(undefined)}
             className={classNames(
-              "w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between",
+              "w-full text-left px-3.5 py-2.5 rounded-xl transition-all flex items-center justify-between cursor-pointer",
               !selectedCategory
-                ? "bg-[#1F3D2B] text-white font-medium shadow-xs"
-                : "text-[#555555] hover:bg-[#FAF7F2] hover:text-[#1C1D1F]",
+                ? "bg-[#0E3924] text-white font-medium shadow-xs"
+                : "text-[#555555] hover:bg-[#FAF7F2] hover:text-[#071A12]",
             )}
           >
             <span>All Formulations</span>
             <span
               className={classNames(
-                "text-[10px] font-mono px-1.5 py-0.5 rounded-full",
+                "text-[10px] font-mono px-2 py-0.5 rounded-full",
                 !selectedCategory
                   ? "bg-white/20 text-white"
-                  : "bg-[#FAF7F2] text-[#737373]",
+                  : "bg-[#0E3924]/6 text-[#0E3924]",
               )}
             >
-              6
+              {totalResults ?? categories.reduce((sum, c) => sum + (c.productCount || 0), 0)}
             </span>
           </button>
 
@@ -134,19 +138,19 @@ export function ProductFilters({
                 type="button"
                 onClick={() => onCategoryChange(isSelected ? undefined : cat.slug)}
                 className={classNames(
-                  "w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between",
+                  "w-full text-left px-3.5 py-2.5 rounded-xl transition-all flex items-center justify-between cursor-pointer",
                   isSelected
-                    ? "bg-[#1F3D2B] text-white font-medium shadow-xs"
-                    : "text-[#555555] hover:bg-[#FAF7F2] hover:text-[#1C1D1F]",
+                    ? "bg-[#0E3924] text-white font-medium shadow-xs"
+                    : "text-[#555555] hover:bg-[#FAF7F2] hover:text-[#071A12]",
                 )}
               >
                 <span className="truncate pr-2">{cat.name}</span>
                 <span
                   className={classNames(
-                    "text-[10px] font-mono px-1.5 py-0.5 rounded-full flex-shrink-0",
+                    "text-[10px] font-mono px-2 py-0.5 rounded-full flex-shrink-0",
                     isSelected
                       ? "bg-white/20 text-white"
-                      : "bg-[#FAF7F2] text-[#737373]",
+                      : "bg-[#0E3924]/6 text-[#0E3924]",
                   )}
                 >
                   {cat.productCount}
@@ -158,15 +162,15 @@ export function ProductFilters({
       </div>
 
       {/* Divider */}
-      <hr className="border-[#9E8047]/20" />
+      <hr className="border-[#0E3924]/10" />
 
       {/* Price Range Section */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-mono uppercase tracking-wider text-[#1C1D1F] font-semibold">
+          <h3 className="text-xs font-sans uppercase tracking-wider text-[#071A12] font-bold">
             Price Range
           </h3>
-          <span className="text-[11px] font-mono text-[#4E5F52] font-medium">
+          <span className="text-[11px] font-mono text-[#0E3924] font-semibold">
             ₹{priceRange[0].toLocaleString()} – ₹{priceRange[1].toLocaleString()}
           </span>
         </div>
@@ -182,10 +186,10 @@ export function ProductFilters({
                 type="button"
                 onClick={() => onPriceRangeChange([preset.min, preset.max])}
                 className={classNames(
-                  "px-2.5 py-1.5 rounded-lg text-[11px] font-sans border transition-all text-center truncate",
+                  "px-2.5 py-1.5 rounded-lg text-[11px] font-sans border transition-all text-center truncate cursor-pointer",
                   isActive
-                    ? "bg-[#1F3D2B] text-white border-[#1F3D2B] font-medium shadow-xs"
-                    : "bg-[#FFFFFF] text-[#555555] border-[#9E8047]/25 hover:border-[#1F3D2B] hover:text-[#1C1D1F]",
+                    ? "bg-[#0E3924] text-white border-[#0E3924] font-medium shadow-xs"
+                    : "bg-white text-[#555555] border-[#0E3924]/15 hover:border-[#0E3924]/35 hover:text-[#071A12]",
                 )}
               >
                 {preset.label}
@@ -208,7 +212,7 @@ export function ProductFilters({
                 step="50"
                 value={minInput}
                 onChange={(e) => setMinInput(parseInt(e.target.value) || 0)}
-                className="w-full pl-6 pr-2 py-1.5 bg-[#FAF7F2] border border-[#9E8047]/25 rounded-lg text-xs text-[#1C1D1F] focus:outline-none focus:border-[#1F3D2B]"
+                className="w-full pl-6 pr-2 py-1.5 bg-[#FAF7F2] border border-[#0E3924]/20 rounded-lg text-xs text-[#071A12] focus:outline-none focus:border-[#0E3924]"
                 placeholder="Min"
               />
             </div>
@@ -224,14 +228,14 @@ export function ProductFilters({
                 step="50"
                 value={maxInput}
                 onChange={(e) => setMaxInput(parseInt(e.target.value) || 0)}
-                className="w-full pl-6 pr-2 py-1.5 bg-[#FAF7F2] border border-[#9E8047]/25 rounded-lg text-xs text-[#1C1D1F] focus:outline-none focus:border-[#1F3D2B]"
+                className="w-full pl-6 pr-2 py-1.5 bg-[#FAF7F2] border border-[#0E3924]/20 rounded-lg text-xs text-[#071A12] focus:outline-none focus:border-[#0E3924]"
                 placeholder="Max"
               />
             </div>
             <button
               type="button"
               onClick={handleApplyPrice}
-              className="px-3 py-1.5 bg-[#1F3D2B] text-white rounded-lg text-xs font-medium hover:bg-[#162C1F] transition-colors"
+              className="px-3.5 py-1.5 bg-[#0E3924] text-white rounded-lg text-xs font-semibold hover:bg-[#071A12] transition-colors cursor-pointer"
             >
               Go
             </button>
@@ -240,18 +244,18 @@ export function ProductFilters({
       </div>
 
       {/* Divider */}
-      <hr className="border-[#9E8047]/20" />
+      <hr className="border-[#0E3924]/10" />
 
       {/* Health Indication & Tags */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-mono uppercase tracking-wider text-[#1C1D1F] font-semibold">
+          <h3 className="text-xs font-sans uppercase tracking-wider text-[#071A12] font-bold">
             Health Focus
           </h3>
           {selectedTags.length > 0 && (
             <button
               onClick={() => onTagsChange([])}
-              className="text-[11px] text-[#4E5F52] hover:underline"
+              className="text-[11px] text-[#0E3924] font-medium hover:underline cursor-pointer"
             >
               Reset
             </button>
@@ -272,10 +276,10 @@ export function ProductFilters({
                   onTagsChange(newTags);
                 }}
                 className={classNames(
-                  "px-2.5 py-1 rounded-full text-[11px] font-sans border transition-all inline-flex items-center gap-1",
+                  "px-3 py-1 rounded-full text-[11px] font-sans border transition-all inline-flex items-center gap-1 cursor-pointer",
                   isSelected
-                    ? "bg-[#1F3D2B] text-white border-[#1F3D2B] font-medium shadow-xs"
-                    : "bg-[#FFFFFF] text-[#555555] border-[#9E8047]/25 hover:border-[#1F3D2B] hover:text-[#1C1D1F]",
+                    ? "bg-[#0E3924] text-white border-[#0E3924] font-medium shadow-xs"
+                    : "bg-white text-[#555555] border-[#0E3924]/15 hover:border-[#0E3924]/35 hover:text-[#071A12]",
                 )}
               >
                 {isSelected && <Check className="w-3 h-3 text-white" />}
@@ -287,11 +291,11 @@ export function ProductFilters({
       </div>
 
       {/* Divider */}
-      <hr className="border-[#9E8047]/20" />
+      <hr className="border-[#0E3924]/10" />
 
       {/* Availability */}
       <div className="space-y-3">
-        <h3 className="text-xs font-mono uppercase tracking-wider text-[#1C1D1F] font-semibold">
+        <h3 className="text-xs font-sans uppercase tracking-wider text-[#071A12] font-bold">
           Availability
         </h3>
         <label className="flex items-center gap-2.5 cursor-pointer py-1 group">
@@ -299,10 +303,10 @@ export function ProductFilters({
             type="checkbox"
             checked={inStockOnly}
             onChange={(e) => onInStockChange(e.target.checked)}
-            className="w-4 h-4 text-[#1F3D2B] border-[#9E8047]/30 rounded focus:ring-[#1F3D2B] accent-[#1F3D2B]"
+            className="w-4 h-4 text-[#0E3924] border-[#0E3924]/30 rounded focus:ring-[#0E3924] accent-[#0E3924] cursor-pointer"
           />
-          <span className="text-xs text-[#333333] group-hover:text-[#1C1D1F] transition-colors">
-            In stock ready for dispatch
+          <span className="text-xs text-[#333333] group-hover:text-[#071A12] transition-colors font-sans">
+            In stock ready for immediate dispatch
           </span>
         </label>
       </div>
@@ -316,13 +320,13 @@ export function ProductFilters({
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/30 text-xs font-medium text-[#1C1D1F] hover:bg-[#FAF7F2] transition-colors shadow-xs"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-[#0E3924]/20 text-xs font-semibold text-[#071A12] hover:bg-[#FAF7F2] transition-colors shadow-xs cursor-pointer"
           aria-label="Open filter drawer"
         >
-          <SlidersHorizontal className="w-3.5 h-3.5 text-[#4E5F52]" />
+          <SlidersHorizontal className="w-3.5 h-3.5 text-[#0E3924]" />
           <span>Filters</span>
           {activeFiltersCount > 0 && (
-            <span className="w-4 h-4 rounded-full bg-[#1F3D2B] text-white text-[10px] font-bold flex items-center justify-center">
+            <span className="w-4 h-4 rounded-full bg-[#0E3924] text-white text-[10px] font-bold flex items-center justify-center">
               {activeFiltersCount}
             </span>
           )}
@@ -336,7 +340,7 @@ export function ProductFilters({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/50 backdrop-blur-xs"
+                className="fixed inset-0 bg-black/60 backdrop-blur-xs"
                 onClick={() => setIsOpen(false)}
               />
 
@@ -346,24 +350,24 @@ export function ProductFilters({
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 28, stiffness: 280 }}
-                className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-[#FFFFFF] shadow-2xl z-50 flex flex-col"
+                className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-white shadow-2xl z-50 flex flex-col"
               >
                 {/* Drawer Header */}
-                <div className="p-4 border-b border-[#9E8047]/20 flex items-center justify-between bg-[#FAF7F2]">
+                <div className="p-4 border-b border-[#0E3924]/15 flex items-center justify-between bg-[#FAF7F2]">
                   <div className="flex items-center gap-2">
-                    <SlidersHorizontal className="w-4 h-4 text-[#4E5F52]" />
-                    <h2 className="font-heading text-base font-medium text-[#1C1D1F]">
+                    <SlidersHorizontal className="w-4 h-4 text-[#0E3924]" />
+                    <h2 className="font-editorial text-base font-medium text-[#071A12]">
                       Filter Formulations
                     </h2>
                     {activeFiltersCount > 0 && (
-                      <span className="px-2 py-0.5 rounded-full bg-[#1F3D2B] text-white text-[10px] font-mono">
+                      <span className="px-2 py-0.5 rounded-full bg-[#0E3924] text-white text-[10px] font-mono">
                         {activeFiltersCount} active
                       </span>
                     )}
                   </div>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="p-1.5 rounded-lg text-[#737373] hover:text-[#1C1D1F] hover:bg-black/5 transition-colors"
+                    className="p-1.5 rounded-lg text-[#737373] hover:text-[#071A12] hover:bg-black/5 transition-colors cursor-pointer"
                     aria-label="Close filters"
                   >
                     <X className="w-5 h-5" />
@@ -376,14 +380,14 @@ export function ProductFilters({
                 </div>
 
                 {/* Drawer Sticky Footer */}
-                <div className="p-4 border-t border-[#9E8047]/20 bg-[#FAF7F2] flex items-center gap-3">
+                <div className="p-4 border-t border-[#0E3924]/15 bg-[#FAF7F2] flex items-center gap-3">
                   {hasActiveFilters && (
                     <button
                       type="button"
                       onClick={() => {
                         onClearFilters();
                       }}
-                      className="flex-1 py-2.5 px-3 rounded-xl border border-[#9E8047]/30 text-xs font-medium text-[#737373] hover:text-[#1C1D1F] bg-white transition-colors text-center"
+                      className="flex-1 py-2.5 px-3 rounded-xl border border-[#0E3924]/20 text-xs font-semibold text-[#555555] hover:text-[#071A12] bg-white transition-colors text-center cursor-pointer"
                     >
                       Reset All
                     </button>
@@ -391,7 +395,7 @@ export function ProductFilters({
                   <button
                     type="button"
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-[#1F3D2B] text-white text-xs font-semibold hover:bg-[#162C1F] transition-colors shadow-sm text-center"
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-[#0E3924] text-white text-xs font-bold hover:bg-[#071A12] transition-colors shadow-sm text-center cursor-pointer"
                   >
                     View {totalResults !== undefined ? `${totalResults} ` : ""}Formulations
                   </button>
@@ -406,18 +410,18 @@ export function ProductFilters({
 
   // Desktop Sidebar Mode
   return (
-    <div className="bg-[#FFFFFF] rounded-2xl border border-[#9E8047]/25 p-5 shadow-xs">
-      <div className="flex items-center justify-between pb-4 mb-5 border-b border-[#9E8047]/20">
+    <div className="bg-white rounded-3xl border border-[#0E3924]/15 p-5 shadow-xs">
+      <div className="flex items-center justify-between pb-4 mb-5 border-b border-[#0E3924]/15">
         <div className="flex items-center gap-2">
-          <SlidersHorizontal className="w-4 h-4 text-[#4E5F52]" />
-          <h2 className="font-heading text-sm font-semibold text-[#1C1D1F]">
-            Refine Catalog
+          <SlidersHorizontal className="w-4 h-4 text-[#0E3924]" />
+          <h2 className="font-editorial text-base font-normal text-[#071A12]">
+            Refine Formulary
           </h2>
         </div>
         {hasActiveFilters && (
           <button
             onClick={onClearFilters}
-            className="text-[11px] font-mono text-[#737373] hover:text-[#1C1D1F] flex items-center gap-1 transition-colors uppercase tracking-wider"
+            className="text-[11px] font-sans text-[#0E3924] hover:text-[#071A12] font-semibold flex items-center gap-1 transition-colors uppercase tracking-wider cursor-pointer"
           >
             <RefreshCw className="w-3 h-3" />
             Reset

@@ -143,8 +143,8 @@ export function LuxuryHero() {
       />
 
       <div className="container mx-auto px-3.5 sm:px-6 lg:px-8 relative z-10 w-full max-w-full box-border">
-        {/* High-Impact Split-Card 3D Banner Carousel: 16:9 responsive on mobile */}
-        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] min-h-[340px] sm:min-h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-[#D4AF37]/30 bg-[#071A12]">
+        {/* High-Impact Split-Card 3D Banner Carousel: Fixed layout constraints to prevent overlap */}
+        <div className="relative w-full aspect-[4/5] sm:aspect-[21/9] min-h-[360px] sm:min-h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-[#D4AF37]/30 bg-[#071A12]">
           <AnimatePresence mode="wait">
             <motion.div
               key={active.id}
@@ -154,13 +154,14 @@ export function LuxuryHero() {
               transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0 w-full h-full"
             >
-              {/* Atmospheric Background Image Layer */}
+              {/* Atmospheric Background Image Layer with Organic Matte Finish */}
+              <div className="absolute inset-0 bg-[#071A12]/20 matte-overlay z-[5]"></div>
               <Image
                 src={active.bgImage}
                 alt={active.badge}
                 fill
                 priority
-                className="object-cover opacity-40 mix-blend-luminosity filter blur-[0.5px] scale-105"
+                className="object-cover opacity-60 mix-blend-multiply transition-opacity duration-700"
                 sizes="(max-width: 768px) 100vw, 1200px"
               />
 
@@ -175,18 +176,18 @@ export function LuxuryHero() {
 
               {/* 55% / 45% Split Layout Stage (Editorial Luxury Ayurveda) */}
               <div className="relative z-20 w-full h-full flex flex-col md:flex-row items-center justify-between p-5 sm:p-8 md:p-10 lg:p-12 gap-3 sm:gap-6">
-                {/* Left Side: Typography & Action Elements */}
-                <div className="w-full md:w-[60%] flex flex-col justify-end md:justify-center space-y-2.5 sm:space-y-3.5 pt-1 md:pt-0">
+                {/* Left Side: Typography & Action Elements - Added explicit height constraints */}
+                <div className="w-full md:w-[60%] flex flex-col justify-center h-full space-y-3 sm:space-y-4 px-5 sm:px-8 py-6 md:px-10">
                   {/* Classical Gold Badge */}
                   <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#071A12]/90 border border-[#D4AF37]/50 text-[#D4AF37] text-[9.5px] sm:text-[10.5px] font-sans font-semibold tracking-[0.16em] uppercase shadow-xs">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#071A12]/90 border border-[#D4AF37]/50 text-[#D4AF37] text-[9.5px] sm:text-[10.5px] font-editorial font-semibold tracking-[0.16em] uppercase shadow-xs">
                       <Sparkles className="w-3 h-3 text-[#D4AF37]" />
                       {active.badge}
                     </span>
                   </div>
 
-                  {/* Headline with Authoritative Editorial Serif */}
-                  <h1 className="font-editorial text-2xl sm:text-3xl lg:text-[40px] text-[#FDFBF7] font-normal leading-[1.18] tracking-tight drop-shadow-sm">
+                  {/* Headline with Authoritative Editorial Serif - Adjusted Weight for Organic Feel */}
+                  <h1 className="font-editorial text-3xl sm:text-4xl lg:text-[48px] text-[#FDFBF7] font-medium leading-[1.05] tracking-tight drop-shadow-md">
                     {active.titlePrefix}
                     <span className="italic text-[#D4AF37] font-normal">
                       {active.titleEmphasis}
@@ -195,13 +196,13 @@ export function LuxuryHero() {
                   </h1>
 
                   {/* Clean, Non-Clipped Subheadline */}
-                  <p className="text-[12px] sm:text-[13px] lg:text-sm text-[#FDFBF7]/90 max-w-lg font-sans leading-relaxed tracking-normal">
+                  <p className="text-[12px] sm:text-[13px] lg:text-sm text-[#FDFBF7]/90 max-w-lg font-editorial leading-relaxed tracking-normal">
                     {active.subtitle}
                   </p>
 
                   {/* Clinical Accreditation Pill */}
                   <div className="flex items-center gap-2 pt-0.5">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[#FDFBF7]/95 text-[9.5px] sm:text-[11px] font-sans">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[#FDFBF7]/95 text-[9.5px] sm:text-[11px] font-editorial">
                       <ShieldCheck className="w-3.5 h-3.5 text-[#10B981]" />
                       <span>{active.specs}</span>
                     </div>
@@ -211,7 +212,7 @@ export function LuxuryHero() {
                   <div className="pt-2 sm:pt-3 flex items-center gap-3 flex-wrap">
                     <Link
                       href={active.primaryCtaLink}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-[#D4AF37] hover:bg-[#E5C358] active:scale-95 text-[#071A12] text-xs font-sans font-bold tracking-wider uppercase transition-all shadow-md"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-[#D4AF37] hover:bg-[#E5C358] active:scale-95 text-[#071A12] text-xs font-editorial font-bold tracking-wider uppercase transition-all shadow-md"
                     >
                       <span>{active.primaryCtaText}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -221,7 +222,7 @@ export function LuxuryHero() {
                       <button
                         type="button"
                         onClick={handleWhatsAppConsultation}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/30 text-white text-xs font-sans font-semibold tracking-wider uppercase transition-all shadow-xs"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/30 text-white text-xs font-editorial font-semibold tracking-wider uppercase transition-all shadow-xs"
                       >
                         <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
                         <span>{active.secondaryCtaText}</span>
@@ -229,7 +230,7 @@ export function LuxuryHero() {
                     ) : (
                       <Link
                         href={active.secondaryCtaLink || "/consultation"}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/30 text-white text-xs font-sans font-semibold tracking-wider uppercase transition-all shadow-xs"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/30 text-white text-xs font-editorial font-semibold tracking-wider uppercase transition-all shadow-xs"
                       >
                         <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
                         <span>{active.secondaryCtaText}</span>
@@ -258,7 +259,7 @@ export function LuxuryHero() {
                     />
 
                     {/* Floating Botanical Leaf Pill */}
-                    <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#071A12] border border-[#D4AF37]/50 text-[#D4AF37] text-[9.5px] font-sans font-semibold whitespace-nowrap shadow-md flex items-center gap-1.5">
+                    <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#071A12] border border-[#D4AF37]/50 text-[#D4AF37] text-[9.5px] font-editorial font-semibold whitespace-nowrap shadow-md flex items-center gap-1.5">
                       <Leaf className="w-3 h-3 text-[#10B981]" />
                       <span>100% SHUDDHA HERBS</span>
                     </div>

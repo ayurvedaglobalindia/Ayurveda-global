@@ -667,6 +667,251 @@ Regular scalp massage stimulates circulation, cools the crown, and leaves hair s
     createdAt: "2024-03-20T10:00:00Z",
     updatedAt: "2026-10-04T12:00:00Z",
   },
+  {
+    id: "himalayan-shilajit-resin",
+    slug: "himalayan-shilajit-resin",
+    name: "Pure Himalayan Shilajit Resin (20g)",
+    tagline: "Gold Grade | 75%+ Fulvic Acid & 84+ Trace Minerals",
+    description: `Harvested from the pristine heights of the Himalayas above 16,000 feet, Ayur Veda Global's Himalayan Shilajit Resin is purified using classical Surya Tapi and Shodhana procedures. Rich in naturally occurring fulvic acid (exceeding 75%) and over 84 ionic trace minerals, it acts as a paramount Rasayana, directly boosting mitochondrial cellular ATP energy, stamina, and endocrine balance.
+
+Every batch is rigorously tested for heavy metals and purity, ensuring zero fillers, artificial colors, or adulteration.`,
+    shortDescription:
+      "Gold-grade authentic Himalayan Shilajit resin with 75%+ fulvic acid for supreme cellular stamina, endurance, and holistic vitality.",
+    category: "supplements",
+    images: [
+      {
+        src: "/images/products/himalayan-shilajit-resin-card.jpg",
+        alt: "Pure Himalayan Shilajit Resin 20g - Authentic Gold Grade",
+        isPrimary: true,
+      },
+      {
+        src: "/images/products/himalayan-shilajit-resin-detail.jpg",
+        alt: "Himalayan Shilajit Resin - Close up texture & purity",
+        isPrimary: false,
+      },
+      {
+        src: "/images/products/himalayan-shilajit-resin-thumb.jpg",
+        alt: "Himalayan Shilajit Resin - Square Thumbnail",
+        isPrimary: false,
+      },
+    ],
+    price: 129900,
+    compareAtPrice: 189900,
+    variants: [
+      {
+        id: "himalayan-shilajit-resin-20g",
+        name: "Single Jar (20g)",
+        price: 129900,
+        compareAtPrice: 189900,
+        inventory: 120,
+        sku: "AVG-SHIL-20",
+      },
+      {
+        id: "himalayan-shilajit-resin-40g",
+        name: "Twin Pack (2 x 20g - Save ₹1,400)",
+        price: 239900,
+        compareAtPrice: 379800,
+        inventory: 60,
+        sku: "AVG-SHIL-40",
+      },
+    ],
+    inventory: {
+      quantity: 120,
+      trackQuantity: true,
+    },
+    tags: [
+      "shilajit",
+      "fulvic-acid",
+      "vitality",
+      "stamina",
+      "energy",
+      "rasayana",
+      "immunity",
+    ],
+    ingredients: [
+      "Shuddha Shilajit (Asphaltum punjabianum) purified resin - 100% (Fulvic Acid > 75%)",
+    ],
+    usage:
+      "Take a pea-sized portion (300-500 mg) using the included measuring spoon, dissolve in warm milk or water, and consume once daily in the morning.",
+    warnings: [
+      "Keep tightly sealed in a cool, dry place away from sunlight.",
+      "Not recommended for pregnant or lactating individuals without physician advice.",
+    ],
+    ageRestricted: false,
+    seo: {
+      title: "Pure Himalayan Shilajit Resin (20g) | Ayur Veda Global",
+      description:
+        "Buy authentic Gold Grade Himalayan Shilajit Resin with 75%+ Fulvic Acid. Lab-tested pure Rasayana for stamina and vitality.",
+      keywords: ["himalayan shilajit", "shilajit resin", "pure shilajit", "fulvic acid"],
+    },
+    createdAt: "2024-03-25T10:00:00Z",
+    updatedAt: "2026-10-04T12:00:00Z",
+  },
+  {
+    id: "ashwagandha-root-extract",
+    slug: "ashwagandha-root-extract",
+    name: "Ashwagandha KSM-66 Full-Spectrum (60 Capsules)",
+    tagline: "Certified Organic | Stress Relief, Cortisol Control & Stamina",
+    description: `Ayur Veda Global's Ashwagandha formulation uses clinically proven KSM-66 full-spectrum root extract, the highest concentration root extract available today. Prepared using traditional milk extraction principles without chemical solvents, it preserves the complete biological fingerprint of the herb with guaranteed >5% withanolides.
+
+Helps lower serum cortisol, manage mental stress, promote sound sleep cycles, and enhance muscular strength and recovery.`,
+    shortDescription:
+      "Clinically standardized KSM-66 full-spectrum Ashwagandha capsules (>5% withanolides) for stress relief, cortisol balance, and restorative energy.",
+    category: "supplements",
+    images: [
+      {
+        src: "/images/products/ashwagandha-root-extract-card.jpg",
+        alt: "Ashwagandha KSM-66 Full Spectrum 60 Capsules",
+        isPrimary: true,
+      },
+      {
+        src: "/images/products/ashwagandha-root-extract-detail.jpg",
+        alt: "Ashwagandha Extract - Botanical detail shot",
+        isPrimary: false,
+      },
+      {
+        src: "/images/products/ashwagandha-root-extract-thumb.jpg",
+        alt: "Ashwagandha Extract - Thumbnail",
+        isPrimary: false,
+      },
+    ],
+    price: 89900,
+    compareAtPrice: 129900,
+    variants: [
+      {
+        id: "ashwagandha-root-extract-60",
+        name: "60 Capsules (1 Month Pack)",
+        price: 89900,
+        compareAtPrice: 129900,
+        inventory: 140,
+        sku: "AVG-ASH-60",
+      },
+      {
+        id: "ashwagandha-root-extract-120",
+        name: "120 Capsules (2 Months Value Pack)",
+        price: 159900,
+        compareAtPrice: 259800,
+        inventory: 85,
+        sku: "AVG-ASH-120",
+      },
+    ],
+    inventory: {
+      quantity: 140,
+      trackQuantity: true,
+    },
+    tags: [
+      "ashwagandha",
+      "ksm-66",
+      "stress-relief",
+      "sleep",
+      "cortisol",
+      "strength",
+      "supplements",
+    ],
+    ingredients: [
+      "Standardized KSM-66 Ashwagandha (Withania somnifera) root extract - 600mg (Withanolides > 5%)",
+      "Piperine (Black pepper extract) - 5mg",
+    ],
+    usage:
+      "Take 1 to 2 capsules daily after dinner with warm water or milk.",
+    warnings: [
+      "Consult your physician if you are taking prescription sedatives or thyroid medications.",
+      "Store in a cool and dry place.",
+    ],
+    ageRestricted: false,
+    seo: {
+      title: "Ashwagandha KSM-66 Full-Spectrum Capsules | Ayur Veda Global",
+      description:
+        "High potency KSM-66 Ashwagandha capsules. Certified organic root extract for cortisol regulation, mental calm, and stamina.",
+      keywords: ["ashwagandha ksm-66", "ashwagandha capsules", "stress relief ayurveda"],
+    },
+    createdAt: "2024-03-25T10:00:00Z",
+    updatedAt: "2026-10-04T12:00:00Z",
+  },
+  {
+    id: "vajikara-gold-vitality-oil",
+    slug: "vajikara-gold-vitality-oil",
+    name: "Vajikara Gold Vitality Massage Taila (100ml)",
+    tagline: "Classical Taila Paka | Microcirculation, Vigour & Muscular Tone",
+    description: `Formulated through classical Taila Paka vidhi, Vajikara Gold Vitality Oil is an artisanal topical massage formulation infused with Swarna Bhasma (Gold ash), Saffron (Kesar), Ashwagandha, Bala, and Jyotishmati. Designed to deeply penetrate dermal and vascular layers, it invigorates local nerve endings, optimizes microcirculation, and relieves muscular tension.
+
+100% natural, free from mineral oil, synthetic perfumes, and parabens.`,
+    shortDescription:
+      "Classical Ayurvedic 24-herb massage oil infused with Swarna Bhasma and saffron for local microcirculation and muscular rejuvenation.",
+    category: "personal-care",
+    images: [
+      {
+        src: "/images/products/vajikara-gold-vitality-oil-card.jpg",
+        alt: "Vajikara Gold Vitality Massage Taila 100ml",
+        isPrimary: true,
+      },
+      {
+        src: "/images/products/vajikara-gold-vitality-oil-detail.jpg",
+        alt: "Vajikara Gold Vitality Oil - Herb Infusion Detail",
+        isPrimary: false,
+      },
+      {
+        src: "/images/products/vajikara-gold-vitality-oil-thumb.jpg",
+        alt: "Vajikara Gold Vitality Oil - Thumbnail",
+        isPrimary: false,
+      },
+    ],
+    price: 119900,
+    compareAtPrice: 169900,
+    variants: [
+      {
+        id: "vajikara-gold-vitality-oil-100ml",
+        name: "Single Bottle (100 ml)",
+        price: 119900,
+        compareAtPrice: 169900,
+        inventory: 110,
+        sku: "AVG-VGO-100",
+      },
+      {
+        id: "vajikara-gold-vitality-oil-200ml",
+        name: "Twin Pack (2 x 100 ml - Save ₹1,000)",
+        price: 219900,
+        compareAtPrice: 339800,
+        inventory: 50,
+        sku: "AVG-VGO-200",
+      },
+    ],
+    inventory: {
+      quantity: 110,
+      trackQuantity: true,
+    },
+    tags: [
+      "massage-oil",
+      "vitality",
+      "taila",
+      "microcirculation",
+      "vajikara",
+      "personal-care",
+    ],
+    ingredients: [
+      "Til Taila (Sesamum indicum oil) - 60%",
+      "Ashwagandha (Withania somnifera) - 10%",
+      "Bala (Sida cordifolia) - 10%",
+      "Jyotishmati (Celastrus paniculatus) - 8%",
+      "Kumkuma (Crocus sativus) Saffron - 2%",
+      "Swarna Bhasma (Incinerated gold preparation) - 0.1%",
+    ],
+    usage:
+      "Take 5-7 drops of warm oil and gently massage on targeted areas in circular strokes for 5-10 minutes. Use consistently before bed.",
+    warnings: [
+      "For external topical application only.",
+      "Do not apply to open cuts, abrasions, or inflamed skin.",
+    ],
+    ageRestricted: true,
+    seo: {
+      title: "Vajikara Gold Vitality Massage Taila (100ml) | Ayur Veda Global",
+      description:
+        "Classical Ayurvedic massage oil with saffron and botanical essences. Enhances local microcirculation and tissue vitality.",
+      keywords: ["vajikara gold oil", "ayurvedic massage oil", "vitality taila"],
+    },
+    createdAt: "2024-03-25T10:00:00Z",
+    updatedAt: "2026-10-04T12:00:00Z",
+  },
 ];
 
 export function getProductById(id: string): Product | undefined {
@@ -775,6 +1020,27 @@ export function getProductImage(
       detail: "/images/products/hair-regrow-oil-detail.jpg",
       default: "/images/products/hair-regrow-oil-card.jpg",
     },
+    "himalayan-shilajit-resin": {
+      card: "/images/products/himalayan-shilajit-resin-card.jpg",
+      thumb: "/images/products/himalayan-shilajit-resin-thumb.jpg",
+      hero: "/images/products/himalayan-shilajit-resin-card.jpg",
+      detail: "/images/products/himalayan-shilajit-resin-detail.jpg",
+      default: "/images/products/himalayan-shilajit-resin-card.jpg",
+    },
+    "ashwagandha-root-extract": {
+      card: "/images/products/ashwagandha-root-extract-card.jpg",
+      thumb: "/images/products/ashwagandha-root-extract-thumb.jpg",
+      hero: "/images/products/ashwagandha-root-extract-card.jpg",
+      detail: "/images/products/ashwagandha-root-extract-detail.jpg",
+      default: "/images/products/ashwagandha-root-extract-card.jpg",
+    },
+    "vajikara-gold-vitality-oil": {
+      card: "/images/products/vajikara-gold-vitality-oil-card.jpg",
+      thumb: "/images/products/vajikara-gold-vitality-oil-thumb.jpg",
+      hero: "/images/products/vajikara-gold-vitality-oil-card.jpg",
+      detail: "/images/products/vajikara-gold-vitality-oil-detail.jpg",
+      default: "/images/products/vajikara-gold-vitality-oil-card.jpg",
+    },
   };
 
   // Identify product key
@@ -790,7 +1056,13 @@ export function getProductImage(
   ).toLowerCase();
 
   let matchedKey = "body-essential-nutrition";
-  if (idToMatch.includes("hair") || idToMatch.includes("regrow")) {
+  if (idToMatch.includes("shilajit")) {
+    matchedKey = "himalayan-shilajit-resin";
+  } else if (idToMatch.includes("ashwagandha")) {
+    matchedKey = "ashwagandha-root-extract";
+  } else if (idToMatch.includes("vajikara")) {
+    matchedKey = "vajikara-gold-vitality-oil";
+  } else if (idToMatch.includes("hair") || idToMatch.includes("regrow")) {
     if (idToMatch.includes("capsule")) {
       matchedKey = "hair-regrow-capsules";
     } else if (idToMatch.includes("oil")) {
@@ -814,17 +1086,23 @@ export function getProductImage(
 
   const productName =
     product?.name ||
-    (matchedKey === "staymax-delay-spray"
-      ? "STAYMAX+ Delay Spray (30 ml)"
-      : matchedKey === "vitality-power-combo"
-        ? "Vitality & Performance Power Combo"
-        : matchedKey === "hair-regrow-kit"
-          ? "HAIR RE-GROW Complete Growth Kit (Oil + Capsules)"
-          : matchedKey === "hair-regrow-capsules"
-            ? "HAIR RE-GROW Pure Ayurvedic Botanical Capsules"
-            : matchedKey === "hair-regrow-oil"
-              ? "HAIR RE-GROW Ayurvedic Scalp Oil (100 ml)"
-              : "BODY Essential Nutrition (60 Capsules)");
+    (matchedKey === "himalayan-shilajit-resin"
+      ? "Pure Himalayan Shilajit Resin (20g)"
+      : matchedKey === "ashwagandha-root-extract"
+        ? "Ashwagandha KSM-66 Full-Spectrum (60 Capsules)"
+        : matchedKey === "vajikara-gold-vitality-oil"
+          ? "Vajikara Gold Vitality Massage Taila (100ml)"
+          : matchedKey === "staymax-delay-spray"
+            ? "STAYMAX+ Delay Spray (30 ml)"
+            : matchedKey === "vitality-power-combo"
+              ? "Vitality & Performance Power Combo"
+              : matchedKey === "hair-regrow-kit"
+                ? "HAIR RE-GROW Complete Growth Kit (Oil + Capsules)"
+                : matchedKey === "hair-regrow-capsules"
+                  ? "HAIR RE-GROW Pure Ayurvedic Botanical Capsules"
+                  : matchedKey === "hair-regrow-oil"
+                    ? "HAIR RE-GROW Ayurvedic Scalp Oil (100 ml)"
+                    : "BODY Essential Nutrition (60 Capsules)");
 
   // 1. If product.images array exists and requested variant is matched in it
   if (Array.isArray(product?.images) && product.images.length > 0) {

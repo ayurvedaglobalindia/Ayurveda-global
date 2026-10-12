@@ -35,42 +35,43 @@ export function HomeAllProducts() {
       : products.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="all-products" className="py-16 sm:py-20 bg-[#FAF7F2]">
+    <section id="all-products" className="py-12 sm:py-20 bg-[#FAF7F2] border-t border-[#D4AF37]/20 relative">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFF4F0] border border-[#2D4A3E]/20 text-[#2D4A3E] text-xs font-mono uppercase tracking-wider mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-[#9E8047]" />
-            100% Authentic Classical Pharmacopeia
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0E3924]/8 border border-[#0E3924]/20 text-[#0E3924] text-xs font-sans uppercase tracking-wider mb-2.5">
+            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+            <span className="font-semibold text-[11px]">100% Authentic Classical Pharmacopeia</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1C1D1F] tracking-tight mb-3">
-            Explore All Formulations
+          <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl text-[#071A12] font-normal tracking-tight mb-2.5">
+            Complete Ayurvedic{" "}
+            <span className="italic text-[#8C703D]">Formulations</span>
           </h2>
-          <p className="text-sm sm:text-base text-[#737373] leading-relaxed">
-            Laboratory purity-certified Ayurvedic remedies crafted with standardized herbal extracts, zero synthetic additives, and discrete doorstep fulfillment.
+          <p className="font-editorial text-xs sm:text-sm text-[#555555] leading-relaxed max-w-xl mx-auto">
+            Laboratory purity-certified remedies crafted with standardized herbal extracts, zero synthetic adulterants, and discrete doorstep fulfillment across India.
           </p>
         </div>
 
         {/* Category Pills Bar */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-10">
+        <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mb-8 sm:mb-10">
           {filterTabs.map((tab) => {
             const isActive = activeCategory === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveCategory(tab.id)}
-                className={`px-4 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all duration-200 flex items-center gap-2 ${
+                className={`px-4 sm:px-5 py-2 rounded-full text-xs font-sans tracking-wide transition-all duration-200 flex items-center gap-2 cursor-pointer ${
                   isActive
-                    ? "bg-[#2D4A3E] text-white shadow-md scale-102"
-                    : "bg-white text-[#737373] border border-gray-200 hover:border-[#9E8047]/40 hover:text-[#1C1D1F]"
+                    ? "bg-[#0E3924] text-white shadow-sm font-semibold scale-102"
+                    : "bg-white text-[#555555] border border-[#0E3924]/15 hover:border-[#0E3924]/35 hover:text-[#071A12] font-medium"
                 }`}
               >
                 <span>{tab.label}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                     isActive
                       ? "bg-white/20 text-white"
-                      : "bg-gray-100 text-[#737373]"
+                      : "bg-[#0E3924]/6 text-[#0E3924]"
                   }`}
                 >
                   {tab.count}
@@ -80,8 +81,8 @@ export function HomeAllProducts() {
           })}
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+        {/* Products Grid: 2-column on mobile, 3-column on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3.5 sm:gap-6 lg:gap-8 items-stretch px-2 sm:px-0">
           {filteredProducts.map((product) => (
             <div key={product.id} className="h-full">
               <ProductCard product={product} variant="default" />
@@ -93,12 +94,12 @@ export function HomeAllProducts() {
         <div className="mt-12 sm:mt-16 text-center">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#1C1D1F] hover:bg-[#2D4A3E] text-white text-xs sm:text-sm font-semibold tracking-wide uppercase transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#0E3924] hover:bg-[#071A12] text-white text-xs sm:text-sm font-sans font-bold tracking-wider uppercase transition-all shadow-md hover:shadow-lg active:scale-95"
           >
             <span>Open Advanced Catalog &amp; Filters</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 text-[#D4AF37]" />
           </Link>
-          <p className="text-xs text-[#737373] font-mono mt-3">
+          <p className="text-[11px] sm:text-xs text-[#737373] font-editorial mt-3">
             All formulations backed by our 7-Day Authenticity Guarantee • Cash on Delivery &amp; WhatsApp Checkout
           </p>
         </div>

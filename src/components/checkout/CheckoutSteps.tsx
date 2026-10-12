@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { placeOrderServer, saveLeadServer } from "@/app/actions";
+import { createOrderInSupabase } from "@/lib/supabase/orders";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -45,6 +46,13 @@ import {
 import { validateCoupon } from "@/lib/coupons";
 import { getProductImage } from "@/lib/products/registry";
 import { normalizeIndianPhone } from "@/lib/auth/otpService";
+import {
+  initiateRazorpayPayment,
+  buildUpiDeepLink,
+  getPaymentConfig,
+  createCashfreeOrderSession,
+  initiateCashfreePayment,
+} from "@/lib/payments/gateway";
 import type { Order } from "@/types";
 
 const INDIAN_STATES = [
@@ -282,100 +290,219 @@ export function CheckoutForm() {
       whatsappMessageSent: true,
     };
 
-    // Save to user store & localStorage for instant tracking
-    useUserStore.getState().addOrder(recordedOrder);
-    placeOrderServer(recordedOrder).catch(console.error);
-    try {
-      if (typeof window !== "undefined") {
-        const stored = JSON.parse(localStorage.getItem("ayur_orders") || "[]");
-        stored.unshift(recordedOrder);
-        localStorage.setItem(
-          "ayur_orders",
-          JSON.stringify(stored.slice(0, 50)),
-        );
-      }
-    } catch {}
+    const finishOrderAndRedirect = (finalPaymentStatus: "pending" | "confirmed" | "paid" = "confirmed") => {
+      // Save to user store & localStorage for instant tracking
+      const finalOrder: Order = {
+        ...recordedOrder,
+        paymentStatus: finalPaymentStatus,
+      };
 
-    // Track order conversion in privacy-conscious analytics
-    trackEvent("order_conversion", {
-      orderId,
-      total,
-      itemsCount: items.length,
-      paymentMethod: effectivePayment,
-    });
+      useUserStore.getState().addOrder(finalOrder);
+      placeOrderServer(finalOrder).catch(console.error);
 
-    // Track analytics lead
-    saveLeadServer({
-      source: "checkout_whatsapp",
-      productName: items.map((i) => i.product.name).join(", "),
-      customerName: customerFullName,
-      customerPhone: formData.phone.trim(),
-      customerEmail: formData.email.trim(),
-      quantity: items.reduce((sum, i) => sum + i.quantity, 0),
-      orderTotal: total,
-      orderId,
-    }).catch(console.error);
-    trackLead({
-      source: "checkout_whatsapp",
-      productName: items.map((i) => i.product.name).join(", "),
-      customerName: customerFullName,
-      customerPhone: formData.phone.trim(),
-      customerEmail: formData.email.trim(),
-      quantity: items.reduce((sum, i) => sum + i.quantity, 0),
-      orderTotal: total,
-      orderId,
-      pageUrl: typeof window !== "undefined" ? window.location.href : "",
-      userAgent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-      referrer: typeof document !== "undefined" ? document.referrer : "",
-    });
-
-    // Build rich, custom WhatsApp order message
-    const message = buildOrderWhatsAppMessage({
-      orderId,
-      orderNumber,
-      customerName: customerFullName,
-      customerPhone: formData.phone.trim(),
-      customerEmail: formData.email.trim() || undefined,
-      shippingAddress: {
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-        addressLine1: formData.addressLine1.trim(),
-        addressLine2: formData.addressLine2.trim() || undefined,
-        city: formData.city.trim(),
-        state: formData.state.trim(),
-        pincode: formData.pincode.trim(),
-        phone: formData.phone.trim(),
-      },
-      items: items.map((item) => {
-        const variantName = item.product?.variants?.find(
-          (v) => v.id === item.variantId,
-        )?.name;
-        return {
-          name: item.product.name,
-          productName: item.product.name,
-          variantName,
+      // Persist order in Supabase PostgreSQL database
+      createOrderInSupabase({
+        orderNumber: recordedOrder.orderNumber,
+        userId: user?.id,
+        customerName: `${formData.firstName} ${formData.lastName}`.trim(),
+        customerPhone: formData.phone,
+        customerEmail: formData.email,
+        shippingAddress: recordedOrder.shippingAddress,
+        items: recordedOrder.items.map((item) => ({
+          productId: item.productId || "",
+          title: item.name || item.productName || "Ayurvedic Formulation",
           quantity: item.quantity,
           price: item.price,
-          total: item.price * item.quantity,
-        };
-      }),
-      subtotal,
-      shipping: shippingCalc.cost,
-      tax: 0,
-      discount,
-      total,
-      paymentMethod: effectivePayment,
-      couponCode: couponCode || undefined,
-      notes: formData.notes.trim() || undefined,
-    });
+          total: item.total || item.price * item.quantity,
+        })),
+        subtotal: recordedOrder.subtotal ?? subtotal,
+        shippingFee: recordedOrder.shipping ?? shippingCalc.cost,
+        discount: recordedOrder.discount ?? 0,
+        total: recordedOrder.total,
+        paymentMethod: recordedOrder.paymentMethod as any,
+        paymentStatus: finalPaymentStatus === "paid" ? "paid" : "pending",
+        notes: formData.notes,
+      }).catch(console.warn);
 
-    // Open WhatsApp URL directly
-    const whatsappUrl = buildWhatsAppUrl(message);
-    window.open(whatsappUrl, "_blank");
+      try {
+        if (typeof window !== "undefined") {
+          const stored = JSON.parse(localStorage.getItem("ayur_orders") || "[]");
+          stored.unshift(finalOrder);
+          localStorage.setItem(
+            "ayur_orders",
+            JSON.stringify(stored.slice(0, 50)),
+          );
+        }
+      } catch {}
 
-    // Clear cart and redirect
-    clearCart();
-    router.push(`/checkout/success?order=${orderNumber}`);
+      // Track order conversion in privacy-conscious analytics
+      trackEvent("order_conversion", {
+        orderId,
+        total,
+        itemsCount: items.length,
+        paymentMethod: effectivePayment,
+      });
+
+      // Track analytics lead
+      saveLeadServer({
+        source: `checkout_${effectivePayment}`,
+        productName: items.map((i) => i.product.name).join(", "),
+        customerName: customerFullName,
+        customerPhone: formData.phone.trim(),
+        customerEmail: formData.email.trim(),
+        quantity: items.reduce((sum, i) => sum + i.quantity, 0),
+        orderTotal: total,
+        orderId,
+      }).catch(console.error);
+
+      // Build rich, custom WhatsApp order message
+      const message = buildOrderWhatsAppMessage({
+        orderId,
+        orderNumber,
+        customerName: customerFullName,
+        customerPhone: formData.phone.trim(),
+        customerEmail: formData.email.trim() || undefined,
+        shippingAddress: {
+          firstName: formData.firstName.trim(),
+          lastName: formData.lastName.trim(),
+          addressLine1: formData.addressLine1.trim(),
+          addressLine2: formData.addressLine2.trim() || undefined,
+          city: formData.city.trim(),
+          state: formData.state.trim(),
+          pincode: formData.pincode.trim(),
+          phone: formData.phone.trim(),
+        },
+        items: items.map((item) => {
+          const variantName = item.product?.variants?.find(
+            (v) => v.id === item.variantId,
+          )?.name;
+          return {
+            name: item.product.name,
+            productName: item.product.name,
+            variantName,
+            quantity: item.quantity,
+            price: item.price,
+            total: item.price * item.quantity,
+          };
+        }),
+        subtotal,
+        shipping: shippingCalc.cost,
+        tax: 0,
+        discount,
+        total,
+        paymentMethod: effectivePayment,
+        couponCode: couponCode || undefined,
+        notes: formData.notes.trim() || undefined,
+      });
+
+      // Open WhatsApp URL if user requested WhatsApp mode
+      if (effectivePayment === "whatsapp") {
+        const whatsappUrl = buildWhatsAppUrl(message);
+        window.open(whatsappUrl, "_blank");
+      }
+
+      // Clear cart and redirect
+      clearCart();
+      router.push(`/checkout/success?order=${orderNumber}`);
+    };
+
+    // If UPI or Online Payment mode: Trigger Cashfree seamless checkout
+    if (effectivePayment === "upi") {
+      createCashfreeOrderSession({
+        orderId,
+        amountPaise: total,
+        amountRupees: total / 100,
+        customerName: customerFullName,
+        customerPhone: formData.phone.trim(),
+        customerEmail: formData.email.trim(),
+      }).then(async (sessionRes) => {
+        if (sessionRes.success && sessionRes.payment_session_id) {
+          const cfResult = await initiateCashfreePayment(
+            sessionRes.payment_session_id,
+            () => {
+              finishOrderAndRedirect("paid");
+            },
+            (err) => {
+              console.warn("Cashfree modal dismissed/cancelled:", err);
+              setIsSubmitting(false);
+              showToast({
+                type: "info",
+                title: "Payment Pending",
+                message: "You can retry UPI or choose Cash on Delivery.",
+              });
+            },
+          );
+
+          if (!cfResult.success) {
+            // Fallback to direct UPI deep link if Cashfree SDK script fails to load
+            const upiUrl = buildUpiDeepLink({
+              orderId,
+              amountPaise: total,
+              amountRupees: total / 100,
+              customerName: customerFullName,
+              customerPhone: formData.phone.trim(),
+              customerEmail: formData.email.trim(),
+            });
+            try {
+              window.location.href = upiUrl;
+            } catch {}
+            finishOrderAndRedirect("confirmed");
+          }
+        } else {
+          // Fallback to standard UPI direct intent
+          const upiUrl = buildUpiDeepLink({
+            orderId,
+            amountPaise: total,
+            amountRupees: total / 100,
+            customerName: customerFullName,
+            customerPhone: formData.phone.trim(),
+            customerEmail: formData.email.trim(),
+          });
+          try {
+            window.location.href = upiUrl;
+          } catch {}
+          finishOrderAndRedirect("confirmed");
+        }
+      }).catch(() => {
+        finishOrderAndRedirect("confirmed");
+      });
+      return;
+    }
+
+    // Check if Razorpay keys exist for Card / NetBanking
+    const payConfig = getPaymentConfig();
+    if (payConfig.razorpayKeyId && effectivePayment !== "cod" && effectivePayment !== "whatsapp") {
+      initiateRazorpayPayment(
+        {
+          orderId,
+          amountPaise: total,
+          amountRupees: total / 100,
+          customerName: customerFullName,
+          customerPhone: formData.phone.trim(),
+          customerEmail: formData.email.trim(),
+        },
+        (_paymentId) => {
+          finishOrderAndRedirect("paid");
+        },
+        () => {
+          setIsSubmitting(false);
+          showToast({
+            type: "info",
+            title: "Payment Cancelled",
+            message: "You can choose Cash on Delivery or WhatsApp payment instead.",
+          });
+        },
+      ).then((res) => {
+        if (!res.success) {
+          // Fallback gracefully
+          finishOrderAndRedirect("pending");
+        }
+      });
+      return;
+    }
+
+    // Default flow (COD or WhatsApp)
+    finishOrderAndRedirect("confirmed");
   };
 
   return (

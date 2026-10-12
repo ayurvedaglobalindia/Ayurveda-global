@@ -15,8 +15,8 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         <Header />
       </div>
 
-      {/* Main Content */}
-      <main className="flex-1 bg-[#FAF7F2] relative z-10 pb-20 md:pb-0">
+      {/* Main Content with Safe Mobile Bottom Nav Spacing */}
+      <main className="flex-1 bg-[#FAF7F2] relative z-10 pb-[104px] md:pb-10" style={{ paddingBottom: "max(104px, calc(80px + env(safe-area-inset-bottom, 0px)))" }}>
         {children}
       </main>
 
