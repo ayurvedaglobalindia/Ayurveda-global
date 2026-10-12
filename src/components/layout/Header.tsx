@@ -117,13 +117,13 @@ export function Header() {
             </button>
           </div>
 
-          {/* Right Side Controls: Search, Wishlist, Account, Chief Vaidya Desk, Cart Count Pill */}
+          {/* Right Side Controls: Search, Account, Wishlist, Cart Count Pill */}
           <div className="flex items-center gap-1 sm:gap-2.5 flex-shrink-0">
-            {/* Search (Icon on small screens) - CSS media query only */}
+            {/* Search (Icon on small screens) */}
             <button
               type="button"
               onClick={() => openSearch()}
-              className="flex lg:hidden p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
+              className="lg:hidden p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Search"
             >
               <Search className="w-5 h-5 stroke-[1.5]" />
@@ -144,25 +144,14 @@ export function Header() {
               ) : null}
             </button>
 
-            {/* User Account Link - CSS media query only */}
+            {/* User Account */}
             <Link
               href="/account"
-              className="hidden sm:flex p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
+              className="p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Account"
             >
               <User className="w-5 h-5 stroke-[1.5]" />
             </Link>
-
-            {/* Direct Telephone Support (Chief Vaidya Desk) - CSS media query only */}
-            <a
-              href={OFFICIAL_PHONE_TEL}
-              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1B4332]/10 hover:bg-[#1B4332]/15 text-[#1B4332] text-xs font-mono font-medium border border-[#1B4332]/20 transition-all hover:scale-105"
-              title={`${CHIEF_VAIDYA_DESK_TITLE}: ${OFFICIAL_PHONE}`}
-              aria-label="Call Chief Vaidya Desk"
-            >
-              <Phone className="w-3.5 h-3.5 fill-current" />
-              <span>{OFFICIAL_PHONE}</span>
-            </a>
 
             {/* Cart Count Pill */}
             <button

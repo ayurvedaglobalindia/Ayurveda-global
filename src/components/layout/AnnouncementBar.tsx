@@ -4,6 +4,7 @@ import React from "react";
 
 export function AnnouncementBar() {
   const marqueeItems = [
+    "📞 Call Chief Vaidya Desk: +91 91234 85451",
     "✨ 100% NABL Lab Certified & AYUSH Approved",
     "🌿 Free Doctor Consultation on WhatsApp",
     "🚚 Free Express Delivery across India",
