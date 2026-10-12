@@ -134,14 +134,14 @@ export function Header() {
               type="button"
               onClick={openWishlistDrawer}
               className="relative p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
-              aria-label={isMounted ? `Wishlist, ${wishlistCount} items` : "Wishlist"}
+              aria-label="Wishlist"
             >
               <Heart className="w-5 h-5 stroke-[1.5]" />
-              {isMounted && wishlistCount > 0 && (
-                <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-[#D4AF37] text-[#071A12] text-[9px] font-bold flex items-center justify-center shadow-xs">
+              {isMounted && wishlistCount > 0 ? (
+                <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-[#D4AF37] text-[#071A12] text-[9px] font-bold flex items-center justify-center shadow-xs pointer-events-none">
                   {wishlistCount > 99 ? "99+" : wishlistCount}
                 </span>
-              )}
+              ) : null}
             </button>
 
             {/* Direct Telephone Support (Chief Vaidya Desk) */}
@@ -149,7 +149,7 @@ export function Header() {
               href={OFFICIAL_PHONE_TEL}
               className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1B4332]/10 hover:bg-[#1B4332]/15 text-[#1B4332] text-xs font-mono font-medium border border-[#1B4332]/20 transition-all hover:scale-105"
               title={`${CHIEF_VAIDYA_DESK_TITLE}: ${OFFICIAL_PHONE}`}
-              aria-label={`Call Chief Vaidya Desk at ${OFFICIAL_PHONE}`}
+              aria-label="Call Chief Vaidya Desk"
             >
               <Phone className="w-3.5 h-3.5 fill-current" />
               <span>{OFFICIAL_PHONE}</span>
@@ -169,14 +169,14 @@ export function Header() {
               type="button"
               onClick={openCartDrawer}
               className="relative p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
-              aria-label={isMounted ? `Cart, ${cartCount} items` : "Cart"}
+              aria-label="Cart"
             >
               <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
-              {isMounted && cartCount > 0 && (
-                <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-[#0E3924] text-white text-[9px] font-bold flex items-center justify-center shadow-xs">
+              {isMounted && cartCount > 0 ? (
+                <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-[#0E3924] text-white text-[9px] font-bold flex items-center justify-center shadow-xs pointer-events-none">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
-              )}
+              ) : null}
             </button>
 
             {/* Mobile Menu Button */}
