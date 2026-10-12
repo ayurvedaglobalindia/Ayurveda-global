@@ -4,7 +4,6 @@ import React from "react";
 
 export function AnnouncementBar() {
   const marqueeItems = [
-    "📞 Call Chief Vaidya Desk: +91 91234 85451",
     "✨ 100% NABL Lab Certified & AYUSH Approved",
     "🌿 Free Doctor Consultation on WhatsApp",
     "🚚 Free Express Delivery across India",
@@ -13,7 +12,7 @@ export function AnnouncementBar() {
   ];
 
   return (
-    <div className="w-full bg-[#071A12] text-[#FDFBF7] overflow-hidden border-b border-[#D4AF37]/25 py-1.5 select-none relative z-50">
+    <div suppressHydrationWarning className="w-full bg-[#071A12] text-[#FDFBF7] overflow-hidden border-b border-[#D4AF37]/25 py-1.5 select-none relative z-50">
       <div className="flex w-max animate-marquee items-center gap-8 text-[10.5px] sm:text-xs font-sans tracking-wide">
         {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, idx) => (
           <div key={idx} className="flex items-center gap-3 shrink-0">
