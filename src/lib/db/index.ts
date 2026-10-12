@@ -2,20 +2,31 @@
 const dbPath = (typeof process !== "undefined" && process.cwd ? process.cwd() : "") + "/.data/ayurveda.json";
 
 try {
-  const fs = require('fs');
-  if (fs.existsSync && !fs.existsSync('.data')) {
-    fs.mkdirSync('.data', { recursive: true });
+  if (typeof window === "undefined") {
+    const fs = typeof require !== "undefined" ? require("fs") : null;
+    if (fs && fs.existsSync) {
+      if (!fs.existsSync(".data")) {
+        fs.mkdirSync(".data", { recursive: true });
+      }
+      if (!fs.existsSync(dbPath)) {
+        fs.writeFileSync(
+          dbPath,
+          JSON.stringify(
+            {
+              products: [],
+              orders: [],
+              orderStatusHistory: [],
+              coupons: [],
+              whatsappLeads: [],
+            },
+            null,
+            2,
+          ),
+        );
+      }
+    }
   }
-  if (fs.existsSync && !fs.existsSync(dbPath)) {
-    fs.writeFileSync(dbPath, JSON.stringify({
-      products: [],
-      orders: [],
-      orderStatusHistory: [],
-      coupons: [],
-      whatsappLeads: []
-    }, null, 2));
-  }
-} catch(e) {}
+} catch (e) {}
 
 
 
