@@ -80,7 +80,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="antialiased">
+    <html lang="en" className="antialiased" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -90,7 +90,7 @@ export default function RootLayout({
         />
         <link rel="dns-prefetch" href="https://wa.me" />
       </head>
-      <body className="min-h-screen bg-transparent text-[#1C1D1F] font-body selection:bg-[#EAE4DC] selection:text-[#1C1D1F] overflow-x-hidden w-full max-w-full">
+      <body suppressHydrationWarning className="min-h-screen bg-transparent text-[#1C1D1F] font-body selection:bg-[#EAE4DC] selection:text-[#1C1D1F] overflow-x-hidden w-full max-w-full">
         <AnimatedBackground />
         <Providers>
           <AnalyticsTracker />
