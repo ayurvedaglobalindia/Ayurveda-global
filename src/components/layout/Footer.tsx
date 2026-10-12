@@ -10,6 +10,13 @@ import {
   Mail,
   Phone,
 } from "lucide-react";
+import {
+  OFFICIAL_PHONE,
+  OFFICIAL_PHONE_TEL,
+  OFFICIAL_WHATSAPP_NUMBER,
+  DIRECT_TELEPHONE_SUPPORT_LABEL,
+  CHIEF_VAIDYA_DESK_TITLE,
+} from "@/lib/config/contact";
 
 export function Footer() {
   return (
@@ -63,7 +70,7 @@ export function Footer() {
                 <Youtube className="w-4 h-4" />
               </a>
               <a
-                href="https://wa.me/919123485451"
+                href={`https://wa.me/${OFFICIAL_WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-[#333333] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-colors"
@@ -200,10 +207,11 @@ export function Footer() {
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#2D4A3E] flex-shrink-0" />
                 <a
-                  href="tel:+919123485451"
+                  href={OFFICIAL_PHONE_TEL}
                   className="text-sm text-[#999999] hover:text-white transition-colors font-light"
+                  title={`${CHIEF_VAIDYA_DESK_TITLE}: ${OFFICIAL_PHONE}`}
                 >
-                  +91 91234 85451
+                  {OFFICIAL_PHONE} ({DIRECT_TELEPHONE_SUPPORT_LABEL})
                 </a>
               </li>
             </ul>

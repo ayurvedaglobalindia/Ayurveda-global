@@ -3,10 +3,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, Search, ShoppingBag, User, Heart } from "lucide-react";
+import { Menu, Search, ShoppingBag, User, Heart, Phone } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { useWishlistStore } from "@/store/wishlistStore";
 import { useUIStore } from "@/store/uiStore";
+import {
+  OFFICIAL_PHONE,
+  OFFICIAL_PHONE_TEL,
+  CHIEF_VAIDYA_DESK_TITLE,
+} from "@/lib/config/contact";
 
 export function Header() {
   const [isMounted, setIsMounted] = useState(false);
@@ -133,6 +138,17 @@ export function Header() {
                 </span>
               )}
             </button>
+
+            {/* Direct Telephone Support (Chief Vaidya Desk) */}
+            <a
+              href={OFFICIAL_PHONE_TEL}
+              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1B4332]/10 hover:bg-[#1B4332]/15 text-[#1B4332] text-xs font-mono font-medium border border-[#1B4332]/20 transition-all hover:scale-105"
+              title={`${CHIEF_VAIDYA_DESK_TITLE}: ${OFFICIAL_PHONE}`}
+              aria-label={`Call Chief Vaidya Desk at ${OFFICIAL_PHONE}`}
+            >
+              <Phone className="w-3.5 h-3.5 fill-current" />
+              <span>{OFFICIAL_PHONE}</span>
+            </a>
 
             {/* User Account (Desktop / Tablet only to save space on mobile) */}
             <Link

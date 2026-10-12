@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import type { WhatsAppLeadEvent } from "@/types";
 import { useUserStore } from "./userStore";
 import { trackEvent } from "@/lib/analytics";
+import { CONTACT_CONFIG, OFFICIAL_WHATSAPP_NUMBER } from "@/lib/config/contact";
 
 interface WhatsAppStore {
   leads: WhatsAppLeadEvent[];
@@ -20,10 +21,11 @@ interface WhatsAppStore {
 }
 
 const RAW_WHATSAPP_NUMBER =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919123485451";
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || OFFICIAL_WHATSAPP_NUMBER;
 const cleanDigits = RAW_WHATSAPP_NUMBER.replace(/\D/g, "");
 const WHATSAPP_NUMBER =
   cleanDigits.length === 10 ? `91${cleanDigits}` : cleanDigits;
+
 
 export const useWhatsAppStore = create<WhatsAppStore>()(
   persist(
@@ -289,11 +291,18 @@ export const DEFAULT_VAIDYA_CONSULTATION_MESSAGE =
   "Namaste Ayurveda Global 🙏 I would like to consult a Vaidya regarding my health concerns and personalized Ayurvedic guidance. Please assist me.";
 
 export interface VaidyaConsultationData {
+  titlePrefix?: string;
   patientName?: string;
   patientPhone?: string;
   patientCity?: string;
-  patientAge?: string;
+  patientState?: string;
+  patientPincode?: string;
+  patientAge?: string | number;
+  patientGender?: string;
+  preferredLanguage?: string;
+  preferredTimeSlot?: string;
   concern?: string;
+  symptoms?: string;
   enquiry?: string;
   source?: string;
 }
@@ -303,6 +312,74 @@ export function buildVaidyaConsultationMessage(
 ): string {
   if (!data) {
     return DEFAULT_VAIDYA_CONSULTATION_MESSAGE;
+  }
+
+  // If patient name or phone is provided (appointment booking form)
+  if (data.patientName?.trim() || data.patientPhone?.trim()) {
+    const lines: string[] = [
+      "🌿 *AYURVEDA GLOBAL — VAIDYA APPOINTMENT BOOKING*",
+      "━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+      "👤 *Patient Profile:*",
+    ];
+
+    const fullNameWithTitle = [
+      data.titlePrefix?.trim(),
+      data.patientName?.trim(),
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+    if (fullNameWithTitle) {
+      lines.push(`• *Name:* ${fullNameWithTitle}`);
+    }
+    if (data.patientPhone?.trim()) {
+      lines.push(`• *WhatsApp / Mobile:* ${data.patientPhone.trim()}`);
+    }
+
+    const ageGender = [
+      data.patientAge ? `${data.patientAge} yrs` : "",
+      data.patientGender ? data.patientGender : "",
+    ]
+      .filter(Boolean)
+      .join(", ");
+    if (ageGender) {
+      lines.push(`• *Age / Gender:* ${ageGender}`);
+    }
+
+    const locationParts = [
+      data.patientCity?.trim(),
+      data.patientState?.trim(),
+      data.patientPincode?.trim() ? `PIN: ${data.patientPincode.trim()}` : "",
+    ].filter(Boolean);
+
+    if (locationParts.length > 0) {
+      lines.push(`• *Location:* ${locationParts.join(", ")}`);
+    }
+
+    if (data.preferredLanguage?.trim()) {
+      lines.push(`• *Language:* ${data.preferredLanguage.trim()}`);
+    }
+
+    lines.push("");
+    lines.push("📋 *Appointment Details:*");
+    if (data.concern?.trim()) {
+      lines.push(`• *Health Concern:* ${data.concern.trim()}`);
+    }
+    if (data.preferredTimeSlot?.trim()) {
+      lines.push(`• *Preferred Slot:* ${data.preferredTimeSlot.trim()}`);
+    }
+
+    const notesOrSymptoms = data.symptoms?.trim() || data.enquiry?.trim();
+    if (notesOrSymptoms) {
+      lines.push(`• *Health Notes / Symptoms:* ${notesOrSymptoms}`);
+    }
+
+    lines.push("━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    lines.push(
+      "_Namaste Vaidya Ji! 🙏 I have submitted my consultation request. Please confirm available slot and connect with me._",
+    );
+
+    return lines.join("\n");
   }
 
   const concern = data.concern?.trim();
@@ -328,3 +405,4 @@ export function buildVaidyaConsultationMessage(
 
   return DEFAULT_VAIDYA_CONSULTATION_MESSAGE;
 }
+

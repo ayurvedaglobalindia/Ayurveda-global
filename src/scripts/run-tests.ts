@@ -618,6 +618,103 @@ async function runAllTests() {
     }
   });
 
+  test("buildVaidyaConsultationMessage formats full patient booking form details for WhatsApp redirect", () => {
+    const bookingDossier = buildVaidyaConsultationMessage({
+      patientName: "Rahul Sharma",
+      patientPhone: "+91 98765 43210",
+      patientAge: "32",
+      patientGender: "Male",
+      patientCity: "Jaipur, Rajasthan",
+      preferredLanguage: "Hindi (हिंदी)",
+      preferredTimeSlot: "Morning (10:00 AM – 01:00 PM)",
+      concern: "Vitality, Energy & Stamina",
+      symptoms: "Chronic fatigue, poor digestion, restless sleep for 2 months",
+    });
+
+    if (!bookingDossier.includes("AYURVEDA GLOBAL — VAIDYA APPOINTMENT BOOKING")) {
+      throw new Error("Header title missing in appointment booking message");
+    }
+    if (!bookingDossier.includes("Rahul Sharma")) {
+      throw new Error("Patient name missing in appointment message");
+    }
+    if (!bookingDossier.includes("+91 98765 43210")) {
+      throw new Error("Patient phone missing in appointment message");
+    }
+    if (!bookingDossier.includes("32 yrs, Male")) {
+      throw new Error("Age & Gender missing in appointment message");
+    }
+    if (!bookingDossier.includes("Jaipur, Rajasthan")) {
+      throw new Error("City missing in appointment message");
+    }
+    if (!bookingDossier.includes("Hindi (हिंदी)")) {
+      throw new Error("Preferred language missing in appointment message");
+    }
+    if (!bookingDossier.includes("Morning (10:00 AM – 01:00 PM)")) {
+      throw new Error("Time slot missing in appointment message");
+    }
+    if (!bookingDossier.includes("Chronic fatigue, poor digestion")) {
+      throw new Error("Symptoms missing in appointment message");
+    }
+
+    const bookingUrl = buildWhatsAppUrl(bookingDossier);
+    if (!bookingUrl.startsWith("https://wa.me/919123485451?text=")) {
+      throw new Error("WhatsApp booking URL missing official phone number prefix");
+    }
+    if (!bookingUrl.includes(encodeURIComponent("Rahul Sharma"))) {
+      throw new Error("Patient name not encoded into WhatsApp redirect URL");
+    }
+  });
+
+  test("Central contact config and extended consultation (title, state, pincode, tel link) verify correctly", async () => {
+    const {
+      CONTACT_CONFIG,
+      OFFICIAL_PHONE,
+      OFFICIAL_PHONE_TEL,
+      CHIEF_VAIDYA_DESK_TITLE,
+      DIRECT_TELEPHONE_SUPPORT_LABEL,
+      getTelLink,
+    } = await import("@/lib/config/contact");
+
+    if (OFFICIAL_PHONE !== "+91 91234 85451") {
+      throw new Error(`Invalid OFFICIAL_PHONE: ${OFFICIAL_PHONE}`);
+    }
+    if (OFFICIAL_PHONE_TEL !== "tel:+919123485451") {
+      throw new Error(`Invalid OFFICIAL_PHONE_TEL: ${OFFICIAL_PHONE_TEL}`);
+    }
+    if (getTelLink() !== "tel:+919123485451") {
+      throw new Error("getTelLink() does not return tel:+919123485451");
+    }
+    if (CHIEF_VAIDYA_DESK_TITLE !== "Call Chief Vaidya Desk") {
+      throw new Error(`Invalid CHIEF_VAIDYA_DESK_TITLE: ${CHIEF_VAIDYA_DESK_TITLE}`);
+    }
+    if (DIRECT_TELEPHONE_SUPPORT_LABEL !== "Direct Telephone Support") {
+      throw new Error(`Invalid DIRECT_TELEPHONE_SUPPORT_LABEL: ${DIRECT_TELEPHONE_SUPPORT_LABEL}`);
+    }
+
+    // Test extended consultation dossier formatting
+    const extendedDossier = buildVaidyaConsultationMessage({
+      titlePrefix: "Shri",
+      patientName: "Vikram Rathore",
+      patientPhone: "+91 98765 43210",
+      patientState: "Rajasthan",
+      patientPincode: "302001",
+      patientCity: "Jaipur",
+      patientAge: "35",
+      patientGender: "Male",
+      preferredLanguage: "Hindi (हिंदी)",
+      preferredTimeSlot: "Morning (10:00 AM – 01:00 PM)",
+      concern: "Vitality, Energy & Stamina",
+      symptoms: "Fatigue and stress",
+    });
+
+    if (!extendedDossier.includes("Shri Vikram Rathore")) {
+      throw new Error("Title prefix not prepended to patient name in dossier");
+    }
+    if (!extendedDossier.includes("Jaipur, Rajasthan, PIN: 302001")) {
+      throw new Error("Location with State and Pincode missing or malformed in dossier");
+    }
+  });
+
   // 7b. Cashfree Payment Gateway Unit Tests
   console.log("\n💳 7b. Cashfree Payment Gateway Unit Tests:");
   test("Cashfree HMAC-SHA256 signature verification succeeds with correct secret", async () => {

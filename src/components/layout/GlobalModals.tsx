@@ -8,6 +8,7 @@ import { CartDrawer } from "@/components/cart/CartDrawer";
 import { MobileMenuDrawer } from "@/components/layout/MobileMenuDrawer";
 import { SearchModal } from "@/components/layout/SearchModal";
 import { AuthModal } from "@/components/auth/AuthModal";
+import { AppointmentBookingModal } from "@/components/layout/AppointmentBookingModal";
 import type { Product } from "@/types";
 
 export function GlobalModals() {
@@ -18,6 +19,7 @@ export function GlobalModals() {
   const cartModal = modals["cart"];
   const mobileMenuModal = modals["mobile-menu"];
   const authModal = modals["auth"];
+  const appointmentModal = modals["appointment"] || modals["consultation"];
 
   useEffect(() => {
     if (cartModal?.isOpen) {
@@ -72,7 +74,22 @@ export function GlobalModals() {
       {/* Global Luxury Apothecary Search Modal */}
       <SearchModal />
 
-      {/* Global Firebase Phone Auth / Sign In Modal */}
+      {/* Global Appointment Booking Modal */}
+      {appointmentModal?.isOpen && (
+        <AppointmentBookingModal
+          isOpen={true}
+          onClose={() => {
+            closeModal("appointment");
+            closeModal("consultation");
+          }}
+          initialConcern={
+            (appointmentModal.data as { concern?: string })?.concern ||
+            "Vitality, Energy & Stamina"
+          }
+        />
+      )}
+
+      {/* Global Native OTP Phone Auth / Sign In Modal */}
       {authModal?.isOpen && (
         <AuthModal
           isOpen={true}

@@ -25,27 +25,35 @@ import { useWhatsAppStore } from "@/store/whatsappStore";
 import { useUIStore } from "@/store/uiStore";
 import { useUserStore } from "@/store/userStore";
 import { normalizeIndianPhone } from "@/lib/auth/otpService";
+import {
+  CONTACT_CONFIG,
+  OFFICIAL_PHONE,
+  OFFICIAL_PHONE_TEL,
+  OFFICIAL_WHATSAPP_NUMBER,
+  CHIEF_VAIDYA_DESK_TITLE,
+  DIRECT_TELEPHONE_SUPPORT_LABEL,
+} from "@/lib/config/contact";
 
 const contactInfo = [
   {
     icon: MessageSquare,
     title: "WhatsApp Concierge",
-    value: "+91 91234 85451",
-    desc: "Mon–Sat 09:00–20:00 IST",
+    value: OFFICIAL_PHONE,
+    desc: CONTACT_CONFIG.supportTiming,
     action: "Open WhatsApp",
   },
   {
     icon: Mail,
     title: "Email Correspondence",
-    value: "ayurvedaglobalindia@gmail.com",
+    value: CONTACT_CONFIG.supportEmail,
     desc: "Response within 24 business hours",
     action: "Compose Email",
   },
   {
     icon: Phone,
-    title: "Telephone Support",
-    value: "+91 91234 85451",
-    desc: "Mon–Fri 10:00–18:00 IST",
+    title: DIRECT_TELEPHONE_SUPPORT_LABEL,
+    value: OFFICIAL_PHONE,
+    desc: `${CHIEF_VAIDYA_DESK_TITLE} (${CONTACT_CONFIG.supportTiming})`,
     action: "Call Now",
   },
 ];
@@ -346,10 +354,11 @@ export default function ContactPage() {
                         Brand Direction &amp; Formulations
                       </p>
                       <a
-                        href="tel:+919123485451"
+                        href={OFFICIAL_PHONE_TEL}
                         className="text-[11px] font-mono text-[#4E5F52] hover:underline"
+                        title={`${CHIEF_VAIDYA_DESK_TITLE}: ${OFFICIAL_PHONE}`}
                       >
-                        +91 91234 85451
+                        {OFFICIAL_PHONE}
                       </a>
                     </div>
                   </div>

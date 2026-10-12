@@ -24,6 +24,13 @@ import {
   buildWhatsAppUrl,
   buildVaidyaConsultationMessage,
 } from "@/store/whatsappStore";
+import {
+  CONTACT_CONFIG,
+  OFFICIAL_PHONE,
+  OFFICIAL_PHONE_TEL,
+  CHIEF_VAIDYA_DESK_TITLE,
+  DIRECT_TELEPHONE_SUPPORT_LABEL,
+} from "@/lib/config/contact";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
@@ -289,7 +296,7 @@ export function MobileBottomNav() {
 
                 {/* 3. Direct Doctor Hotline */}
                 <a
-                  href="tel:+919820011223"
+                  href={OFFICIAL_PHONE_TEL}
                   className="w-full flex items-center gap-3.5 p-3.5 rounded-2xl bg-white border border-stone-200 hover:border-[#1B4332] transition-all text-left shadow-xs hover:shadow-md group active:scale-98"
                 >
                   <div className="w-11 h-11 rounded-full bg-[#1B4332]/10 text-[#1B4332] flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -298,14 +305,14 @@ export function MobileBottomNav() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-bold text-[#081C15]">
-                        Call Chief Vaidya Desk
+                        {CHIEF_VAIDYA_DESK_TITLE}
                       </span>
                       <span className="text-[10px] font-medium text-stone-500">
-                        10 AM - 8 PM IST
+                        {CONTACT_CONFIG.supportTiming}
                       </span>
                     </div>
                     <p className="text-[11px] text-[#737373] mt-0.5">
-                      Direct telephone support: +91 98200 11223
+                      {DIRECT_TELEPHONE_SUPPORT_LABEL}: {OFFICIAL_PHONE}
                     </p>
                   </div>
                 </a>

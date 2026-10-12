@@ -20,9 +20,17 @@ import {
   Tag,
   Leaf,
   HeartPulse,
+  Phone,
 } from "lucide-react";
 import { useUIStore } from "@/store/uiStore";
 import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from "@/store/whatsappStore";
+import {
+  CONTACT_CONFIG,
+  OFFICIAL_PHONE,
+  OFFICIAL_PHONE_TEL,
+  CHIEF_VAIDYA_DESK_TITLE,
+  DIRECT_TELEPHONE_SUPPORT_LABEL,
+} from "@/lib/config/contact";
 
 interface MobileMenuDrawerProps {
   isOpen: boolean;
@@ -255,19 +263,28 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
               </div>
 
               {/* Drawer Footer */}
-              <div className="p-4 border-t border-[#9E8047]/25 bg-[#FAF7F2] space-y-2">
+              <div className="p-4 border-t border-[#9E8047]/25 bg-[#FAF7F2] space-y-2.5">
                 <a
                   href={buildWhatsAppUrl(buildVaidyaConsultationMessage())}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2.5 px-4 rounded-full bg-[#1C1D1F] text-[#FAF7F2] hover:bg-[#333333] font-medium text-xs flex items-center justify-center gap-2 transition-colors uppercase tracking-wider"
+                  className="w-full py-2.5 px-4 rounded-full bg-[#1B4332] text-[#FAF7F2] hover:bg-[#2D4A3E] font-medium text-xs flex items-center justify-center gap-2 transition-colors uppercase tracking-wider shadow-sm"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
                   <span>WhatsApp Vaidya Desk</span>
                 </a>
 
-                <p className="text-[10.5px] text-center text-[#737373] font-mono">
-                  100% Confidential Unmarked Parcels
+                <a
+                  href={OFFICIAL_PHONE_TEL}
+                  className="w-full py-2.5 px-4 rounded-full bg-white border border-[#1B4332]/30 text-[#1B4332] hover:bg-[#1B4332]/5 font-medium text-xs flex items-center justify-center gap-2 transition-colors font-mono"
+                  title={`${CHIEF_VAIDYA_DESK_TITLE}: ${OFFICIAL_PHONE}`}
+                >
+                  <Phone className="w-3.5 h-3.5 fill-current" />
+                  <span>{CHIEF_VAIDYA_DESK_TITLE}: {OFFICIAL_PHONE}</span>
+                </a>
+
+                <p className="text-[10px] text-center text-[#737373] font-mono">
+                  {DIRECT_TELEPHONE_SUPPORT_LABEL} • {CONTACT_CONFIG.supportTiming}
                 </p>
               </div>
             </motion.div>
