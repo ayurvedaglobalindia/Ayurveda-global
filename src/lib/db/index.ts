@@ -36,10 +36,11 @@ try {
 } catch (e) {}
 
 function readDB() {
-  if (isEdge) return inMemoryDB;
+  if (typeof window !== "undefined" || isEdge) return inMemoryDB;
   try {
-    const { readFileSync } = require("fs");
-    return JSON.parse(readFileSync(dbPath, "utf8"));
+    const fs = typeof require !== "undefined" ? require("fs") : null;
+    if (!fs || !fs.readFileSync) return inMemoryDB;
+    return JSON.parse(fs.readFileSync(dbPath, "utf8"));
   } catch (e) {
     return inMemoryDB;
   }
@@ -47,10 +48,11 @@ function readDB() {
 
 function writeDB(data: any) {
   inMemoryDB = data;
-  if (isEdge) return;
+  if (typeof window !== "undefined" || isEdge) return;
   try {
-    const { writeFileSync } = require("fs");
-    writeFileSync(dbPath, JSON.stringify(data, null, 2));
+    const fs = typeof require !== "undefined" ? require("fs") : null;
+    if (!fs || !fs.writeFileSync) return;
+    fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
   } catch (e) {}
 }
 

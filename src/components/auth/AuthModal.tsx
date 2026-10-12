@@ -28,11 +28,6 @@ import {
   normalizeIndianPhone,
   getWhatsAppVerifyUrl,
 } from "@/lib/auth/otpService";
-import {
-  sendFirebasePhoneOtp,
-  verifyFirebasePhoneOtp,
-  isFirebaseConfigured,
-} from "@/lib/auth/firebaseAuth";
 import type { Product, User } from "@/types";
 
 export interface AuthModalProps {
@@ -58,7 +53,7 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"input" | "otp">("input");
-  const [otpMethod, setOtpMethod] = useState<"firebase" | "sms">("firebase");
+  const [otpMethod, setOtpMethod] = useState<"sms">("sms");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
@@ -138,30 +133,7 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
 
     setLoading(true);
 
-    // 1. Try Firebase Phone Authentication if configured
-    if (isFirebaseConfigured()) {
-      try {
-        const fbResult = await sendFirebasePhoneOtp(cleanPhone, "recaptcha-container");
-        if (fbResult.success) {
-          setLoading(false);
-          setOtpMethod("firebase");
-          setStep("otp");
-          setResendCooldown(30);
-          showToast({
-            type: "info",
-            title: "Firebase SMS OTP Dispatched",
-            message: `A 6-digit verification code was sent to +91 ${cleanPhone}.`,
-          });
-          return;
-        } else {
-          console.warn("Firebase Phone Auth fallback triggered:", fbResult.message);
-        }
-      } catch (fbErr: any) {
-        console.warn("Firebase Phone Auth error, falling back to SMS gateway:", fbErr);
-      }
-    }
-
-    // 2. Gateway / Simulated OTP Fallback (2Factor / Fast2SMS / Local)
+    // 1. Gateway / SMS OTP Dispatch (2Factor / Fast2SMS / Local Simulation)
     try {
       const smsResult = await sendOTP(cleanPhone, name.trim());
       setLoading(false);
@@ -193,22 +165,6 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
 
     setLoading(true);
     setErrors({});
-
-    if (otpMethod === "firebase" && isFirebaseConfigured()) {
-      try {
-        const fbResult = await sendFirebasePhoneOtp(cleanPhone, "recaptcha-container");
-        setLoading(false);
-        if (fbResult.success) {
-          setResendCooldown(30);
-          showToast({
-            type: "info",
-            title: "New Firebase OTP Sent",
-            message: `A new 6-digit code was sent to +91 ${cleanPhone}.`,
-          });
-          return;
-        }
-      } catch {}
-    }
 
     try {
       const result = await sendOTP(cleanPhone, name.trim());
@@ -251,79 +207,29 @@ export function AuthModal({ isOpen, onClose, pendingItem }: AuthModalProps) {
 
     setLoading(true);
 
-    // 1. Verify via Firebase if in Firebase session
-    if (otpMethod === "firebase") {
-      try {
-        const fbVerify = await verifyFirebasePhoneOtp(otp.trim());
-        if (fbVerify.success) {
-          setLoading(false);
-          const userObj: User = {
-            id: fbVerify.user?.uid || `usr-${cleanPhone}`,
-            name: name.trim() || "Ayurvedic Patron",
-            email: email.trim() || `${cleanPhone}@ayurvedaglobal.com`,
-            phone: cleanPhone,
-            addresses: [],
-            orders: [],
-            wishlist: [],
-            createdAt: new Date().toISOString(),
-            isPhoneVerified: true,
-          };
-          completeAuthAndAction(userObj);
-          return;
-        } else {
-          // If Firebase failed, check if simulated/gateway OTP matches
-          const fallbackVerify = await verifyOTP(cleanPhone, otp.trim());
-          if (fallbackVerify.success) {
-            setLoading(false);
-            const userObj: User = {
-              id: `usr-${cleanPhone}`,
-              name: name.trim() || "Ayurvedic Patron",
-              email: email.trim() || `${cleanPhone}@ayurvedaglobal.com`,
-              phone: cleanPhone,
-              addresses: [],
-              orders: [],
-              wishlist: [],
-              createdAt: new Date().toISOString(),
-              isPhoneVerified: true,
-            };
-            completeAuthAndAction(userObj);
-            return;
-          }
-          setLoading(false);
-          setErrors({ otp: fbVerify.message });
-          return;
-        }
-      } catch (err: any) {
-        console.error("Firebase verify error:", err);
-      }
-    }
-
-    // 2. Verify via Gateway / Simulated OTP
     try {
-      const result = await verifyOTP(cleanPhone, otp);
+      const verifyResult = await verifyOTP(cleanPhone, otp.trim());
       setLoading(false);
 
-      if (!result.success) {
-        setErrors({ otp: result.message });
-        return;
+      if (verifyResult.success) {
+        const userObj: User = {
+          id: `usr-${cleanPhone}`,
+          name: name.trim() || "Ayurvedic Patron",
+          email: email.trim() || `${cleanPhone}@ayurvedaglobal.com`,
+          phone: cleanPhone,
+          addresses: [],
+          orders: [],
+          wishlist: [],
+          createdAt: new Date().toISOString(),
+          isPhoneVerified: true,
+        };
+        completeAuthAndAction(userObj);
+      } else {
+        setErrors({ otp: verifyResult.message });
       }
-
-      const userObj: User = {
-        id: `usr-${cleanPhone}`,
-        name: name.trim() || "Ayurvedic Patron",
-        email: email.trim() || `${cleanPhone}@ayurvedaglobal.com`,
-        phone: cleanPhone,
-        addresses: [],
-        orders: [],
-        wishlist: [],
-        createdAt: new Date().toISOString(),
-        isPhoneVerified: true,
-      };
-
-      completeAuthAndAction(userObj);
     } catch {
       setLoading(false);
-      setErrors({ otp: "Verification failed. Please retry." });
+      setErrors({ otp: "Verification failed. Please check code or request new OTP." });
     }
   };
 
