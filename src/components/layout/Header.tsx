@@ -16,17 +16,21 @@ import {
 export function Header() {
   const [isMounted, setIsMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mountedCartCount, setMountedCartCount] = useState(0);
+  const [mountedWishlistCount, setMountedWishlistCount] = useState(0);
 
-  const { getItemCount: getCartCount } = useCartStore();
-  const { getItemCount: getWishlistCount } = useWishlistStore();
+  const cartStoreCount = useCartStore((state) => state.items.length);
+  const wishlistStoreCount = useWishlistStore((state) => state.items.length);
   const { openModal, openCartDrawer, openWishlistDrawer, openSearch } = useUIStore();
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    setMountedCartCount(cartStoreCount);
+    setMountedWishlistCount(wishlistStoreCount);
+  }, [cartStoreCount, wishlistStoreCount]);
 
-  const cartCount = isMounted ? getCartCount() : 0;
-  const wishlistCount = isMounted ? getWishlistCount() : 0;
+  const cartCount = isMounted ? mountedCartCount : 0;
+  const wishlistCount = isMounted ? mountedWishlistCount : 0;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);

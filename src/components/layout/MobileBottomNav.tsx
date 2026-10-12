@@ -36,14 +36,16 @@ export function MobileBottomNav() {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
   const [isConciergeOpen, setIsConciergeOpen] = useState(false);
-  const { getItemCount: getCartCount } = useCartStore();
+  const [mountedCartCount, setMountedCartCount] = useState(0);
+  const cartStoreCount = useCartStore((state) => state.items.length);
   const { openCartDrawer, openSearch, isSearchOpen } = useUIStore();
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+    setMountedCartCount(cartStoreCount);
+  }, [cartStoreCount]);
 
-  const cartCount = isMounted ? getCartCount() : 0;
+  const cartCount = isMounted ? mountedCartCount : 0;
 
   const handleDoctorWhatsApp = () => {
     const msg = buildVaidyaConsultationMessage();
