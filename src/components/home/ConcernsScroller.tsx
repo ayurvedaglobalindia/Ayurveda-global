@@ -130,35 +130,35 @@ export function ConcernsScroller() {
             >
               <Link
                 href={`/shop?category=${item.slug}`}
-                className="flex flex-col items-center group text-center w-[74px] sm:w-[84px]"
+                className="flex flex-col items-center group text-center w-[66px] sm:w-[76px]"
               >
-                {/* Circular herbal tray (64px x 64px) with animated gold-gradient border ring on hover/tap */}
-                <div className="relative w-[64px] h-[64px] rounded-full p-[2px] bg-gradient-to-tr from-[#D4AF37] via-[#10B981] to-[#D4AF37] shadow-sm group-hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] group-active:scale-95 transition-all duration-300">
+                {/* Circular herbal tray (56px sm:60px) with animated gold-gradient border ring on hover/tap */}
+                <div className="relative w-[54px] h-[54px] sm:w-[60px] sm:h-[60px] rounded-full p-[1.5px] bg-gradient-to-tr from-[#D4AF37] via-[#10B981] to-[#D4AF37] shadow-2xs group-hover:shadow-[0_0_12px_rgba(212,175,55,0.35)] group-active:scale-95 transition-all duration-300">
                   <div className="relative w-full h-full rounded-full overflow-hidden bg-[#FAF7F2] border border-white flex items-center justify-center">
                     <Image
                       src={item.image}
                       alt={item.name}
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
-                      sizes="64px"
+                      sizes="60px"
                     />
 
                     {/* Gradient Depth Tint */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#071A12]/45 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#071A12]/40 via-transparent to-transparent pointer-events-none" />
 
                     {/* Subtle Micro Icon Pill */}
-                    <div className="absolute bottom-0.5 right-0.5 w-4 h-4 rounded-full bg-[#071A12] text-[#D4AF37] flex items-center justify-center border border-white/80 shadow-2xs">
+                    <div className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-[#071A12] text-[#D4AF37] flex items-center justify-center border border-white/90 shadow-2xs">
                       <Icon className="w-2 h-2 text-[#D4AF37]" />
                     </div>
                   </div>
                 </div>
 
-                {/* Bottom Label: 11px font-semibold with Dual-Line Subtext */}
-                <div className="mt-1.5 text-center w-full">
-                  <span className="text-[11px] font-semibold text-[#071A12] group-hover:text-[#0E3924] transition-colors leading-tight block truncate">
+                {/* Bottom Label: Clean 10px / 11px font-medium with Single/Dual Line Subtext */}
+                <div className="mt-1.5 text-center w-full px-0.5">
+                  <span className="text-[10px] sm:text-[11px] font-medium text-[#071A12] group-hover:text-[#0E3924] transition-colors leading-tight block truncate">
                     {item.name}
                   </span>
-                  <span className="text-[8.5px] font-editorial font-medium text-[#0E3924]/75 leading-tight block truncate mt-0.5">
+                  <span className="text-[8px] sm:text-[8.5px] font-sans text-[#737373] leading-tight block truncate mt-0.5">
                     {item.subtext}
                   </span>
                 </div>

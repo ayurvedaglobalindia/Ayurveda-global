@@ -388,57 +388,57 @@ export function ProductCard({
           />
         </Link>
 
-        {/* Top Header Discount Badge */}
+        {/* Top Header Discount Badge (Myntra / Meesho Style Sleek Pill) */}
         {hasDiscount && (
-          <div className="absolute top-2 left-2 z-10 pointer-events-none">
-            <span className="bg-[#0E3924] text-[#FDFBF7] text-[8.5px] sm:text-[9.5px] font-sans font-bold px-2 py-0.5 rounded-full shadow-xs tracking-wider uppercase border border-[#D4AF37]/35">
-              {discountPercentage}% OFF
+          <div className="absolute top-1.5 left-1.5 z-10 pointer-events-none">
+            <span className="bg-[#0E3924] text-[#FDFBF7] text-[8px] sm:text-[9px] font-sans font-bold px-1.5 py-0.5 rounded-full shadow-xs tracking-wider uppercase border border-[#D4AF37]/40 flex items-center gap-0.5">
+              <span>{discountPercentage}% OFF</span>
             </span>
           </div>
         )}
 
-        {/* Top-Right: Discreet Quick Action Buttons (No text overlay) */}
-        <div className="absolute top-2 right-2 z-10 flex items-center gap-1">
+        {/* Top-Right: Discreet Quick Action Buttons (Chote Icons, Elegant Glass Pill - Myntra / Flipkart style) */}
+        <div className="absolute top-1.5 right-1.5 z-10 flex items-center gap-1">
           {/* Quick View Button */}
           <button
             type="button"
             onClick={handleQuickView}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white text-[#071A12] hover:text-[#0E3924] flex items-center justify-center border border-stone-200/90 shadow-2xs transition-all active:scale-95"
+            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 hover:bg-white text-[#071A12] hover:text-[#0E3924] flex items-center justify-center border border-stone-200/80 shadow-2xs transition-all active:scale-90"
             aria-label={`Quick preview for ${product.name}`}
             title="Quick Preview"
           >
-            <Eye className="w-3.5 h-3.5" />
+            <Eye className="w-3 h-3" />
           </button>
 
           {/* Wishlist Button */}
           <button
             type="button"
             onClick={handleWishlistToggle}
-            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center border border-stone-200/90 shadow-2xs transition-all active:scale-95 ${
+            className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/95 hover:bg-white flex items-center justify-center border border-stone-200/80 shadow-2xs transition-all active:scale-90 ${
               inWishlist ? "text-rose-500" : "text-[#071A12] hover:text-rose-500"
             }`}
             aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
             title={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
           >
             <Heart
-              className={`w-3.5 h-3.5 ${inWishlist ? "fill-rose-500 text-rose-500" : ""}`}
+              className={`w-3 h-3 ${inWishlist ? "fill-rose-500 text-rose-500" : ""}`}
             />
           </button>
         </div>
       </div>
 
       {/* Card Body - Perfectly Balanced Spacing & Natural Benefit Typography */}
-      <div className="p-2.5 sm:p-3.5 flex-1 flex flex-col justify-between space-y-2 bg-white min-w-0">
-        <div className="space-y-1 min-w-0">
-          {/* Natural Benefit Highlight Text */}
-          <p className="text-[10px] sm:text-[11px] text-[#0E3924] font-medium line-clamp-1 leading-normal tracking-wide">
-            <span>{clinical.forText}</span>
+      <div className="p-2 sm:p-3 flex-1 flex flex-col justify-between space-y-1.5 bg-white min-w-0">
+        <div className="space-y-0.5 min-w-0">
+          {/* Natural Benefit Highlight Text - Compact Tagline */}
+          <p className="text-[9.5px] sm:text-[10px] text-[#0E3924] font-medium line-clamp-1 leading-normal tracking-wide">
+            <span className="font-semibold">{clinical.forText}</span>
             <span className="text-[#9E8047] mx-1">•</span>
             <span className="text-[#666666] font-normal">{clinical.withText}</span>
           </p>
 
-          {/* Product Title (2 Lines Max with Natural Wrapping) */}
-          <h3 className="font-editorial text-[13px] sm:text-[15px] font-normal text-[#071A12] line-clamp-2 min-h-[2.4rem] sm:min-h-[2.8rem] group-hover:text-[#0E3924] transition-colors leading-snug break-words">
+          {/* Product Title (Clean, refined size like Ajio/Myntra luxury beauty) */}
+          <h3 className="font-sans text-[12px] sm:text-[13.5px] font-medium text-[#071A12] line-clamp-2 min-h-[2.1rem] sm:min-h-[2.4rem] group-hover:text-[#0E3924] transition-colors leading-snug break-words">
             <Link href={`/product/${product.slug}`} className="hover:underline">
               {product.name}
             </Link>
@@ -446,35 +446,35 @@ export function ProductCard({
         </div>
 
         {/* Rating, Pricing & CTA Section */}
-        <div className="mt-auto pt-1 space-y-2">
-          {/* Compact Non-Clipping Rating Row */}
-          <div className="flex items-center justify-between text-xs pt-0.5 min-w-0">
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#0E3924]/6 text-[#0E3924] text-[10px] sm:text-[10.5px] font-semibold shrink-0">
-              <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-[#D4AF37] text-[#D4AF37]" />
+        <div className="mt-auto pt-0.5 space-y-1.5">
+          {/* Compact Non-Clipping Rating Row (Flipkart / Amazon Pill Style) */}
+          <div className="flex items-center justify-between text-xs min-w-0">
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm bg-[#0E3924]/8 text-[#0E3924] text-[9.5px] sm:text-[10px] font-bold shrink-0">
+              <Star className="w-2.5 h-2.5 fill-[#D4AF37] text-[#D4AF37]" />
               <span>{product.rating || 4.9}</span>
-              <span className="text-[9px] sm:text-[9.5px] text-stone-400 font-normal">
+              <span className="text-[8.5px] sm:text-[9px] text-[#555555] font-normal">
                 ({product.reviewCount || 128})
               </span>
             </span>
-            <span className="text-[8px] sm:text-[9px] font-sans uppercase text-[#0E3924] tracking-wider font-semibold px-1.5 py-0.5 rounded-full bg-[#0E3924]/6 border border-[#0E3924]/10 shrink-0">
+            <span className="text-[8px] sm:text-[8.5px] font-sans uppercase text-[#0E3924] tracking-wider font-semibold px-1.5 py-0.5 rounded-full bg-[#FAF7F2] border border-[#0E3924]/10 shrink-0">
               {product.category === "supplements" ? "Rasayana" : product.category === "wellness" ? "Vajikara" : "Taila"}
             </span>
           </div>
 
-          {/* Price Row */}
-          <div className="flex items-center justify-between gap-1.5 pt-0.5 flex-wrap">
+          {/* Price Row (Flipkart & Myntra style clear layout) */}
+          <div className="flex items-center justify-between gap-1 pt-0.5 flex-wrap">
             <div className="flex items-baseline gap-1.5">
-              <span className="font-sans text-[13.5px] sm:text-[15px] font-bold text-[#071A12] tracking-tight">
+              <span className="font-sans text-[13px] sm:text-[14.5px] font-bold text-[#071A12] tracking-tight">
                 {formatINR(product.price)}
               </span>
               {hasDiscount && (
-                <span className="text-[10.5px] sm:text-xs text-stone-400 line-through font-normal">
+                <span className="text-[10px] sm:text-[11px] text-stone-400 line-through font-normal">
                   {formatINR(product.compareAtPrice!)}
                 </span>
               )}
             </div>
             {hasDiscount && (
-              <span className="text-[8.5px] sm:text-[9px] font-sans font-semibold text-[#0E3924] bg-[#0E3924]/8 border border-[#0E3924]/15 px-1.5 py-0.5 rounded-full shrink-0 tracking-tight">
+              <span className="text-[8px] sm:text-[8.5px] font-sans font-bold text-[#0E3924] bg-[#0E3924]/8 border border-[#0E3924]/15 px-1.5 py-0.2 rounded-full shrink-0 tracking-tight">
                 Save ₹{Math.round((product.compareAtPrice! - product.price) / 100)}
               </span>
             )}
@@ -523,17 +523,17 @@ export function ProductCard({
                   product?.inventory?.trackQuantity &&
                   product?.inventory?.quantity === 0
                 }
-                className="w-full text-xs font-sans font-bold py-2.5 sm:py-3 px-3 rounded-xl bg-[#0E3924] text-white hover:bg-[#071A12] transition-all inline-flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap active:scale-95 group/btn"
+                className="w-full text-[11px] sm:text-xs font-sans font-bold py-2 sm:py-2.5 px-3 rounded-lg bg-[#0E3924] hover:bg-[#071A12] text-white transition-all inline-flex items-center justify-center gap-1.5 shadow-2xs whitespace-nowrap active:scale-95 group/btn"
               >
                 {justAdded ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <Check className="w-3 h-3 text-[#D4AF37]" />
                     <span className="text-white">Added to Bag</span>
                   </>
                 ) : (
                   <>
-                    <ShoppingBag className="w-3.5 h-3.5 text-[#D4AF37] group-hover/btn:scale-110 transition-transform" />
-                    <span>ADD TO BAG</span>
+                    <ShoppingBag className="w-3 h-3 text-[#D4AF37] group-hover/btn:scale-110 transition-transform" />
+                    <span className="tracking-wide">ADD TO BAG</span>
                   </>
                 )}
               </button>
