@@ -914,26 +914,53 @@ Helps lower serum cortisol, manage mental stress, promote sound sleep cycles, an
   },
 ];
 
-export function getProductById(id: string): Product | undefined {
-  return products.find((p) => p.id === id);
-}
-
-export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug);
-}
-
-export function getProductsByCategory(category: string): Product[] {
-  return products.filter((p) => p.category === category);
-}
-
 export function getAllProducts(): Product[] {
+  if (typeof window !== "undefined") {
+    try {
+      const overrides = JSON.parse(
+        localStorage.getItem("ayur_product_overrides") || "{}",
+      );
+      const customProducts: Product[] = JSON.parse(
+        localStorage.getItem("ayur_custom_products") || "[]",
+      );
+      const deletedIds: string[] = JSON.parse(
+        localStorage.getItem("ayur_deleted_product_ids") || "[]",
+      );
+
+      const base = products
+        .filter(
+          (p) => !deletedIds.includes(p.id) && !deletedIds.includes(p.slug),
+        )
+        .map((p) => {
+          if (overrides[p.id]) {
+            return { ...p, ...overrides[p.id] };
+          }
+          return p;
+        });
+
+      return [...base, ...customProducts];
+    } catch {}
+  }
   return products;
 }
 
+export function getProductById(id: string): Product | undefined {
+  return getAllProducts().find((p) => p.id === id || p.slug === id);
+}
+
+export function getProductBySlug(slug: string): Product | undefined {
+  return getAllProducts().find((p) => p.slug === slug || p.id === slug);
+}
+
+export function getProductsByCategory(category: string): Product[] {
+  return getAllProducts().filter((p) => p.category === category);
+}
+
 export function getCategories(): Category[] {
+  const allProds = getAllProducts();
   return categories.map((cat) => ({
     ...cat,
-    productCount: products.filter((p) => p.category === cat.slug).length,
+    productCount: allProds.filter((p) => p.category === cat.slug).length,
   }));
 }
 
@@ -943,7 +970,7 @@ export function getCategoryBySlug(slug: string): Category | undefined {
 
 export function searchProducts(query: string): Product[] {
   const lowercaseQuery = query.toLowerCase();
-  return products.filter(
+  return getAllProducts().filter(
     (p) =>
       p.name.toLowerCase().includes(lowercaseQuery) ||
       p.tagline.toLowerCase().includes(lowercaseQuery) ||
@@ -954,14 +981,16 @@ export function searchProducts(query: string): Product[] {
 }
 
 export function getFeaturedProducts(limit = 6): Product[] {
-  return products.slice(0, limit);
+  return getAllProducts().slice(0, limit);
 }
 
 export function getRelatedProducts(
   currentProductId: string,
   limit = 4,
 ): Product[] {
-  return products.filter((p) => p.id !== currentProductId).slice(0, limit);
+  return getAllProducts()
+    .filter((p) => p.id !== currentProductId)
+    .slice(0, limit);
 }
 
 export type ProductImageVariant =
@@ -1146,6 +1175,22 @@ export function getProductImage(
       if (hero)
         return { src: hero.src, alt: hero.alt || productName, isPrimary: true };
     }
+    const primaryImg = product.images.find((img: any) => img?.isPrimary) || product.images[0];
+    if (primaryImg && typeof primaryImg.src === "string" && primaryImg.src.trim()) {
+      return {
+        src: primaryImg.src,
+        alt: primaryImg.alt || productName,
+        isPrimary: true,
+      };
+    }
+  }
+
+  if (typeof product?.image === "string" && product.image.trim()) {
+    return {
+      src: product.image,
+      alt: productName,
+      isPrimary: true,
+    };
   }
 
   // 2. Return tailored crop from cropMap

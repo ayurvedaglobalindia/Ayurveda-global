@@ -1,4 +1,4 @@
-import { OrderRepository, LeadRepository } from "@/lib/db";
+import { OrderRepository, LeadRepository, ProductRepository } from "@/lib/db";
 
 export async function placeOrderServer(order: any) {
   try {
@@ -106,3 +106,96 @@ export async function getLeadsServer() {
     return [];
   }
 }
+
+export async function saveProductServer(product: any) {
+  try {
+    if (typeof window === "undefined") {
+      try {
+        ProductRepository.create(product);
+      } catch (err) {
+        console.error("SQL persistence error in saveProductServer:", err);
+      }
+    }
+    if (typeof window !== "undefined") {
+      const stored = JSON.parse(
+        localStorage.getItem("ayur_custom_products") || "[]",
+      );
+      const idx = stored.findIndex(
+        (p: any) => p.id === product.id || p.slug === product.slug,
+      );
+      if (idx >= 0) {
+        stored[idx] = product;
+      } else {
+        stored.push(product);
+      }
+      localStorage.setItem("ayur_custom_products", JSON.stringify(stored));
+    }
+    return { success: true, id: product.id };
+  } catch (error: any) {
+    return { success: false, error: error?.message || "Failed to save product" };
+  }
+}
+
+export async function updateProductServer(id: string, updates: any) {
+  try {
+    if (typeof window === "undefined") {
+      try {
+        ProductRepository.update(id, updates);
+      } catch (e) {}
+    }
+    if (typeof window !== "undefined") {
+      const stored = JSON.parse(
+        localStorage.getItem("ayur_custom_products") || "[]",
+      );
+      const idx = stored.findIndex((p: any) => p.id === id || p.slug === id);
+      if (idx >= 0) {
+        stored[idx] = { ...stored[idx], ...updates };
+        localStorage.setItem("ayur_custom_products", JSON.stringify(stored));
+      } else {
+        const overrides = JSON.parse(
+          localStorage.getItem("ayur_product_overrides") || "{}",
+        );
+        overrides[id] = { ...(overrides[id] || {}), ...updates };
+        localStorage.setItem(
+          "ayur_product_overrides",
+          JSON.stringify(overrides),
+        );
+      }
+    }
+    return { success: true };
+  } catch (error) {
+    return { success: false };
+  }
+}
+
+export async function deleteProductServer(id: string) {
+  try {
+    if (typeof window === "undefined") {
+      try {
+        ProductRepository.delete(id);
+      } catch (e) {}
+    }
+    if (typeof window !== "undefined") {
+      const stored = JSON.parse(
+        localStorage.getItem("ayur_custom_products") || "[]",
+      );
+      const filtered = stored.filter((p: any) => p.id !== id && p.slug !== id);
+      localStorage.setItem("ayur_custom_products", JSON.stringify(filtered));
+
+      const deletedIds = JSON.parse(
+        localStorage.getItem("ayur_deleted_product_ids") || "[]",
+      );
+      if (!deletedIds.includes(id)) {
+        deletedIds.push(id);
+        localStorage.setItem(
+          "ayur_deleted_product_ids",
+          JSON.stringify(deletedIds),
+        );
+      }
+    }
+    return { success: true };
+  } catch (error) {
+    return { success: false };
+  }
+}
+

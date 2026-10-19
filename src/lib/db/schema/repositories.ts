@@ -57,6 +57,93 @@ export const ProductRepository = {
     const result = stmt.run(quantity, productId);
     return result.changes > 0;
   },
+
+  create(product: any): { success: boolean; id: string } {
+    const id = product.id || product.slug || `prod-${Date.now()}`;
+    const slug = product.slug || id;
+    const stmt = db.prepare(`
+      INSERT OR REPLACE INTO products (
+        id, slug, name, tagline, description, short_description,
+        category, price, compare_at_price, inventory_quantity, track_inventory,
+        age_restricted, images_json, variants_json, ingredients_json,
+        usage, warnings_json, tags_json, seo_json
+      ) VALUES (
+        @id, @slug, @name, @tagline, @description, @shortDescription,
+        @category, @price, @compareAtPrice, @inventoryQuantity, @trackInventory,
+        @ageRestricted, @imagesJson, @variantsJson, @ingredientsJson,
+        @usage, @warningsJson, @tagsJson, @seoJson
+      )
+    `);
+    stmt.run({
+      id,
+      slug,
+      name: product.name,
+      tagline: product.tagline || "",
+      description: product.description || "",
+      shortDescription: product.shortDescription || "",
+      category: product.category || "supplements",
+      price: product.price || 0,
+      compareAtPrice: product.compareAtPrice || null,
+      inventoryQuantity:
+        product.inventory?.quantity ?? product.inventory_quantity ?? 100,
+      trackInventory: product.inventory?.trackQuantity ?? 1,
+      ageRestricted: product.ageRestricted ? 1 : 0,
+      imagesJson: JSON.stringify(product.images || []),
+      variantsJson: JSON.stringify(product.variants || []),
+      ingredientsJson: JSON.stringify(product.ingredients || []),
+      usage: product.usage || "",
+      warningsJson: JSON.stringify(product.warnings || []),
+      tagsJson: JSON.stringify(product.tags || []),
+      seoJson: JSON.stringify(product.seo || {}),
+    });
+    return { success: true, id };
+  },
+
+  update(id: string, updates: any): boolean {
+    const stmt = db.prepare(`
+      INSERT OR REPLACE INTO products (
+        id, slug, name, tagline, description, short_description,
+        category, price, compare_at_price, inventory_quantity, track_inventory,
+        age_restricted, images_json, variants_json, ingredients_json,
+        usage, warnings_json, tags_json, seo_json
+      ) VALUES (
+        @id, @slug, @name, @tagline, @description, @shortDescription,
+        @category, @price, @compareAtPrice, @inventoryQuantity, @trackInventory,
+        @ageRestricted, @imagesJson, @variantsJson, @ingredientsJson,
+        @usage, @warningsJson, @tagsJson, @seoJson
+      )
+    `);
+    stmt.run({
+      ...updates,
+      id,
+      slug: updates.slug || id,
+      name: updates.name || "Ayurvedic Formulation",
+      tagline: updates.tagline || "",
+      description: updates.description || "",
+      shortDescription: updates.shortDescription || "",
+      category: updates.category || "supplements",
+      price: updates.price || 0,
+      compareAtPrice: updates.compareAtPrice || null,
+      inventoryQuantity:
+        updates.inventory?.quantity ?? updates.inventory_quantity ?? 100,
+      trackInventory: updates.inventory?.trackQuantity ?? 1,
+      ageRestricted: updates.ageRestricted ? 1 : 0,
+      imagesJson: JSON.stringify(updates.images || []),
+      variantsJson: JSON.stringify(updates.variants || []),
+      ingredientsJson: JSON.stringify(updates.ingredients || []),
+      usage: updates.usage || "",
+      warningsJson: JSON.stringify(updates.warnings || []),
+      tagsJson: JSON.stringify(updates.tags || []),
+      seoJson: JSON.stringify(updates.seo || {}),
+    });
+    return true;
+  },
+
+  delete(id: string): boolean {
+    const stmt = db.prepare("UPDATE products SET is_active = 0 WHERE id = ?");
+    stmt.run(id);
+    return true;
+  },
 };
 
 // ==============================================================================

@@ -20,7 +20,7 @@ export interface Product {
   tagline: string;
   description: string;
   shortDescription: string;
-  category: "supplements" | "wellness" | "personal-care";
+  category: "supplements" | "wellness" | "personal-care" | string;
   images: ProductImage[];
   price: number;
   compareAtPrice?: number;

@@ -1,8 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getOrdersServer, updateOrderStatusServer, getLeadsServer } from "@/app/actions";
+import {
+  getOrdersServer,
+  updateOrderStatusServer,
+  getLeadsServer,
+  saveProductServer,
+  updateProductServer,
+  deleteProductServer,
+} from "@/app/actions";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -51,6 +59,9 @@ import {
   Send,
   Sparkles,
   Award,
+  Copy,
+  Trash2,
+  Edit3,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { formatINR, formatDate } from "@/lib/utils/formatters";
@@ -72,6 +83,8 @@ import { getAllProducts, getProductImage } from "@/lib/products/registry";
 import { useUserStore } from "@/store/userStore";
 import { buildWhatsAppUrl } from "@/store/whatsappStore";
 import { OrderInvoiceModal } from "@/components/admin/OrderInvoiceModal";
+import { ProductEditorModal } from "@/components/admin/ProductEditorModal";
+import type { Product } from "@/types";
 
 interface PatronProfile {
   id: string;
@@ -108,6 +121,7 @@ export default function AdminPage() {
   // Dashboard Data
   const [orders, setOrders] = useState<any[]>([]);
   const [leads, setLeads] = useState<any[]>([]);
+  const [catalogProducts, setCatalogProducts] = useState<Product[]>([]);
   const [stockOverrides, setStockOverrides] = useState<Record<string, number>>({});
   const [analytics, setAnalytics] = useState<AnalyticsSummary | null>(null);
   
@@ -118,9 +132,12 @@ export default function AdminPage() {
   const [invoiceOrder, setInvoiceOrder] = useState<any | null>(null);
   const [selectedOrderIds, setSelectedOrderIds] = useState<string[]>([]);
 
-  // Inventory Filters
+  // Product & Seller Catalog Management State
   const [inventorySearch, setInventorySearch] = useState("");
   const [inventoryFilter, setInventoryFilter] = useState<"all" | "low" | "out" | "instock">("all");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [isProductEditorOpen, setIsProductEditorOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   // Customers & Leads CRM State
   const [customerSearch, setCustomerSearch] = useState("");
@@ -224,6 +241,7 @@ export default function AdminPage() {
         setSelectedOrder(null);
         setInvoiceOrder(null);
         setContactModalPatron(null);
+        setIsProductEditorOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -235,7 +253,10 @@ export default function AdminPage() {
     // 1. Load analytics for selected range
     setAnalytics(getAnalyticsSummary(range));
 
-    // 2. Gather all orders
+    // 2. Load catalog products
+    setCatalogProducts(getAllProducts());
+
+    // 3. Gather all orders
     if (typeof window !== "undefined") {
       getOrdersServer()
         .then((serverOrders) => {
@@ -270,7 +291,7 @@ export default function AdminPage() {
         });
     }
 
-    // 3. Gather customer leads & stock overrides
+    // 4. Gather customer leads & stock overrides
     if (typeof window !== "undefined") {
       getLeadsServer()
         .then((serverLeads) => {
@@ -315,9 +336,67 @@ export default function AdminPage() {
     const current =
       stockOverrides[productId] !== undefined
         ? stockOverrides[productId]
-        : (getAllProducts().find((p) => p.id === productId)?.inventory?.quantity ?? 100);
+        : (catalogProducts.find((p) => p.id === productId)?.inventory?.quantity ?? 100);
     const newQty = Math.max(0, current + delta);
     handleStockUpdate(productId, newQty);
+  };
+
+  const handleAddNewProduct = () => {
+    setEditingProduct(null);
+    setIsProductEditorOpen(true);
+  };
+
+  const handleEditProduct = (p: Product) => {
+    setEditingProduct(p);
+    setIsProductEditorOpen(true);
+  };
+
+  const handleDuplicateProduct = (p: Product) => {
+    const timestamp = Date.now().toString().slice(-4);
+    const cloned: Product = {
+      ...p,
+      id: `${p.id}-copy-${timestamp}`,
+      slug: `${p.slug}-copy-${timestamp}`,
+      name: `${p.name} (Copy)`,
+      variants: (p.variants || []).map((v) => ({
+        ...v,
+        id: `${v.id}-copy-${timestamp}`,
+        sku: `${v.sku || "AVG"}-COPY-${timestamp}`,
+      })),
+    };
+    setEditingProduct(cloned);
+    setIsProductEditorOpen(true);
+  };
+
+  const handleSaveProduct = async (productToSave: Product) => {
+    const exists = catalogProducts.some(
+      (p) => p.id === productToSave.id || p.slug === productToSave.slug,
+    );
+    if (exists) {
+      await updateProductServer(productToSave.id, productToSave);
+      showToast(`Formulation "${productToSave.name}" updated successfully!`);
+    } else {
+      await saveProductServer(productToSave);
+      showToast(`New formulation "${productToSave.name}" published to catalog!`);
+    }
+
+    if (productToSave.inventory?.quantity !== undefined) {
+      handleStockUpdate(productToSave.id, productToSave.inventory.quantity);
+    }
+
+    loadDashboardData();
+  };
+
+  const handleDeleteProduct = async (productId: string, productName: string) => {
+    if (
+      confirm(
+        `Are you sure you want to archive "${productName}" from the storefront catalog?`,
+      )
+    ) {
+      await deleteProductServer(productId);
+      showToast(`"${productName}" archived from catalog`, "info");
+      loadDashboardData();
+    }
   };
 
   const handleUpdateTracking = (orderId: string, awb: string) => {
@@ -516,7 +595,7 @@ export default function AdminPage() {
               Admin Operations Terminal
             </h1>
             <p className="text-xs text-[#737373] mt-1 font-sans">
-              Centralized enterprise command for order fulfillment, stock, marketing &amp; patron CRM.
+              Centralized enterprise command for order fulfillment, seller catalog, marketing &amp; patron CRM.
             </p>
           </div>
 
@@ -583,22 +662,21 @@ export default function AdminPage() {
   const aov = orders.length > 0 ? Math.round(totalRevenue / orders.length) : 0;
   const codOrdersCount = orders.filter((o) => o.paymentMethod === "cod").length;
   const prepaidOrdersCount = orders.length - codOrdersCount;
-  const products = getAllProducts();
 
   // Inventory Aggregations
-  const totalInventoryUnits = products.reduce((acc, p) => {
+  const totalInventoryUnits = catalogProducts.reduce((acc, p) => {
     const qty = stockOverrides[p.id] !== undefined ? stockOverrides[p.id] : (p.inventory?.quantity ?? 100);
     return acc + qty;
   }, 0);
-  const totalInventoryValuation = products.reduce((acc, p) => {
+  const totalInventoryValuation = catalogProducts.reduce((acc, p) => {
     const qty = stockOverrides[p.id] !== undefined ? stockOverrides[p.id] : (p.inventory?.quantity ?? 100);
     return acc + p.price * qty;
   }, 0);
-  const lowStockCount = products.filter((p) => {
+  const lowStockCount = catalogProducts.filter((p) => {
     const qty = stockOverrides[p.id] !== undefined ? stockOverrides[p.id] : (p.inventory?.quantity ?? 100);
     return qty > 0 && qty <= 10;
   }).length;
-  const outOfStockCount = products.filter((p) => {
+  const outOfStockCount = catalogProducts.filter((p) => {
     const qty = stockOverrides[p.id] !== undefined ? stockOverrides[p.id] : (p.inventory?.quantity ?? 100);
     return qty === 0;
   }).length;
@@ -618,14 +696,16 @@ export default function AdminPage() {
   });
 
   // Filtered products for inventory
-  const filteredProducts = products.filter((p) => {
+  const filteredProducts = catalogProducts.filter((p) => {
     const qty = stockOverrides[p.id] !== undefined ? stockOverrides[p.id] : (p.inventory?.quantity ?? 100);
     const matchesSearch =
       inventorySearch.trim() === "" ||
       p.name.toLowerCase().includes(inventorySearch.toLowerCase()) ||
       p.id.toLowerCase().includes(inventorySearch.toLowerCase()) ||
-      p.category.toLowerCase().includes(inventorySearch.toLowerCase());
+      p.category.toLowerCase().includes(inventorySearch.toLowerCase()) ||
+      p.tags?.some((t) => t.toLowerCase().includes(inventorySearch.toLowerCase()));
     if (!matchesSearch) return false;
+    if (categoryFilter !== "all" && p.category !== categoryFilter) return false;
     if (inventoryFilter === "low") return qty > 0 && qty <= 10;
     if (inventoryFilter === "out") return qty === 0;
     if (inventoryFilter === "instock") return qty > 10;
@@ -804,7 +884,7 @@ export default function AdminPage() {
       "Units Sold",
       "Revenue (INR)",
     ];
-    const rows = products.map((p) => {
+    const rows = catalogProducts.map((p) => {
       const qty =
         stockOverrides[p.id] !== undefined
           ? stockOverrides[p.id]
@@ -861,7 +941,7 @@ export default function AdminPage() {
                 </span>
               </div>
               <p className="text-[10px] text-[#737373] hidden sm:block">
-                Centralized Operations, Real-Time Analytics &amp; Order Fulfillment
+                Seller Central Hub, Inventory Management &amp; Logistics Command
               </p>
             </div>
           </div>
@@ -906,7 +986,7 @@ export default function AdminPage() {
             { id: "orders", label: `Orders (${orders.length})`, icon: Package },
             {
               id: "products",
-              label: `Inventory (${products.length})`,
+              label: `Seller Catalog (${catalogProducts.length})`,
               icon: Layers,
             },
             {
@@ -1098,45 +1178,6 @@ export default function AdminPage() {
               </div>
             </div>
 
-            {/* Secondary Metrics: Reach, Impressions, Clicks, Searches */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373] block">
-                  Unique Visitors
-                </span>
-                <p className="text-base font-semibold text-[#1C1D1F] mt-0.5">
-                  {analytics?.uniqueSessions || 1}
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373] block">
-                  Total Impressions
-                </span>
-                <p className="text-base font-semibold text-[#1C1D1F] mt-0.5">
-                  {analytics?.totalImpressions || 0}
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373] block">
-                  CTA &amp; Lead Clicks
-                </span>
-                <p className="text-base font-semibold text-[#1C1D1F] mt-0.5">
-                  {analytics?.totalClicks || 0}
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373] block">
-                  Catalog Searches
-                </span>
-                <p className="text-base font-semibold text-[#1C1D1F] mt-0.5">
-                  {analytics?.totalSearches || 0}
-                </p>
-              </div>
-            </div>
-
             {/* Complete E-Commerce Funnel Flow */}
             <div className="p-5 rounded-2xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-[#9E8047]/25">
@@ -1201,60 +1242,6 @@ export default function AdminPage() {
                     </span>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Regional & Device Breakdown */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs space-y-3">
-                <span className="text-xs font-semibold text-[#1C1D1F] block">
-                  Device Hardware Allocation
-                </span>
-                <div className="grid grid-cols-3 gap-2 text-center">
-                  <div className="p-2.5 rounded-lg bg-[#FAF7F2] border border-[#9E8047]/20">
-                    <Smartphone className="w-4 h-4 mx-auto mb-1 text-[#4E5F52]" />
-                    <span className="text-[10px] text-[#737373] block">Mobile</span>
-                    <strong className="text-xs text-[#1C1D1F]">
-                      {analytics?.deviceBreakdown.mobile || 1}
-                    </strong>
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-[#FAF7F2] border border-[#9E8047]/20">
-                    <Tablet className="w-4 h-4 mx-auto mb-1 text-[#4E5F52]" />
-                    <span className="text-[10px] text-[#737373] block">Tablet</span>
-                    <strong className="text-xs text-[#1C1D1F]">
-                      {analytics?.deviceBreakdown.tablet || 0}
-                    </strong>
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-[#FAF7F2] border border-[#9E8047]/20">
-                    <Monitor className="w-4 h-4 mx-auto mb-1 text-[#4E5F52]" />
-                    <span className="text-[10px] text-[#737373] block">Desktop</span>
-                    <strong className="text-xs text-[#1C1D1F]">
-                      {analytics?.deviceBreakdown.desktop || 0}
-                    </strong>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs space-y-3">
-                <span className="text-xs font-semibold text-[#1C1D1F] block">
-                  Top Dispatch Regions
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {(analytics?.geoBreakdown || []).length > 0 ? (
-                    analytics!.geoBreakdown.map((g, idx) => (
-                      <span
-                        key={idx}
-                        className="px-2.5 py-1 rounded-lg bg-[#FAF7F2] border border-[#9E8047]/25 text-[11px] text-[#1C1D1F]"
-                      >
-                        {g.region} ({g.count})
-                      </span>
-                    ))
-                  ) : (
-                    <span className="text-xs text-[#737373]">
-                      Delhi NCR, Karnataka, Maharashtra, Gujarat, Rajasthan, Tamil Nadu
-                    </span>
-                  )}
-                </div>
               </div>
             </div>
           </div>
@@ -1514,7 +1501,7 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* TAB 3: PRODUCT PERFORMANCE & LIVE INVENTORY */}
+        {/* TAB 3: SELLER CATALOG & LIVE INVENTORY MANAGEMENT */}
         {activeTab === "products" && (
           <div className="space-y-4">
             {/* Inventory Valuation Header Strip */}
@@ -1524,9 +1511,9 @@ export default function AdminPage() {
                   Catalog Formulations
                 </span>
                 <p className="text-xl font-semibold text-[#1C1D1F] mt-0.5">
-                  {products.length} SKUs
+                  {catalogProducts.length} SKUs
                 </p>
-                <span className="text-[10px] text-[#4E5F52]">100% Certified AYUSH</span>
+                <span className="text-[10px] text-[#4E5F52]">Active on Storefront</span>
               </div>
 
               <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs">
@@ -1536,7 +1523,7 @@ export default function AdminPage() {
                 <p className="text-xl font-semibold text-[#1C1D1F] mt-0.5">
                   {totalInventoryUnits} units
                 </p>
-                <span className="text-[10px] text-[#737373]">Across all warehouse batches</span>
+                <span className="text-[10px] text-[#737373]">Live warehouse inventory</span>
               </div>
 
               <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs">
@@ -1546,37 +1533,48 @@ export default function AdminPage() {
                 <p className="text-xl font-semibold text-[#4E5F52] mt-0.5">
                   {formatINR(totalInventoryValuation)}
                 </p>
-                <span className="text-[10px] text-[#737373]">Live warehouse retail value</span>
+                <span className="text-[10px] text-[#737373]">Cumulative retail value</span>
               </div>
 
               <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373] block">
-                  Stock Alerts
+                  Stock Health Alerts
                 </span>
                 <p className="text-xl font-semibold text-amber-700 mt-0.5">
                   {lowStockCount} Low / {outOfStockCount} Out
                 </p>
-                <span className="text-[10px] text-[#737373]">Replenishment indicators</span>
+                <span className="text-[10px] text-[#737373]">Replenishment triggers</span>
               </div>
             </div>
 
-            {/* Inventory Search & Filters */}
-            <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            {/* Seller Action Bar & Filters */}
+            <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
               <div className="flex items-center gap-2 flex-1 max-w-md">
                 <Search className="w-4 h-4 text-[#737373]" />
                 <input
                   type="text"
-                  placeholder="Search formulations by name, category, or SKU..."
+                  placeholder="Search by formulation name, category, or SKU..."
                   value={inventorySearch}
                   onChange={(e) => setInventorySearch(e.target.value)}
                   className="w-full bg-transparent text-xs text-[#1C1D1F] placeholder-[#999999] focus:outline-none"
                 />
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <select
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  className="px-2.5 py-1.5 rounded-lg bg-[#FAF7F2] border border-[#9E8047]/25 text-xs text-[#1C1D1F] focus:outline-none font-mono"
+                >
+                  <option value="all">All Categories</option>
+                  <option value="supplements">Supplements</option>
+                  <option value="personal-care">Personal Care</option>
+                  <option value="wellness">Wellness Combos</option>
+                </select>
+
                 <div className="flex items-center gap-1 bg-[#FAF7F2] border border-[#9E8047]/25 p-1 rounded-xl">
                   {[
-                    { id: "all", label: `All (${products.length})` },
+                    { id: "all", label: `All (${catalogProducts.length})` },
                     { id: "instock", label: "In Stock" },
                     { id: "low", label: `Low (${lowStockCount})` },
                     { id: "out", label: `Out (${outOfStockCount})` },
@@ -1597,10 +1595,18 @@ export default function AdminPage() {
 
                 <button
                   onClick={handleExportInventoryCSV}
-                  className="px-3 py-1.5 rounded-lg bg-[#4E5F52] hover:bg-[#3D4D40] text-white text-xs font-medium inline-flex items-center gap-1 shadow-xs transition-colors"
+                  className="px-3 py-1.5 rounded-lg bg-[#FFFFFF] border border-[#9E8047]/25 hover:border-[#1C1D1F] text-[#1C1D1F] text-xs font-medium inline-flex items-center gap-1 shadow-xs transition-colors"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>CSV</span>
+                </button>
+
+                <button
+                  onClick={handleAddNewProduct}
+                  className="px-3.5 py-1.5 rounded-xl bg-[#4E5F52] hover:bg-[#3D4D40] text-white text-xs font-semibold inline-flex items-center gap-1.5 shadow-sm transition-all"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>+ Add Formulation</span>
                 </button>
               </div>
             </div>
@@ -1613,13 +1619,12 @@ export default function AdminPage() {
                     <tr>
                       <th className="py-3 px-4">Formulation</th>
                       <th className="py-3 px-4">Category</th>
-                      <th className="py-3 px-4">Price</th>
-                      <th className="py-3 px-4">Views</th>
-                      <th className="py-3 px-4">Units Sold</th>
-                      <th className="py-3 px-4">Gross Revenue</th>
+                      <th className="py-3 px-4">Price (INR)</th>
                       <th className="py-3 px-4">Live Units</th>
                       <th className="py-3 px-4">Stock Health</th>
-                      <th className="py-3 px-4 text-right">Quick Restock</th>
+                      <th className="py-3 px-4">Sold / Rev</th>
+                      <th className="py-3 px-4">Quick Units</th>
+                      <th className="py-3 px-4 text-right">Seller Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#999999]/20">
@@ -1628,7 +1633,6 @@ export default function AdminPage() {
                       const perf = analytics?.productPerformance.find(
                         (perf) => perf.id === p.id || perf.id === p.slug,
                       );
-                      const views = perf?.views || 0;
                       const unitsSold = perf?.orders || 0;
                       const rev = perf?.revenue || unitsSold * p.price;
                       const qty =
@@ -1643,21 +1647,23 @@ export default function AdminPage() {
                         >
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-9 h-9 rounded-lg bg-[#FAF7F2] border border-[#9E8047]/25 relative overflow-hidden flex-shrink-0">
-                                <Image
+                              <div className="w-10 h-10 rounded-lg bg-[#FAF7F2] border border-[#9E8047]/25 relative overflow-hidden flex-shrink-0">
+                                <img
                                   src={img.src}
                                   alt={p.name}
-                                  fill
-                                  className="object-cover"
-                                  sizes="36px"
+                                  className="object-cover w-full h-full"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).src =
+                                      "/images/products/body-essential-nutrition-card.jpg";
+                                  }}
                                 />
                               </div>
                               <div>
-                                <span className="font-medium text-[#1C1D1F] block">
+                                <span className="font-semibold text-[#1C1D1F] block hover:text-[#4E5F52] cursor-pointer" onClick={() => handleEditProduct(p)}>
                                   {p.name}
                                 </span>
                                 <span className="text-[10px] text-[#737373] font-mono">
-                                  SKU: {p.id.toUpperCase()}
+                                  SKU: {p.variants?.[0]?.sku || p.id.toUpperCase()}
                                 </span>
                               </div>
                             </div>
@@ -1665,18 +1671,18 @@ export default function AdminPage() {
                           <td className="py-3 px-4 text-[#737373] capitalize">
                             {p.category}
                           </td>
-                          <td className="py-3 px-4 font-semibold text-[#1C1D1F]">
-                            {formatINR(p.price)}
-                          </td>
-                          <td className="py-3 px-4 font-mono">{views}</td>
-                          <td className="py-3 px-4 font-mono font-medium text-[#4E5F52]">
-                            {unitsSold}
+                          <td className="py-3 px-4">
+                            <span className="font-semibold text-[#1C1D1F] block">
+                              {formatINR(p.price)}
+                            </span>
+                            {p.compareAtPrice && p.compareAtPrice > p.price && (
+                              <span className="text-[10px] text-[#737373] line-through">
+                                {formatINR(p.compareAtPrice)}
+                              </span>
+                            )}
                           </td>
                           <td className="py-3 px-4 font-mono font-semibold text-[#1C1D1F]">
-                            {formatINR(rev)}
-                          </td>
-                          <td className="py-3 px-4 font-mono font-semibold text-[#1C1D1F]">
-                            {qty}
+                            {qty} units
                           </td>
                           <td className="py-3 px-4">
                             {qty === 0 ? (
@@ -1693,8 +1699,11 @@ export default function AdminPage() {
                               </span>
                             )}
                           </td>
-                          <td className="py-3 px-4 text-right">
-                            <div className="flex items-center justify-end gap-1.5">
+                          <td className="py-3 px-4 font-mono text-[11px] text-[#737373]">
+                            <span className="text-[#4E5F52] font-semibold">{unitsSold}</span> sold • {formatINR(rev)}
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-1">
                               <button
                                 onClick={() => handleQuickStockAdjust(p.id, -1)}
                                 className="w-6 h-6 rounded border border-[#9E8047]/30 hover:border-[#1C1D1F] flex items-center justify-center text-[#737373] hover:text-[#1C1D1F] transition-colors"
@@ -1713,7 +1722,7 @@ export default function AdminPage() {
                                     parseInt(e.target.value) || 0,
                                   )
                                 }
-                                className="w-14 px-1.5 py-0.5 rounded bg-[#FAF7F2] border border-[#9E8047]/25 text-xs text-center font-mono focus:outline-none focus:border-[#4E5F52]"
+                                className="w-12 px-1 py-0.5 rounded bg-[#FAF7F2] border border-[#9E8047]/25 text-xs text-center font-mono focus:outline-none focus:border-[#4E5F52]"
                                 title="Direct edit stock count"
                               />
                               <button
@@ -1725,10 +1734,43 @@ export default function AdminPage() {
                               </button>
                               <button
                                 onClick={() => handleQuickStockAdjust(p.id, 50)}
-                                className="px-2 py-0.5 rounded bg-[#EFF4F0] border border-[#4E5F52]/30 text-[10px] font-mono text-[#4E5F52] hover:bg-[#4E5F52] hover:text-white transition-colors"
+                                className="px-1.5 py-0.5 rounded bg-[#EFF4F0] border border-[#4E5F52]/30 text-[9px] font-mono text-[#4E5F52] hover:bg-[#4E5F52] hover:text-white transition-colors"
                                 title="Quick Restock +50 Units"
                               >
                                 +50
+                              </button>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 text-right">
+                            <div className="flex items-center justify-end gap-1.5">
+                              <button
+                                onClick={() => handleEditProduct(p)}
+                                title="Edit Full Formulation"
+                                className="p-1.5 rounded-lg border border-[#9E8047]/30 hover:border-[#4E5F52] text-[#4E5F52] bg-[#FAF7F2] hover:bg-white transition-colors"
+                              >
+                                <Edit3 className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => handleDuplicateProduct(p)}
+                                title="Duplicate Formulation"
+                                className="p-1.5 rounded-lg border border-[#9E8047]/30 hover:border-[#1C1D1F] text-[#737373] hover:text-[#1C1D1F] bg-[#FAF7F2] hover:bg-white transition-colors"
+                              >
+                                <Copy className="w-3.5 h-3.5" />
+                              </button>
+                              <Link
+                                href={`/product/${p.slug}`}
+                                target="_blank"
+                                title="View Live on Storefront"
+                                className="p-1.5 rounded-lg border border-[#9E8047]/30 hover:border-[#1C1D1F] text-[#737373] hover:text-[#1C1D1F] bg-[#FAF7F2] hover:bg-white transition-colors"
+                              >
+                                <ExternalLink className="w-3.5 h-3.5" />
+                              </Link>
+                              <button
+                                onClick={() => handleDeleteProduct(p.id, p.name)}
+                                title="Archive / Delete Formulation"
+                                className="p-1.5 rounded-lg border border-red-200 hover:border-red-500 text-red-600 bg-red-50/50 hover:bg-red-50 transition-colors"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
                               </button>
                             </div>
                           </td>
@@ -2588,6 +2630,14 @@ export default function AdminPage() {
           onClose={() => setInvoiceOrder(null)}
         />
       )}
+
+      {/* Seller Central Product Editor Modal */}
+      <ProductEditorModal
+        isOpen={isProductEditorOpen}
+        product={editingProduct}
+        onClose={() => setIsProductEditorOpen(false)}
+        onSave={handleSaveProduct}
+      />
 
       {/* Floating System Toast */}
       {toast && (
