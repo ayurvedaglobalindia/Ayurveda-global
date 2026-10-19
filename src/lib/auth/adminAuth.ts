@@ -15,7 +15,8 @@ const SESSION_DURATION_MS = 2 * 60 * 60 * 1000; // 2 hours
 
 const AUTHORIZED_HASHES = new Set([
   "adb2bfa9d66224b9465dc2e78196f5b71bbe53aec9afcce76c96489b8d3445d4",
-  "b383aa421ebd9038adb130a407cc2ef2882cbbc4a9af0d4f8861755a0077ff7a",
+  "b383aa421ebd9038adb130a407cc2ef2882cbbc4a9af0d4f8861755a0077ff7a", // ayur2025
+  "f5a321401b0f34c59152070b16d9e4fe069aa6b0e0b3bf2ae05213904c6a27d6", // ayur2026
 ]);
 
 async function sha256(message: string): Promise<string> {

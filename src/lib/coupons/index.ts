@@ -72,6 +72,32 @@ const defaultCoupons: Record<string, DbCoupon> = {
     applicable_products_json: "[]",
     applicable_categories_json: "[]",
   },
+  WELLNESS10: {
+    code: "WELLNESS10",
+    type: "percentage",
+    value: 10,
+    min_order_amount: 0,
+    max_discount_amount: 100000,
+    usage_limit: 10000,
+    used_count: 0,
+    expires_at: "2028-12-31T23:59:59Z",
+    is_active: 1,
+    applicable_products_json: "[]",
+    applicable_categories_json: "[]",
+  },
+  AYURVEDA: {
+    code: "AYURVEDA",
+    type: "percentage",
+    value: 15,
+    min_order_amount: 0,
+    max_discount_amount: 150000,
+    usage_limit: 10000,
+    used_count: 0,
+    expires_at: "2028-12-31T23:59:59Z",
+    is_active: 1,
+    applicable_products_json: "[]",
+    applicable_categories_json: "[]",
+  },
 };
 
 export function validateCoupon(
@@ -80,7 +106,33 @@ export function validateCoupon(
   productIds: string[],
   categories: string[],
 ): { valid: boolean; coupon?: Coupon; discount: number; error?: string } {
-  const row: DbCoupon | undefined = defaultCoupons[code.toUpperCase()];
+  let row: DbCoupon | undefined = defaultCoupons[code.toUpperCase()];
+
+  // Support custom coupons created via Admin Panel
+  if (!row && typeof window !== "undefined") {
+    try {
+      const customCoupons = JSON.parse(
+        localStorage.getItem("ayur_custom_coupons") || "[]",
+      );
+      const found = customCoupons.find(
+        (c: any) => c.code === code.toUpperCase() && c.active !== false,
+      );
+      if (found) {
+        row = {
+          code: found.code,
+          type: found.type === "flat" ? "fixed" : "percentage",
+          value: found.discount,
+          min_order_amount: (found.minOrder || 0) * 100,
+          usage_limit: 10000,
+          used_count: 0,
+          expires_at: "2030-12-31T23:59:59Z",
+          is_active: 1,
+          applicable_products_json: "[]",
+          applicable_categories_json: "[]",
+        };
+      }
+    } catch {}
+  }
 
   if (!row) {
     return { valid: false, discount: 0, error: "Invalid coupon code" };

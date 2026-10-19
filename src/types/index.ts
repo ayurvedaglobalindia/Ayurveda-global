@@ -167,7 +167,9 @@ export interface WhatsAppLeadEvent {
     | "combo-spotlight"
     | "video-player"
     | "quick-view"
-    | "ag-mascot";
+    | "ag-mascot"
+    | "consultation_appointment_form"
+    | "modal_appointment_form";
   productId?: string;
   productName?: string;
   customerName?: string;

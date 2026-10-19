@@ -1,7 +1,9 @@
-/** @type {import('next').NextConfig} */
+const fs = require("fs");
+const isTermux = fs.existsSync("/data/data/com.termux");
+
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
-  disable: process.env.NODE_ENV === "development",
+  disable: process.env.NODE_ENV === "development" || isTermux,
   register: true,
   skipWaiting: true,
 });
@@ -36,6 +38,13 @@ const nextConfig = {
         path: false,
         crypto: false,
       }
+    }
+    if (isTermux && config.optimization && Array.isArray(config.optimization.minimizer)) {
+      config.optimization.minimizer.forEach((m) => {
+        if (m && m.options) {
+          m.options.parallel = false;
+        }
+      });
     }
     return config
   },

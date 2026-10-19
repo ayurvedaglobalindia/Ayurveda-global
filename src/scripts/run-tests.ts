@@ -220,6 +220,32 @@ async function runAllTests() {
       );
   });
 
+  test("Valid WELLNESS10 coupon calculates 10% discount", () => {
+    const res = validateCoupon(
+      "WELLNESS10",
+      300000,
+      ["vitality-power-combo"],
+      ["wellness"],
+    );
+    if (!res.valid)
+      throw new Error(`WELLNESS10 should be valid, got: ${res.error}`);
+    if (res.discount !== 30000)
+      throw new Error(`Expected 30000 discount, got ${res.discount}`);
+  });
+
+  test("Valid AYURVEDA coupon calculates 15% discount", () => {
+    const res = validateCoupon(
+      "AYURVEDA",
+      200000,
+      ["body-essential-nutrition"],
+      ["supplements"],
+    );
+    if (!res.valid)
+      throw new Error(`AYURVEDA should be valid, got: ${res.error}`);
+    if (res.discount !== 30000)
+      throw new Error(`Expected 30000 discount, got ${res.discount}`);
+  });
+
   test("Rejects invalid non-existent coupon code", () => {
     const res = validateCoupon(
       "INVALID_CODE_XYZ",

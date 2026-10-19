@@ -182,7 +182,7 @@ export async function createCashfreeOrderSession(intent: PaymentIntent): Promise
   is_mock?: boolean;
 }> {
   try {
-    const res = await fetch("/api/cashfree/create-order", {
+    const res = await fetch("/api/cashfree/create-order/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
