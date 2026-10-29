@@ -579,6 +579,31 @@ export function CouponInput({
           {error && (
             <p className="text-[11px] text-red-500 font-medium">{error}</p>
           )}
+
+          {/* Quick-Tap Suggested Coupons */}
+          <div className="flex items-center gap-1.5 pt-1 flex-wrap">
+            <span className="text-[10px] text-[#737373] font-mono">Available:</span>
+            <button
+              type="button"
+              onClick={() => {
+                setCode("WELCOME10");
+                onApply("WELCOME10");
+              }}
+              className="text-[9.5px] font-mono font-bold text-[#0E3924] bg-[#0E3924]/8 hover:bg-[#0E3924]/15 border border-[#0E3924]/20 px-2 py-0.5 rounded-full transition-colors cursor-pointer"
+            >
+              WELCOME10 (10% Off)
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setCode("AYURVEDA");
+                onApply("AYURVEDA");
+              }}
+              className="text-[9.5px] font-mono font-bold text-[#8C703D] bg-[#8C703D]/10 hover:bg-[#8C703D]/20 border border-[#8C703D]/25 px-2 py-0.5 rounded-full transition-colors cursor-pointer"
+            >
+              AYURVEDA (15% Off)
+            </button>
+          </div>
         </div>
       )}
     </div>

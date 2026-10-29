@@ -109,7 +109,7 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <div className="container py-8 sm:py-12 lg:py-16">
+      <div className="container py-8 sm:py-12 lg:py-16 pb-28 sm:pb-32 lg:pb-16">
         {/* Hero Section */}
         <section className="mb-12 sm:mb-16">
           <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-10">

@@ -131,7 +131,7 @@ export default function OrdersPage() {
 
   return (
     <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
-      <div className="container py-6 sm:py-8 lg:py-10">
+      <div className="container py-6 sm:py-8 lg:py-10 pb-28 sm:pb-32 lg:pb-10">
         <div className="mb-6 pb-4 border-b border-[#9E8047]/25">
           <Link
             href="/account"

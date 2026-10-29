@@ -38,7 +38,7 @@ interface MobileMenuDrawerProps {
 }
 
 export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
-  const { openSearch } = useUIStore();
+  const { openSearch, openModal } = useUIStore();
 
   useEffect(() => {
     if (isOpen) {
@@ -124,6 +124,27 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                   <span className="truncate">Search catalog...</span>
                 </button>
 
+                {/* Ayurvedic Dosha Diagnostic Banner */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    openModal("dosha-quiz");
+                  }}
+                  className="w-full flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-[#1B4332] to-[#2D4A3E] text-[#FAF7F2] shadow-sm text-left group transition-all"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#FAF7F2]/10 flex items-center justify-center text-[#D4AF37]">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-medium tracking-wide">Take Ayurvedic Dosha Quiz</div>
+                      <div className="text-[10px] text-[#FAF7F2]/75 font-mono">Personalized Protocol in 60s</div>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-[#D4AF37] group-hover:translate-x-0.5 transition-transform" />
+                </button>
+
                 {/* Main Links */}
                 <div>
                   <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#737373] mb-2 px-1">
@@ -145,6 +166,24 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                       className="flex items-center justify-between p-2.5 rounded-lg hover:bg-[#F4EFEA] text-sm text-[#1C1D1F] transition-colors"
                     >
                       <span>Formulation Collections</span>
+                      <ChevronRight className="w-4 h-4 text-[#999999]" />
+                    </Link>
+
+                    <Link
+                      href="/consultation"
+                      onClick={onClose}
+                      className="flex items-center justify-between p-2.5 rounded-lg hover:bg-[#F4EFEA] text-sm text-[#1C1D1F] transition-colors"
+                    >
+                      <span>Online Vaidya Consultation</span>
+                      <ChevronRight className="w-4 h-4 text-[#999999]" />
+                    </Link>
+
+                    <Link
+                      href="/blog"
+                      onClick={onClose}
+                      className="flex items-center justify-between p-2.5 rounded-lg hover:bg-[#F4EFEA] text-sm text-[#1C1D1F] transition-colors"
+                    >
+                      <span>Ayurvedic Journal &amp; Articles</span>
                       <ChevronRight className="w-4 h-4 text-[#999999]" />
                     </Link>
 
@@ -256,6 +295,15 @@ export function MobileMenuDrawer({ isOpen, onClose }: MobileMenuDrawerProps) {
                       className="flex items-center justify-between p-2 rounded-lg hover:bg-[#F4EFEA] text-xs text-[#1C1D1F] transition-colors"
                     >
                       <span>Patron Account &amp; OTP Access</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-[#999999]" />
+                    </Link>
+
+                    <Link
+                      href="/wishlist"
+                      onClick={onClose}
+                      className="flex items-center justify-between p-2 rounded-lg hover:bg-[#F4EFEA] text-xs text-[#1C1D1F] transition-colors"
+                    >
+                      <span>Saved Formulations (Wishlist)</span>
                       <ChevronRight className="w-3.5 h-3.5 text-[#999999]" />
                     </Link>
                   </div>

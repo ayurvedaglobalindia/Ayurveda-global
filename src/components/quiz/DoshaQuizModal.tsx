@@ -12,8 +12,12 @@ import {
   ShieldCheck,
   Heart,
   ChevronRight,
+  ShoppingBag,
 } from "lucide-react";
 import { formatINR } from "@/lib/utils/formatters";
+import { useCartStore } from "@/store/cartStore";
+import { useUIStore } from "@/store/uiStore";
+import { getProductBySlug } from "@/lib/products/registry";
 
 interface QuizQuestion {
   id: number;
@@ -157,9 +161,26 @@ export function DoshaQuizModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const { addItem } = useCartStore();
+  const { openCartDrawer, showToast } = useUIStore();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, "vata" | "pitta" | "kapha">>({});
   const [result, setResult] = useState<DoshaResult | null>(null);
+
+  const handleAddToCart = () => {
+    if (!result) return;
+    const prod = getProductBySlug(result.recommendedProductSlug);
+    if (prod) {
+      addItem(prod);
+      showToast({
+        type: "success",
+        title: "Added to Bag",
+        message: `${result.recommendedProductName} added to cart.`,
+      });
+      onClose();
+      openCartDrawer();
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -352,14 +373,24 @@ export function DoshaQuizModal({
                     </span>
                   </div>
 
-                  <Link
-                    href={`/product/${result.recommendedProductSlug}`}
-                    onClick={onClose}
-                    className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#071A12] hover:bg-[#0E3924] text-[#D4AF37] text-xs font-bold uppercase tracking-wider inline-flex items-center justify-center gap-2 transition-all shadow-md flex-shrink-0"
-                  >
-                    <span>Order Now</span>
-                    <ArrowRight className="w-4 h-4 text-[#D4AF37]" />
-                  </Link>
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto shrink-0">
+                    <button
+                      type="button"
+                      onClick={handleAddToCart}
+                      className="px-5 py-3 rounded-full bg-[#D4AF37] hover:bg-[#E5C358] text-[#071A12] text-xs font-bold uppercase tracking-wider inline-flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer"
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5 text-[#071A12]" />
+                      <span>Add to Bag</span>
+                    </button>
+                    <Link
+                      href={`/product/${result.recommendedProductSlug}`}
+                      onClick={onClose}
+                      className="px-5 py-3 rounded-full bg-[#071A12] hover:bg-[#0E3924] text-white text-xs font-bold uppercase tracking-wider inline-flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 cursor-pointer text-center"
+                    >
+                      <span>View Details</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    </Link>
+                  </div>
                 </div>
               </div>
 

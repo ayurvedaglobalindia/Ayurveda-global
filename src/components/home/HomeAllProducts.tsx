@@ -35,15 +35,15 @@ export function HomeAllProducts() {
       : products.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="all-products" className="py-12 sm:py-20 bg-[#FAF7F2] border-t border-[#D4AF37]/20 relative">
+    <section id="all-products" className="py-6 sm:py-12 lg:py-16 bg-[#FAF7F2] border-t border-[#D4AF37]/20 relative">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0E3924]/8 border border-[#0E3924]/20 text-[#0E3924] text-xs font-sans uppercase tracking-wider mb-2.5">
             <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
             <span className="font-semibold text-[11px]">100% Authentic Classical Pharmacopeia</span>
           </div>
-          <h2 className="font-editorial text-3xl sm:text-4xl lg:text-5xl text-[#071A12] font-normal tracking-tight mb-2.5">
+          <h2 className="font-editorial text-2xl sm:text-4xl lg:text-5xl text-[#071A12] font-normal tracking-tight mb-2 sm:mb-2.5">
             Complete Ayurvedic{" "}
             <span className="italic text-[#8C703D]">Formulations</span>
           </h2>
@@ -53,7 +53,7 @@ export function HomeAllProducts() {
         </div>
 
         {/* Category Pills Bar */}
-        <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mb-8 sm:mb-10">
+        <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mb-5 sm:mb-10">
           {filterTabs.map((tab) => {
             const isActive = activeCategory === tab.id;
             return (

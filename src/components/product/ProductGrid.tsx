@@ -84,7 +84,7 @@ export function ProductGrid({
   };
 
   const gridClasses = classNames(
-    "grid gap-5 sm:gap-6",
+    "grid gap-3.5 sm:gap-6",
     getColClass(columns.base),
     getSmColClass(columns.sm),
     getMdColClass(columns.md),

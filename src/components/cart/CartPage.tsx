@@ -119,7 +119,7 @@ export function CartPage() {
   const relatedProducts = getProductsByCategory("supplements").slice(0, 4);
 
   return (
-    <div className="container py-5 sm:py-7 lg:py-8 pb-16">
+    <div className="container py-5 sm:py-7 lg:py-8 pb-28 sm:pb-32 lg:pb-16">
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}

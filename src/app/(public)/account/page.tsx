@@ -45,7 +45,7 @@ export default function AccountPage() {
 
   return (
     <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F]">
-      <div className="container py-6 sm:py-8 lg:py-10 max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="container py-6 sm:py-8 lg:py-10 pb-28 sm:pb-32 lg:pb-10 max-w-4xl mx-auto px-4 sm:px-6">
         {/* Profile Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-[#9E8047]/25">
           <div className="flex items-center gap-3.5">

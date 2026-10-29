@@ -53,11 +53,11 @@ export function Header() {
           {/* Scaled Luxury Serif Logo Brand Lockup */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0 group py-0.5"
+            className="flex items-center gap-2 sm:gap-3 flex-shrink-0 group py-0.5"
             aria-label="Ayurveda Global Home"
           >
             {/* Logo Emblem (38px-40px) */}
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0 rounded-full p-0.5 bg-white/90 border border-[#D4AF37]/35 shadow-[0_2px_8px_rgba(7,26,18,0.12)] group-hover:shadow-[0_4px_12px_rgba(7,26,18,0.2)] transition-shadow">
+            <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 rounded-full p-0.5 bg-white/90 border border-[#D4AF37]/35 shadow-[0_2px_8px_rgba(7,26,18,0.12)] group-hover:shadow-[0_4px_12px_rgba(7,26,18,0.2)] transition-shadow">
               <img
                 src="/images/brand-logo.png"
                 alt="Ayurveda Global Emblem"
@@ -65,10 +65,10 @@ export function Header() {
               />
             </div>
             <div className="min-w-0 flex flex-col justify-center">
-              <span className="font-editorial text-lg sm:text-xl lg:text-2xl font-bold tracking-tight text-[#071A12] transition-colors whitespace-nowrap block leading-tight">
+              <span className="font-editorial text-base sm:text-xl lg:text-2xl font-bold tracking-tight text-[#071A12] transition-colors whitespace-nowrap block leading-tight">
                 Ayurveda Global
               </span>
-              <span className="text-[8px] sm:text-[9.5px] uppercase tracking-[0.24em] text-[#D4AF37] font-sans font-bold whitespace-nowrap leading-none mt-0.5">
+              <span className="text-[7.5px] sm:text-[9.5px] uppercase tracking-[0.22em] text-[#D4AF37] font-sans font-bold whitespace-nowrap leading-none mt-0.5">
                 CLASSICAL APOTHECARY
               </span>
             </div>
@@ -118,7 +118,7 @@ export function Header() {
           </div>
 
           {/* Right Side Controls: Search, Account, Wishlist, Cart Count Pill */}
-          <div className="flex items-center gap-1 sm:gap-2.5 flex-shrink-0">
+          <div className="flex items-center gap-0.5 sm:gap-2 flex-shrink-0">
             {/* Search (Icon on small screens) */}
             <button
               type="button"
@@ -126,7 +126,7 @@ export function Header() {
               className="lg:hidden p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Search"
             >
-              <Search className="w-5 h-5 stroke-[1.5]" />
+              <Search className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5]" />
             </button>
 
             {/* Wishlist Icon Button */}
@@ -136,9 +136,9 @@ export function Header() {
               className="relative p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Wishlist"
             >
-              <Heart className="w-5 h-5 stroke-[1.5]" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5]" />
               {isMounted && wishlistCount > 0 ? (
-                <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-[#D4AF37] text-[#071A12] text-[9px] font-bold flex items-center justify-center shadow-xs pointer-events-none">
+                <span className="absolute top-0 right-0 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#D4AF37] text-[#071A12] text-[8.5px] sm:text-[9px] font-bold flex items-center justify-center shadow-xs pointer-events-none">
                   {wishlistCount > 99 ? "99+" : wishlistCount}
                 </span>
               ) : null}
@@ -150,7 +150,7 @@ export function Header() {
               className="p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Account"
             >
-              <User className="w-5 h-5 stroke-[1.5]" />
+              <User className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5]" />
             </Link>
 
             {/* Cart Count Pill */}
@@ -160,9 +160,9 @@ export function Header() {
               className="relative p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Cart"
             >
-              <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
+              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5]" />
               {isMounted && cartCount > 0 ? (
-                <span className="absolute top-0 right-0 w-4 h-4 rounded-full bg-[#0E3924] text-white text-[9px] font-bold flex items-center justify-center shadow-xs pointer-events-none">
+                <span className="absolute top-0 right-0 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#0E3924] text-white text-[8.5px] sm:text-[9px] font-bold flex items-center justify-center shadow-xs pointer-events-none">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               ) : null}
@@ -175,7 +175,7 @@ export function Header() {
               className="md:hidden p-1.5 sm:p-2 rounded-full text-[#071A12] hover:bg-[#071A12]/5 transition-colors"
               aria-label="Open menu"
             >
-              <Menu className="w-5 h-5 stroke-[1.5]" />
+              <Menu className="w-4 h-4 sm:w-5 sm:h-5 stroke-[1.5]" />
             </button>
           </div>
         </div>

@@ -465,18 +465,18 @@ export function ProductCard({
 
           {/* Price Row (Flipkart & Myntra style clear layout) */}
           <div className="flex items-center justify-between gap-1 pt-0.5 flex-wrap">
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-sans text-[13px] sm:text-[14.5px] font-bold text-[#071A12] tracking-tight">
+            <div className="flex items-baseline gap-1 sm:gap-1.5 min-w-0">
+              <span className="font-sans text-[12.5px] sm:text-[14.5px] font-bold text-[#071A12] tracking-tight">
                 {formatINR(product.price)}
               </span>
               {hasDiscount && (
-                <span className="text-[10px] sm:text-[11px] text-stone-400 line-through font-normal">
+                <span className="text-[9.5px] sm:text-[11px] text-stone-400 line-through font-normal">
                   {formatINR(product.compareAtPrice!)}
                 </span>
               )}
             </div>
             {hasDiscount && (
-              <span className="text-[8px] sm:text-[8.5px] font-sans font-bold text-[#0E3924] bg-[#0E3924]/8 border border-[#0E3924]/15 px-1.5 py-0.2 rounded-full shrink-0 tracking-tight">
+              <span className="text-[7.5px] sm:text-[8.5px] font-sans font-bold text-[#0E3924] bg-[#0E3924]/8 border border-[#0E3924]/15 px-1 sm:px-1.5 py-0.2 rounded-full shrink-0 tracking-tight">
                 Save ₹{Math.round((product.compareAtPrice! - product.price) / 100)}
               </span>
             )}
@@ -485,33 +485,33 @@ export function ProductCard({
           {/* Add to Bag CTA and View Link */}
           <div className="pt-2 border-t border-[#0E3924]/10 space-y-1.5">
             {inCart ? (
-              <div className="w-full flex items-center justify-between bg-[#FAF7F2] p-1 px-1.5 sm:px-2 rounded-xl border border-[#0E3924]/20">
-                <div className="flex items-center gap-1">
+              <div className="w-full flex items-center justify-between bg-[#FAF7F2] p-1 px-1 sm:px-2 rounded-xl border border-[#0E3924]/20 gap-1">
+                <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
                   <button
                     type="button"
                     onClick={handleDecrement}
-                    className="w-6 h-6 rounded-lg bg-white text-[#071A12] flex items-center justify-center border border-stone-200 shadow-2xs hover:bg-stone-50 active:scale-95 transition-all"
+                    className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-white text-[#071A12] flex items-center justify-center border border-stone-200 shadow-2xs hover:bg-stone-50 active:scale-95 transition-all shrink-0 cursor-pointer"
                     aria-label="Decrease quantity"
                   >
-                    <Minus className="w-3 h-3 text-[#0E3924]" />
+                    <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#0E3924]" />
                   </button>
-                  <span className="text-[11px] font-bold text-[#071A12] px-1.5 min-w-[18px] text-center font-sans">
+                  <span className="text-[10px] sm:text-[11px] font-bold text-[#071A12] px-1 min-w-[16px] text-center font-sans">
                     {cartQuantity}
                   </span>
                   <button
                     type="button"
                     onClick={handleIncrement}
-                    className="w-6 h-6 rounded-lg bg-white text-[#071A12] flex items-center justify-center border border-stone-200 shadow-2xs hover:bg-stone-50 active:scale-95 transition-all"
+                    className="w-5 h-5 sm:w-6 sm:h-6 rounded-md sm:rounded-lg bg-white text-[#071A12] flex items-center justify-center border border-stone-200 shadow-2xs hover:bg-stone-50 active:scale-95 transition-all shrink-0 cursor-pointer"
                     aria-label="Increase quantity"
                   >
-                    <Plus className="w-3 h-3 text-[#0E3924]" />
+                    <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#0E3924]" />
                   </button>
                 </div>
 
                 <button
                   type="button"
                   onClick={() => openCartDrawer()}
-                  className="text-[10px] font-semibold py-1 px-2.5 bg-[#0E3924] text-white rounded-lg hover:bg-[#071A12] transition-colors inline-flex items-center gap-1 shadow-2xs active:scale-95"
+                  className="text-[9.5px] sm:text-[10px] font-semibold py-1 px-1.5 sm:px-2.5 bg-[#0E3924] text-white rounded-md sm:rounded-lg hover:bg-[#071A12] transition-colors inline-flex items-center gap-1 shadow-2xs active:scale-95 shrink-0 cursor-pointer"
                 >
                   <ShoppingBag className="w-2.5 h-2.5 text-[#D4AF37]" />
                   <span>View Bag</span>
@@ -525,7 +525,7 @@ export function ProductCard({
                   product?.inventory?.trackQuantity &&
                   product?.inventory?.quantity === 0
                 }
-                className="w-full text-[11px] sm:text-xs font-sans font-bold py-2 sm:py-2.5 px-3 rounded-lg bg-[#0E3924] hover:bg-[#071A12] text-white transition-all inline-flex items-center justify-center gap-1.5 shadow-2xs whitespace-nowrap active:scale-95 group/btn"
+                className="w-full text-[10.5px] sm:text-xs font-sans font-bold py-2 sm:py-2.5 px-2 sm:px-3 rounded-lg bg-[#0E3924] hover:bg-[#071A12] text-white transition-all inline-flex items-center justify-center gap-1 sm:gap-1.5 shadow-2xs whitespace-nowrap active:scale-95 group/btn cursor-pointer"
               >
                 {justAdded ? (
                   <>

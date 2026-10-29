@@ -209,7 +209,7 @@ export default function ConsultationClient() {
 
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F] py-8 sm:py-12">
+    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F] py-8 sm:py-12 pb-28 sm:pb-32 lg:pb-12">
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Breadcrumb */}
         <nav

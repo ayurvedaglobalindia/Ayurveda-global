@@ -235,7 +235,7 @@ function ShopContent({ initialProducts = [], initialCategories = [] }: ShopClien
   };
 
   return (
-    <div className="container py-3 sm:py-6 lg:py-8 pb-20">
+    <div className="container py-3 sm:py-6 lg:py-8 pb-28 sm:pb-32 lg:pb-16">
       {/* Compact Luxury Apothecary Header */}
       <div className="mb-4 sm:mb-6 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white via-[#FAF7F2] to-[#F5EFE6] border border-[#D4AF37]/30 p-3.5 sm:p-6 lg:p-8 shadow-xs relative overflow-hidden">
         {/* Subtle decorative background watermark */}

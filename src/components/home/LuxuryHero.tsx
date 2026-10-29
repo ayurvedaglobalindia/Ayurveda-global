@@ -144,7 +144,7 @@ export function LuxuryHero() {
 
       <div className="container mx-auto px-3.5 sm:px-6 lg:px-8 relative z-10 w-full max-w-full box-border">
         {/* High-Impact Split-Card 3D Banner Carousel: Fixed layout constraints to prevent overlap */}
-        <div className="relative w-full aspect-[4/5] sm:aspect-[21/9] min-h-[360px] sm:min-h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-[#D4AF37]/30 bg-[#071A12]">
+        <div className="relative w-full aspect-[4/5] sm:aspect-[21/9] min-h-[400px] sm:min-h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-[#D4AF37]/30 bg-[#071A12]">
           <AnimatePresence mode="wait">
             <motion.div
               key={active.id}
@@ -175,19 +175,19 @@ export function LuxuryHero() {
               />
 
               {/* 55% / 45% Split Layout Stage (Editorial Luxury Ayurveda) */}
-              <div className="relative z-20 w-full h-full flex flex-col md:flex-row items-center justify-between p-5 sm:p-8 md:p-10 lg:p-12 gap-3 sm:gap-6">
+              <div className="relative z-20 w-full h-full flex flex-col md:flex-row items-center justify-between p-4 sm:p-8 md:p-10 lg:p-12 gap-2 sm:gap-6">
                 {/* Left Side: Typography & Action Elements - Added explicit height constraints */}
-                <div className="w-full md:w-[60%] flex flex-col justify-center h-full space-y-3 sm:space-y-4 px-5 sm:px-8 py-6 md:px-10">
+                <div className="w-full md:w-[60%] flex flex-col justify-center h-full space-y-2.5 sm:space-y-4 px-2 sm:px-8 py-3 md:px-10">
                   {/* Classical Gold Badge */}
                   <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#071A12]/90 border border-[#D4AF37]/50 text-[#D4AF37] text-[9.5px] sm:text-[10.5px] font-editorial font-semibold tracking-[0.16em] uppercase shadow-xs">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[#071A12]/90 border border-[#D4AF37]/50 text-[#D4AF37] text-[9px] sm:text-[10.5px] font-editorial font-semibold tracking-[0.16em] uppercase shadow-xs">
                       <Sparkles className="w-3 h-3 text-[#D4AF37]" />
                       {active.badge}
                     </span>
                   </div>
 
                   {/* Headline with Authoritative Editorial Serif - Adjusted Weight for Organic Feel */}
-                  <h1 className="font-editorial text-3xl sm:text-4xl lg:text-[48px] text-[#FDFBF7] font-medium leading-[1.05] tracking-tight drop-shadow-md">
+                  <h1 className="font-editorial text-2xl sm:text-4xl lg:text-[48px] text-[#FDFBF7] font-medium leading-[1.08] sm:leading-[1.05] tracking-tight drop-shadow-md">
                     {active.titlePrefix}
                     <span className="italic text-[#D4AF37] font-normal">
                       {active.titleEmphasis}
@@ -196,20 +196,20 @@ export function LuxuryHero() {
                   </h1>
 
                   {/* Clean, Non-Clipped Subheadline */}
-                  <p className="text-[12px] sm:text-[13px] lg:text-sm text-[#FDFBF7]/90 max-w-lg font-editorial leading-relaxed tracking-normal">
+                  <p className="text-[11.5px] sm:text-[13px] lg:text-sm text-[#FDFBF7]/90 max-w-lg font-editorial leading-relaxed tracking-normal line-clamp-3 sm:line-clamp-none">
                     {active.subtitle}
                   </p>
 
                   {/* Clinical Accreditation Pill */}
                   <div className="flex items-center gap-2 pt-0.5">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[#FDFBF7]/95 text-[9.5px] sm:text-[11px] font-editorial">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/10 border border-white/20 text-[#FDFBF7]/95 text-[9px] sm:text-[11px] font-editorial">
                       <ShieldCheck className="w-3.5 h-3.5 text-[#10B981]" />
                       <span>{active.specs}</span>
                     </div>
                   </div>
 
                   {/* In-Banner Dual CTAs */}
-                  <div className="pt-2 sm:pt-3 flex items-center gap-3 flex-wrap">
+                  <div className="pt-1.5 sm:pt-3 flex items-center gap-2.5 sm:gap-3 flex-wrap">
                     <Link
                       href={active.primaryCtaLink}
                       className="inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-[#D4AF37] hover:bg-[#E5C358] active:scale-95 text-[#071A12] text-xs font-editorial font-bold tracking-wider uppercase transition-all shadow-md"

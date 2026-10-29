@@ -237,7 +237,7 @@ function TrackOrderContent() {
   };
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F] py-6 sm:py-10 lg:py-12">
+    <div className="bg-[#FAF7F2] min-h-screen text-[#1C1D1F] py-6 sm:py-10 lg:py-12 pb-28 sm:pb-32 lg:pb-12">
       <div className="container max-w-3xl mx-auto px-4 sm:px-6">
         {/* If Order is Tracked */}
         {trackedOrder ? (

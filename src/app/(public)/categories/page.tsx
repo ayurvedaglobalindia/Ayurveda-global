@@ -74,7 +74,7 @@ export default function CategoriesPage() {
         }}
       />
 
-      <div className="container py-6 sm:py-8 lg:py-10">
+      <div className="container py-6 sm:py-8 lg:py-10 pb-28 sm:pb-32 lg:pb-10">
         <div className="mb-6 sm:mb-8 pb-4 border-b border-[#9E8047]/25">
           <nav
             className="flex items-center gap-2 text-xs text-[#737373] mb-2 font-mono"

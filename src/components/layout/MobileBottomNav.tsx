@@ -47,7 +47,7 @@ export function MobileBottomNav() {
 
   const cartCount = isMounted ? mountedCartCount : 0;
 
-  if (pathname?.startsWith("/product/")) {
+  if (pathname?.startsWith("/product/") || pathname?.startsWith("/checkout")) {
     return null;
   }
 
@@ -59,12 +59,12 @@ export function MobileBottomNav() {
 
   return (
     <>
-      {/* Sleek, Compact iOS Floating Island Bottom Navigation Dock (10px float margin, 52px max height) */}
+      {/* Sleek, Compact Centered Floating Bottom Navigation Dock (Safely above Android navigation/home gestures) */}
       <nav
         aria-label="Mobile Floating Navigation Dock"
-        className="md:hidden fixed inset-x-3 sm:inset-x-4 max-w-sm mx-auto z-40 rounded-full backdrop-blur-xl bg-white/95 dark:bg-stone-950/95 border border-stone-200/80 shadow-lg px-2.5 sm:px-3 py-1.5 transition-all"
+        className="md:hidden fixed left-1/2 -translate-x-1/2 w-[calc(100%-24px)] max-w-[360px] sm:max-w-sm z-40 rounded-full backdrop-blur-xl bg-white/95 dark:bg-stone-950/95 border border-stone-200/80 shadow-lg px-2 sm:px-3 py-1.5 transition-all"
         style={{
-          bottom: "max(10px, calc(6px + env(safe-area-inset-bottom, 0px)))",
+          bottom: "max(12px, calc(10px + env(safe-area-inset-bottom, 0px)))",
         }}
       >
         <div className="flex items-center justify-around h-[48px] relative">
