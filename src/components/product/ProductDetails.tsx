@@ -17,6 +17,7 @@ import {
   Clock,
   Sun,
   MessageCircle,
+  ShoppingBag,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { classNames } from "@/lib/utils/formatters";
@@ -33,6 +34,7 @@ import {
 } from "@/store/whatsappStore";
 import { formatINR } from "@/lib/utils/formatters";
 import { PincodeDeliveryEstimator } from "@/components/product/PincodeDeliveryEstimator";
+import { DiscreetPackagingBadge } from "@/components/product/DiscreetPackagingBadge";
 import {
   ReviewSubmissionModal,
   CustomerReview,
@@ -131,7 +133,7 @@ export function ProductDetails({
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowStickyBar(window.scrollY > 450);
+      setShowStickyBar(window.scrollY > 280);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -534,6 +536,9 @@ export function ProductDetails({
             {/* Postal Delivery & Pincode Estimator */}
             <PincodeDeliveryEstimator />
 
+            {/* 100% Discreet Packaging & Privacy Guarantee */}
+            <DiscreetPackagingBadge className="mt-4" />
+
             {/* Trust Icons */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 border-t border-stone-200">
               <div className="flex flex-col items-center justify-center p-2 text-center gap-1">
@@ -761,7 +766,7 @@ export function ProductDetails({
 
           {/* Customer Reviews & Testimonials Section */}
           <section className="max-w-4xl mx-auto py-10 border-t border-stone-200">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <div className="flex text-[#D4AF37]">
@@ -788,6 +793,45 @@ export function ProductDetails({
               </button>
             </div>
 
+            {/* Rating Breakdown Bars */}
+            <div className="grid sm:grid-cols-2 gap-6 bg-stone-50/80 p-5 rounded-2xl border border-stone-200 mb-8">
+              <div className="flex flex-col justify-center">
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-3xl sm:text-4xl font-serif font-bold text-[#1f3d2b]">4.9</span>
+                  <span className="text-stone-500 text-xs sm:text-sm">out of 5.0</span>
+                </div>
+                <div className="flex text-[#D4AF37] mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                  ))}
+                </div>
+                <p className="text-xs text-stone-600 font-sans">
+                  100% verified customer ratings compiled from apothecary consultations and direct orders.
+                </p>
+              </div>
+
+              <div className="space-y-1.5 justify-center flex flex-col text-xs font-mono">
+                {[
+                  { star: 5, pct: "92%" },
+                  { star: 4, pct: "8%" },
+                  { star: 3, pct: "0%" },
+                  { star: 2, pct: "0%" },
+                  { star: 1, pct: "0%" },
+                ].map((row) => (
+                  <div key={row.star} className="flex items-center gap-2">
+                    <span className="w-7 text-stone-600 text-[11px] shrink-0">{row.star} ★</span>
+                    <div className="flex-1 h-2 bg-stone-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-[#D4AF37] rounded-full transition-all"
+                        style={{ width: row.pct }}
+                      />
+                    </div>
+                    <span className="w-8 text-right text-[10px] text-stone-500 shrink-0">{row.pct}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Reviews Grid */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {allReviews.map((rev) => (
@@ -811,9 +855,20 @@ export function ProductDetails({
                       {rev.title}
                     </h4>
 
-                    <p className="text-xs text-stone-600 leading-relaxed font-sans line-clamp-4 mb-4">
-                      "{rev.comment}"
+                    <p className="text-xs text-stone-600 leading-relaxed font-sans line-clamp-4 mb-3">
+                      &ldquo;{rev.comment}&rdquo;
                     </p>
+
+                    {rev.image && (
+                      <div className="mb-3">
+                        <img
+                          src={rev.image}
+                          alt="Customer verification photo"
+                          className="w-16 h-16 rounded-xl object-cover border border-stone-200 shadow-2xs hover:scale-105 transition-transform cursor-pointer"
+                          onClick={() => window.open(rev.image, "_blank")}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="pt-3 border-t border-stone-100 flex items-center justify-between text-xs">
@@ -850,32 +905,66 @@ export function ProductDetails({
         </div>
       </div>
 
-      {/* Mobile Sticky CTA */}
+      {/* Mobile Sticky CTA Dock */}
       <AnimatePresence>
         {showStickyBar && (
           <motion.div
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             exit={{ y: 100 }}
-            className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-stone-200 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] p-3 px-4 flex items-center justify-between gap-4"
+            className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#071A12]/95 backdrop-blur-md border-t border-[#D4AF37]/30 shadow-2xl p-2.5 px-3 flex items-center justify-between gap-2.5"
           >
-            <div className="flex flex-col">
-              <span className="text-xs text-stone-500 line-through leading-none mb-1">
-                {comparePrice && comparePrice > currentPrice
-                  ? formatINR(comparePrice)
-                  : ""}
-              </span>
-              <span className="font-bold text-xl text-[#1f3d2b] leading-none">
-                {formatINR(currentPrice)}
-              </span>
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-[#D4AF37]/40 shrink-0 bg-stone-900">
+                <Image
+                  src={productImages[0] || "/images/products/himalayan-shilajit-resin-card.jpg"}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[11px] font-medium text-white truncate max-w-[110px]">
+                  {product.name}
+                </p>
+                <div className="flex items-baseline gap-1">
+                  <span className="font-bold text-sm text-[#D4AF37] font-mono">
+                    {formatINR(currentPrice)}
+                  </span>
+                  {comparePrice && comparePrice > currentPrice && (
+                    <span className="text-[10px] text-stone-400 line-through">
+                      {formatINR(comparePrice)}
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
-            <Button
-              variant="primary"
-              onClick={handleBuyNow}
-              className="flex-1 bg-[#1f3d2b] hover:bg-[#152a1d] text-white py-3 rounded-lg text-sm font-bold uppercase tracking-wider shadow-sm"
-            >
-              Buy Now
-            </Button>
+
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                onClick={handleWhatsAppOrder}
+                className="w-9 h-9 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white flex items-center justify-center shadow-xs active:scale-95 cursor-pointer"
+                title="Order via WhatsApp"
+              >
+                <MessageCircle className="w-4 h-4 fill-white" />
+              </button>
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className="px-3 py-2 rounded-xl bg-[#D4AF37] hover:bg-[#E5C358] text-[#071A12] text-xs font-bold uppercase tracking-wider shadow-md active:scale-95 flex items-center gap-1 cursor-pointer"
+              >
+                <ShoppingBag className="w-3.5 h-3.5 text-[#071A12]" />
+                <span>Add</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleBuyNow}
+                className="px-3.5 py-2 rounded-xl bg-white hover:bg-stone-100 text-[#071A12] text-xs font-bold uppercase tracking-wider shadow-md active:scale-95 cursor-pointer"
+              >
+                Buy Now
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

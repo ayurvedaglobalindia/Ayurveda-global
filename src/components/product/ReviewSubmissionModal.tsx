@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Star, X, CheckCircle2, ShieldCheck, Heart } from "lucide-react";
+import { Star, X, CheckCircle2, ShieldCheck, Heart, Camera, Image as ImageIcon } from "lucide-react";
 import { useUIStore } from "@/store/uiStore";
 
 export interface CustomerReview {
@@ -13,6 +13,7 @@ export interface CustomerReview {
   title: string;
   comment: string;
   verified: boolean;
+  image?: string;
 }
 
 interface ReviewSubmissionModalProps {
@@ -38,15 +39,38 @@ export function ReviewSubmissionModal({
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   if (!isOpen) return null;
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 3 * 1024 * 1024) {
+      showToast({
+        type: "error",
+        title: "Photo Too Large",
+        message: "Please choose an image under 3MB",
+      });
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!author.trim() || !comment.trim()) {
-      showToast("Please provide your name and review details", "error");
+      showToast({
+        type: "error",
+        title: "Missing Details",
+        message: "Please provide your name and review details",
+      });
       return;
     }
 
@@ -61,6 +85,7 @@ export function ReviewSubmissionModal({
       title: title.trim() || "Authentic Ayurvedic Formulation",
       comment: comment.trim(),
       verified: true,
+      image: imagePreview || undefined,
     };
 
     try {
@@ -72,7 +97,11 @@ export function ReviewSubmissionModal({
     } catch {}
 
     onReviewSubmitted(newReview);
-    showToast("Thank you! Your verified review has been published.", "success");
+    showToast({
+      type: "success",
+      title: "Review Published",
+      message: "Thank you! Your verified review has been published.",
+    });
     setSubmitting(false);
     onClose();
   };
@@ -186,6 +215,41 @@ export function ReviewSubmissionModal({
               required
               className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#9E8047]/25 text-xs text-[#1C1D1F] focus:border-[#9E8047] focus:outline-hidden resize-none"
             />
+          </div>
+
+          {/* Photo Attachment (Customer Unboxing / Results) */}
+          <div>
+            <label className="text-xs font-mono text-[#737373] uppercase tracking-wider block mb-1">
+              Attach Photo of Formulation / Unboxing (Optional)
+            </label>
+            <div className="flex items-center gap-3">
+              <label className="px-3.5 py-2.5 rounded-xl bg-white border border-dashed border-[#9E8047]/40 hover:border-[#9E8047] text-xs font-medium text-[#071A12] cursor-pointer flex items-center gap-2 shadow-2xs transition-colors">
+                <Camera className="w-4 h-4 text-[#9E8047]" />
+                <span>{imagePreview ? "Change Photo" : "Upload Photo"}</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </label>
+              {imagePreview && (
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-[#9E8047]/40 shadow-xs">
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setImagePreview(null)}
+                    className="absolute top-0 right-0 bg-black/70 text-white p-0.5 rounded-bl hover:bg-black"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Verified Badge Assurance */}

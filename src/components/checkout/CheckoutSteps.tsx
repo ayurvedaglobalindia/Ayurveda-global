@@ -53,6 +53,7 @@ import {
   createCashfreeOrderSession,
   initiateCashfreePayment,
 } from "@/lib/payments/gateway";
+import { DiscreetPackagingBadge } from "@/components/product/DiscreetPackagingBadge";
 import type { Order } from "@/types";
 
 const INDIAN_STATES = [
@@ -942,6 +943,9 @@ export function CheckoutForm() {
                 </label>
               </div>
             </div>
+
+            {/* Discreet Packaging Assurance */}
+            <DiscreetPackagingBadge variant="compact" />
 
             {/* Card 3: Optional Delivery Note */}
             <div className="p-3.5 sm:p-4 rounded-xl bg-[#FFFFFF] border border-[#9E8047]/25">

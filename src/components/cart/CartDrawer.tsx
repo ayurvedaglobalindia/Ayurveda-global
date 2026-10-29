@@ -15,6 +15,7 @@ import {
   Lock,
   Shield,
   RotateCcw,
+  Sparkles,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { classNames } from "@/lib/utils/formatters";
@@ -22,7 +23,7 @@ import { Button } from "@/components/ui/Button";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { QuantitySelector } from "@/components/ui/QuantitySelector";
 import { formatINR, calculateShipping } from "@/lib/utils/formatters";
-import { getProductImage } from "@/lib/products/registry";
+import { getProductImage, getAllProducts } from "@/lib/products/registry";
 import { validateCoupon } from "@/lib/coupons";
 import { useCartStore } from "@/store/cartStore";
 import { useUserStore } from "@/store/userStore";
@@ -38,6 +39,7 @@ export function CartDrawer() {
   const { user } = useUserStore();
   const {
     items = [],
+    addItem,
     couponCode,
     discount = 0,
     tax = 0,
@@ -56,6 +58,12 @@ export function CartDrawer() {
   const shippingCalc = calculateShipping(subtotal);
   const [couponError, setCouponError] = useState<string | null>(null);
   const [couponLoading, setCouponLoading] = useState(false);
+
+  const allProds = getAllProducts();
+  const cartProductIds = new Set(items.map((i) => i.productId));
+  const upsellProducts = allProds
+    .filter((p) => !cartProductIds.has(p.id))
+    .slice(0, 2);
 
   useEffect(() => {
     setIsMounted(true);
@@ -198,6 +206,39 @@ export function CartDrawer() {
               </button>
             </div>
 
+            {/* Free Delivery Meter */}
+            {items.length > 0 && (
+              <div className="bg-[#FAF7F2] px-4 py-2.5 border-b border-[#9E8047]/20">
+                <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
+                  {subtotal >= 99900 ? (
+                    <span className="text-[#075E54] flex items-center gap-1.5 font-bold">
+                      <Truck className="w-4 h-4 text-[#25D366]" />
+                      🎉 You unlocked FREE Express Delivery!
+                    </span>
+                  ) : (
+                    <span className="text-[#1C1D1F] flex items-center gap-1.5">
+                      <Truck className="w-3.5 h-3.5 text-[#9E8047]" />
+                      Add <strong className="text-[#0E3924] font-bold">{formatINR(99900 - subtotal)}</strong> more for <strong>FREE Delivery</strong>
+                    </span>
+                  )}
+                  <span className="text-[10px] font-mono text-[#4E5F52]">
+                    {Math.min(100, Math.round((subtotal / 99900) * 100))}%
+                  </span>
+                </div>
+                <div className="w-full h-1.5 bg-stone-200 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-[#D4AF37] to-[#0E3924] transition-all duration-500 rounded-full"
+                    style={{
+                      width: `${Math.min(
+                        100,
+                        Math.max(6, Math.round((subtotal / 99900) * 100)),
+                      )}%`,
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Content List */}
             <div className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3.5 overscroll-contain">
               {items.length === 0 ? (
@@ -233,6 +274,53 @@ export function CartDrawer() {
                       />
                     ))}
                   </div>
+
+                  {/* Frequently Added Formulations (1-Click Upsell) */}
+                  {upsellProducts.length > 0 && (
+                    <div className="bg-white border border-[#9E8047]/25 rounded-xl p-3 shadow-2xs space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#0E3924] flex items-center gap-1.5 font-sans">
+                          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                          Frequently Added Together
+                        </span>
+                        <span className="text-[9.5px] font-mono text-stone-500">1-Click Add</span>
+                      </div>
+                      <div className="space-y-2">
+                        {upsellProducts.map((upProd) => (
+                          <div
+                            key={upProd.id}
+                            className="flex items-center justify-between p-2 rounded-lg bg-[#FAF7F2] border border-[#9E8047]/15"
+                          >
+                            <div className="flex items-center gap-2 min-w-0">
+                              <div className="relative w-10 h-10 rounded-md overflow-hidden bg-stone-100 shrink-0">
+                                <Image
+                                  src={getProductImage(upProd, upProd.id, "thumb").src}
+                                  alt={upProd.name}
+                                  fill
+                                  className="object-cover"
+                                />
+                              </div>
+                              <div className="min-w-0">
+                                <h5 className="text-[11px] font-medium text-[#1C1D1F] truncate leading-tight">
+                                  {upProd.name}
+                                </h5>
+                                <span className="text-[11px] font-bold text-[#0E3924] font-sans">
+                                  {formatINR(upProd.price)}
+                                </span>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => addItem(upProd)}
+                              className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1.5 rounded-md bg-[#0E3924] hover:bg-[#071A12] text-white shrink-0 transition-colors shadow-2xs cursor-pointer"
+                            >
+                              + Add
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   <CouponInput
                     couponCode={couponCode}

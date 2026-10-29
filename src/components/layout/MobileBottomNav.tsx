@@ -47,6 +47,10 @@ export function MobileBottomNav() {
 
   const cartCount = isMounted ? mountedCartCount : 0;
 
+  if (pathname?.startsWith("/product/")) {
+    return null;
+  }
+
   const handleDoctorWhatsApp = () => {
     const msg = buildVaidyaConsultationMessage();
     window.open(buildWhatsAppUrl(msg), "_blank");

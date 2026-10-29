@@ -92,6 +92,7 @@ export function ProductCard({
             title: "Added to Bag",
             message: `${product.name} (1 unit) added.`,
           });
+          openCartDrawer();
         },
       });
       return;
@@ -110,6 +111,7 @@ export function ProductCard({
       title: "Added to Bag",
       message: `${product.name} added to cart.`,
     });
+    openCartDrawer();
   };
 
   const handleIncrement = (e: React.MouseEvent) => {
