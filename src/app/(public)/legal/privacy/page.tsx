@@ -1,10 +1,13 @@
 import { Metadata } from "next";
-import { generateWebsiteStructuredData } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, generateWebsiteStructuredData } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "Ayur Veda Global Privacy Policy - How we collect, use, and protect your personal information.",
+  alternates: {
+    canonical: `${SITE_URL}/legal/privacy`,
+  },
 };
 
 const lastUpdated = "December 15, 2024";

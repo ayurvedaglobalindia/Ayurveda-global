@@ -1,10 +1,13 @@
 import { Metadata } from "next";
-import { generateWebsiteStructuredData } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, generateWebsiteStructuredData } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
     "Ayur Veda Global Terms of Service - Rules and guidelines for using our website and services.",
+  alternates: {
+    canonical: `${SITE_URL}/legal/terms`,
+  },
 };
 
 const lastUpdated = "December 15, 2024";

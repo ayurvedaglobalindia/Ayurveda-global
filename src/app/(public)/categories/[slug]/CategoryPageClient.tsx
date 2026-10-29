@@ -16,15 +16,25 @@ import type { Product, Category } from "@/types";
 
 const ITEMS_PER_PAGE = 12;
 
-export default function CategoryPageClient() {
+interface CategoryPageClientProps {
+  initialCategory?: Category | null;
+  initialProducts?: Product[];
+  slug?: string;
+}
+
+export default function CategoryPageClient({
+  initialCategory,
+  initialProducts = [],
+  slug: propSlug,
+}: CategoryPageClientProps = {}) {
   const params = useParams();
   const searchParams = useSearchParams();
-  const slug = (params?.slug as string) || "";
+  const slug = (params?.slug as string) || propSlug || "";
 
-  const [category, setCategory] = useState<Category | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState<Category | null>(initialCategory || null);
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts);
+  const [loading, setLoading] = useState(!initialCategory && initialProducts.length === 0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");

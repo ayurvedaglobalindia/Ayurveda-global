@@ -5,14 +5,22 @@ import { useParams, notFound } from "next/navigation";
 import { ProductDetails } from "@/components/product/ProductDetails";
 import { ProductCard } from "@/components/product/ProductCard";
 import { getProductBySlug, getRelatedProducts } from "@/lib/products/registry";
-import { generateProductSEO } from "@/lib/seo";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { AgeVerificationGate } from "@/components/layout/AgeVerificationGate";
+import type { Product } from "@/types";
 
-export default function ProductPageClient() {
+interface ProductPageClientProps {
+  initialProduct?: Product;
+  slug?: string;
+}
+
+export default function ProductPageClient({
+  initialProduct,
+  slug: propSlug,
+}: ProductPageClientProps) {
   const params = useParams();
-  const slug = (params?.slug as string) || "";
-  const product = getProductBySlug(slug);
+  const slug = (params?.slug as string) || propSlug || "";
+  const product = initialProduct || getProductBySlug(slug);
 
   if (!product) {
     notFound();
@@ -27,13 +35,6 @@ export default function ProductPageClient() {
 
   return (
     <div className="bg-[#FAF7F2] text-[#1C1D1F] min-h-screen">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateProductSEO(product).structuredData),
-        }}
-      />
-
       <div className="container py-4 sm:py-6 lg:py-8">
         <div className="mb-4 sm:mb-6 pb-3 border-b border-[#9E8047]/25">
           <Breadcrumb
@@ -51,15 +52,7 @@ export default function ProductPageClient() {
         )}
 
         <div className="mb-8 sm:mb-12">
-          <Suspense
-            fallback={
-              <div className="min-h-[400px] flex items-center justify-center text-[#737373]">
-                Loading formulation details...
-              </div>
-            }
-          >
-            <ProductDetails product={product} />
-          </Suspense>
+          <ProductDetails product={product} />
         </div>
 
         {relatedProducts.length > 0 && (

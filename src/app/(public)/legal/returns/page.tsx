@@ -1,10 +1,13 @@
 import { Metadata } from "next";
-import { generateWebsiteStructuredData } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, generateWebsiteStructuredData } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Returns & Refunds Policy",
   description:
     "Ayur Veda Global Returns & Refunds Policy - How to return products, eligibility, timelines, and refund process.",
+  alternates: {
+    canonical: `${SITE_URL}/legal/returns`,
+  },
 };
 
 const lastUpdated = "December 15, 2024";

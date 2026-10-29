@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import {
+  SITE_URL,
+  SITE_NAME,
   generateFAQStructuredData,
   generateWebsiteStructuredData,
 } from "@/lib/seo";
@@ -8,7 +10,19 @@ import { FAQClient } from "@/components/faq/FAQClient";
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
   description:
-    "Find answers to common questions about Ayur Veda Global products, shipping, returns, and more.",
+    "Find answers to common questions about Ayur Veda Global products, shipping, returns, dosage, and discrete delivery across India.",
+  alternates: {
+    canonical: `${SITE_URL}/faq`,
+  },
+  openGraph: {
+    title: `Frequently Asked Questions | ${SITE_NAME}`,
+    description:
+      "Find answers to common questions about Ayur Veda Global products, shipping, returns, dosage, and discrete delivery across India.",
+    url: `${SITE_URL}/faq`,
+    siteName: SITE_NAME,
+    locale: "en_IN",
+    type: "website",
+  },
 };
 
 const faqs = [

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json.schemastore.org/feed-1.json",
+  "version": "1.0",
+  "title": "Ayur Veda Global - Agentic Product Catalog",
+  "home_page_url": "https://ayurvedaglobal.com",
+  "feed_url": "https://ayurvedaglobal.com/ai-catalog.json",
+  "description": "Machine-readable catalog of authentic Ayurvedic Rasayana formulations, standardized herbal supplements, and endurance sprays.",
+  "publisher": {
+    "name": "Ayur Veda Global",
+    "url": "https://ayurvedaglobal.com",
+    "contact": {
+      "telephone": "+91-9123485451",
+      "email": "care@ayurvedaglobal.com",
+      "whatsapp": "https://wa.me/919123485451"
+    }
+  },
+  "items": [
+    {
+      "id": "body-essential-nutrition",
+      "sku": "AVG-BEN-60",
+      "title": "BODY Essential Nutrition (60 Capsules)",
+      "url": "https://ayurvedaglobal.com/product/body-essential-nutrition",
+      "summary": "Herbal & Safe Rasayana supplement for energy, stamina, and muscle endurance with Ashwagandha, Shilajit, and Safed Musli.",
+      "image": "https://ayurvedaglobal.com/images/products/body-essential-nutrition-card.jpg",
+      "price": 899,
+      "currency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Herbal Supplements"
+    },
+    {
+      "id": "staymax-delay-spray",
+      "sku": "AVG-SMX-30",
+      "title": "STAYMAX+ Delay Spray (30 ml)",
+      "url": "https://ayurvedaglobal.com/product/staymax-delay-spray",
+      "summary": "Calibrated topical endurance spray for men with soothing botanical extracts and discrete packaging.",
+      "image": "https://ayurvedaglobal.com/images/products/staymax-delay-spray-card.jpg",
+      "price": 899,
+      "currency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Personal Care & Vitality"
+    },
+    {
+      "id": "vitality-power-combo",
+      "sku": "AVG-VPC-01",
+      "title": "Vitality & Performance Power Combo",
+      "url": "https://ayurvedaglobal.com/product/vitality-power-combo",
+      "summary": "Synergistic dual protocol: BODY Essential Nutrition Capsules + STAYMAX+ Delay Spray.",
+      "image": "https://ayurvedaglobal.com/images/products/vitality-power-combo-card.jpg",
+      "price": 1599,
+      "currency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Power Combos & Regrowth Kits"
+    },
+    {
+      "id": "hair-regrow-kit",
+      "sku": "AVG-HRK-01",
+      "title": "HAIR RE-GROW Complete Care Kit",
+      "url": "https://ayurvedaglobal.com/product/hair-regrow-kit",
+      "summary": "Synergistic hair regrowth protocol: 60 Botanical Capsules + 100ml Scalp Therapy Oil.",
+      "image": "https://ayurvedaglobal.com/images/products/hair-regrow-kit-card.jpg",
+      "price": 1499,
+      "currency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Power Combos & Regrowth Kits"
+    },
+    {
+      "id": "hair-regrow-capsules",
+      "sku": "AVG-HRC-60",
+      "title": "HAIR RE-GROW Pure Botanical Capsules (60 Capsules)",
+      "url": "https://ayurvedaglobal.com/product/hair-regrow-capsules",
+      "summary": "Internal DHT-balancing and follicular nutrition formula with Bhringraj, Brahmi, and Amla.",
+      "image": "https://ayurvedaglobal.com/images/products/hair-regrow-capsules-card.jpg",
+      "price": 799,
+      "currency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Herbal Supplements"
+    },
+    {
+      "id": "hair-regrow-oil",
+      "sku": "AVG-HRO-100",
+      "title": "HAIR RE-GROW Nourishing Ayurvedic Scalp Oil (100 ml)",
+      "url": "https://ayurvedaglobal.com/product/hair-regrow-oil",
+      "summary": "Classical Kshir Pak processed medicinal hair oil for scalp stimulation and root rejuvenation.",
+      "image": "https://ayurvedaglobal.com/images/products/hair-regrow-oil-card.jpg",
+      "price": 799,
+      "currency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Personal Care & Vitality"
+    },
+    {
+      "id": "himalayan-shilajit-resin",
+      "sku": "AVG-SHL-20",
+      "title": "Pure Himalayan Shilajit Resin (20g)",
+      "url": "https://ayurvedaglobal.com/product/himalayan-shilajit-resin",
+      "summary": "Authentic Gold Grade purified Himalayan Shilajit with >75% Fulvic Acid and 84+ minerals.",
+      "image": "https://ayurvedaglobal.com/images/products/himalayan-shilajit-resin-card.jpg",
+      "price": 999,
+      "currency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Herbal Supplements"
+    },
+    {
+      "id": "ashwagandha-root-extract",
+      "sku": "AVG-ASH-60",
+      "title": "Ashwagandha KSM-66 Full-Spectrum (60 Capsules)",
+      "url": "https://ayurvedaglobal.com/product/ashwagandha-root-extract",
+      "summary": "Standardized 5% withanolides organic root extract for cortisol regulation and restorative sleep.",
+      "image": "https://ayurvedaglobal.com/images/products/ashwagandha-root-extract-card.jpg",
+      "price": 699,
+      "currency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Herbal Supplements"
+    },
+    {
+      "id": "vajikara-gold-vitality-oil",
+      "sku": "AVG-VGT-100",
+      "title": "Vajikara Gold Vitality Massage Taila (100ml)",
+      "url": "https://ayurvedaglobal.com/product/vajikara-gold-vitality-oil",
+      "summary": "Classical medicated massage oil prepared with classical herbs in a pure sesame oil base.",
+      "image": "https://ayurvedaglobal.com/images/products/vajikara-gold-vitality-oil-card.jpg",
+      "price": 849,
+      "currency": "INR",
+      "availability": "https://schema.org/InStock",
+      "category": "Personal Care & Vitality"
+    }
+  ]
+}

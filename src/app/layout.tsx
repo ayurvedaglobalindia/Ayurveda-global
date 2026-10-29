@@ -4,20 +4,26 @@ import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/Toast";
 import { WhatsAppFloatButton } from "@/components/layout/WhatsAppFloatButton";
 import { GlobalModals } from "@/components/layout/GlobalModals";
+import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
+import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
+import {
+  SITE_URL,
+  SITE_NAME,
+  generateOrganizationStructuredData,
+  generateWebsiteStructuredData,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://ayurvedaglobal.com",
-  ),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: "/",
   },
   title: {
-    default: "Ayur Veda Global | Authentic Ayurvedic Wellness Products",
-    template: "%s | Ayur Veda Global",
+    default: `${SITE_NAME} | Authentic Ayurvedic Wellness Products`,
+    template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Discover authentic Ayurvedic wellness products. BODY Essential Nutrition supplements and STAYMAX+ Delay Spray. Natural herbs, sustainable sourcing, free shipping on orders above ₹999.",
+    "Discover authentic Ayurvedic wellness products. Standardized botanical extracts, pure Himalayan Shilajit, Ashwagandha KSM-66, and holistic vitality formulations. Discrete delivery across India.",
   keywords: [
     "ayurvedic",
     "wellness",
@@ -25,34 +31,48 @@ export const metadata: Metadata = {
     "natural products",
     "ayurveda",
     "health",
+    "shilajit",
+    "ashwagandha",
+    "vitality",
+    "hair regrowth",
   ],
-  authors: [{ name: "Ayur Veda Global" }],
-  creator: "Ayur Veda Global",
-  publisher: "Ayur Veda Global",
-  robots: "index, follow",
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://ayurvedaglobal.com",
-    siteName: "Ayur Veda Global",
-    title: "Ayur Veda Global | Authentic Ayurvedic Wellness Products",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} | Authentic Ayurvedic Wellness Products`,
     description:
-      "Discover authentic Ayurvedic wellness products. Natural herbs, sustainable sourcing.",
+      "Discover authentic Ayurvedic wellness products. Standardized botanical extracts, lab purity tested, discrete delivery across India.",
     images: [
       {
-        url: "/images/og-default.svg",
+        url: `${SITE_URL}/images/og-default.svg`,
         width: 1200,
         height: 630,
-        alt: "Ayur Veda Global",
+        alt: `${SITE_NAME} Apothecary`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ayur Veda Global | Authentic Ayurvedic Wellness Products",
+    title: `${SITE_NAME} | Authentic Ayurvedic Wellness Products`,
     description:
-      "Discover authentic Ayurvedic wellness products. Natural herbs, sustainable sourcing.",
-    images: ["/images/og-default.svg"],
+      "Discover authentic Ayurvedic wellness products. Standardized botanical extracts, lab purity tested.",
+    images: [`${SITE_URL}/images/og-default.svg`],
   },
   verification: {
     google: "google-site-verification-code",
@@ -63,9 +83,6 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
 };
-
-import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
-import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
 
 export const viewport: Viewport = {
   themeColor: "#FAF7F2",
@@ -79,6 +96,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const globalStructuredData = [
+    generateWebsiteStructuredData(),
+    generateOrganizationStructuredData(),
+  ];
+
   return (
     <html lang="en" className="antialiased" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
@@ -89,6 +111,13 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link rel="dns-prefetch" href="https://wa.me" />
+        <link rel="ai-catalog" type="application/json" href="/ai-catalog.json" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(globalStructuredData),
+          }}
+        />
       </head>
       <body suppressHydrationWarning className="min-h-screen bg-transparent text-[#1C1D1F] font-body selection:bg-[#EAE4DC] selection:text-[#1C1D1F] overflow-x-hidden w-full max-w-full">
         <AnimatedBackground />

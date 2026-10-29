@@ -11,14 +11,20 @@ import {
   ArrowRight,
 } from "lucide-react";
 import {
+  SITE_URL,
+  SITE_NAME,
   generateWebsiteStructuredData,
   generateOrganizationStructuredData,
+  generateBreadcrumbStructuredData,
 } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "About Us | Classical Ayurvedic Apothecary",
   description:
     "Ayur Veda Global honors centuries of Ayurvedic tradition. Learn about our lineage, botanical sourcing, Shodhana purification, and commitment to purity.",
+  alternates: {
+    canonical: `${SITE_URL}/about`,
+  },
 };
 
 const values = [
@@ -90,6 +96,10 @@ export default function AboutPage() {
   const structuredData = [
     generateWebsiteStructuredData(),
     generateOrganizationStructuredData(),
+    generateBreadcrumbStructuredData([
+      { name: "Home", url: "/" },
+      { name: "About Us", url: "/about" },
+    ]),
   ];
 
   return (

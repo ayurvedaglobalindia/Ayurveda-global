@@ -1,10 +1,13 @@
 import { Metadata } from "next";
-import { generateWebsiteStructuredData } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, generateWebsiteStructuredData } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Shipping Policy",
   description:
     "Ayur Veda Global Shipping Policy - Delivery times, charges, tracking, and international shipping information.",
+  alternates: {
+    canonical: `${SITE_URL}/legal/shipping`,
+  },
 };
 
 const lastUpdated = "December 15, 2024";

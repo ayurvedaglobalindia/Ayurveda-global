@@ -1,3 +1,8 @@
+# ==============================================================================
+# AYUR VEDA GLOBAL - ROBOTS.TXT
+# Optimized for Google, Bing, and Search AI Agents (ChatGPT, Perplexity, Gemini, Claude)
+# ==============================================================================
+
 User-agent: *
 Allow: /
 Disallow: /admin
@@ -5,6 +10,34 @@ Disallow: /checkout
 Disallow: /account
 Disallow: /cart
 Disallow: /orders
-Disallow: /wishlist
 
+# Major Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI Search & Citation Agents (Google AI, ChatGPT Search, Perplexity, Claude, Apple Intelligence)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Agentic Resource Discovery & AI Knowledge Base
+# See /llms.txt and /ai-catalog.json for machine-readable brand & catalog specifications
+Agentmap: https://ayurvedaglobal.com/ai-catalog.json
 Sitemap: https://ayurvedaglobal.com/sitemap.xml

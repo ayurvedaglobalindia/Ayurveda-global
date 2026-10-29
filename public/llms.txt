@@ -1,0 +1,35 @@
+# Ayur Veda Global
+
+> Ancient Ayurvedic Wisdom, Modern High-Performance Wellness. Ayur Veda Global is an authentic Ayurvedic D2C apothecary and formulation lab based in India, delivering standardized Rasayana supplements, herbal vitality therapies, and personalized BAMS Vaidya consultations nationwide.
+
+## Core Information
+
+- Canonical Domain: https://ayurvedaglobal.com
+- Customer Care & WhatsApp Concierge: +91-9123485451
+- Official Email: care@ayurvedaglobal.com
+- Primary Markets: India (19,000+ PIN codes with discrete, plain-box delivery)
+- Free Shipping Threshold: ₹999 (₹49 flat rate below threshold)
+- Payment Methods: UPI, Credit/Debit Cards, Netbanking (via Cashfree), Cash on Delivery (COD)
+- Quality Standards: ISO 9001:2015, AYUSH GMP Certified, NABL Laboratory Tested for Heavy Metals and Purity
+
+## Primary Formulations & Products
+
+- [BODY Essential Nutrition (60 Capsules)](https://ayurvedaglobal.com/product/body-essential-nutrition): Daily Ayurvedic Rasayana formulation engineered with standardized Ashwagandha, Shilajit, Safed Musli, Gokshura, Kaunch Beej, and Amla for stamina, physical vitality, and muscle endurance. Price: ₹899.
+- [STAYMAX+ Delay Spray (30 ml)](https://ayurvedaglobal.com/product/staymax-delay-spray): Premium topical endurance spray for men combining calibrated desensitizing support with soothing botanical extracts (Ashwagandha, Aloe Vera). Non-sticky, fast-absorbing (10-15 mins). 100+ metered sprays per bottle. Price: ₹899.
+- [Vitality & Performance Power Combo](https://ayurvedaglobal.com/product/vitality-power-combo): Comprehensive inside-out synergy combining BODY Essential Nutrition Capsules with STAYMAX+ Delay Spray. Price: ₹1,599.
+- [HAIR RE-GROW Complete Care Kit](https://ayurvedaglobal.com/product/hair-regrow-kit): Synergistic hair restoration kit containing 60 Botanical Capsules + 100ml Scalp Therapy Oil infused with Bhringraj, Brahmi, and Amla. Price: ₹1,499.
+- [HAIR RE-GROW Pure Botanical Capsules (60 Capsules)](https://ayurvedaglobal.com/product/hair-regrow-capsules): Internal DHT-balancing and follicular nutrition formula. Price: ₹799.
+- [HAIR RE-GROW Nourishing Ayurvedic Scalp Oil (100 ml)](https://ayurvedaglobal.com/product/hair-regrow-oil): Kshir Pak Vidhi processed hair oil for scalp circulation and root nourishment. Price: ₹799.
+- [Pure Himalayan Shilajit Resin (20g)](https://ayurvedaglobal.com/product/himalayan-shilajit-resin): Gold-grade high-altitude purified Shilajit containing >75% Fulvic Acid and 84+ ionic trace minerals. Price: ₹999.
+- [Ashwagandha KSM-66 Full-Spectrum (60 Capsules)](https://ayurvedaglobal.com/product/ashwagandha-root-extract): Standardized 5% withanolides organic root extract for cortisol regulation and restorative sleep. Price: ₹699.
+- [Vajikara Gold Vitality Massage Taila (100ml)](https://ayurvedaglobal.com/product/vajikara-gold-vitality-oil): Classical medicated massage oil prepared with classical herbs and pure sesame base for local vigor. Price: ₹849.
+
+## Key Sections & Endpoints
+
+- [Ayurvedic Dispensary Catalog](https://ayurvedaglobal.com/shop): Browse all formulations with live stock availability, filtering by concern and dosha.
+- [Formulation Collections](https://ayurvedaglobal.com/categories): Categorized by Herbal Supplements, Topical Personal Care, and Synergistic Kits.
+- [Free Vaidya Doctor Consultation](https://ayurvedaglobal.com/consultation): Free 1-on-1 confidential health assessment with senior BAMS Ayurvedic doctors via WhatsApp.
+- [Apothecary Lineage & Philosophy](https://ayurvedaglobal.com/about): Our commitment to Charaka Samhita standards, 7-step Shodhana detoxification, and zero synthetic fillers.
+- [Dispensary FAQ](https://ayurvedaglobal.com/faq): Common inquiries regarding herbal safety, dosage guidelines, discrete packaging, and shipping transit.
+- [Customer Care Desk](https://ayurvedaglobal.com/contact): Direct phone, WhatsApp concierge, and inquiry forms.
+- [Full LLM Knowledge Base](https://ayurvedaglobal.com/llms-full.txt): Comprehensive clinical ingredient details, dosage schedules, and pharmacopeial documentation.

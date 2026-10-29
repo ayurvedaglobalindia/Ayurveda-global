@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import {
+  SITE_URL,
   generateWebsiteStructuredData,
   generateOrganizationStructuredData,
 } from "@/lib/seo";
@@ -17,9 +18,12 @@ import { HomeFAQ } from "@/components/home/HomeFAQ";
 import { HomeTrustBar } from "@/components/home/HomeTrustBar";
 
 export const metadata: Metadata = {
-  title: "Ayurveda Global | Ancient Ayurvedic Wisdom, Modern Wellness",
+  title: "Ancient Ayurvedic Wisdom, Modern High-Performance Wellness",
   description:
     "Pure, authentic & holistic wellness formulations powered by standardized botanical extracts. Shop BODY Essential Nutrition, STAYMAX+ Spray, and complete hair regrowth kits.",
+  alternates: {
+    canonical: SITE_URL,
+  },
   openGraph: {
     title: "Ayurveda Global | Ancient Ayurvedic Wisdom, Modern Wellness",
     description:

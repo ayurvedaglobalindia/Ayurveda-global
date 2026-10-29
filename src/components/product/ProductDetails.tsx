@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   Star,
@@ -43,7 +43,6 @@ export function ProductDetails({
   onVariantChange?: (variant: ProductVariant) => void;
 }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { addItem } = useCartStore();
   const { openCartDrawer, showToast } = useUIStore();
 
@@ -56,21 +55,23 @@ export function ProductDetails({
   // Accordion state
   const [openFaq, setOpenFaq] = useState<string | null>("overview");
 
-  const variantParam = searchParams?.get("variant");
-
   useEffect(() => {
-    if (variantParam) {
-      const match = product.variants.find(
-        (v) =>
-          v.id === variantParam ||
-          v.id.toLowerCase().includes(variantParam.toLowerCase()),
-      );
-      if (match) {
-        setSelectedVariantId(match.id);
-        onVariantChange?.(match);
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const variantParam = urlParams.get("variant");
+      if (variantParam) {
+        const match = product.variants.find(
+          (v) =>
+            v.id === variantParam ||
+            v.id.toLowerCase().includes(variantParam.toLowerCase()),
+        );
+        if (match) {
+          setSelectedVariantId(match.id);
+          onVariantChange?.(match);
+        }
       }
     }
-  }, [variantParam, product.variants, onVariantChange]);
+  }, [product.variants, onVariantChange]);
 
   useEffect(() => {
     const handleScroll = () => {
