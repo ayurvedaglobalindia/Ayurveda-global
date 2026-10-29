@@ -110,6 +110,10 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        />
         <link rel="dns-prefetch" href="https://wa.me" />
         <link rel="ai-catalog" type="application/json" href="/ai-catalog.json" />
         <script

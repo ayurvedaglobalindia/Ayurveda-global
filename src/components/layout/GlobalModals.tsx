@@ -9,6 +9,7 @@ import { MobileMenuDrawer } from "@/components/layout/MobileMenuDrawer";
 import { SearchModal } from "@/components/layout/SearchModal";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AppointmentBookingModal } from "@/components/layout/AppointmentBookingModal";
+import { DoshaQuizModal } from "@/components/quiz/DoshaQuizModal";
 import type { Product } from "@/types";
 
 export function GlobalModals() {
@@ -20,6 +21,7 @@ export function GlobalModals() {
   const mobileMenuModal = modals["mobile-menu"];
   const authModal = modals["auth"];
   const appointmentModal = modals["appointment"] || modals["consultation"];
+  const doshaQuizModal = modals["dosha-quiz"];
 
   useEffect(() => {
     if (cartModal?.isOpen) {
@@ -95,6 +97,14 @@ export function GlobalModals() {
           isOpen={true}
           onClose={() => closeModal("auth")}
           pendingItem={(authModal.data as any)?.pendingItem || null}
+        />
+      )}
+
+      {/* Global Ayurvedic Dosha Assessment Quiz Modal */}
+      {doshaQuizModal?.isOpen && (
+        <DoshaQuizModal
+          isOpen={true}
+          onClose={() => closeModal("dosha-quiz")}
         />
       )}
     </>

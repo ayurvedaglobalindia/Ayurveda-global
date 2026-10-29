@@ -3,10 +3,12 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MessageCircle, HeartPulse, CheckCircle2, Shield, ArrowRight, Award } from "lucide-react";
+import { MessageCircle, HeartPulse, CheckCircle2, Shield, ArrowRight, Award, Sparkles } from "lucide-react";
 import { buildWhatsAppUrl, buildVaidyaConsultationMessage } from "@/store/whatsappStore";
+import { useUIStore } from "@/store/uiStore";
 
 export function DoctorConsultBanner() {
+  const { openModal } = useUIStore();
   const handleDirectWhatsApp = () => {
     const msg = buildVaidyaConsultationMessage();
     window.open(buildWhatsAppUrl(msg), "_blank");
@@ -57,18 +59,27 @@ export function DoctorConsultBanner() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 pt-1">
               <button
                 type="button"
+                onClick={() => openModal("dosha-quiz")}
+                className="px-5 py-3 sm:py-3.5 rounded-xl bg-[#D4AF37] hover:bg-[#E5C358] text-[#071A12] text-xs sm:text-sm font-bold tracking-wide flex items-center justify-center gap-2 shadow-md transition-all hover:-translate-y-0.5 cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-[#071A12]" />
+                <span>Take 2-Min Dosha Quiz</span>
+              </button>
+
+              <button
+                type="button"
                 onClick={handleDirectWhatsApp}
                 className="px-5 py-3 sm:py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-2 shadow-md transition-all hover:-translate-y-0.5"
               >
                 <MessageCircle className="w-4 h-4 fill-white text-[#25D366]" />
-                <span>Chat with Doctor on WhatsApp</span>
+                <span>Chat on WhatsApp</span>
               </button>
 
               <Link
                 href="/consultation"
                 className="px-5 py-3 sm:py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-[#FAF7F2] text-xs sm:text-sm font-medium tracking-wide flex items-center justify-center gap-2 transition-colors text-center"
               >
-                <span>Book Detailed Consultation</span>
+                <span>Book Consultation</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

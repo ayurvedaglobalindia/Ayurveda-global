@@ -100,7 +100,7 @@ const consultationCategories = [
 
 export default function ConsultationClient() {
   const { user } = useUserStore();
-  const { showToast } = useUIStore();
+  const { showToast, openModal } = useUIStore();
   const trackLead = useWhatsAppStore((s) => s.trackLead);
 
   const [selectedConcern, setSelectedConcern] = useState("vitality");
@@ -237,7 +237,7 @@ export default function ConsultationClient() {
             <p className="text-[#E8ECE9]/90 text-sm sm:text-base font-light leading-relaxed mb-6">
               Receive 100% confidential, personalized health advice rooted in classical Charaka Samhita &amp; Sushruta Samhita principles. Free dietary charts, dosha evaluation, and targeted herbal guidance.
             </p>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-[#E8ECE9]/80 font-mono">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-[#E8ECE9]/80 font-mono mb-6">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-[#9E8047]" />
                 Certified BAMS Practitioners
@@ -251,6 +251,15 @@ export default function ConsultationClient() {
                 Zero Consultation Fee
               </span>
             </div>
+
+            <button
+              type="button"
+              onClick={() => openModal("dosha-quiz")}
+              className="px-6 py-3 rounded-full bg-[#D4AF37] hover:bg-[#E5C358] text-[#071A12] text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2 shadow-lg transition-all hover:scale-105 cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4 text-[#071A12]" />
+              <span>Take Free 2-Min Dosha Assessment Quiz</span>
+            </button>
           </div>
         </div>
 

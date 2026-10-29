@@ -260,10 +260,10 @@ export default function BlogClient() {
           /* Articles Grid */
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filteredPosts.map((post) => (
-              <article
+              <Link
                 key={post.id}
+                href={`/blog/${post.slug}`}
                 className="bg-white rounded-2xl border border-[#9E8047]/20 shadow-xs hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col group cursor-pointer"
-                onClick={() => setActiveArticle(post)}
               >
                 {/* Image */}
                 <div className="relative aspect-[16/10] bg-gray-50 overflow-hidden border-b border-gray-100">
@@ -316,7 +316,7 @@ export default function BlogClient() {
                     )}
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         )}
